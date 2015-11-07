@@ -15,18 +15,20 @@ class Task extends Migration
         /**
          * create task table
          */
-        Schema::create('task', function(Blueprint $table){
+        Schema::create('task', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->time('start_time_task');
+            $table->time('end_time_task');
+            $table->integer('task_hours_worked');
             $table->timestamps();
         });
 
         /**
-         * create foreign key to the client table
+         * create foreign key to the task table
          */
-        Schema::table('task', function(Blueprint $table) {
-            $table->integer('project_id')->unsigned();
-            $table->foreign('project_id')->references('id')->on('project');
+        Schema::table('task', function (Blueprint $table) {
+            $table->integer('time_card_id')->unsigned();
+            $table->foreign('time_card_id')->references('id')->on('time_card');
         });
     }
 

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Project extends Migration
+class Timecardformat extends Migration
 {
     /**
      * Run the migrations.
@@ -13,21 +13,29 @@ class Project extends Migration
     public function up()
     {
         /**
-         * create project table
+         * create time_card table
          */
-        Schema::create('project', function(Blueprint $table){
+        Schema::create('time_card_format', function(Blueprint $table){
             $table->increments('id');
-            $table->string('name')->unique();
+            $table->string('description')->unique();
+            $table->char('dow_01',10);
+            $table->char('dow_02',10);
+            $table->char('dow_03',10);
+            $table->char('dow_04',10);
+            $table->char('dow_05',10);
+            $table->char('dow_06',10);
+            $table->char('dow_07',10);
             $table->timestamps();
         });
 
         /**
          * create foreign key to the client table
          */
-        Schema::table('project', function(Blueprint $table) {
+        Schema::table('time_card_format', function(Blueprint $table) {
             $table->integer('client_id')->unsigned();
             $table->foreign('client_id')->references('id')->on('client');
         });
+
     }
 
     /**
@@ -37,6 +45,6 @@ class Project extends Migration
      */
     public function down()
     {
-        Schema::drop('project');
+        Schema::drop('time_card_format');
     }
 }
