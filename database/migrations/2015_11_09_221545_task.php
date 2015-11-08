@@ -17,9 +17,10 @@ class Task extends Migration
          */
         Schema::create('task', function (Blueprint $table) {
             $table->increments('id');
-            $table->time('start_time_task');
-            $table->time('end_time_task');
-            $table->integer('task_hours_worked');
+            $table->time('start_time')->unique();
+            $table->time('end_time');
+            $table->integer('hours_worked');
+            $table->string('notes');
             $table->timestamps();
         });
 
@@ -27,8 +28,8 @@ class Task extends Migration
          * create foreign key to the task table
          */
         Schema::table('task', function (Blueprint $table) {
-            $table->integer('time_card_id')->unsigned();
-            $table->foreign('time_card_id')->references('id')->on('time_card');
+            $table->integer('time_card_id')->unsigned()->nullable();
+            $table->foreign('time_card_id')->references('id')->on('time_card')->nullable();
         });
     }
 
