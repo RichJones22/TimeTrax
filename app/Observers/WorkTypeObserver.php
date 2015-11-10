@@ -6,6 +6,7 @@ namespace App\Observers;
  * Date: 11/8/15
  * Time: 3:55 PM
  */
+use \App\Helpers\appGlobals;
 class WorkTypeObserver
 {
     /**
@@ -13,6 +14,6 @@ class WorkTypeObserver
      * @param $project
      */
     public function created($workType) {
-        createdMessage(workTypeTableName(), $workType->type,$workType->id);
+        appGlobals::createdMessage(appGlobals::getWorkTypeTableName(), $workType->type, $workType->id);
     }
 }

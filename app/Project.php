@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use \App\Helpers\appGlobals;
 
 
 class Project extends Model
@@ -29,7 +30,7 @@ class Project extends Model
         $project = Project::where('name', '=', $text)->first();
 
         if (!is_null($project)) {
-            existsMessage($project->table, $project->name, $project->id);
+            appGlobals::existsMessage(appGlobals::getProjectTableName(), $project->name, $project->id);
         }
 
         return $project;

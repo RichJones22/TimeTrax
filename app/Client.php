@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-//require_once(__DIR__ . '/Helpers/Helper.php');
+use \App\Helpers\appGlobals;
 
 class Client extends Model
 {
@@ -29,7 +29,7 @@ class Client extends Model
         $client = Client::where('name', '=', $text)->first();
 
         if (!is_null($client)) {
-            existsMessage($client->table, $client->name, $client->id);
+            appGlobals::existsMessage(appGlobals::getClientTableName(), $client->name, $client->id);
         }
 
         return $client;

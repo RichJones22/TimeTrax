@@ -6,6 +6,7 @@ namespace App\Observers;
  * Date: 11/8/15
  * Time: 11:49 AM
  */
+use \App\Helpers\appGlobals;
 
 class ProjectObserver
 {
@@ -14,6 +15,6 @@ class ProjectObserver
      * @param $project
      */
     public function created($project) {
-        createdMessage(projectTableName(), $project->name ,$project->id);
+        appGlobals::createdMessage(appGlobals::getProjectTableName(), $project->name , $project->id);
     }
 }

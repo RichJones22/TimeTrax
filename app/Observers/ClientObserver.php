@@ -7,6 +7,8 @@ namespace App\Observers;
  * Time: 1:05 PM
  */
 
+use \App\Helpers\appGlobals;
+
 class ClientObserver
 {
     /**
@@ -14,7 +16,7 @@ class ClientObserver
      * @param $project
      */
     public function created($client) {
-        createdMessage(clientTableName(), $client->name ,$client->id);
+        appGlobals::createdMessage(appGlobals::getClientTableName(), $client->name , $client->id);
     }
 
 }

@@ -96,18 +96,18 @@ Route::get('create_data', function() {
 
         $workType->save();
     }
-//
-//    $type = 'Feature';
-//    if (is_null($project = WorkType::checkIfExists($type))) {
-//
-//        // get $client->id
-//        $client = Client::where('name', '=', 'Kendra Scott')->first();
-//
-//        $workType = new Worktype;
-//
-//        $workType->type = $type;
-//        $workType->client_id = $client->id;
-//
-//        $workType->save();
-//    }
+
+    $type = 'Feature';
+    if (is_null($project = WorkType::checkIfExists($type))) {
+
+        // get $client->id
+        $client = Client::where('name', '=', 'Kendra Scott')->first();
+
+        $workType = new Worktype;
+
+        $workType->type = $type;
+        $workType->client_id = $client->id;
+
+        $workType->save();
+    }
 });

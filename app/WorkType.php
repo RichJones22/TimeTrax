@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use \App\Helpers\appGlobals;
 
 class WorkType extends Model
 {
@@ -28,7 +29,7 @@ class WorkType extends Model
         $workType = WorkType::where('type', '=', $text)->first();
 
         if (!is_null($workType)) {
-            existsMessage($workType->table, $workType->type, $workType->id);
+            appGlobals::existsMessage(appGlobals::getWorkTypeTableName(), $workType->type, $workType->id);
         }
 
         return $workType;
