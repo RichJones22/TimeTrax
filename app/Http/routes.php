@@ -4,6 +4,7 @@ use \App\Client;
 use \App\Project;
 use \App\WorkType;
 use \App\TimeCardFormat;
+use \App\Work;
 
 /*
 |--------------------------------------------------------------------------
@@ -124,16 +125,38 @@ Route::get('create_data', function() {
         $timeCardFormat = new Timecardformat;
 
         $timeCardFormat->description = $description;
-        $timeCardFormat->dow_01 = "SAT";
+        $timeCardFormat->dow_01 = "SUN";
         $timeCardFormat->dow_02 = "MON";
         $timeCardFormat->dow_03 = "TUE";
         $timeCardFormat->dow_04 = "WED";
         $timeCardFormat->dow_05 = "THU";
         $timeCardFormat->dow_06 = "FRI";
-        $timeCardFormat->dow_07 = "SUN";
+        $timeCardFormat->dow_07 = "SAT";
 
         $timeCardFormat->client_id = $client->id;
 
         $timeCardFormat->save();
+    }
+
+    /*******************************************************************************************************************
+     * work insert(s)
+     ******************************************************************************************************************/
+    $description = 'This thing does not work right.';
+    if (is_null($work = Work::checkIfExists($description))) {
+
+        // get $project->id
+        $project = Project::where('name', '=', 'Magento Development')->first();
+
+        // get $project->id
+        $workType = WorkType::where('type', '=', 'Defect')->first();
+
+        $work = new Work;
+
+        $work->work_type_description = $description;
+
+        $work->project_id = $project->id;
+        $work->work_type_id = $workType->id;
+
+        $work->save();
     }
 });
