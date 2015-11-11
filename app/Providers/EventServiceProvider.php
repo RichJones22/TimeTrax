@@ -8,9 +8,11 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 use \App\Project;
 use \App\Client;
 use \App\WorkType;
+use \App\TimeCardFormat;
 use \App\Observers\ProjectObserver;
 use \App\Observers\ClientObserver;
 use \App\Observers\WorkTypeObserver;
+use \App\Observers\TimeCardFormatObserver;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -41,5 +43,7 @@ class EventServiceProvider extends ServiceProvider
         Project::observe(new ProjectObserver);
         // register the WorkTypeObserver class.
         WorkType::observe(new WorkTypeObserver);
+        // register the TimeCardFormatObserver class.
+        TimeCardFormat::observe(new TimeCardFormatObserver);
     }
 }

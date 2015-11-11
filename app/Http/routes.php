@@ -3,6 +3,7 @@
 use \App\Client;
 use \App\Project;
 use \App\WorkType;
+use \App\TimeCardFormat;
 
 /*
 |--------------------------------------------------------------------------
@@ -109,5 +110,30 @@ Route::get('create_data', function() {
         $workType->client_id = $client->id;
 
         $workType->save();
+    }
+
+    /*******************************************************************************************************************
+     * time_card_format insert(s)
+     ******************************************************************************************************************/
+    $description = 'Day of week starts on SAT and ends on SUN';
+    if (is_null($timeCardFormat = TimeCardFormat::checkIfExists($description))) {
+
+        // get $client->id
+        $client = Client::where('name', '=', 'Kendra Scott')->first();
+
+        $timeCardFormat = new Timecardformat;
+
+        $timeCardFormat->description = $description;
+        $timeCardFormat->dow_01 = "SAT";
+        $timeCardFormat->dow_02 = "MON";
+        $timeCardFormat->dow_03 = "TUE";
+        $timeCardFormat->dow_04 = "WED";
+        $timeCardFormat->dow_05 = "THU";
+        $timeCardFormat->dow_06 = "FRI";
+        $timeCardFormat->dow_07 = "SUN";
+
+        $timeCardFormat->client_id = $client->id;
+
+        $timeCardFormat->save();
     }
 });
