@@ -19,7 +19,12 @@ $myArray['THU'] = 3.0;
 $myArray['FRI'] = 2.0;
 $myArray['SAT'] = 10.0;
 
-
+$i=0;
 foreach ($myArray as $day => $key) {
-    print("Day is $day, value of day is $key \n");
+    print("Day $i is $day with a value of $key \n");
+    $i++;
 }
+
+//for ($i=0; $i<sizeof($myArray); $i++) {
+//    print("Day $i is $day with a value of $myArray[$i] \n");
+//}

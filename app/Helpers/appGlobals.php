@@ -10,9 +10,10 @@ namespace app\Helpers;
 
 use \App\Client;
 use \App\Project;
-use App\TimeCardFormat;
+use \App\TimeCardFormat;
 use \App\WorkType;
 use \App\Work;
+use \App\TimeCard;
 
 
 class appGlobals
@@ -22,6 +23,7 @@ class appGlobals
     static protected $workTypeTableName;
     static protected $timeCardFormatTableName;
     static protected $workTableName;
+    static protected $timeCardTableName;
 
     public function __construct() {
         self::$clientTableName = with(new Client)->getTable();
@@ -29,6 +31,7 @@ class appGlobals
         self::$workTypeTableName = with(new WorkType)->getTable();
         self::$timeCardFormatTableName = with(new TimeCardFormat)->getTable();
         self::$workTableName = with(new Work)->getTable();
+        self::$timeCardTableName = with(new TimeCard)->getTable();
     }
 
     static public function getClientTableName() {
@@ -49,6 +52,10 @@ class appGlobals
 
     static public function getWorkTableName() {
         return self::$workTableName;
+    }
+
+    static public function getTimeCardTableName() {
+        return self::$timeCardTableName;
     }
 
     static public function existsMessage($table, $text, $key) {

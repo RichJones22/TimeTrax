@@ -10,11 +10,13 @@ use \App\Client;
 use \App\WorkType;
 use \App\TimeCardFormat;
 use \App\Work;
+use \App\TimeCard;
 use \App\Observers\ProjectObserver;
 use \App\Observers\ClientObserver;
 use \App\Observers\WorkTypeObserver;
 use \App\Observers\TimeCardFormatObserver;
 use \App\Observers\WorkObserver;
+use \App\Observers\TimeCardObserver;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -49,5 +51,7 @@ class EventServiceProvider extends ServiceProvider
         TimeCardFormat::observe(new TimeCardFormatObserver);
         // register the WorkObserver class.
         Work::observe(new WorkObserver);
+        // register the TimeCardObserver class.
+        TimeCard::observe(new TimeCardObserver);
     }
 }

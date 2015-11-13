@@ -5,6 +5,7 @@ use \App\Project;
 use \App\WorkType;
 use \App\TimeCardFormat;
 use \App\Work;
+use \App\TimeCard;
 
 /*
 |--------------------------------------------------------------------------
@@ -158,5 +159,29 @@ Route::get('create_data', function() {
         $work->work_type_id = $workType->id;
 
         $work->save();
+    }
+
+    /*******************************************************************************************************************
+     * time_card insert(s)
+     ******************************************************************************************************************/
+    $date = '2015-11-12';
+    if (is_null($timeCard = TimeCard::checkIfExists($date))) {
+
+        // get $$timeCardFormat->id
+        $timeCardFormat = Work::where('work_type_description', '=', 'This thing does not work right.')->first();
+
+        // get $workType->id
+        $workType = TimeCardFormat::where('description', '=', 'Day of week starts on SAT and ends on SUN')->first();
+
+        $timeCard = new TimeCard;
+
+        $timeCard->date_worked = $date;
+        $timeCard->dow = "THU";
+        $timeCard->total_hours_worked = 8.0;
+
+        $timeCard->time_card_format_id = $timeCardFormat->id;
+        $timeCard->work_id = $workType->id;
+
+        $timeCard->save();
     }
 });
