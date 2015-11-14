@@ -19,8 +19,8 @@ class Task extends Migration
             $table->increments('id');
             $table->time('start_time')->unique();
             $table->time('end_time');
-            $table->integer('hours_worked');
-            $table->string('notes');
+            $table->float('hours_worked');
+            $table->string('notes')->nullable();
             $table->timestamps();
         });
 

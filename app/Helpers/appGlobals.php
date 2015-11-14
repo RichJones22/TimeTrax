@@ -15,6 +15,7 @@ use \App\WorkType;
 use \App\Work;
 use \App\TimeCard;
 use \App\TaskType;
+use \App\Task;
 
 
 class appGlobals
@@ -26,6 +27,7 @@ class appGlobals
     static protected $workTableName;
     static protected $timeCardTableName;
     static protected $timeTaskTypeTableName;
+    static protected $timeTaskTableName;
 
     public function __construct() {
         self::$clientTableName = with(new Client)->getTable();
@@ -35,6 +37,7 @@ class appGlobals
         self::$workTableName = with(new Work)->getTable();
         self::$timeCardTableName = with(new TimeCard)->getTable();
         self::$timeTaskTypeTableName = with(new TaskType)->getTable();
+        self::$timeTaskTableName = with(new Task)->getTable();
     }
 
     static public function getClientTableName() {
@@ -63,6 +66,10 @@ class appGlobals
 
     static public function getTaskTypeTableName() {
         return self::$timeTaskTypeTableName;
+    }
+
+    static public function getTaskTableName() {
+        return self::$timeTaskTableName;
     }
 
     static public function existsMessage($table, $text, $key) {

@@ -7,6 +7,7 @@ use \App\TimeCardFormat;
 use \App\Work;
 use \App\TimeCard;
 use \App\TaskType;
+use \App\Task;
 
 /*
 |--------------------------------------------------------------------------
@@ -320,5 +321,59 @@ Route::get('create_data', function() {
 
         $taskType->save();
     }
+
+    /*******************************************************************************************************************
+     * task insert(s)
+     ******************************************************************************************************************/
+    $startTime = '07:00:00';
+    $endTime = '11:30:00';
+    $hoursWorked = 3.5;
+    $notes = "worked defect number 127068";
+    if (is_null($task = Task::checkIfExists($startTime))) {
+
+        // get $taskType->id
+        $taskType = TaskType::where('type', '=', 'Code')->first();
+
+        // get $timeCard->id
+        $timeCard = TimeCard::where('date_worked', '=', '2015-11-12')->first();
+
+        $task = new Task;
+
+        $task->start_time = $startTime;
+        $task->end_time = $endTime;
+        $task->hours_worked = $hoursWorked;
+        $task->notes = $notes;
+
+        $task->task_type_id = $taskType->id;
+        $task->time_card_id = $timeCard->id;
+
+        $task->save();
+    }
+
+    $startTime = '12:00:00';
+    $endTime = '17:00:00';
+    $hoursWorked = 5.00;
+    $notes = "worked defect number 127068";
+    if (is_null($task = Task::checkIfExists($startTime))) {
+
+        // get $taskType->id
+        $taskType = TaskType::where('type', '=', 'Code')->first();
+
+        // get $timeCard->id
+        $timeCard = TimeCard::where('date_worked', '=', '2015-11-12')->first();
+
+        $task = new Task;
+
+        $task->start_time = $startTime;
+        $task->end_time = $endTime;
+        $task->hours_worked = $hoursWorked;
+        $task->notes = $notes;
+
+        $task->task_type_id = $taskType->id;
+        $task->time_card_id = $timeCard->id;
+
+        $task->save();
+    }
+
 
 });
