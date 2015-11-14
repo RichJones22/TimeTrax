@@ -11,12 +11,14 @@ use \App\WorkType;
 use \App\TimeCardFormat;
 use \App\Work;
 use \App\TimeCard;
+use \App\TaskType;
 use \App\Observers\ProjectObserver;
 use \App\Observers\ClientObserver;
 use \App\Observers\WorkTypeObserver;
 use \App\Observers\TimeCardFormatObserver;
 use \App\Observers\WorkObserver;
 use \App\Observers\TimeCardObserver;
+use \App\Observers\TaskTypeObserver;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -53,5 +55,7 @@ class EventServiceProvider extends ServiceProvider
         Work::observe(new WorkObserver);
         // register the TimeCardObserver class.
         TimeCard::observe(new TimeCardObserver);
+        // register the TaskTypeObserver class.
+        TaskType::observe(new TaskTypeObserver);
     }
 }

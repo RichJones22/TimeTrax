@@ -6,6 +6,7 @@ use \App\WorkType;
 use \App\TimeCardFormat;
 use \App\Work;
 use \App\TimeCard;
+use \App\TaskType;
 
 /*
 |--------------------------------------------------------------------------
@@ -167,11 +168,11 @@ Route::get('create_data', function() {
     $date = '2015-11-12';
     if (is_null($timeCard = TimeCard::checkIfExists($date))) {
 
-        // get $$timeCardFormat->id
-        $timeCardFormat = Work::where('work_type_description', '=', 'This thing does not work right.')->first();
+        // get $work->id
+        $work = Work::where('work_type_description', '=', 'This thing does not work right.')->first();
 
-        // get $workType->id
-        $workType = TimeCardFormat::where('description', '=', 'Day of week starts on SAT and ends on SUN')->first();
+        // get $timeCardFormat->id
+        $timeCardFormat = TimeCardFormat::where('description', '=', 'Day of week starts on SAT and ends on SUN')->first();
 
         $timeCard = new TimeCard;
 
@@ -180,8 +181,144 @@ Route::get('create_data', function() {
         $timeCard->total_hours_worked = 8.0;
 
         $timeCard->time_card_format_id = $timeCardFormat->id;
-        $timeCard->work_id = $workType->id;
+        $timeCard->work_id = $work->id;
 
         $timeCard->save();
     }
+
+    $date = '2015-11-13';
+    if (is_null($timeCard = TimeCard::checkIfExists($date))) {
+
+        // get $work->id
+        $work = Work::where('work_type_description', '=', 'This thing does not work right.')->first();
+
+        // get $timeCardFormat->id
+        $timeCardFormat = TimeCardFormat::where('description', '=', 'Day of week starts on SAT and ends on SUN')->first();
+
+        $timeCard = new TimeCard;
+
+        $timeCard->date_worked = $date;
+        $timeCard->dow = "FRI";
+        $timeCard->total_hours_worked = 8.0;
+
+        $timeCard->time_card_format_id = $timeCardFormat->id;
+        $timeCard->work_id = $work->id;
+
+        $timeCard->save();
+    }
+
+    $date = '2015-11-16';
+    if (is_null($timeCard = TimeCard::checkIfExists($date))) {
+
+        // get $work->id
+        $work = Work::where('work_type_description', '=', 'This thing does not work right.')->first();
+
+        // get $timeCardFormat->id
+        $timeCardFormat = TimeCardFormat::where('description', '=', 'Day of week starts on SAT and ends on SUN')->first();
+
+        $timeCard = new TimeCard;
+
+        $timeCard->date_worked = $date;
+        $timeCard->dow = "MON";
+        $timeCard->total_hours_worked = 8.0;
+
+        $timeCard->time_card_format_id = $timeCardFormat->id;
+        $timeCard->work_id = $work->id;
+
+        $timeCard->save();
+    }
+
+    $date = '2015-11-17';
+    if (is_null($timeCard = TimeCard::checkIfExists($date))) {
+
+        // get $work->id
+        $work = Work::where('work_type_description', '=', 'This thing does not work right.')->first();
+
+        // get $timeCardFormat->id
+        $timeCardFormat = TimeCardFormat::where('description', '=', 'Day of week starts on SAT and ends on SUN')->first();
+
+        $timeCard = new TimeCard;
+
+        $timeCard->date_worked = $date;
+        $timeCard->dow = "TUE";
+        $timeCard->total_hours_worked = 8.0;
+
+        $timeCard->time_card_format_id = $timeCardFormat->id;
+        $timeCard->work_id = $work->id;
+
+        $timeCard->save();
+    }
+
+    $date = '2015-11-18';
+    if (is_null($timeCard = TimeCard::checkIfExists($date))) {
+
+        // get $work->id
+        $work = Work::where('work_type_description', '=', 'This thing does not work right.')->first();
+
+        // get $timeCardFormat->id
+        $timeCardFormat = TimeCardFormat::where('description', '=', 'Day of week starts on SAT and ends on SUN')->first();
+
+        $timeCard = new TimeCard;
+
+        $timeCard->date_worked = $date;
+        $timeCard->dow = "WED";
+        $timeCard->total_hours_worked = 8.0;
+
+        $timeCard->time_card_format_id = $timeCardFormat->id;
+        $timeCard->work_id = $work->id;
+
+        $timeCard->save();
+    }
+
+    /*******************************************************************************************************************
+     * task_type insert(s)
+     ******************************************************************************************************************/
+    $type = 'Code';
+    $description = 'Type for coding tasks';
+    if (is_null($taskType = TaskType::checkIfExists($type))) {
+
+        $taskType = new TaskType;
+
+        $taskType->type = $type;
+        $taskType->description = $description;
+
+        $taskType->save();
+    }
+
+    $type = 'Test';
+    $description = 'Type for testing tasks';
+    if (is_null($taskType = TaskType::checkIfExists($type))) {
+
+        $taskType = new TaskType;
+
+        $taskType->type = $type;
+        $taskType->description = $description;
+
+        $taskType->save();
+    }
+
+    $type = 'Deployment';
+    $description = 'Type for deployment tasks';
+    if (is_null($taskType = TaskType::checkIfExists($type))) {
+
+        $taskType = new TaskType;
+
+        $taskType->type = $type;
+        $taskType->description = $description;
+
+        $taskType->save();
+    }
+
+    $type = 'Analysis';
+    $description = 'Type for Analyzing tasks';
+    if (is_null($taskType = TaskType::checkIfExists($type))) {
+
+        $taskType = new TaskType;
+
+        $taskType->type = $type;
+        $taskType->description = $description;
+
+        $taskType->save();
+    }
+
 });
