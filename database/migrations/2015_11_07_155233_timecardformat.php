@@ -18,13 +18,13 @@ class Timecardformat extends Migration
         Schema::create('time_card_format', function(Blueprint $table){
             $table->increments('id');
             $table->string('description')->unique();
+            $table->char('dow_00',10);
             $table->char('dow_01',10);
             $table->char('dow_02',10);
             $table->char('dow_03',10);
             $table->char('dow_04',10);
             $table->char('dow_05',10);
             $table->char('dow_06',10);
-            $table->char('dow_07',10);
             $table->timestamps();
         });
 

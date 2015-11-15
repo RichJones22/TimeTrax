@@ -1,5 +1,7 @@
 <?php
 
+use \App\Helpers\appGlobals;
+
 use \App\Client;
 use \App\Project;
 use \App\WorkType;
@@ -128,13 +130,13 @@ Route::get('create_data', function() {
         $timeCardFormat = new Timecardformat;
 
         $timeCardFormat->description = $description;
-        $timeCardFormat->dow_01 = "SUN";
-        $timeCardFormat->dow_02 = "MON";
-        $timeCardFormat->dow_03 = "TUE";
-        $timeCardFormat->dow_04 = "WED";
-        $timeCardFormat->dow_05 = "THU";
-        $timeCardFormat->dow_06 = "FRI";
-        $timeCardFormat->dow_07 = "SAT";
+        $timeCardFormat->dow_00 = "SUN";
+        $timeCardFormat->dow_01 = "MON";
+        $timeCardFormat->dow_02 = "TUE";
+        $timeCardFormat->dow_03 = "WED";
+        $timeCardFormat->dow_04 = "THU";
+        $timeCardFormat->dow_05 = "FRI";
+        $timeCardFormat->dow_06 = "SAT";
 
         $timeCardFormat->client_id = $client->id;
 
@@ -374,6 +376,27 @@ Route::get('create_data', function() {
 
         $task->save();
     }
+});
 
+/**
+ * prototyping...
+ */
+Route::get('play', function() {
+
+    $myArray['SUN'] = 0.0;
+    $myArray['MON'] = 0.0;
+    $myArray['TUE'] = 5.0;
+    $myArray['WED'] = 0.0;
+    $myArray['THU'] = 3.0;
+    $myArray['FRI'] = 2.0;
+    $myArray['SAT'] = 10.0;
+
+    $description = 'Day of week starts on SAT and ends on SUN';
+    $timeCardFormat = TimeCardFormat::where('description', '=', $description)->first();
+
+    for ($j = 0; $j < appGlobals::DAYS_IN_WEEK_NUM; $j++) {
+        $pos = $timeCardFormat->{"dow_0" . $j};
+        echo "For $pos the hours worked are: " . $myArray[$pos]  . "<br>";
+    }
 
 });

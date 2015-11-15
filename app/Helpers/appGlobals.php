@@ -20,6 +20,8 @@ use \App\Task;
 
 class appGlobals
 {
+    const DAYS_IN_WEEK_NUM = 7;
+
     static protected $clientTableName;
     static protected $projectTableName;
     static protected $workTypeTableName;
