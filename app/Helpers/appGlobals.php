@@ -7,6 +7,7 @@
  */
 
 namespace app\Helpers;
+use \Illuminate\Database\QueryException;
 
 use \App\Client;
 use \App\Project;
@@ -16,11 +17,13 @@ use \App\Work;
 use \App\TimeCard;
 use \App\TaskType;
 use \App\Task;
+use Mockery\Exception;
 
 
 class appGlobals
 {
     const DAYS_IN_WEEK_NUM = 7;
+    const TBL_TASK_START_TIME_GT_END_TIME = '45001';
 
     static protected $clientTableName;
     static protected $projectTableName;
@@ -80,6 +83,14 @@ class appGlobals
 
     static public function createdMessage($table, $text, $key) {
         echo $table . ": " . "'" . $text . "'" . " with key of " . $key . ' created.<br>';
+    }
+
+    static public function reportError(QueryException $e, $file, $line) {
+        echo "error code ". $e->getCode() . " found at line: " . $line . "<br>";
+        echo "in file: " . $file . "<br>";
+        echo "with message: ". "<br>";
+        echo $e->getMessage();
+        //var_dump($e);
     }
 }
 

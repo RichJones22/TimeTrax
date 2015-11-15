@@ -1,6 +1,7 @@
 <?php
 
 use \App\Helpers\appGlobals;
+use \Illuminate\Database\QueryException;
 
 use \App\Client;
 use \App\Project;
@@ -399,4 +400,38 @@ Route::get('play', function() {
         echo "For $pos the hours worked are: " . $myArray[$pos]  . "<br>";
     }
 
+});
+
+Route::get('task_fail', function() {
+
+    $startTime = '17:00:00';
+    $endTime = '12:00:00';
+    $hoursWorked = 5.00;
+    $notes = "error testing";
+    if (is_null($task = Task::checkIfExists($startTime))) {
+
+        // get $taskType->id
+        $taskType = TaskType::where('type', '=', 'Code')->first();
+
+        // get $timeCard->id
+        $timeCard = TimeCard::where('date_worked', '=', '2015-11-12')->first();
+
+        $task = new Task;
+
+        $task->start_time = $startTime;
+        $task->end_time = $endTime;
+        $task->hours_worked = $hoursWorked;
+        $task->notes = $notes;
+
+        $task->task_type_id = $taskType->id;
+        $task->time_card_id = $timeCard->id;
+
+        try {
+            $task->save();
+        } catch (QueryException $e) {
+            if ($e->getCode() == appGlobals::TBL_TASK_START_TIME_GT_END_TIME) {
+                appGlobals::reportError($e, __FILE__, __LINE__);
+            }
+        }
+    }
 });
