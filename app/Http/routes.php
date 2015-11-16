@@ -36,8 +36,6 @@ Route::get('/', function () {
 });
 
 
-
-
 /**
  * creating records
  */
@@ -435,3 +433,54 @@ Route::get('task_fail', function() {
         }
     }
 });
+
+Route::get('get_all_clients', function() {
+
+    $sessionData = Session::get('clients');
+
+    if (!$sessionData) {
+        echo "client session data was reset..." . "<br>";
+
+        $clients = Client::all();
+
+        foreach($clients as $client) {
+            $data[] = ['id' => $client->id, 'text' => $client->name];
+        }
+
+        Session::set('clients', $data);
+
+        $sessionData = Session::get('clients');
+    }
+
+    return $sessionData;
+
+});
+
+Route::get('unset_all_clients', function() {
+
+    Session::forget('clients');
+
+});
+
+Route::get('get_all_tasks', function() {
+
+    $sessionData = Session::get(appGlobals::getTaskTypeTableName());
+
+    if (!$sessionData) {
+        echo "task session data was reset..." . "<br>";
+
+        $tasks = TaskType::all();
+
+        foreach($tasks as $task) {
+            $data[] = ['id' => $task->id, 'text' => $task->type];
+        }
+
+        Session::set(appGlobals::getTaskTypeTableName(), $data);
+
+        $sessionData = Session::get(appGlobals::getTaskTypeTableName());
+    }
+
+    return $sessionData;
+
+});
+
