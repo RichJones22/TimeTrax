@@ -29,4 +29,12 @@ class TimeCard extends Model
 
         return $timeCard;
     }
+
+    /**
+     * Eager load Task model.
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function task() {
+        return $this->hasMany('\App\Task');
+    }
 }

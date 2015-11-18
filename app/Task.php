@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use \App\Helpers\appGlobals;
 
+
 class Task extends Model
 {
     /**
@@ -29,5 +30,21 @@ class Task extends Model
         }
 
         return $task;
+    }
+
+    /**
+     * Eager load the TimeCard model.
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function timeCard() {
+        return $this->belongsTo('\App\TimeCard');
+    }
+
+    /**
+     * Eager load the TaskType model.
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function taskType() {
+        return $this->belongsTo('\App\TaskType');
     }
 }

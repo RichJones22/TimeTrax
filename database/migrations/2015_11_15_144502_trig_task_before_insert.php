@@ -27,7 +27,7 @@ class TrigTaskBeforeInsert extends Migration
         DB::unprepared("
         CREATE TRIGGER tr_update_endTime_gt_startTime
         BEFORE UPDATE
-        ON task FOR EACH ROW
+        ON task FOR EACH ROW " . "
         BEGIN
             IF (NEW.start_time > NEW.end_time) THEN
                 SIGNAL SQLSTATE '45001'

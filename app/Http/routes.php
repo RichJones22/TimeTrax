@@ -35,6 +35,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// route to task view.
+Route::get('task/show/{id}', ['as' => 'task.view', 'uses' => 'TaskController@show']);
+
 
 /**
  * creating records

@@ -28,4 +28,12 @@ class TaskType extends Model
 
         return $taskType;
     }
+
+    /**
+     * Eager load Task model.
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function task() {
+        return $this->hasMany('\App\Task');
+    }
 }
