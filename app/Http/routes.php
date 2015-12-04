@@ -36,7 +36,7 @@ Route::get('/', function () {
 });
 
 // route to task view.
-Route::get('task/show/{id}', ['as' => 'task.view', 'uses' => 'TaskController@show']);
+Route::get('task/show/{id}', 'TaskController@show');
 
 
 /**
@@ -475,7 +475,7 @@ Route::get('get_all_tasks', function() {
         $tasks = TaskType::all();
 
         foreach($tasks as $task) {
-            $data[] = ['id' => $task->id, 'text' => $task->type];
+            $data[] = ['id' => $task->id, 'type' => $task->type];
         }
 
         Session::set(appGlobals::getTaskTypeTableName(), $data);

@@ -60,7 +60,7 @@ class TaskController extends Controller
         $timeCard = TimeCard::where('id', '=', $id)->get();
 
         // pass the data to the view.
-        view('tasks.view')
+        return view('pages.userTaskView')
             ->with('tasks', $tasks)
             ->with('timeCard', $timeCard);
     }
