@@ -470,8 +470,6 @@ Route::get('get_all_tasks', function() {
     $sessionData = Session::get(appGlobals::getTaskTypeTableName());
 
     if (!$sessionData) {
-        echo "task session data was reset..." . "<br>";
-
         $tasks = TaskType::all();
 
         foreach($tasks as $task) {

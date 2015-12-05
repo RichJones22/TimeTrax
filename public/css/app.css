@@ -8299,3 +8299,7 @@ button.close {
     display: none !important;
   }
 }
+
+.table-header-colors {
+  background-color: darkgray;
+}
