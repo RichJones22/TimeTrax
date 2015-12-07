@@ -1,13 +1,17 @@
 @extends('pages.userMainView')
 
+<?php
+    use \Carbon\Carbon;
+?>
+
 @section('content')
 
     <div style="margin: 40px;">
-        <table class="table table-striped table-bordered">
+        <table class="table table-hover table-bordered">
 
             <thead>
                 <tr style="background-color: darkgray;">
-                    <th colspan="5" class="text-center">{{$timeCard[0]->date_worked}}</th>
+                    <th colspan="5" class="text-center">{{(new Carbon($timeCard[0]->date_worked))->toFormattedDateString()}}</th>
                 </tr>
                 <tr style="background-color: darkgray;">
                     <th>Type</th>
@@ -16,23 +20,23 @@
                     <th>Hours Worked</th>
                     <th>Notes</th>
                 </tr>
-                <form class="form-inline">
+                <form>
                     <input hidden type="text" name="_token" value="{{ csrf_token() }}">
-                    <div class="form-group">
+                    <div>
                         <tr class="info">
                             <th>
-                                <select id="taskType">
+                                <select id="taskType" class="form-control col-xs-12">
                                     <option value="0">--Select Type--</option>
                                 </select>
                             </th>
-                            <th><input type="startt" class="form-control" id="startt" placeholder="start"></th>
-                            <th><input type="endt" class="form-control" id="endt" placeholder="end"></th>
-                            <th></th>
+                            <th><input class="form-control" id="startt-search" placeholder="start"></th>
+                            <th><input class="form-control" id="endt" placeholder="end"></th>
+                            <th><input disabled type="text" class="form-control" id="hoursWorked"></th>
                             <th>
-                                <div style="display: inline-block">
+                                <div class="col-xs-9" style="display: inline-block;">
                                     <input type="notes" class="form-control" id="notes" placeholder="notes">
                                 </div>
-                                <button type="submit" class="btn btn-primary">Add</button>
+                                <button type="submit" class="btn btn-primary col-xs-3" style="float: right">Save</button>
                             </th>
                         </tr>
                     </div>
