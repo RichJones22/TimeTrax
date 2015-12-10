@@ -6,7 +6,7 @@
 
 @section('content')
 
-    <div style="margin: 40px;">
+    <div style="margin: 60px;">
         <table class="table table-hover table-bordered">
 
             <thead>
@@ -43,12 +43,12 @@
                 </form>
             </thead>
 
-            <tbody>
+            <tbody id="taskTable">
                 @foreach ($tasks as $task)
                     <tr>
                         <td>{{ $task->TaskType->type }}</td>
-                        <td>{{ $task->start_time }}</td>
-                        <td>{{ $task->end_time }}</td>
+                        <td>{{ (new Carbon($task->start_time))->format('H:i') }}</td>
+                        <td>{{ (new Carbon($task->end_time))->format('H:i') }}</td>
                         <td>{{ $task->hours_worked }}</td>
                         <td>{{ $task->notes }}</td>
                     </tr>

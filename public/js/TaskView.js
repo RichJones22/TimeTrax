@@ -5,7 +5,6 @@ $(document).ready(function(){
         return (this.length === 0 || !this.trim());
     };
 
-    // populate the type drop-down box on the Task View.
     TaskType();
     isValidHourMinute();
     getStartTime();
@@ -14,11 +13,13 @@ $(document).ready(function(){
     loseFocusOnEndTime();
     loseFocusOnTaskType();
     enabledDisabledSaveButton();
+    //checkForStartTimeOverlaps();
+    //checkForTimeOverlaps();
 
 });
 
 // SaveButton class to save state of required input fields.
-function SaveButton(type,startt,endt) {
+function SaveButton(type, startt, endt) {
     this.type = type;
     this.startt = startt;
     this.endt = endt;
@@ -50,7 +51,6 @@ SaveButton.prototype.isReady = function() {
 };
 
 var saveButton = new SaveButton(false,false,false);
-
 
 // populate the type drop-down box on the Task View.
 function TaskType() {
@@ -105,21 +105,16 @@ function getEndTime() {
 // calculate hours worked and populate the hours worked cell.
 function loseFocusOnEndTime() {
     $("#endt").focusout(function(){
-
-        /**
-         *  parse start and end times
-         * @type {*|jQuery}
-         */
         var t1Str = $('#startt-search').text($(this)).val();
         var t1 = t1Str.split(':');
 
         var t2Str = $('#endt').text($(this)).val();
-        if (!isValidHourMinute(t2Str)) {
-            $('#endt').focus();
+        if (!isValidHourMinute(t2Str) && !t2Str.isEmpty()) {
             $('#endt').css('background-color', 'pink');
 
             saveButton.setEndt(false);
             enabledDisabledSaveButton();
+            $('#hoursWorked').val("");
 
             return;
         }
@@ -131,21 +126,30 @@ function loseFocusOnEndTime() {
         }
         var t2 = t2Str.split(':');
 
+        if (!t2Str.isEmpty() && !checkForEndTimeOverlaps()) {
+            saveButton.setEndt(false);
+            enabledDisabledSaveButton();
+            $('#hoursWorked').val("");
+            return;
+        }
+
         if (!t1Str.isEmpty() && !t2Str.isEmpty()) {
             var beginningTime = moment({H: t1[0], s: t1[1]});
             var endTime = moment({H: t2[0], s: t2[1]});
             if (!beginningTime.isBefore(endTime)) {
-                $('#endt').focus();
                 $('#endt').css('background-color', 'pink');
 
                 saveButton.setEndt(false);
                 enabledDisabledSaveButton();
+                $('#hoursWorked').val("");
 
                 return;
             }
             else {
+                $('#startt-search').css('background-color', 'white');
                 $('#endt').css('background-color', 'white');
 
+                saveButton.setStartt(true);
                 saveButton.setEndt(true);
                 enabledDisabledSaveButton();
             }
@@ -163,12 +167,12 @@ function loseFocusOnEndTime() {
 function loseFocusOnStartTime() {
     $("#startt-search").focusout(function(){
         var t1Str = $('#startt-search').text($(this)).val();
-        if (!isValidHourMinute(t1Str)) {
-            $('#startt-search').focus();
+        if (!isValidHourMinute(t1Str) && !t1Str.isEmpty()) {
             $('#startt-search').css('background-color', 'pink');
 
             saveButton.setStartt(false);
             enabledDisabledSaveButton();
+            $('#hoursWorked').val("");
 
             return;
         }
@@ -180,28 +184,35 @@ function loseFocusOnStartTime() {
         }
         var t1 = t1Str.split(':');
 
+        if (!t1Str.isEmpty() && !checkForStartTimeOverlaps()) {
+            saveButton.setStartt(false);
+            enabledDisabledSaveButton();
+            $('#hoursWorked').val("");
+            return;
+        }
+
+
         var t2Str = $('#endt').text($(this)).val();
         var t2 = t2Str.split(':');
 
-
-
         if (!t1Str.isEmpty() && !t2Str.isEmpty()) {
-
             var beginningTime = moment({H: t1[0], s: t1[1]});
             var endTime = moment({H: t2[0], s: t2[1]});
             if (!beginningTime.isBefore(endTime)) {
-                $('#startt-search').focus();
                 $('#startt-search').css('background-color', 'pink');
 
                 saveButton.setStartt(false);
                 enabledDisabledSaveButton();
+                $('#hoursWorked').val("");
 
                 return;
             }
             else {
                 $('#startt-search').css('background-color', 'white');
+                $('#endt').css('background-color', 'white');
 
                 saveButton.setStartt(true);
+                saveButton.setEndt(true);
                 enabledDisabledSaveButton();
             }
 
@@ -219,11 +230,11 @@ function loseFocusOnTaskType() {
     $("#taskType").change(function () {
         var v1 = Math.floor($('#taskType').val());
 
-        if (v1 !== 0) {
-            saveButton.setType(true);
+        if (v1 === 0) {
+            saveButton.setType(false);
             enabledDisabledSaveButton();
         } else {
-            saveButton.setType(false);
+            saveButton.setType(true);
             enabledDisabledSaveButton();
         }
     });
@@ -237,5 +248,70 @@ function enabledDisabledSaveButton() {
     }
 }
 
+function checkForStartTimeOverlaps() {
+
+    var table = document.getElementById("taskTable");
+    for (var i = 0, row; row = table.rows[i]; i++) {
+        var t1Str = $('#startt-search').text($(this)).val();
+        var t1 = t1Str.split(':');
+        var timeToCheck = moment({H: t1[0], s: t1[1]});
+
+        var t2Str = row.cells[1].innerHTML;
+        var t2 = t2Str.split(':');
+        var cellStartTime = moment({H: t2[0], s: t2[1]});
+
+        var t2Str = row.cells[2].innerHTML;
+        var t2 = t2Str.split(':');
+        var cellEndTime = moment({H: t2[0], s: t2[1]}).subtract(1, 'seconds');
+
+        if (!timeToCheck.isBefore(cellStartTime) && !timeToCheck.isAfter(cellEndTime)) {
+            $('#startt-search').css('background-color', 'pink');
+            row.cells[1].bgColor = 'pink';
+
+            return false;
+        } else {
+            $('#startt-search').css('background-color', 'white');
+            row.cells[1].bgColor = 'white';
+        }
+    }
+    saveButton.setStartt(true);
+    saveButton.setEndt(true);
+    enabledDisabledSaveButton();
+
+    return true;
+}
+
+function checkForEndTimeOverlaps() {
+
+    var table = document.getElementById("taskTable");
+    for (var i = 0, row; row = table.rows[i]; i++) {
+        var t1Str = $('#endt').text($(this)).val();
+        var t1 = t1Str.split(':');
+        var timeToCheck = moment({H: t1[0], s: t1[1]}).subtract(1, 'seconds');
+
+        var t2Str = row.cells[1].innerHTML;
+        var t2 = t2Str.split(':');
+        var cellStartTime = moment({H: t2[0], s: t2[1]});
+
+        var t2Str = row.cells[2].innerHTML;
+        var t2 = t2Str.split(':');
+        var cellEndTime = moment({H: t2[0], s: t2[1]});
+
+        if (!timeToCheck.isBefore(cellStartTime) && !timeToCheck.isAfter(cellEndTime)) {
+            $('#endt').css('background-color', 'pink');
+            row.cells[2].bgColor = 'pink';
+
+            return false;
+        } else {
+            $('#endt').css('background-color', 'white');
+            row.cells[2].bgColor = 'white';
+        }
+    }
+    saveButton.setStartt(true);
+    saveButton.setEndt(true);
+    enabledDisabledSaveButton();
+
+    return true;
+}
 
 //# sourceMappingURL=TaskView.js.map

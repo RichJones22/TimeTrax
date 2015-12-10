@@ -1,10 +1,8 @@
 List of ToDo's...
 
-1)  Finish styling the Task View.
-   a) next up:  code the type drop down box.
-      i)  I have the code for the dropdown box.
-      ii) Need to add in the javascript lib for the TaskView.js file.
-   b) code the date boxes.
-   c) code the add button.
-   d) code the edits and audits on the server side.
-   e) on error, code the client side behavior.
+1)  Finish styling/coding the Task View client behavior.
+   b) Put phpunit tests together for the Task View, before you refactor the TaskView.js lib.
+   a) Refactor TaskView.js.
+   b) Put phpunit tests together for the Task View, before you create the add button code.
+   c) Code the add button.
+   d) Style and code the delete button.
