@@ -1,5 +1,7 @@
 <?php
 
+use Laracasts\Integrated\Extensions\Laravel;
+
 class TestCase extends Illuminate\Foundation\Testing\TestCase
 {
     /**
@@ -7,7 +9,8 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
      *
      * @var string
      */
-    protected $baseUrl = 'http://localhost';
+//    protected $baseUrl = 'http://localhost';
+    protected $baseUrl = 'http://timetrax.dev';
 
     /**
      * Creates the application.

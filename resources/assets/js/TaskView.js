@@ -146,12 +146,14 @@ function loseFocusOnEndTime() {
                 return;
             }
             else {
-                $('#startt-search').css('background-color', 'white');
-                $('#endt').css('background-color', 'white');
+                if (!checkForEndTimeStartTimeOverlaps()) {
+                    $('#startt-search').css('background-color', 'white');
+                    $('#endt').css('background-color', 'white');
 
-                saveButton.setStartt(true);
-                saveButton.setEndt(true);
-                enabledDisabledSaveButton();
+                    saveButton.setStartt(true);
+                    saveButton.setEndt(true);
+                    enabledDisabledSaveButton();
+                }
             }
 
             var t1Min = Math.floor(t1[0]) *60 + Math.floor(t1[1]);
@@ -191,9 +193,12 @@ function loseFocusOnStartTime() {
             return;
         }
 
-
         var t2Str = $('#endt').text($(this)).val();
         var t2 = t2Str.split(':');
+
+        if (t1Str.isEmpty() && t2Str.isEmpty()) {
+            clearTaskTable();
+        }
 
         if (!t1Str.isEmpty() && !t2Str.isEmpty()) {
             var beginningTime = moment({H: t1[0], s: t1[1]});
@@ -266,12 +271,18 @@ function checkForStartTimeOverlaps() {
 
         if (!timeToCheck.isBefore(cellStartTime) && !timeToCheck.isAfter(cellEndTime)) {
             $('#startt-search').css('background-color', 'pink');
-            row.cells[1].bgColor = 'pink';
+            row.cells[1].style.color = "pink";
+            row.cells[1].style.fontWeight = 'bold';
+            row.cells[2].style.color = "pink";
+            row.cells[2].style.fontWeight = 'bold';
 
             return false;
         } else {
             $('#startt-search').css('background-color', 'white');
-            row.cells[1].bgColor = 'white';
+            row.cells[1].style.color = "pink";
+            row.cells[1].style.fontWeight = 'bold';
+            row.cells[2].style.color = "pink";
+            row.cells[2].style.fontWeight = 'bold';
         }
     }
     saveButton.setStartt(true);
@@ -299,13 +310,35 @@ function checkForEndTimeOverlaps() {
 
         if (!timeToCheck.isBefore(cellStartTime) && !timeToCheck.isAfter(cellEndTime)) {
             $('#endt').css('background-color', 'pink');
-            row.cells[2].bgColor = 'pink';
+            row.cells[1].style.color = "pink";
+            row.cells[1].style.fontWeight = 'bold';
+            row.cells[2].style.color = "pink";
+            row.cells[2].style.fontWeight = 'bold';
 
             return false;
         } else {
             $('#endt').css('background-color', 'white');
-            row.cells[2].bgColor = 'white';
+            row.cells[1].style.color = "black";
+            row.cells[1].style.fontWeight = 'normal';
+            row.cells[2].style.color = "black";
+            row.cells[2].style.fontWeight = 'normal';
         }
+    }
+    saveButton.setStartt(true);
+    saveButton.setEndt(true);
+    enabledDisabledSaveButton();
+
+    return true;
+}
+
+function clearTaskTable() {
+
+    var table = document.getElementById("taskTable");
+    for (var i = 0, row; row = table.rows[i]; i++) {
+        row.cells[1].style.color = "black";
+        row.cells[1].style.fontWeight = 'normal';
+        row.cells[2].style.color = "black";
+        row.cells[2].style.fontWeight = 'normal';
     }
     saveButton.setStartt(true);
     saveButton.setEndt(true);
