@@ -13,8 +13,7 @@ $(document).ready(function(){
     loseFocusOnEndTime();
     loseFocusOnTaskType();
     enabledDisabledSaveButton();
-    //checkForStartTimeOverlaps();
-    //checkForTimeOverlaps();
+    onClickOnSaveButton();
 
 });
 
@@ -82,7 +81,7 @@ function TaskType() {
     });
 }
 
-// time validation are performed via http://momentjs.com/.
+// time validation are performed via http://momentjs.com/
 function isValidHourMinute(ttime) {
 
     var myDateTime = "1960-10-03 " + ttime;
@@ -183,13 +182,14 @@ function loseFocusOnStartTime() {
             return;
         }
         else {
+            $('#endt').css('background-color', 'white');
             $('#startt-search').css('background-color', 'white');
             saveButton.setStartt(true);
             enabledDisabledSaveButton();
         }
         var t1 = t1Str.split(':');
 
-        if (!t1Str.isEmpty() && !checkForStartTimeOverlaps()) {
+        if (!checkForStartTimeOverlaps()) {
             saveButton.setStartt(false);
             enabledDisabledSaveButton();
             $('#hoursWorked').val("");
@@ -248,6 +248,12 @@ function loseFocusOnTaskType() {
     });
 }
 
+function onClickOnSaveButton() {
+    $("#saveButton").click(function () {
+        $("#hoursWorked").prop('disabled', false);
+    });
+}
+
 function enabledDisabledSaveButton() {
     if (saveButton.isReady()) {
         $("#saveButton").prop('disabled', false);
@@ -291,6 +297,11 @@ function checkForStartTimeOverlaps() {
             }
         }
     }
+
+    if (!timeToCheck.isBefore(cellEndTime)) {
+        clearTaskTable();
+    }
+
     saveButton.setStartt(true);
     enabledDisabledSaveButton();
 
@@ -298,8 +309,6 @@ function checkForStartTimeOverlaps() {
 }
 
 function checkForEndTimeOverlaps() {
-
-    var result = true;
 
     var table = document.getElementById("taskTable");
     for (var i = 0, row; row = table.rows[i]; i++) {
@@ -325,7 +334,7 @@ function checkForEndTimeOverlaps() {
                 row.cells[2].style.color = "pink";
                 row.cells[2].style.fontWeight = 'bold';
 
-                result = false;
+                return false;
             } else {
                 $('#endt').css('background-color', 'white');
                 row.cells[1].style.color = "black";
@@ -335,10 +344,14 @@ function checkForEndTimeOverlaps() {
             }
         }
     }
+
+    if (!timeToCheck.isAfter(cellStartTime)) {
+        clearTaskTable();
+    }
     saveButton.setEndt(true);
     enabledDisabledSaveButton();
 
-    return result;
+    return true;
 }
 
 function clearTaskTable() {

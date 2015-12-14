@@ -32,6 +32,14 @@ class testTaskView extends Selenium
     }
 
     /** @test */
+    function test_checks_for_invalid_end_time() {
+        $this->visit('/task/show/1')
+            ->type('11:99', '#endt')
+            ->click('#taskType')
+            ->See('pink');
+    }
+
+    /** @test */
     function test_checks_empty_start_and_end_times() {
         $this->visit('/task/show/1')
             ->type('', '#startt-search')
@@ -49,6 +57,14 @@ class testTaskView extends Selenium
     }
 
     /** @test */
+    function test_checks_for_valid_end_time() {
+        $this->visit('/task/show/1')
+            ->type('18:00', '#endt')
+            ->click('#taskType')
+            ->notSee('pink');
+    }
+
+    /** @test */
     function test_checks_for_start_time_overlap() {
         $this->visit('/task/show/1')
             ->type('07:00', '#startt-search')
@@ -60,6 +76,15 @@ class testTaskView extends Selenium
     function test_checks_for_end_time_overlap() {
         $this->visit('/task/show/1')
             ->type('11:00', '#endt')
+            ->click('#taskType')
+            ->see('pink');
+    }
+
+    /** @test */
+    function test_start_time_is_after_end_time() {
+        $this->visit('/task/show/1')
+            ->type('20:00', '#startt-search')
+            ->type('19:00', '#endt')
             ->click('#taskType')
             ->see('pink');
     }
@@ -98,6 +123,7 @@ class testTaskView extends Selenium
             ->click('#taskType')
             ->see('pink');
     }
+
     /** @test */
     function test_end_time_overlaps_existing_time_slot() {
         $this->visit('/task/show/1')

@@ -35,8 +35,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// route to task view.
+// route to task view; show a specific task.
 Route::get('task/show/{id}', 'TaskController@show');
+
+// insert a task
+Route::post('task/create/{id}', ['as' => 'task.create', 'uses' => 'TaskController@create']);
+
+// delete a task
+Route::post('task/destroy/{id}', ['as' => 'task.destroy', 'uses' => 'TaskController@destroy']);
 
 
 /**

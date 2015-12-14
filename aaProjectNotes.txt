@@ -1,0 +1,10 @@
+
+Stuff that I added after Laravel was installed.
+
+Javascript:
+- time validation are performed via http://momentjs.com/
+- time picker:  see https://github.com/jonthornton/jquery-timepicker#timepicker-plugin-for-jquery
+
+Composer:
+
+- Illuminate/html -- for blade styling.

@@ -17,8 +17,10 @@ class Task extends Model
      * fillable fields
      */
     protected $fillable = [
+        'time_card_id',
+        'task_type_id',
         'start_time',
-        'end_type',
+        'end_time',
         'hours_worked',
         'notes'];
 

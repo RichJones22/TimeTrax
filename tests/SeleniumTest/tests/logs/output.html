@@ -4,12 +4,15 @@
     <title>TimeTrax</title>
     <link href="/css/app.css" media="screen" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.8.8/jquery.timepicker.min.css" media="screen" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" media="screen" rel="stylesheet" />
+
 </head>
 <body>
 <div class="container-fluid">
 
+    
     <div style="margin: 60px;">
-        <input type="text" hidden="" value="C7Lcy6xzc30fO2f4CTM1hcC8GE30ebmV9oGnImQv" name="_token" /><div>
+        <input type="text" hidden="" value="ON4H5S3rDm9qHlbhJFELA2J3UTaaR9SoJqO9tkx5" name="_token" /><div>
                         </div><table class="table table-hover table-bordered">
 
             <thead>
@@ -23,22 +26,22 @@
                     <th>Hours Worked</th>
                     <th>Notes</th>
                 </tr>
-                <form></form>
+                <form action="http://timetrax.dev/task/create/1" method="post"></form>
                     
                     <tr class="info">
                             <th>
-                                <select class="form-control col-xs-12" id="taskType">
+                                <select class="form-control col-xs-12" name="taskType" id="taskType">
                                     <option value="0">--Select Type--</option>
                                 <option value="1">Code</option><option value="2">Test</option><option value="3">Deployment</option><option value="4">Analysis</option></select>
                             </th>
-                            <th><input placeholder="start" id="startt-search" class="form-control ui-timepicker-input" autocomplete="off" style="background-color: white;">[object Object]</input></th>
-                            <th><input placeholder="end" id="endt" class="form-control ui-timepicker-input" autocomplete="off">[object Object]</input></th>
-                            <th><input type="text" id="hoursWorked" class="form-control" disabled="disabled" /></th>
+                            <th><input placeholder="start" name="startt" id="startt-search" class="form-control ui-timepicker-input" autocomplete="off" /></th>
+                            <th><input placeholder="end" name="endt" id="endt" class="form-control ui-timepicker-input" autocomplete="off" /></th>
+                            <th><input type="text" name="hoursWorked" id="hoursWorked" class="form-control" disabled="disabled" /></th>
                             <th>
                                 <div style="display: inline-block;" class="col-xs-9">
-                                    <input type="notes" placeholder="notes" id="notes" class="form-control" />
+                                    <input type="text" name="notes" placeholder="notes" id="notes" class="form-control" />
                                 </div>
-                                <button style="float: right" id="saveButton" class="btn btn-primary col-xs-3" type="submit">Save</button>
+                                <button style="float: right" id="saveButton" class="btn btn-primary col-xs-3" type="submit" disabled="disabled">Save</button>
                             </th>
                         </tr>
                     
@@ -48,20 +51,39 @@
             <tbody id="taskTable">
                                     <tr>
                         <td>Code</td>
-                        <td style="color: pink; font-weight: bold;">07:00</td>
-                        <td style="color: pink; font-weight: bold;">11:30</td>
+                        <td>07:00</td>
+                        <td>11:30</td>
                         <td>3.5</td>
-                        <td>worked defect number 127068</td>
+                        <td>
+                            <div style="display: inline-block;" class="col-xs-9">
+                                worked defect number 127068
+                            </div>
+                            <form action="http://timetrax.dev/task/destroy/1" method="post">
+                                <input type="text" hidden="" value="ON4H5S3rDm9qHlbhJFELA2J3UTaaR9SoJqO9tkx5" name="_token" />
+                                <button style="float: right" class="btn btn-danger btn-xs" type="submit">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </button>
+                            </form>
+                        </td>
                     </tr>
                                     <tr>
                         <td>Code</td>
-                        <td style="color: pink; font-weight: bold;">12:00</td>
-                        <td style="color: pink; font-weight: bold;">17:00</td>
+                        <td>12:00</td>
+                        <td>17:00</td>
                         <td>5</td>
-                        <td>worked defect number 127068</td>
+                        <td>
+                            <div style="display: inline-block;" class="col-xs-9">
+                                worked defect number 127068
+                            </div>
+                            <form action="http://timetrax.dev/task/destroy/2" method="post">
+                                <input type="text" hidden="" value="ON4H5S3rDm9qHlbhJFELA2J3UTaaR9SoJqO9tkx5" name="_token" />
+                                <button style="float: right" class="btn btn-danger btn-xs" type="submit">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </button>
+                            </form>
+                        </td>
                     </tr>
                             </tbody>
-
         </table>
 
             </div>
@@ -74,4 +96,4 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
 <script src="/js/TaskView.js"></script>
 
-<div class="ui-timepicker-wrapper" tabindex="-1" style="position: absolute; top: 179px; left: 262.133px; display: none;"><ul class="ui-timepicker-list"><li class="ui-timepicker-am">00:00</li><li class="ui-timepicker-am">00:30</li><li class="ui-timepicker-am">01:00</li><li class="ui-timepicker-am">01:30</li><li class="ui-timepicker-am">02:00</li><li class="ui-timepicker-am">02:30</li><li class="ui-timepicker-am">03:00</li><li class="ui-timepicker-am">03:30</li><li class="ui-timepicker-am">04:00</li><li class="ui-timepicker-am">04:30</li><li class="ui-timepicker-am">05:00</li><li class="ui-timepicker-am">05:30</li><li class="ui-timepicker-am">06:00</li><li class="ui-timepicker-am">06:30</li><li class="ui-timepicker-am">07:00</li><li class="ui-timepicker-am">07:30</li><li class="ui-timepicker-am">08:00</li><li class="ui-timepicker-am">08:30</li><li class="ui-timepicker-am">09:00</li><li class="ui-timepicker-am">09:30</li><li class="ui-timepicker-am">10:00</li><li class="ui-timepicker-am">10:30</li><li class="ui-timepicker-am">11:00</li><li class="ui-timepicker-am">11:30</li><li class="ui-timepicker-pm">12:00</li><li class="ui-timepicker-pm">12:30</li><li class="ui-timepicker-pm">13:00</li><li class="ui-timepicker-pm">13:30</li><li class="ui-timepicker-pm">14:00</li><li class="ui-timepicker-pm">14:30</li><li class="ui-timepicker-pm">15:00</li><li class="ui-timepicker-pm">15:30</li><li class="ui-timepicker-pm">16:00</li><li class="ui-timepicker-pm">16:30</li><li class="ui-timepicker-pm">17:00</li><li class="ui-timepicker-pm">17:30</li><li class="ui-timepicker-pm ui-timepicker-selected">18:00</li><li class="ui-timepicker-pm">18:30</li><li class="ui-timepicker-pm">19:00</li><li class="ui-timepicker-pm">19:30</li><li class="ui-timepicker-pm">20:00</li><li class="ui-timepicker-pm">20:30</li><li class="ui-timepicker-pm">21:00</li><li class="ui-timepicker-pm">21:30</li><li class="ui-timepicker-pm">22:00</li><li class="ui-timepicker-pm">22:30</li><li class="ui-timepicker-pm">23:00</li><li class="ui-timepicker-pm">23:30</li><li class="ui-timepicker-am">24:00</li></ul></div></body></html>
+</body></html>
