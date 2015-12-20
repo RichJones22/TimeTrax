@@ -7,11 +7,12 @@
  */
 
 use Laracasts\Integrated\Extensions\Selenium;
+use Laracasts\Integrated\Services\Laravel\Application as Laravel;
 
 
 class testTaskView extends Selenium
 {
-
+    use Laravel;
 
     /** @test */
     function test_visits_root() {

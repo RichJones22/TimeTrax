@@ -36,7 +36,7 @@ Route::get('/', function () {
 });
 
 // route to task view; show a specific task.
-Route::get('task/show/{id}', 'TaskController@show');
+Route::get('task/show/{id}', ['as' => 'task.show', 'uses' => 'TaskController@show']);
 
 // insert a task
 Route::post('task/create/{id}', ['as' => 'task.create', 'uses' => 'TaskController@create']);
@@ -363,6 +363,91 @@ Route::get('create_data', function() {
     $startTime = '12:00:00';
     $endTime = '17:00:00';
     $hoursWorked = 5.00;
+    $notes = "worked defect number 127068";
+    if (is_null($task = Task::checkIfExists($startTime))) {
+
+        // get $taskType->id
+        $taskType = TaskType::where('type', '=', 'Code')->first();
+
+        // get $timeCard->id
+        $timeCard = TimeCard::where('date_worked', '=', '2015-11-12')->first();
+
+        $task = new Task;
+
+        $task->start_time = $startTime;
+        $task->end_time = $endTime;
+        $task->hours_worked = $hoursWorked;
+        $task->notes = $notes;
+
+        $task->task_type_id = $taskType->id;
+        $task->time_card_id = $timeCard->id;
+
+        $task->save();
+    }
+});
+
+Route::get('delete_task_data', function() {
+    DB::table('task')->truncate();
+
+    echo "task data deleted!";
+});
+
+Route::get('add_task_data_firstPass', function() {
+    $startTime = '07:00:00';
+    $endTime = '11:30:00';
+    $hoursWorked = 3.5;
+    $notes = "worked defect number 127068";
+    if (is_null($task = Task::checkIfExists($startTime))) {
+
+        // get $taskType->id
+        $taskType = TaskType::where('type', '=', 'Code')->first();
+
+        // get $timeCard->id
+        $timeCard = TimeCard::where('date_worked', '=', '2015-11-12')->first();
+
+        $task = new Task;
+
+        $task->start_time = $startTime;
+        $task->end_time = $endTime;
+        $task->hours_worked = $hoursWorked;
+        $task->notes = $notes;
+
+        $task->task_type_id = $taskType->id;
+        $task->time_card_id = $timeCard->id;
+
+        $task->save();
+    }
+
+    $startTime = '12:00:00';
+    $endTime = '17:00:00';
+    $hoursWorked = 5.00;
+    $notes = "worked defect number 127068";
+    if (is_null($task = Task::checkIfExists($startTime))) {
+
+        // get $taskType->id
+        $taskType = TaskType::where('type', '=', 'Code')->first();
+
+        // get $timeCard->id
+        $timeCard = TimeCard::where('date_worked', '=', '2015-11-12')->first();
+
+        $task = new Task;
+
+        $task->start_time = $startTime;
+        $task->end_time = $endTime;
+        $task->hours_worked = $hoursWorked;
+        $task->notes = $notes;
+
+        $task->task_type_id = $taskType->id;
+        $task->time_card_id = $timeCard->id;
+
+        $task->save();
+    }
+});
+
+Route::get('add_task_data_secondPass', function() {
+    $startTime = '13:00:00';
+    $endTime = '14:00';
+    $hoursWorked = 3.5;
     $notes = "worked defect number 127068";
     if (is_null($task = Task::checkIfExists($startTime))) {
 

@@ -6,26 +6,22 @@
 
 @section('content')
 
-    @if ($errors->any())
-        <ul class="alert alert-danger">
-            @foreach($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    @endif
-
     <div style="margin: 60px;">
         <table class="table table-hover table-bordered">
-
             <thead>
                 <tr style="background-color: darkgray;">
-                    <th colspan="5" class="text-center">{{(new Carbon($timeCard[0]->date_worked))->toFormattedDateString()}}</th>
+                    @if (Session::has('info_message'))
+                        <th id="thAlertMessage" colspan="5" class="text-center"><span style="color: brown;font-weight: bold">{{ Session::get('info_message') }}</span></th>
+                        <th id="thNoAlertMessage" colspan="5" class="text-center" style="display: none">{{(new Carbon($timeCard[0]->date_worked))->toFormattedDateString()}}</th>
+                    @else
+                        <th colspan="5" class="text-center">{{(new Carbon($timeCard[0]->date_worked))->toFormattedDateString()}}</th>
+                    @endif
                 </tr>
                 <tr style="background-color: darkgray;">
                     <th>Type</th>
                     <th>Start Time</th>
                     <th>End Time</th>
-                    <th>Hours Worked</th>
+                    <th> <span style="color: blue; font-weight: bold"> ( {{ $totalHoursWorked }} ) </span>Hours Worked</th>
                     <th>Notes</th>
                 </tr>
                 <form method="post" action="{{ route('task.create', $taskTypeId) }}">
@@ -77,6 +73,7 @@
         @unless(count($tasks))
             <p class="text-center">No Tasks have been added as yet</p>
         @endunless
+
     </div>
 
 @stop

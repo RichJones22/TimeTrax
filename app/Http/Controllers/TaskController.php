@@ -30,16 +30,32 @@ class TaskController extends Controller
     {
         $taskRequestAttributes = $request->all();
 
-        $taskAttributes = [
-            'time_card_id' => $id,
-            'task_type_id' => $taskRequestAttributes['taskType'],
-            'start_time' => $taskRequestAttributes['startt'],
-            'end_time' => $taskRequestAttributes['endt'],
-            'hours_worked' => $taskRequestAttributes['hoursWorked'],
-            'notes' => $taskRequestAttributes['notes'],
-        ];
+//        if (Task::checkIfStartTimeExists($taskRequestAttributes['startt'])) {
+//            return redirect()->back();
+//        }
 
-        Task::create($taskAttributes);
+//        $taskAttributes = [
+//            'time_card_id' => $id,
+//            'task_type_id' => $taskRequestAttributes['taskType'],
+//            'start_time' => $taskRequestAttributes['startt'],
+//            'end_time' => $taskRequestAttributes['endt'],
+//            'hours_worked' => $taskRequestAttributes['hoursWorked'],
+//            'notes' => $taskRequestAttributes['notes'],
+//        ];
+
+//        Task::create($taskAttributes);
+
+        $task = new Task();
+
+        $task->start_time = $taskRequestAttributes['startt'];
+        $task->end_time = $taskRequestAttributes['endt'];
+        $task->hours_worked = $taskRequestAttributes['hoursWorked'];
+        $task->notes = $taskRequestAttributes['notes'];
+
+        $task->task_type_id = $taskRequestAttributes['taskType'];
+        $task->time_card_id = $id;
+
+        $task->save();
 
         return redirect()->back();
     }
@@ -69,6 +85,12 @@ class TaskController extends Controller
         // get all task for a specific time_card.date.
         $tasks = Task::where('time_card_id', '=', $id)->get()->sortBy('start_time');
 
+        // derive total hours worked.
+        $totalHoursWorked=0;
+        foreach($tasks as $task) {
+            $totalHoursWorked += $task->hours_worked;
+        }
+
         // eager load task_type for each task.
         $tasks->load('taskType');
 
@@ -79,7 +101,8 @@ class TaskController extends Controller
         return view('pages.userTaskView')
             ->with('tasks', $tasks)
             ->with('timeCard', $timeCard)
-            ->with('taskTypeId', $taskTypeId);
+            ->with('taskTypeId', $taskTypeId)
+            ->with('totalHoursWorked', $totalHoursWorked);
     }
 
     /**
