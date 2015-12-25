@@ -149,7 +149,7 @@ class testTaskView extends Selenium
             ->type('11:30', '#startt-search')
             ->type('12:00', '#endt')
             ->select('#taskType', 1)
-            ->click('#saveButton')
+            ->click('#saveButton')->wait(5000)
             ->see("--Select Type--");
     }
 

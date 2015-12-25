@@ -9,8 +9,11 @@ use \App\Http\Requests\PrepareTaskRequest;
 use \App\Http\Controllers\Controller;
 use \App\Task;
 
+use DB;
+
 class TaskController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -26,24 +29,9 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(PrepareTaskRequest $request, $id)
+    public function create(PrepareTaskRequest $request, $timeCardId)
     {
         $taskRequestAttributes = $request->all();
-
-//        if (Task::checkIfStartTimeExists($taskRequestAttributes['startt'])) {
-//            return redirect()->back();
-//        }
-
-//        $taskAttributes = [
-//            'time_card_id' => $id,
-//            'task_type_id' => $taskRequestAttributes['taskType'],
-//            'start_time' => $taskRequestAttributes['startt'],
-//            'end_time' => $taskRequestAttributes['endt'],
-//            'hours_worked' => $taskRequestAttributes['hoursWorked'],
-//            'notes' => $taskRequestAttributes['notes'],
-//        ];
-
-//        Task::create($taskAttributes);
 
         $task = new Task();
 
@@ -53,7 +41,20 @@ class TaskController extends Controller
         $task->notes = $taskRequestAttributes['notes'];
 
         $task->task_type_id = $taskRequestAttributes['taskType'];
-        $task->time_card_id = $id;
+        $task->time_card_id = $timeCardId;
+
+//        try {
+//            DB::beginTransaction();
+//            $result = $task->save();
+//
+//            dd($result);
+//
+//            DB::commit();
+//        } catch (Exception $e) {
+//            dd("*********** save failed. ************");
+//            DB::rollBack();
+//            //session()->flash(appGlobals::getInfoMessageType(), appGlobals::getInfoMessageText(appGlobals::INFO_TIME_VALUE_OVERLAP));
+//        }
 
         $task->save();
 
@@ -77,13 +78,13 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($timeCardId)
     {
         // create separate task id to be passed to view.
-        $taskTypeId = $id;
+//        $timeCardId = $id;
 
         // get all task for a specific time_card.date.
-        $tasks = Task::where('time_card_id', '=', $id)->get()->sortBy('start_time');
+        $tasks = Task::where('time_card_id', '=', $timeCardId)->get()->sortBy('start_time');
 
         // derive total hours worked.
         $totalHoursWorked=0;
@@ -95,13 +96,13 @@ class TaskController extends Controller
         $tasks->load('taskType');
 
         // get time_card data.
-        $timeCard = TimeCard::where('id', '=', $id)->get();
+        $timeCard = TimeCard::where('id', '=', $timeCardId)->get();
 
         // pass the data to the view.
         return view('pages.userTaskView')
             ->with('tasks', $tasks)
             ->with('timeCard', $timeCard)
-            ->with('taskTypeId', $taskTypeId)
+            ->with('timeCardId', $timeCardId)
             ->with('totalHoursWorked', $totalHoursWorked);
     }
 

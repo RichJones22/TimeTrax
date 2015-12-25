@@ -324,9 +324,9 @@ function checkForStartTimeOverlaps() {
         }
     }
 
-    if (!timeToCheck.isBefore(cellEndTime)) {
-        clearTaskTable();
-    }
+    //if (!timeToCheck.isBefore(cellEndTime)) {
+    //    clearTaskTable();
+    //}
 
     saveButton.setStartt(true);
     enabledDisabledSaveButton();
@@ -371,9 +371,9 @@ function checkForEndTimeOverlaps() {
         }
     }
 
-    if (!timeToCheck.isAfter(cellStartTime)) {
-        clearTaskTable();
-    }
+    //if (!timeToCheck.isAfter(cellStartTime)) {
+    //    clearTaskTable();
+    //}
     saveButton.setEndt(true);
     enabledDisabledSaveButton();
 

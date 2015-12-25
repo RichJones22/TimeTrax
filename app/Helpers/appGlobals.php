@@ -24,6 +24,9 @@ class appGlobals
     const DAYS_IN_WEEK_NUM = 7;
     const TBL_TASK_START_TIME_GT_END_TIME = '45001';
 
+    // info message numbers.
+    const INFO_TIME_VALUE_OVERLAP = 1000;
+
     static protected $clientTableName;
     static protected $projectTableName;
     static protected $workTypeTableName;
@@ -32,6 +35,16 @@ class appGlobals
     static protected $timeCardTableName;
     static protected $timeTaskTypeTableName;
     static protected $timeTaskTableName;
+
+    static protected $infoMessageType = 'info_message';
+    static protected $messageText = [
+        // app info messages
+        self::INFO_TIME_VALUE_OVERLAP => 'One of your entered time values overlaps with existing data.  Your data has been refreshed.',
+    ];
+
+    //used for testing Relational Database Management System fail cases.
+    // set $testRDBMS = true to test the SeleniumRDBMSTest.php file.
+    static protected $testRDBMS = false;
 
     public function __construct() {
         self::$clientTableName = with(new Client)->getTable();
@@ -91,6 +104,24 @@ class appGlobals
         echo $e->getMessage();
         //var_dump($e);
     }
+
+
+    static public function getInfoMessageType() {
+        return self::$infoMessageType;
+    }
+
+    static public function getInfoMessageText($messageNum) {
+        if (array_key_exists($messageNum, self::$messageText)) {
+            return self::$messageText[$messageNum];
+        } else {
+            return "error message not found for error number -- $messageNum";
+        }
+    }
+
+    static public function getTestRDBMS() {
+        return self::$testRDBMS;
+    }
+
 }
 
 global $appGlobals;

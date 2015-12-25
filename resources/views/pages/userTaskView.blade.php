@@ -2,6 +2,7 @@
 
 <?php
     use \Carbon\Carbon;
+    use \App\Helpers\appGlobals;
 ?>
 
 @section('content')
@@ -10,8 +11,8 @@
         <table class="table table-hover table-bordered">
             <thead>
                 <tr style="background-color: darkgray;">
-                    @if (Session::has('info_message'))
-                        <th id="thAlertMessage" colspan="5" class="text-center"><span style="color: brown;font-weight: bold">{{ Session::get('info_message') }}</span></th>
+                    @if (Session::has(appGlobals::getInfoMessageType()))
+                        <th id="thAlertMessage" colspan="5" class="text-center"><span style="color: brown;font-weight: bold">{{ Session::get(appGlobals::getInfoMessageType()) }}</span></th>
                         <th id="thNoAlertMessage" colspan="5" class="text-center" style="display: none">{{(new Carbon($timeCard[0]->date_worked))->toFormattedDateString()}}</th>
                     @else
                         <th colspan="5" class="text-center">{{(new Carbon($timeCard[0]->date_worked))->toFormattedDateString()}}</th>
@@ -21,10 +22,18 @@
                     <th>Type</th>
                     <th>Start Time</th>
                     <th>End Time</th>
-                    <th> <span style="color: blue; font-weight: bold"> ( {{ $totalHoursWorked }} ) </span>Hours Worked</th>
-                    <th>Notes</th>
+                    <th><span style="color: blue; font-weight: bold"> ( {{ $totalHoursWorked }} ) </span>Hours Worked</th>
+                    <th>
+                        <span class="col-xs-9" style="display: inline-block;">Notes</span>
+                        <form method="get" action="{{ route('task.show', $timeCardId) }}">
+                            {{--<input hidden type="text" name="_token" value="{{ csrf_token() }}">--}}
+                            <button type ="submit" class = "btn btn-primary btn-xs" style="float: right">
+                                   <span class="glyphicon glyphicon-refresh"></span>
+                            </button>
+                        </form>
+                    </th>
                 </tr>
-                <form method="post" action="{{ route('task.create', $taskTypeId) }}">
+                <form method="post" action="{{ route('task.create', $timeCardId) }}">
                     <input hidden type="text" name="_token" value="{{ csrf_token() }}">
                     <div>
                         <tr class="info">

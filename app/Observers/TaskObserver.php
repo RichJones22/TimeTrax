@@ -12,8 +12,14 @@ use \App\Helpers\appGlobals;
 class TaskObserver
 {
     public function creating($task) {
+
+        // check if getTestRDBMS is set for testing the Database triggers.
+        if (appGlobals::getTestRDBMS()) {
+            return true;
+        }
+
         if ($task->checkIfTimeOverLaps($task->time_card_id, $task->start_time, $task->end_time)) {
-            session()->flash('info_message', 'One of your entered time values overlaps with existing data.  Your data has been refreshed.');
+            session()->flash(appGlobals::getInfoMessageType(), appGlobals::getInfoMessageText(appGlobals::INFO_TIME_VALUE_OVERLAP));
 
             return false;
         }
