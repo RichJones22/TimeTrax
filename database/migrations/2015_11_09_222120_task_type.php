@@ -29,6 +29,14 @@ class TaskType extends Migration
             $table->integer('task_type_id')->unsigned();
             $table->foreign('task_type_id')->references('id')->on('task_type');
         });
+
+        /**
+         * create foreign key to the client table
+         */
+        Schema::table('task_type', function(Blueprint $table) {
+            $table->integer('client_id')->unsigned();
+            $table->foreign('client_id')->references('id')->on('client');
+        });
     }
 
     /**

@@ -43,19 +43,6 @@ class TaskController extends Controller
         $task->task_type_id = $taskRequestAttributes['taskType'];
         $task->time_card_id = $timeCardId;
 
-//        try {
-//            DB::beginTransaction();
-//            $result = $task->save();
-//
-//            dd($result);
-//
-//            DB::commit();
-//        } catch (Exception $e) {
-//            dd("*********** save failed. ************");
-//            DB::rollBack();
-//            //session()->flash(appGlobals::getInfoMessageType(), appGlobals::getInfoMessageText(appGlobals::INFO_TIME_VALUE_OVERLAP));
-//        }
-
         $task->save();
 
         return redirect()->back();
@@ -80,9 +67,6 @@ class TaskController extends Controller
      */
     public function show($timeCardId)
     {
-        // create separate task id to be passed to view.
-//        $timeCardId = $id;
-
         // get all task for a specific time_card.date.
         $tasks = Task::where('time_card_id', '=', $timeCardId)->get()->sortBy('start_time');
 

@@ -288,10 +288,14 @@ Route::get('create_data', function() {
     $description = 'Type for coding tasks';
     if (is_null($taskType = TaskType::checkIfExists($type))) {
 
+        // get $client->id
+        $client = Client::where('name', '=', 'Kendra Scott')->first();
+
         $taskType = new TaskType;
 
         $taskType->type = $type;
         $taskType->description = $description;
+        $taskType->client_id = $client->id;
 
         $taskType->save();
     }
@@ -300,10 +304,14 @@ Route::get('create_data', function() {
     $description = 'Type for testing tasks';
     if (is_null($taskType = TaskType::checkIfExists($type))) {
 
+        // get $client->id
+        $client = Client::where('name', '=', 'Kendra Scott')->first();
+
         $taskType = new TaskType;
 
         $taskType->type = $type;
         $taskType->description = $description;
+        $taskType->client_id = $client->id;
 
         $taskType->save();
     }
@@ -312,10 +320,14 @@ Route::get('create_data', function() {
     $description = 'Type for deployment tasks';
     if (is_null($taskType = TaskType::checkIfExists($type))) {
 
+        // get $client->id
+        $client = Client::where('name', '=', 'Kendra Scott')->first();
+
         $taskType = new TaskType;
 
         $taskType->type = $type;
         $taskType->description = $description;
+        $taskType->client_id = $client->id;
 
         $taskType->save();
     }
@@ -324,10 +336,14 @@ Route::get('create_data', function() {
     $description = 'Type for Analyzing tasks';
     if (is_null($taskType = TaskType::checkIfExists($type))) {
 
+        // get $client->id
+        $client = Client::where('name', '=', 'Kendra Scott')->first();
+
         $taskType = new TaskType;
 
         $taskType->type = $type;
         $taskType->description = $description;
+        $taskType->client_id = $client->id;
 
         $taskType->save();
     }
