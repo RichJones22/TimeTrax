@@ -2,17 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\TimeCard;
 use Illuminate\Http\Request;
 
-use \App\Http\Requests\PrepareTaskRequest;
-use \App\Task;
+use App\Http\Requests;
+use \App\TaskType;
 
-use DB;
-
-class TaskController extends Controller
+class TaskTypeController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      *
@@ -28,22 +24,8 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(PrepareTaskRequest $request, $timeCardId)
+    public function create()
     {
-        $taskRequestAttributes = $request->all();
-
-        $task = new Task();
-
-        $task->start_time = $taskRequestAttributes['startt'];
-        $task->end_time = $taskRequestAttributes['endt'];
-        $task->hours_worked = $taskRequestAttributes['hoursWorked'];
-        $task->notes = $taskRequestAttributes['notes'];
-
-        $task->task_type_id = $taskRequestAttributes['taskType'];
-        $task->time_card_id = $timeCardId;
-
-        $task->save();
-
         return redirect()->back();
     }
 
@@ -64,29 +46,15 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($timeCardId)
+    public function show($clientId)
     {
         // get all task for a specific time_card.date.
-        $tasks = Task::where('time_card_id', '=', $timeCardId)->get()->sortBy('start_time');
-
-        // derive total hours worked.
-        $totalHoursWorked=0;
-        foreach($tasks as $task) {
-            $totalHoursWorked += $task->hours_worked;
-        }
-
-        // eager load task_type for each task.
-        $tasks->load('taskType');
-
-        // get time_card data.
-        $timeCard = TimeCard::where('id', '=', $timeCardId)->get();
+        $taskTypes = TaskType::where('client_id', '=', $clientId)->get();
 
         // pass the data to the view.
-        return view('pages.userTaskView')
-            ->with('tasks', $tasks)
-            ->with('timeCard', $timeCard)
-            ->with('timeCardId', $timeCardId)
-            ->with('totalHoursWorked', $totalHoursWorked);
+        return view('pages.userTaskTypeView')
+            ->with('taskTypes', $taskTypes)
+            ->with('clientId', $clientId);
     }
 
     /**
@@ -120,9 +88,6 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
-
-        Task::destroy($id);
-
         return redirect()->back();
     }
 }

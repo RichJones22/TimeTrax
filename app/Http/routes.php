@@ -45,6 +45,18 @@ Route::post('task/create/{id}', ['as' => 'task.create', 'uses' => 'TaskControlle
 Route::post('task/destroy/{id}', ['as' => 'task.destroy', 'uses' => 'TaskController@destroy']);
 
 
+
+// route to task type view.
+Route::get('taskType/show/{id}', ['as' => 'taskType.show', 'uses' => 'TaskTypeController@show']);
+
+// insert a task type.
+Route::post('taskType/create/{id}', ['as' => 'taskType.create', 'uses' => 'TaskTypeController@create']);
+
+// delete a task type.
+Route::post('taskType/destroy/{id}', ['as' => 'taskType.destroy', 'uses' => 'TaskTypeController@destroy']);
+
+
+
 /**
  * creating records
  */

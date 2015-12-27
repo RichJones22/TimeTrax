@@ -17,7 +17,7 @@ class TaskType extends Migration
          */
         Schema::create('task_type', function(Blueprint $table){
             $table->increments('id');
-            $table->string('type')->unique();
+            $table->char('type', 15)->unique();
             $table->string('description');
             $table->timestamps();
         });
