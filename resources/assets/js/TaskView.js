@@ -14,7 +14,7 @@ $(document).ready(function(){
     getEndTime();
     loseFocusOnStartTime();
     loseFocusOnEndTime();
-    loseFocusOnTaskType();
+    loseFocusOnType();
     enabledDisabledSaveButton();
     onClickOnSaveButton();
     causeTheTopLineOfTableHeaderToFade();
@@ -105,6 +105,7 @@ function TaskType() {
         complete: function() {
         }
     });
+
 }
 
 // time validation are performed via http://momentjs.com/
@@ -260,13 +261,16 @@ function loseFocusOnStartTime() {
     });
 }
 
-function loseFocusOnTaskType() {
+function loseFocusOnType() {
     $("#taskType").change(function () {
         var v1 = Math.floor($('#taskType').val());
 
         if (v1 === 0) {
             saveButton.setType(false);
             enabledDisabledSaveButton();
+            $("#taskType").empty();
+            $('#taskType').append("<option value='0'>--Select Type--</option>");
+            TaskType();
         } else {
             saveButton.setType(true);
             enabledDisabledSaveButton();

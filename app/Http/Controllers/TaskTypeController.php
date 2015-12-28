@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Http\Requests;
+use App\Http\Requests\PrepareTaskTypeRequest;
 use \App\TaskType;
+use \App\Helpers\appGlobals;
 
 class TaskTypeController extends Controller
 {
@@ -24,8 +25,21 @@ class TaskTypeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(PrepareTaskTypeRequest $request, $clientId)
     {
+        $taskRequestAttributes = $request->all();
+
+        $taskType = new TaskType();
+
+        $taskType->type = $taskRequestAttributes['taskType'];
+        $taskType->description = $taskRequestAttributes['description'];
+        $taskType->client_id = $clientId;
+
+        $taskType->save();
+
+        // reset the appGlobals::getTaskTypeTableName()
+        \Session::forget(appGlobals::getTaskTypeTableName());
+
         return redirect()->back();
     }
 
@@ -88,6 +102,12 @@ class TaskTypeController extends Controller
      */
     public function destroy($id)
     {
+
+        TaskType::destroy($id);
+
+        // reset the appGlobals::getTaskTypeTableName()
+        \Session::forget(appGlobals::getTaskTypeTableName());
+
         return redirect()->back();
     }
 }

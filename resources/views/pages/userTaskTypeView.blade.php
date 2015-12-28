@@ -9,7 +9,17 @@
                     <th colspan="5" class="text-center" id="taskTypeHeader">Task Type Maintenance</th>
                 </tr>
                 <tr style="background-color: darkgray;">
-                    <th id="taskTypeId">Type</th>
+                    <th>
+                        <span class="col-xs-9" style="display: inline-block;">Type</span>
+                        {{--@if (Session::has('from_taskView'))--}}
+                            {{--<form method="get" action="{{ route('task.show', Session::get('from_taskView')) }}">--}}
+                                {{--{{Session::forget('from_taskView')}}--}}
+                                {{--<button type ="submit" class = "btn btn-primary btn-xs" style="float: right">--}}
+                                    {{--<span class="glyphicon glyphicon-step-backward"></span>--}}
+                                {{--</button>--}}
+                            {{--</form>--}}
+                        {{--@endif--}}
+                    </th>
                     <th>
                         <span class="col-xs-9" style="display: inline-block;">Description</span>
                         <form method="get" action="{{ route('taskType.show', $clientId) }}">
@@ -23,7 +33,7 @@
                     <input hidden type="text" name="_token" value="{{ csrf_token() }}">
                     <div>
                         <tr class="info">
-                            <th><input class="form-control" id="taskType" placeholder="type" name="taskType"></th>
+                            <th><input class="form-control" id="taskType01" placeholder="type" name="taskType"></th>
                             <th>
                                 <div class="col-xs-9" style="display: inline-block;">
                                     <input type="text" class="form-control" id="description" placeholder="description" name="description">
@@ -43,7 +53,7 @@
                             <div class="col-xs-9" style="display: inline-block;">
                                 {{ $taskType->description }}
                             </div>
-                            <form method="post" action="{{ route('taskType.destroy', $clientId) }}">
+                            <form method="post" action="{{ route('taskType.destroy', $taskType->id) }}">
                                 <input hidden type="text" name="_token" value="{{ csrf_token() }}">
                                 <button type ="submit" class = "btn btn-danger btn-xs" style="float: right">
                                     <span class="glyphicon glyphicon-trash"></span>

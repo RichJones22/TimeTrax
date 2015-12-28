@@ -78,6 +78,8 @@ class TaskController extends Controller
         // eager load task_type for each task.
         $tasks->load('taskType');
 
+//        dd($tasks);
+
         // get time_card data.
         $timeCard = TimeCard::where('id', '=', $timeCardId)->get();
 

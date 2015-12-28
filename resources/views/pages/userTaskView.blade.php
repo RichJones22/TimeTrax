@@ -19,14 +19,23 @@
                     @endif
                 </tr>
                 <tr style="background-color: darkgray;">
-                    <th>Type</th>
+                    <th>
+                        <span class="col-xs-9" style="display: inline-block;">Type</span>
+                        @if(count($tasks)>0)
+                            {{--{{Session::put('from_taskView', $timeCardId)}}--}}
+                            <form method="get" action="{{ route('taskType.show', $tasks[0]->TaskType->client_id) }}">
+                                <button type ="submit" class = "btn btn-primary btn-xs" style="float: right">
+                                    <span class="glyphicon glyphicon-open"></span>
+                                </button>
+                            </form>
+                        @endif
+                    </th>
                     <th>Start Time</th>
                     <th>End Time</th>
                     <th><span style="color: blue; font-weight: bold"> ( {{ $totalHoursWorked }} ) </span>Hours Worked</th>
                     <th>
                         <span class="col-xs-9" style="display: inline-block;">Notes</span>
                         <form method="get" action="{{ route('task.show', $timeCardId) }}">
-                            {{--<input hidden type="text" name="_token" value="{{ csrf_token() }}">--}}
                             <button type ="submit" class = "btn btn-primary btn-xs" style="float: right">
                                    <span class="glyphicon glyphicon-refresh"></span>
                             </button>

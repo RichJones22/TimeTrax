@@ -23,6 +23,8 @@ class appGlobals
 {
     const DAYS_IN_WEEK_NUM = 7;
     const TBL_TASK_START_TIME_GT_END_TIME = '45001';
+    const TBL_TASK_TYPE_TYPE_RESTRICTED_TO_ONE_WORD = 45002;
+    const TBL_TASK_TYPE_TYPE_ALREADY_EXISTS = 45003;
 
     // info message numbers.
     const INFO_TIME_VALUE_OVERLAP = 1000;
@@ -40,6 +42,8 @@ class appGlobals
     static protected $messageText = [
         // app info messages
         self::INFO_TIME_VALUE_OVERLAP => 'One of your entered time values overlaps with existing data.  Your data has been refreshed.',
+        self::TBL_TASK_TYPE_TYPE_RESTRICTED_TO_ONE_WORD => 'Type restricted to one word.',
+        self::TBL_TASK_TYPE_TYPE_ALREADY_EXISTS => 'Type already exists.',
     ];
 
     //used for testing Relational Database Management System fail cases.
