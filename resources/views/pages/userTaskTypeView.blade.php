@@ -1,12 +1,21 @@
 @extends('pages.userMainView')
 
+<?php
+use \App\Helpers\appGlobals;
+?>
+
+
 @section('content')
 
     <div style="margin: 60px;">
         <table class="table table-hover table-bordered">
             <thead>
                 <tr style="background-color: darkgray;">
-                    <th colspan="5" class="text-center" id="taskTypeHeader">Task Type Maintenance</th>
+                    @if (Session::has(appGlobals::getInfoMessageType()))
+                        <th colspan="5" class="text-center" id="taskTypeHeader"><span style="color: brown;font-weight: bold">{{ Session::get(appGlobals::getInfoMessageType()) }}</span></th>
+                    @else
+                        <th colspan="5" class="text-center" id="taskTypeHeader">Task Type Maintenance</th>
+                    @endif
                 </tr>
                 <tr style="background-color: darkgray;">
                     <th>
@@ -55,7 +64,7 @@
                             </div>
                             <form method="post" action="{{ route('taskType.destroy', $taskType->id) }}">
                                 <input hidden type="text" name="_token" value="{{ csrf_token() }}">
-                                <button type ="submit" class = "btn btn-danger btn-xs" style="float: right">
+                                <button id="{{ $taskType->type }}" type ="submit" class = "btn btn-danger btn-xs" style="float: right">
                                     <span class="glyphicon glyphicon-trash"></span>
                                 </button>
                             </form>

@@ -12,6 +12,22 @@ use \App\Helpers\appGlobals;
 
 class TaskTypeObserver
 {
+    public function deleting($taskType) {
+
+        // check if getTestRDBMS is set for testing the Database triggers.
+        if (appGlobals::getTestRDBMS()) {
+            return true;
+        }
+
+        $result = $taskType->checkTaskTypeDeleteAudits($taskType);
+        if ($result > 0) {
+            session()->forget(appGlobals::getInfoMessageType());
+            session()->flash(appGlobals::getInfoMessageType(), sprintf(appGlobals::getInfoMessageText($result), $taskType->type));
+
+            return false;
+        }
+    }
+
     public function creating($taskType) {
 
         // check if getTestRDBMS is set for testing the Database triggers.
@@ -19,18 +35,13 @@ class TaskTypeObserver
             return true;
         }
 
-        $result = $taskType->checkTaskTypeAudits($taskType);
+        $result = $taskType->checkTaskTypeCreateAudits($taskType);
         if ($result > 0) {
+            session()->forget(appGlobals::getInfoMessageType());
             session()->flash(appGlobals::getInfoMessageType(), appGlobals::getInfoMessageText($result));
 
             return false;
         }
-//
-//        if ($result = $taskType->checkTaskTypeAudits($taskType)) {
-//            session()->flash(appGlobals::getInfoMessageType(), appGlobals::getInfoMessageText($result));
-//
-//            return false;
-//        }
     }
 
     public function created($taskType) {

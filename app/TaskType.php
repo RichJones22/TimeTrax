@@ -38,19 +38,31 @@ class TaskType extends Model
     }
 
     /**
-     * Edit and audit routines.
+     * Delete edit and audit routine(s).
      * @param $taskType
      * @return bool
      */
-    public function checkTaskTypeAudits($taskType) {
+    public function checkTaskTypeDeleteAudits($taskType) {
 
-        $result =  $this->checkIfTypeExists($taskType);
-        if ($result > 0) {
+        if (($result =  $this->checkIfTypeConstraintExists($taskType)) > 0) {
             return $result;
         }
 
-        $result =  $this->checkIfTypeContainsMultipleWords($taskType);
-        if ($result > 0) {
+        return false;
+    }
+
+    /**
+     * Create edit and audit routine(s).
+     * @param $taskType
+     * @return bool
+     */
+    public function checkTaskTypeCreateAudits($taskType) {
+
+        if (($result =  $this->checkIfTypeExists($taskType)) > 0) {
+            return $result;
+        }
+
+        if (($result =  $this->checkIfTypeContainsMultipleWords($taskType)) > 0) {
             return $result;
         }
 
@@ -78,6 +90,18 @@ class TaskType extends Model
             return (int)appGlobals::TBL_TASK_TYPE_TYPE_RESTRICTED_TO_ONE_WORD;
         }
 
-        return false;
+        return 0;
+    }
+
+    public function checkIfTypeConstraintExists($taskType) {
+
+        $val = Task::where('task_type_id', '=', $taskType->id)
+            ->first();
+
+        if (!is_null($val)) {
+            return appGlobals::TBL_TASK_TYPE_CONSTRAINT_VIOLATION;
+        }
+
+        return 0;
     }
 }

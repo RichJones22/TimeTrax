@@ -1,8 +1,10 @@
 List of ToDo's...
 
-1)  Finish styling/coding the Task View client behavior.
-   b) Put phpunit tests together for the Task View, before you refactor the TaskView.js lib.
-   a) Refactor TaskView.js.
-   b) Put phpunit tests together for the Task View, before you create the add button code.
-   c) Code the add button.
-   d) Style and code the delete button.
+1)  Finish styling/coding the TaskType View.
+   a) put together client, server, and database test cases.
+   b) would like to namespace the .js libs.
+   c) have what looks to be a cashing bug between Task and Task Type view.
+      i) it is creating records that were deleted prior.
+
+
+2)  Start working on the TimeCard View

@@ -25,6 +25,8 @@ class appGlobals
     const TBL_TASK_START_TIME_GT_END_TIME = '45001';
     const TBL_TASK_TYPE_TYPE_RESTRICTED_TO_ONE_WORD = 45002;
     const TBL_TASK_TYPE_TYPE_ALREADY_EXISTS = 45003;
+    const TBL_TASK_TYPE_CONSTRAINT_VIOLATION = 45004;
+
 
     // info message numbers.
     const INFO_TIME_VALUE_OVERLAP = 1000;
@@ -43,7 +45,8 @@ class appGlobals
         // app info messages
         self::INFO_TIME_VALUE_OVERLAP => 'One of your entered time values overlaps with existing data.  Your data has been refreshed.',
         self::TBL_TASK_TYPE_TYPE_RESTRICTED_TO_ONE_WORD => 'Type restricted to one word.',
-        self::TBL_TASK_TYPE_TYPE_ALREADY_EXISTS => 'Type already exists.',
+        self::TBL_TASK_TYPE_TYPE_ALREADY_EXISTS => 'Type already exists.  Your data has been refreshed.',
+        self::TBL_TASK_TYPE_CONSTRAINT_VIOLATION => "Type (%s) currently exists on tasks.  Can't delete.",
     ];
 
     //used for testing Relational Database Management System fail cases.

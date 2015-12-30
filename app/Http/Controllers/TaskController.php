@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use \App\Http\Requests\PrepareTaskRequest;
 use \App\Task;
 
-use DB;
+use \App\Helpers\appGlobals;
 
 class TaskController extends Controller
 {
@@ -78,10 +78,11 @@ class TaskController extends Controller
         // eager load task_type for each task.
         $tasks->load('taskType');
 
-//        dd($tasks);
-
         // get time_card data.
         $timeCard = TimeCard::where('id', '=', $timeCardId)->get();
+
+        // allow the type drop down to refresh.
+        \Session::forget(appGlobals::getTaskTypeTableName());
 
         // pass the data to the view.
         return view('pages.userTaskView')

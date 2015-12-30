@@ -5,60 +5,106 @@
     <link href="/css/app.css" media="screen" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.8.8/jquery.timepicker.min.css" media="screen" rel="stylesheet" />
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" media="screen" rel="stylesheet" />
-    <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.9.1/bootstrap-table.min.css" rel="stylesheet" />
-
+    
 </head>
 <body>
 <div class="container-fluid">
 
     <div style="margin: 60px;">
-        <input type="text" hidden="" value="EHTctiyuk5w8XsY8tp2LwN0uOzRU7c7OcImyLoal" name="_token" /><div>
+        <input type="text" hidden="" value="i9RZ5Gj1izbas5u5AejcEYkkwMU25ueFv7JEJ2Tl" name="_token" /><div>
                         </div><table class="table table-hover table-bordered">
             <thead>
                 <tr style="background-color: darkgray;">
-                                            <th class="text-center" colspan="5">Nov 12, 2015</th>
+                                            <th id="taskTypeHeader" class="text-center" colspan="5"><span style="color: brown;font-weight: bold">Type (Code) currently exists on tasks.  Can't delete.</span></th>
                                     </tr>
                 <tr style="background-color: darkgray;">
-                    <th>Type</th>
-                    <th>Start Time</th>
-                    <th>End Time</th>
-                    <th><span style="color: blue; font-weight: bold"> ( 0 ) </span>Hours Worked</th>
                     <th>
-                        <span style="display: inline-block;" class="col-xs-9">Notes</span>
-                        <form action="http://timetrax.dev/task/show/1" method="get">
-                                                        <button style="float: right" class="btn btn-primary btn-xs" type="submit">
+                        <span style="display: inline-block;" class="col-xs-9">Type</span>
+                                                                                                                                                                                                                                                                </th>
+                    <th>
+                        <span style="display: inline-block;" class="col-xs-9">Description</span>
+                        <form action="http://timetrax.dev/taskType/show/1" method="get">
+                            <button style="float: right" class="btn btn-primary btn-xs" type="submit">
                                    <span class="glyphicon glyphicon-refresh"></span>
                             </button>
                         </form>
                     </th>
                 </tr>
-                <form action="http://timetrax.dev/task/create/1" method="post"></form>
+                <form action="http://timetrax.dev/taskType/create/1" method="post"></form>
                     
                     <tr class="info">
-                            <th>
-                                <select class="form-control col-xs-12" name="taskType" id="taskType">
-                                    <option value="0">--Select Type--</option>
-                                <option value="1">Code</option><option value="2">Test</option><option value="3">Deployment</option><option value="4">Analysis</option></select>
-                            </th>
-                            <th><input placeholder="start" name="startt" id="startt-search" class="form-control ui-timepicker-input" autocomplete="off" /></th>
-                            <th><input placeholder="end" name="endt" id="endt" class="form-control ui-timepicker-input" autocomplete="off" /></th>
-                            <th><input type="text" name="hoursWorked" id="hoursWorked" class="form-control" disabled="disabled" /></th>
+                            <th><input name="taskType" placeholder="type" id="taskType01" class="form-control" /></th>
                             <th>
                                 <div style="display: inline-block;" class="col-xs-9">
-                                    <input type="text" name="notes" placeholder="notes" id="notes" class="form-control" />
+                                    <input type="text" name="description" placeholder="description" id="description" class="form-control" />
                                 </div>
-                                <button style="float: right" id="saveButton" class="btn btn-primary col-xs-3" type="submit" disabled="disabled">Save</button>
+                                <button style="float: right" id="saveButtonTaskType" class="btn btn-primary col-xs-3" type="submit" disabled="disabled">Save</button>
                             </th>
                         </tr>
                     
                 
             </thead>
 
-            <tbody id="taskTable">
+            <tbody id="taskTypeTable">
+                                    <tr>
+                        <td>Code</td>
+                        <td>
+                            <div style="display: inline-block;" class="col-xs-9">
+                                Type for coding tasks
+                            </div>
+                            <form action="http://timetrax.dev/taskType/destroy/1" method="post">
+                                <input type="text" hidden="" value="i9RZ5Gj1izbas5u5AejcEYkkwMU25ueFv7JEJ2Tl" name="_token" />
+                                <button style="float: right" class="btn btn-danger btn-xs" type="submit" id="Code">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                                    <tr>
+                        <td>Test</td>
+                        <td>
+                            <div style="display: inline-block;" class="col-xs-9">
+                                Type for testing tasks
+                            </div>
+                            <form action="http://timetrax.dev/taskType/destroy/2" method="post">
+                                <input type="text" hidden="" value="i9RZ5Gj1izbas5u5AejcEYkkwMU25ueFv7JEJ2Tl" name="_token" />
+                                <button style="float: right" class="btn btn-danger btn-xs" type="submit" id="Test">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                                    <tr>
+                        <td>Deployment</td>
+                        <td>
+                            <div style="display: inline-block;" class="col-xs-9">
+                                Type for deployment tasks
+                            </div>
+                            <form action="http://timetrax.dev/taskType/destroy/3" method="post">
+                                <input type="text" hidden="" value="i9RZ5Gj1izbas5u5AejcEYkkwMU25ueFv7JEJ2Tl" name="_token" />
+                                <button style="float: right" class="btn btn-danger btn-xs" type="submit" id="Deployment">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                                    <tr>
+                        <td>Analysis</td>
+                        <td>
+                            <div style="display: inline-block;" class="col-xs-9">
+                                Type for Analyzing tasks
+                            </div>
+                            <form action="http://timetrax.dev/taskType/destroy/8" method="post">
+                                <input type="text" hidden="" value="i9RZ5Gj1izbas5u5AejcEYkkwMU25ueFv7JEJ2Tl" name="_token" />
+                                <button style="float: right" class="btn btn-danger btn-xs" type="submit" id="Analysis">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
                             </tbody>
         </table>
 
-                    <p class="text-center">No Tasks have been added as yet</p>
         
     </div>
 
@@ -70,6 +116,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.8.8/jquery.timepicker.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
 
-<script src="/js/TaskView.js"></script>
+<script src="/js/all.js"></script>
 
 </body></html>
