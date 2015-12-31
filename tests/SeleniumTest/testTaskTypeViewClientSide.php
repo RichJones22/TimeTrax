@@ -19,6 +19,19 @@ class testTaskView extends Selenium
         $this->visit('/');
     }
 
+    /** @test */
+    public function testCreateData()
+    {
+        $newTestClass = new testTaskView();
+
+        $newTestClass->visit('create_data');
+
+        $newTestClass->tearDown();
+
+        return $this;
+
+    }
+
    /** @test */
     function test_visits_taskType_view() {
         $this->visit('/taskType/show/1')->see("Type");
@@ -47,6 +60,7 @@ class testTaskView extends Selenium
             ->type('description','description')
             ->See('Error: Type already exists.');
     }
+
 
     /** @test */
     function test_checks_for_successful_insert() {

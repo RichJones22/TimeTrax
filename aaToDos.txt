@@ -1,8 +1,9 @@
 List of ToDo's...
 
 1)  Finish styling/coding the TaskType View.
- * a) put together client, server, and database test cases.
-   b) replace the save button with a glyphicon.
+ x a) put together client, server, and database test cases.
+ x b) replace the save button with a glyphicon.
+      i) went with a fixed size save button.
    c) i have a bug on the task page with the client edits; see if you can recreate it.
       i) it has something to do with blank spaces and then tabbing out, or
          causing the error some how and then not being able to clear it by tabbing back

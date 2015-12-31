@@ -58,7 +58,7 @@
                                 <div class="col-xs-9" style="display: inline-block;">
                                     <input type="text" class="form-control" id="notes" placeholder="notes" name="notes">
                                 </div>
-                                <button disabled type="submit" class="btn btn-primary col-xs-3" id="saveButton" style="float: right">Save</button>
+                                <button disabled type="submit" class="btn btn-primary col-xs" id="saveButton" style="float: right">Save</button>
                             </th>
                         </tr>
                     </div>

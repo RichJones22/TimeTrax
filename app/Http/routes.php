@@ -420,6 +420,13 @@ Route::get('delete_task_data', function() {
     echo "task data deleted!";
 });
 
+Route::get('delete_taskType_data', function() {
+    DB::table('task')->delete();
+    DB::table('task_type')->delete();
+
+    echo "task data deleted!";
+});
+
 Route::get('add_task_data_firstPass', function() {
     $startTime = '07:00:00';
     $endTime = '11:30:00';
@@ -472,32 +479,24 @@ Route::get('add_task_data_firstPass', function() {
     }
 });
 
-Route::get('add_task_data_secondPass', function() {
-    $startTime = '13:00:00';
-    $endTime = '14:00';
-    $hoursWorked = 3.5;
-    $notes = "worked defect number 127068";
-    if (is_null($task = Task::checkIfExists($startTime))) {
+Route::get('add_taskType_data', function() {
+    $type = 'Lunch';
+    $description = 'Lunch break';
+    if (is_null($taskType = TaskType::checkIfExists($type))) {
 
-        // get $taskType->id
-        $taskType = TaskType::where('type', '=', 'Code')->first();
+        // get $client->id
+        $client = Client::where('name', '=', 'Kendra Scott')->first();
 
-        // get $timeCard->id
-        $timeCard = TimeCard::where('date_worked', '=', '2015-11-12')->first();
+        $taskType = new TaskType;
 
-        $task = new Task;
+        $taskType->type = $type;
+        $taskType->description = $description;
+        $taskType->client_id = $client->id;
 
-        $task->start_time = $startTime;
-        $task->end_time = $endTime;
-        $task->hours_worked = $hoursWorked;
-        $task->notes = $notes;
-
-        $task->task_type_id = $taskType->id;
-        $task->time_card_id = $timeCard->id;
-
-        $task->save();
+        $taskType->save();
     }
 });
+
 
 /**
  * prototyping...

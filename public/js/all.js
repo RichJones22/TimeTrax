@@ -408,6 +408,7 @@ var taskType = {};
 $(document).ready(function(){
     taskType.loseFocusOnTaskType();
     taskType.loseFocusOnDescription();
+    taskType.causeTheTopLineOfTableHeaderToFade();
 });
 
 // SaveButton class to save state of required input fields.
@@ -442,6 +443,19 @@ function enabledDisabledSaveButton01() {
         $("#saveButtonTaskType").prop('disabled', false);
     } else {
         $("#saveButtonTaskType").prop('disabled', true);
+    }
+}
+
+taskType.causeTheTopLineOfTableHeaderToFade = function() {
+    var valueIs = $('#thAlertMessage').val();
+    if (typeof valueIs != 'undefined') {
+        (setTimeout(function () {
+            document.getElementById('thAlertMessage').style.display='none';
+            $('#thNoAlertMessage').fadeIn(3000);
+            //document.getElementById('thAlertMessage').style.display='none';
+            //document.getElementById('thNoAlertMessage').style.display='block';
+            //$('#thNoAlertMessage').css('display', '');
+        }, 10000))();
     }
 }
 

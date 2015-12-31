@@ -12,7 +12,8 @@ use \App\Helpers\appGlobals;
             <thead>
                 <tr style="background-color: darkgray;">
                     @if (Session::has(appGlobals::getInfoMessageType()))
-                        <th colspan="5" class="text-center" id="taskTypeHeader"><span style="color: brown;font-weight: bold">{{ Session::get(appGlobals::getInfoMessageType()) }}</span></th>
+                        <th id="thAlertMessage" colspan="5" class="text-center" id="taskTypeHeader"><span style="color: brown;font-weight: bold">{{ Session::get(appGlobals::getInfoMessageType()) }}</span></th>
+                        <th id="thNoAlertMessage" colspan="5" class="text-center" id="taskTypeHeader" style="display: none">Task Type Maintenance</th>
                     @else
                         <th colspan="5" class="text-center" id="taskTypeHeader">Task Type Maintenance</th>
                     @endif
@@ -47,7 +48,7 @@ use \App\Helpers\appGlobals;
                                 <div class="col-xs-9" style="display: inline-block;">
                                     <input type="text" class="form-control" id="description" placeholder="description" name="description">
                                 </div>
-                                <button disabled type="submit" class="btn btn-primary col-xs-3" id="saveButtonTaskType" style="float: right">Save</button>
+                                <button disabled type="submit" class="btn btn-primary col-xs" id="saveButtonTaskType" style="float: right">Save</button>
                             </th>
                         </tr>
                     </div>
