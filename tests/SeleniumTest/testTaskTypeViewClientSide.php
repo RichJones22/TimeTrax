@@ -43,7 +43,7 @@ class testTaskView extends Selenium
     /** @test */
     function test_checks_for_invalid_word_cant_exist() {
         $this->visit('/taskType/show/1')
-            ->type('code', '#taskType01')
+            ->type('Code', '#taskType01')
             ->type('description','description')
             ->See('Error: Type already exists.');
     }

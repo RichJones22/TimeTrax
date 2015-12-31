@@ -1,10 +1,20 @@
 List of ToDo's...
 
 1)  Finish styling/coding the TaskType View.
-   a) put together client, server, and database test cases.
-   b) would like to namespace the .js libs.
-   c) have what looks to be a cashing bug between Task and Task Type view.
+ * a) put together client, server, and database test cases.
+   b) replace the save button with a glyphicon.
+   c) i have a bug on the task page with the client edits; see if you can recreate it.
+      i) it has something to do with blank spaces and then tabbing out, or
+         causing the error some how and then not being able to clear it by tabbing back
+         in...
+ x d) i have what looks to be a cashing bug between Task and Task Type view.
       i) it is creating records that were deleted prior.
+        I) SOLUTION:  It looks like the end points that add data are getting called.  When I route
+                      specifically to the Task Type view, I don't get the same behavior.
 
 
-2)  Start working on the TimeCard View
+2)  Start working on the TimeCard View.
+   a) it looks like the date_worked field on the time_card table needs to not be unique.
+   b) i'm going to algorithmically determine what the dates should be for the days of the
+      week on the time card view.  Either by defaulting to today's date, and or, using a
+      date picker from a calendar of some kind...
