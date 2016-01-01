@@ -23,7 +23,7 @@ use \App\Helpers\appGlobals;
                         <span class="col-xs-9" style="display: inline-block;">Type</span>
                         @if (Session::has('from_taskView'))
                             <form method="get" action="{{ route('task.show', Session::get('from_taskView')) }}">
-                                <button type ="submit" class = "btn btn-primary btn-xs" style="float: right">
+                                <button id="routeToTaskView" type ="submit" class = "btn btn-primary btn-xs" style="float: right">
                                     <span class="glyphicon glyphicon-step-backward"></span>
                                 </button>
                             </form>
@@ -33,13 +33,13 @@ use \App\Helpers\appGlobals;
                         <span class="col-xs-9" style="display: inline-block;">Description</span>
                         @if (Session::has('from_taskView'))
                             <form method="get" action="{{ route('taskType.show', [$clientId, Session::get('from_taskView')])}}">
-                                <button type ="submit" class = "btn btn-primary btn-xs" style="float: right">
+                                <button id="taskTypeRefreshPage" type ="submit" class = "btn btn-primary btn-xs" style="float: right">
                                     <span class="glyphicon glyphicon-refresh"></span>
                                 </button>
                             </form>
                         @else
                             <form method="get" action="{{ route('taskType.show', $clientId)}}">
-                                <button type ="submit" class = "btn btn-primary btn-xs" style="float: right">
+                                <button id="taskTypeRefreshPage" type ="submit" class = "btn btn-primary btn-xs" style="float: right">
                                     <span class="glyphicon glyphicon-refresh"></span>
                                 </button>
                             </form>
