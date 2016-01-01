@@ -497,7 +497,6 @@ Route::get('add_taskType_data', function() {
     }
 });
 
-
 /**
  * prototyping...
  */
@@ -585,21 +584,14 @@ Route::get('unset_all_clients', function() {
 
 Route::get('get_all_tasks', function() {
 
-    $sessionData = Session::get(appGlobals::getTaskTypeTableName());
 
-    if (!$sessionData) {
-        $tasks = TaskType::all();
+    $tasks = TaskType::all();
 
-        foreach($tasks as $task) {
-            $data[] = ['id' => $task->id, 'type' => $task->type];
-        }
-
-        Session::set(appGlobals::getTaskTypeTableName(), $data);
-
-        $sessionData = Session::get(appGlobals::getTaskTypeTableName());
+    foreach($tasks as $task) {
+        $data[] = ['id' => $task->id, 'type' => $task->type];
     }
 
-    return $sessionData;
+    return $data;
 
 });
 

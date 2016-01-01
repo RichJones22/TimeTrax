@@ -81,9 +81,6 @@ class TaskController extends Controller
         // get time_card data.
         $timeCard = TimeCard::where('id', '=', $timeCardId)->get();
 
-        // allow the type drop down to refresh.
-        \Session::forget(appGlobals::getTaskTypeTableName());
-
         // pass the data to the view.
         return view('pages.userTaskView')
             ->with('tasks', $tasks)

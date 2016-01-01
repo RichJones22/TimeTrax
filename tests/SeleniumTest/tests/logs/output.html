@@ -1,204 +1,115 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"><head>
-        <meta charset="UTF-8" />
-        <meta content="noindex,nofollow" name="robots" />
-        <style>
-            /* Copyright (c) 2010, Yahoo! Inc. All rights reserved. Code licensed under the BSD License: http://developer.yahoo.com/yui/license.html */
-            html{color:#000;background:#FFF;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0;}table{border-collapse:collapse;border-spacing:0;}fieldset,img{border:0;}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}li{list-style:none;}caption,th{text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}q:before,q:after{content:'';}abbr,acronym{border:0;font-variant:normal;}sup{vertical-align:text-top;}sub{vertical-align:text-bottom;}input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;}input,textarea,select{*font-size:100%;}legend{color:#000;}
-
-            html { background: #eee; padding: 10px }
-            img { border: 0; }
-            #sf-resetcontent { width:970px; margin:0 auto; }
-                        .sf-reset { font: 11px Verdana, Arial, sans-serif; color: #333 }
-            .sf-reset .clear { clear:both; height:0; font-size:0; line-height:0; }
-            .sf-reset .clear_fix:after { display:block; height:0; clear:both; visibility:hidden; }
-            .sf-reset .clear_fix { display:inline-block; }
-            .sf-reset * html .clear_fix { height:1%; }
-            .sf-reset .clear_fix { display:block; }
-            .sf-reset, .sf-reset .block { margin: auto }
-            .sf-reset abbr { border-bottom: 1px dotted #000; cursor: help; }
-            .sf-reset p { font-size:14px; line-height:20px; color:#868686; padding-bottom:20px }
-            .sf-reset strong { font-weight:bold; }
-            .sf-reset a { color:#6c6159; cursor: default; }
-            .sf-reset a img { border:none; }
-            .sf-reset a:hover { text-decoration:underline; }
-            .sf-reset em { font-style:italic; }
-            .sf-reset h1, .sf-reset h2 { font: 20px Georgia, "Times New Roman", Times, serif }
-            .sf-reset .exception_counter { background-color: #fff; color: #333; padding: 6px; float: left; margin-right: 10px; float: left; display: block; }
-            .sf-reset .exception_title { margin-left: 3em; margin-bottom: 0.7em; display: block; }
-            .sf-reset .exception_message { margin-left: 3em; display: block; }
-            .sf-reset .traces li { font-size:12px; padding: 2px 4px; list-style-type:decimal; margin-left:20px; }
-            .sf-reset .block { background-color:#FFFFFF; padding:10px 28px; margin-bottom:20px;
-                -webkit-border-bottom-right-radius: 16px;
-                -webkit-border-bottom-left-radius: 16px;
-                -moz-border-radius-bottomright: 16px;
-                -moz-border-radius-bottomleft: 16px;
-                border-bottom-right-radius: 16px;
-                border-bottom-left-radius: 16px;
-                border-bottom:1px solid #ccc;
-                border-right:1px solid #ccc;
-                border-left:1px solid #ccc;
-            }
-            .sf-reset .block_exception { background-color:#ddd; color: #333; padding:20px;
-                -webkit-border-top-left-radius: 16px;
-                -webkit-border-top-right-radius: 16px;
-                -moz-border-radius-topleft: 16px;
-                -moz-border-radius-topright: 16px;
-                border-top-left-radius: 16px;
-                border-top-right-radius: 16px;
-                border-top:1px solid #ccc;
-                border-right:1px solid #ccc;
-                border-left:1px solid #ccc;
-                overflow: hidden;
-                word-wrap: break-word;
-            }
-            .sf-reset a { background:none; color:#868686; text-decoration:none; }
-            .sf-reset a:hover { background:none; color:#313131; text-decoration:underline; }
-            .sf-reset ol { padding: 10px 0; }
-            .sf-reset h1 { background-color:#FFFFFF; padding: 15px 28px; margin-bottom: 20px;
-                -webkit-border-radius: 10px;
-                -moz-border-radius: 10px;
-                border-radius: 10px;
-                border: 1px solid #ccc;
-            }
-        </style>
-    </head>
-    <body>
-                    <div class="sf-reset" id="sf-resetcontent">
-                <h1>Whoops, looks like something went wrong.</h1>
-                                        <h2 class="block_exception clear_fix">
-                            <span class="exception_counter">2/2</span>
-                            <span class="exception_title"><abbr title="Illuminate\Database\QueryException">QueryException</abbr> in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Database/Connection.php line 651">Connection.php line 651</a>:</span>
-                            <span class="exception_message">SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`time_trax`.`task`, CONSTRAINT `task_task_type_id_foreign` FOREIGN KEY (`task_type_id`) REFERENCES `task_type` (`id`)) (SQL: delete from `task_type` where `id` = 72)</span>
-                        </h2>
-                        <div class="block">
-                            <ol class="traces list_exception">
-       <li> in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Database/Connection.php line 651">Connection.php line 651</a></li>
-       <li>at <abbr title="Illuminate\Database\Connection">Connection</abbr>-&gt;runQueryCallback('delete from `task_type` where `id` = ?', <em>array</em>('72'), <em>object</em>(<abbr title="Closure">Closure</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Database/Connection.php line 611">Connection.php line 611</a></li>
-       <li>at <abbr title="Illuminate\Database\Connection">Connection</abbr>-&gt;run('delete from `task_type` where `id` = ?', <em>array</em>('72'), <em>object</em>(<abbr title="Closure">Closure</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Database/Connection.php line 416">Connection.php line 416</a></li>
-       <li>at <abbr title="Illuminate\Database\Connection">Connection</abbr>-&gt;affectingStatement('delete from `task_type` where `id` = ?', <em>array</em>('72')) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Database/Connection.php line 371">Connection.php line 371</a></li>
-       <li>at <abbr title="Illuminate\Database\Connection">Connection</abbr>-&gt;delete('delete from `task_type` where `id` = ?', <em>array</em>('72')) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Database/Query/Builder.php line 1868">Builder.php line 1868</a></li>
-       <li>at <abbr title="Illuminate\Database\Query\Builder">Builder</abbr>-&gt;delete() in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php line 377">Builder.php line 377</a></li>
-       <li>at <abbr title="Illuminate\Database\Eloquent\Builder">Builder</abbr>-&gt;delete() in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php line 1193">Model.php line 1193</a></li>
-       <li>at <abbr title="Illuminate\Database\Eloquent\Model">Model</abbr>-&gt;performDeleteOnModel() in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php line 1161">Model.php line 1161</a></li>
-       <li>at <abbr title="Illuminate\Database\Eloquent\Model">Model</abbr>-&gt;delete() in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php line 1130">Model.php line 1130</a></li>
-       <li>at <abbr title="Illuminate\Database\Eloquent\Model">Model</abbr>::destroy('72') in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/app/Http/Controllers/TaskTypeController.php line 106">TaskTypeController.php line 106</a></li>
-       <li>at <abbr title="App\Http\Controllers\TaskTypeController">TaskTypeController</abbr>-&gt;destroy('72')</li>
-       <li>at <abbr title=""></abbr>call_user_func_array(<em>array</em>(<em>object</em>(<abbr title="App\Http\Controllers\TaskTypeController">TaskTypeController</abbr>), 'destroy'), <em>array</em>('id' =&gt; '72')) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Routing/Controller.php line 256">Controller.php line 256</a></li>
-       <li>at <abbr title="Illuminate\Routing\Controller">Controller</abbr>-&gt;callAction('destroy', <em>array</em>('id' =&gt; '72')) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php line 164">ControllerDispatcher.php line 164</a></li>
-       <li>at <abbr title="Illuminate\Routing\ControllerDispatcher">ControllerDispatcher</abbr>-&gt;call(<em>object</em>(<abbr title="App\Http\Controllers\TaskTypeController">TaskTypeController</abbr>), <em>object</em>(<abbr title="Illuminate\Routing\Route">Route</abbr>), 'destroy') in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php line 112">ControllerDispatcher.php line 112</a></li>
-       <li>at <abbr title="Illuminate\Routing\ControllerDispatcher">ControllerDispatcher</abbr>-&gt;Illuminate\Routing\{closure}(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>))</li>
-       <li>at <abbr title=""></abbr>call_user_func(<em>object</em>(<abbr title="Closure">Closure</abbr>), <em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php line 139">Pipeline.php line 139</a></li>
-       <li>at <abbr title="Illuminate\Pipeline\Pipeline">Pipeline</abbr>-&gt;Illuminate\Pipeline\{closure}(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>))</li>
-       <li>at <abbr title=""></abbr>call_user_func(<em>object</em>(<abbr title="Closure">Closure</abbr>), <em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php line 103">Pipeline.php line 103</a></li>
-       <li>at <abbr title="Illuminate\Pipeline\Pipeline">Pipeline</abbr>-&gt;then(<em>object</em>(<abbr title="Closure">Closure</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php line 114">ControllerDispatcher.php line 114</a></li>
-       <li>at <abbr title="Illuminate\Routing\ControllerDispatcher">ControllerDispatcher</abbr>-&gt;callWithinStack(<em>object</em>(<abbr title="App\Http\Controllers\TaskTypeController">TaskTypeController</abbr>), <em>object</em>(<abbr title="Illuminate\Routing\Route">Route</abbr>), <em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>), 'destroy') in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php line 69">ControllerDispatcher.php line 69</a></li>
-       <li>at <abbr title="Illuminate\Routing\ControllerDispatcher">ControllerDispatcher</abbr>-&gt;dispatch(<em>object</em>(<abbr title="Illuminate\Routing\Route">Route</abbr>), <em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>), 'App\Http\Controllers\TaskTypeController', 'destroy') in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Routing/Route.php line 203">Route.php line 203</a></li>
-       <li>at <abbr title="Illuminate\Routing\Route">Route</abbr>-&gt;runWithCustomDispatcher(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Routing/Route.php line 134">Route.php line 134</a></li>
-       <li>at <abbr title="Illuminate\Routing\Route">Route</abbr>-&gt;run(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Routing/Router.php line 708">Router.php line 708</a></li>
-       <li>at <abbr title="Illuminate\Routing\Router">Router</abbr>-&gt;Illuminate\Routing\{closure}(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>))</li>
-       <li>at <abbr title=""></abbr>call_user_func(<em>object</em>(<abbr title="Closure">Closure</abbr>), <em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php line 139">Pipeline.php line 139</a></li>
-       <li>at <abbr title="Illuminate\Pipeline\Pipeline">Pipeline</abbr>-&gt;Illuminate\Pipeline\{closure}(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>))</li>
-       <li>at <abbr title=""></abbr>call_user_func(<em>object</em>(<abbr title="Closure">Closure</abbr>), <em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php line 103">Pipeline.php line 103</a></li>
-       <li>at <abbr title="Illuminate\Pipeline\Pipeline">Pipeline</abbr>-&gt;then(<em>object</em>(<abbr title="Closure">Closure</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Routing/Router.php line 710">Router.php line 710</a></li>
-       <li>at <abbr title="Illuminate\Routing\Router">Router</abbr>-&gt;runRouteWithinStack(<em>object</em>(<abbr title="Illuminate\Routing\Route">Route</abbr>), <em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Routing/Router.php line 675">Router.php line 675</a></li>
-       <li>at <abbr title="Illuminate\Routing\Router">Router</abbr>-&gt;dispatchToRoute(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Routing/Router.php line 635">Router.php line 635</a></li>
-       <li>at <abbr title="Illuminate\Routing\Router">Router</abbr>-&gt;dispatch(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php line 236">Kernel.php line 236</a></li>
-       <li>at <abbr title="Illuminate\Foundation\Http\Kernel">Kernel</abbr>-&gt;Illuminate\Foundation\Http\{closure}(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>))</li>
-       <li>at <abbr title=""></abbr>call_user_func(<em>object</em>(<abbr title="Closure">Closure</abbr>), <em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php line 139">Pipeline.php line 139</a></li>
-       <li>at <abbr title="Illuminate\Pipeline\Pipeline">Pipeline</abbr>-&gt;Illuminate\Pipeline\{closure}(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/VerifyCsrfToken.php line 50">VerifyCsrfToken.php line 50</a></li>
-       <li>at <abbr title="Illuminate\Foundation\Http\Middleware\VerifyCsrfToken">VerifyCsrfToken</abbr>-&gt;handle(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>), <em>object</em>(<abbr title="Closure">Closure</abbr>))</li>
-       <li>at <abbr title=""></abbr>call_user_func_array(<em>array</em>(<em>object</em>(<abbr title="App\Http\Middleware\VerifyCsrfToken">VerifyCsrfToken</abbr>), 'handle'), <em>array</em>(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>), <em>object</em>(<abbr title="Closure">Closure</abbr>))) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php line 124">Pipeline.php line 124</a></li>
-       <li>at <abbr title="Illuminate\Pipeline\Pipeline">Pipeline</abbr>-&gt;Illuminate\Pipeline\{closure}(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/View/Middleware/ShareErrorsFromSession.php line 49">ShareErrorsFromSession.php line 49</a></li>
-       <li>at <abbr title="Illuminate\View\Middleware\ShareErrorsFromSession">ShareErrorsFromSession</abbr>-&gt;handle(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>), <em>object</em>(<abbr title="Closure">Closure</abbr>))</li>
-       <li>at <abbr title=""></abbr>call_user_func_array(<em>array</em>(<em>object</em>(<abbr title="Illuminate\View\Middleware\ShareErrorsFromSession">ShareErrorsFromSession</abbr>), 'handle'), <em>array</em>(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>), <em>object</em>(<abbr title="Closure">Closure</abbr>))) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php line 124">Pipeline.php line 124</a></li>
-       <li>at <abbr title="Illuminate\Pipeline\Pipeline">Pipeline</abbr>-&gt;Illuminate\Pipeline\{closure}(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Session/Middleware/StartSession.php line 62">StartSession.php line 62</a></li>
-       <li>at <abbr title="Illuminate\Session\Middleware\StartSession">StartSession</abbr>-&gt;handle(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>), <em>object</em>(<abbr title="Closure">Closure</abbr>))</li>
-       <li>at <abbr title=""></abbr>call_user_func_array(<em>array</em>(<em>object</em>(<abbr title="Illuminate\Session\Middleware\StartSession">StartSession</abbr>), 'handle'), <em>array</em>(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>), <em>object</em>(<abbr title="Closure">Closure</abbr>))) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php line 124">Pipeline.php line 124</a></li>
-       <li>at <abbr title="Illuminate\Pipeline\Pipeline">Pipeline</abbr>-&gt;Illuminate\Pipeline\{closure}(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Cookie/Middleware/AddQueuedCookiesToResponse.php line 37">AddQueuedCookiesToResponse.php line 37</a></li>
-       <li>at <abbr title="Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse">AddQueuedCookiesToResponse</abbr>-&gt;handle(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>), <em>object</em>(<abbr title="Closure">Closure</abbr>))</li>
-       <li>at <abbr title=""></abbr>call_user_func_array(<em>array</em>(<em>object</em>(<abbr title="Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse">AddQueuedCookiesToResponse</abbr>), 'handle'), <em>array</em>(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>), <em>object</em>(<abbr title="Closure">Closure</abbr>))) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php line 124">Pipeline.php line 124</a></li>
-       <li>at <abbr title="Illuminate\Pipeline\Pipeline">Pipeline</abbr>-&gt;Illuminate\Pipeline\{closure}(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Cookie/Middleware/EncryptCookies.php line 59">EncryptCookies.php line 59</a></li>
-       <li>at <abbr title="Illuminate\Cookie\Middleware\EncryptCookies">EncryptCookies</abbr>-&gt;handle(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>), <em>object</em>(<abbr title="Closure">Closure</abbr>))</li>
-       <li>at <abbr title=""></abbr>call_user_func_array(<em>array</em>(<em>object</em>(<abbr title="App\Http\Middleware\EncryptCookies">EncryptCookies</abbr>), 'handle'), <em>array</em>(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>), <em>object</em>(<abbr title="Closure">Closure</abbr>))) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php line 124">Pipeline.php line 124</a></li>
-       <li>at <abbr title="Illuminate\Pipeline\Pipeline">Pipeline</abbr>-&gt;Illuminate\Pipeline\{closure}(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/CheckForMaintenanceMode.php line 44">CheckForMaintenanceMode.php line 44</a></li>
-       <li>at <abbr title="Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode">CheckForMaintenanceMode</abbr>-&gt;handle(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>), <em>object</em>(<abbr title="Closure">Closure</abbr>))</li>
-       <li>at <abbr title=""></abbr>call_user_func_array(<em>array</em>(<em>object</em>(<abbr title="Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode">CheckForMaintenanceMode</abbr>), 'handle'), <em>array</em>(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>), <em>object</em>(<abbr title="Closure">Closure</abbr>))) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php line 124">Pipeline.php line 124</a></li>
-       <li>at <abbr title="Illuminate\Pipeline\Pipeline">Pipeline</abbr>-&gt;Illuminate\Pipeline\{closure}(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>))</li>
-       <li>at <abbr title=""></abbr>call_user_func(<em>object</em>(<abbr title="Closure">Closure</abbr>), <em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php line 103">Pipeline.php line 103</a></li>
-       <li>at <abbr title="Illuminate\Pipeline\Pipeline">Pipeline</abbr>-&gt;then(<em>object</em>(<abbr title="Closure">Closure</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php line 122">Kernel.php line 122</a></li>
-       <li>at <abbr title="Illuminate\Foundation\Http\Kernel">Kernel</abbr>-&gt;sendRequestThroughRouter(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php line 87">Kernel.php line 87</a></li>
-       <li>at <abbr title="Illuminate\Foundation\Http\Kernel">Kernel</abbr>-&gt;handle(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/public/index.php line 54">index.php line 54</a></li>
-    </ol>
-</div>
-                        <h2 class="block_exception clear_fix">
-                            <span class="exception_counter">1/2</span>
-                            <span class="exception_title"><abbr title="PDOException">PDOException</abbr> in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Database/Connection.php line 413">Connection.php line 413</a>:</span>
-                            <span class="exception_message">SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`time_trax`.`task`, CONSTRAINT `task_task_type_id_foreign` FOREIGN KEY (`task_type_id`) REFERENCES `task_type` (`id`))</span>
-                        </h2>
-                        <div class="block">
-                            <ol class="traces list_exception">
-       <li> in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Database/Connection.php line 413">Connection.php line 413</a></li>
-       <li>at <abbr title="PDOStatement">PDOStatement</abbr>-&gt;execute(<em>array</em>('72')) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Database/Connection.php line 413">Connection.php line 413</a></li>
-       <li>at <abbr title="Illuminate\Database\Connection">Connection</abbr>-&gt;Illuminate\Database\{closure}(<em>object</em>(<abbr title="Illuminate\Database\MySqlConnection">MySqlConnection</abbr>), 'delete from `task_type` where `id` = ?', <em>array</em>('72')) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Database/Connection.php line 644">Connection.php line 644</a></li>
-       <li>at <abbr title="Illuminate\Database\Connection">Connection</abbr>-&gt;runQueryCallback('delete from `task_type` where `id` = ?', <em>array</em>('72'), <em>object</em>(<abbr title="Closure">Closure</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Database/Connection.php line 611">Connection.php line 611</a></li>
-       <li>at <abbr title="Illuminate\Database\Connection">Connection</abbr>-&gt;run('delete from `task_type` where `id` = ?', <em>array</em>('72'), <em>object</em>(<abbr title="Closure">Closure</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Database/Connection.php line 416">Connection.php line 416</a></li>
-       <li>at <abbr title="Illuminate\Database\Connection">Connection</abbr>-&gt;affectingStatement('delete from `task_type` where `id` = ?', <em>array</em>('72')) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Database/Connection.php line 371">Connection.php line 371</a></li>
-       <li>at <abbr title="Illuminate\Database\Connection">Connection</abbr>-&gt;delete('delete from `task_type` where `id` = ?', <em>array</em>('72')) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Database/Query/Builder.php line 1868">Builder.php line 1868</a></li>
-       <li>at <abbr title="Illuminate\Database\Query\Builder">Builder</abbr>-&gt;delete() in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php line 377">Builder.php line 377</a></li>
-       <li>at <abbr title="Illuminate\Database\Eloquent\Builder">Builder</abbr>-&gt;delete() in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php line 1193">Model.php line 1193</a></li>
-       <li>at <abbr title="Illuminate\Database\Eloquent\Model">Model</abbr>-&gt;performDeleteOnModel() in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php line 1161">Model.php line 1161</a></li>
-       <li>at <abbr title="Illuminate\Database\Eloquent\Model">Model</abbr>-&gt;delete() in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php line 1130">Model.php line 1130</a></li>
-       <li>at <abbr title="Illuminate\Database\Eloquent\Model">Model</abbr>::destroy('72') in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/app/Http/Controllers/TaskTypeController.php line 106">TaskTypeController.php line 106</a></li>
-       <li>at <abbr title="App\Http\Controllers\TaskTypeController">TaskTypeController</abbr>-&gt;destroy('72')</li>
-       <li>at <abbr title=""></abbr>call_user_func_array(<em>array</em>(<em>object</em>(<abbr title="App\Http\Controllers\TaskTypeController">TaskTypeController</abbr>), 'destroy'), <em>array</em>('id' =&gt; '72')) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Routing/Controller.php line 256">Controller.php line 256</a></li>
-       <li>at <abbr title="Illuminate\Routing\Controller">Controller</abbr>-&gt;callAction('destroy', <em>array</em>('id' =&gt; '72')) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php line 164">ControllerDispatcher.php line 164</a></li>
-       <li>at <abbr title="Illuminate\Routing\ControllerDispatcher">ControllerDispatcher</abbr>-&gt;call(<em>object</em>(<abbr title="App\Http\Controllers\TaskTypeController">TaskTypeController</abbr>), <em>object</em>(<abbr title="Illuminate\Routing\Route">Route</abbr>), 'destroy') in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php line 112">ControllerDispatcher.php line 112</a></li>
-       <li>at <abbr title="Illuminate\Routing\ControllerDispatcher">ControllerDispatcher</abbr>-&gt;Illuminate\Routing\{closure}(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>))</li>
-       <li>at <abbr title=""></abbr>call_user_func(<em>object</em>(<abbr title="Closure">Closure</abbr>), <em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php line 139">Pipeline.php line 139</a></li>
-       <li>at <abbr title="Illuminate\Pipeline\Pipeline">Pipeline</abbr>-&gt;Illuminate\Pipeline\{closure}(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>))</li>
-       <li>at <abbr title=""></abbr>call_user_func(<em>object</em>(<abbr title="Closure">Closure</abbr>), <em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php line 103">Pipeline.php line 103</a></li>
-       <li>at <abbr title="Illuminate\Pipeline\Pipeline">Pipeline</abbr>-&gt;then(<em>object</em>(<abbr title="Closure">Closure</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php line 114">ControllerDispatcher.php line 114</a></li>
-       <li>at <abbr title="Illuminate\Routing\ControllerDispatcher">ControllerDispatcher</abbr>-&gt;callWithinStack(<em>object</em>(<abbr title="App\Http\Controllers\TaskTypeController">TaskTypeController</abbr>), <em>object</em>(<abbr title="Illuminate\Routing\Route">Route</abbr>), <em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>), 'destroy') in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php line 69">ControllerDispatcher.php line 69</a></li>
-       <li>at <abbr title="Illuminate\Routing\ControllerDispatcher">ControllerDispatcher</abbr>-&gt;dispatch(<em>object</em>(<abbr title="Illuminate\Routing\Route">Route</abbr>), <em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>), 'App\Http\Controllers\TaskTypeController', 'destroy') in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Routing/Route.php line 203">Route.php line 203</a></li>
-       <li>at <abbr title="Illuminate\Routing\Route">Route</abbr>-&gt;runWithCustomDispatcher(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Routing/Route.php line 134">Route.php line 134</a></li>
-       <li>at <abbr title="Illuminate\Routing\Route">Route</abbr>-&gt;run(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Routing/Router.php line 708">Router.php line 708</a></li>
-       <li>at <abbr title="Illuminate\Routing\Router">Router</abbr>-&gt;Illuminate\Routing\{closure}(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>))</li>
-       <li>at <abbr title=""></abbr>call_user_func(<em>object</em>(<abbr title="Closure">Closure</abbr>), <em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php line 139">Pipeline.php line 139</a></li>
-       <li>at <abbr title="Illuminate\Pipeline\Pipeline">Pipeline</abbr>-&gt;Illuminate\Pipeline\{closure}(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>))</li>
-       <li>at <abbr title=""></abbr>call_user_func(<em>object</em>(<abbr title="Closure">Closure</abbr>), <em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php line 103">Pipeline.php line 103</a></li>
-       <li>at <abbr title="Illuminate\Pipeline\Pipeline">Pipeline</abbr>-&gt;then(<em>object</em>(<abbr title="Closure">Closure</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Routing/Router.php line 710">Router.php line 710</a></li>
-       <li>at <abbr title="Illuminate\Routing\Router">Router</abbr>-&gt;runRouteWithinStack(<em>object</em>(<abbr title="Illuminate\Routing\Route">Route</abbr>), <em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Routing/Router.php line 675">Router.php line 675</a></li>
-       <li>at <abbr title="Illuminate\Routing\Router">Router</abbr>-&gt;dispatchToRoute(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Routing/Router.php line 635">Router.php line 635</a></li>
-       <li>at <abbr title="Illuminate\Routing\Router">Router</abbr>-&gt;dispatch(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php line 236">Kernel.php line 236</a></li>
-       <li>at <abbr title="Illuminate\Foundation\Http\Kernel">Kernel</abbr>-&gt;Illuminate\Foundation\Http\{closure}(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>))</li>
-       <li>at <abbr title=""></abbr>call_user_func(<em>object</em>(<abbr title="Closure">Closure</abbr>), <em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php line 139">Pipeline.php line 139</a></li>
-       <li>at <abbr title="Illuminate\Pipeline\Pipeline">Pipeline</abbr>-&gt;Illuminate\Pipeline\{closure}(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/VerifyCsrfToken.php line 50">VerifyCsrfToken.php line 50</a></li>
-       <li>at <abbr title="Illuminate\Foundation\Http\Middleware\VerifyCsrfToken">VerifyCsrfToken</abbr>-&gt;handle(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>), <em>object</em>(<abbr title="Closure">Closure</abbr>))</li>
-       <li>at <abbr title=""></abbr>call_user_func_array(<em>array</em>(<em>object</em>(<abbr title="App\Http\Middleware\VerifyCsrfToken">VerifyCsrfToken</abbr>), 'handle'), <em>array</em>(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>), <em>object</em>(<abbr title="Closure">Closure</abbr>))) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php line 124">Pipeline.php line 124</a></li>
-       <li>at <abbr title="Illuminate\Pipeline\Pipeline">Pipeline</abbr>-&gt;Illuminate\Pipeline\{closure}(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/View/Middleware/ShareErrorsFromSession.php line 49">ShareErrorsFromSession.php line 49</a></li>
-       <li>at <abbr title="Illuminate\View\Middleware\ShareErrorsFromSession">ShareErrorsFromSession</abbr>-&gt;handle(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>), <em>object</em>(<abbr title="Closure">Closure</abbr>))</li>
-       <li>at <abbr title=""></abbr>call_user_func_array(<em>array</em>(<em>object</em>(<abbr title="Illuminate\View\Middleware\ShareErrorsFromSession">ShareErrorsFromSession</abbr>), 'handle'), <em>array</em>(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>), <em>object</em>(<abbr title="Closure">Closure</abbr>))) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php line 124">Pipeline.php line 124</a></li>
-       <li>at <abbr title="Illuminate\Pipeline\Pipeline">Pipeline</abbr>-&gt;Illuminate\Pipeline\{closure}(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Session/Middleware/StartSession.php line 62">StartSession.php line 62</a></li>
-       <li>at <abbr title="Illuminate\Session\Middleware\StartSession">StartSession</abbr>-&gt;handle(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>), <em>object</em>(<abbr title="Closure">Closure</abbr>))</li>
-       <li>at <abbr title=""></abbr>call_user_func_array(<em>array</em>(<em>object</em>(<abbr title="Illuminate\Session\Middleware\StartSession">StartSession</abbr>), 'handle'), <em>array</em>(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>), <em>object</em>(<abbr title="Closure">Closure</abbr>))) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php line 124">Pipeline.php line 124</a></li>
-       <li>at <abbr title="Illuminate\Pipeline\Pipeline">Pipeline</abbr>-&gt;Illuminate\Pipeline\{closure}(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Cookie/Middleware/AddQueuedCookiesToResponse.php line 37">AddQueuedCookiesToResponse.php line 37</a></li>
-       <li>at <abbr title="Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse">AddQueuedCookiesToResponse</abbr>-&gt;handle(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>), <em>object</em>(<abbr title="Closure">Closure</abbr>))</li>
-       <li>at <abbr title=""></abbr>call_user_func_array(<em>array</em>(<em>object</em>(<abbr title="Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse">AddQueuedCookiesToResponse</abbr>), 'handle'), <em>array</em>(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>), <em>object</em>(<abbr title="Closure">Closure</abbr>))) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php line 124">Pipeline.php line 124</a></li>
-       <li>at <abbr title="Illuminate\Pipeline\Pipeline">Pipeline</abbr>-&gt;Illuminate\Pipeline\{closure}(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Cookie/Middleware/EncryptCookies.php line 59">EncryptCookies.php line 59</a></li>
-       <li>at <abbr title="Illuminate\Cookie\Middleware\EncryptCookies">EncryptCookies</abbr>-&gt;handle(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>), <em>object</em>(<abbr title="Closure">Closure</abbr>))</li>
-       <li>at <abbr title=""></abbr>call_user_func_array(<em>array</em>(<em>object</em>(<abbr title="App\Http\Middleware\EncryptCookies">EncryptCookies</abbr>), 'handle'), <em>array</em>(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>), <em>object</em>(<abbr title="Closure">Closure</abbr>))) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php line 124">Pipeline.php line 124</a></li>
-       <li>at <abbr title="Illuminate\Pipeline\Pipeline">Pipeline</abbr>-&gt;Illuminate\Pipeline\{closure}(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/CheckForMaintenanceMode.php line 44">CheckForMaintenanceMode.php line 44</a></li>
-       <li>at <abbr title="Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode">CheckForMaintenanceMode</abbr>-&gt;handle(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>), <em>object</em>(<abbr title="Closure">Closure</abbr>))</li>
-       <li>at <abbr title=""></abbr>call_user_func_array(<em>array</em>(<em>object</em>(<abbr title="Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode">CheckForMaintenanceMode</abbr>), 'handle'), <em>array</em>(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>), <em>object</em>(<abbr title="Closure">Closure</abbr>))) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php line 124">Pipeline.php line 124</a></li>
-       <li>at <abbr title="Illuminate\Pipeline\Pipeline">Pipeline</abbr>-&gt;Illuminate\Pipeline\{closure}(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>))</li>
-       <li>at <abbr title=""></abbr>call_user_func(<em>object</em>(<abbr title="Closure">Closure</abbr>), <em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php line 103">Pipeline.php line 103</a></li>
-       <li>at <abbr title="Illuminate\Pipeline\Pipeline">Pipeline</abbr>-&gt;then(<em>object</em>(<abbr title="Closure">Closure</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php line 122">Kernel.php line 122</a></li>
-       <li>at <abbr title="Illuminate\Foundation\Http\Kernel">Kernel</abbr>-&gt;sendRequestThroughRouter(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php line 87">Kernel.php line 87</a></li>
-       <li>at <abbr title="Illuminate\Foundation\Http\Kernel">Kernel</abbr>-&gt;handle(<em>object</em>(<abbr title="Illuminate\Http\Request">Request</abbr>)) in <a ondblclick="var f=this.innerHTML;this.innerHTML=this.title;this.title=f;" title="/home/vagrant/Code/TimeTrax/public/index.php line 54">index.php line 54</a></li>
-    </ol>
-</div>
-
-            </div>
+<html xmlns="http://www.w3.org/1999/xhtml"><head lang="en">
+    <meta charset="UTF-8" />
+    <title>TimeTrax</title>
+    <link href="/css/app.css" media="screen" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.8.8/jquery.timepicker.min.css" media="screen" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" media="screen" rel="stylesheet" />
     
+</head>
+<body>
+<div class="container-fluid">
+
+    <div style="margin: 60px;">
+        <input type="text" hidden="" value="zy3DAtfO71zzZmTCRaCvTitv1LTHdZ9b6loFVmyV" name="_token" /><div>
+                        </div><table class="table table-hover table-bordered">
+            <thead>
+                <tr style="background-color: darkgray;">
+                                            <th class="text-center" colspan="5">Nov 12, 2015</th>
+                                    </tr>
+                <tr style="background-color: darkgray;">
+                    <th>
+                        <span style="display: inline-block;" class="col-xs-9">Type</span>
+                                                    
+                            <form action="http://timetrax.dev/taskType/show/1/1" method="get">
+                                <button style="float: right" class="btn btn-primary btn-xs" type="submit" id="routeToTaskTypeView">
+                                    <span class="glyphicon glyphicon-open"></span>
+                                </button>
+                            </form>
+                                            </th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th><span style="color: blue; font-weight: bold"> ( 8.5 ) </span>Hours Worked</th>
+                    <th>
+                        <span style="display: inline-block;" class="col-xs-9">Notes</span>
+                        <form action="http://timetrax.dev/task/show/1" method="get">
+                            <button style="float: right" class="btn btn-primary btn-xs" type="submit">
+                                   <span class="glyphicon glyphicon-refresh"></span>
+                            </button>
+                        </form>
+                    </th>
+                </tr>
+                <form action="http://timetrax.dev/task/create/1" method="post"></form>
+                    
+                    <tr class="info">
+                            <th>
+                                <select class="form-control col-xs-12" name="taskType" id="taskType">
+                                    <option value="0">--Select Type--</option>
+                                <option value="1">Code</option><option value="2">Test</option><option value="3">Deployment</option><option value="4">Analysis</option><option value="13">Lunch</option></select>
+                            </th>
+                            <th><input placeholder="start" name="startt" id="startt-search" class="form-control ui-timepicker-input" autocomplete="off" /></th>
+                            <th><input placeholder="end" name="endt" id="endt" class="form-control ui-timepicker-input" autocomplete="off" /></th>
+                            <th><input type="text" name="hoursWorked" id="hoursWorked" class="form-control" disabled="disabled" /></th>
+                            <th>
+                                <div style="display: inline-block;" class="col-xs-9">
+                                    <input type="text" name="notes" placeholder="notes" id="notes" class="form-control" />
+                                </div>
+                                <button style="float: right" id="saveButton" class="btn btn-primary col-xs" type="submit" disabled="disabled">Save</button>
+                            </th>
+                        </tr>
+                    
+                
+            </thead>
+
+            <tbody id="taskTable">
+                                    <tr>
+                        <td>Code</td>
+                        <td>07:00</td>
+                        <td>11:30</td>
+                        <td>3.5</td>
+                        <td>
+                            <div style="display: inline-block;" class="col-xs-9">
+                                worked defect number 127068
+                            </div>
+                            <form action="http://timetrax.dev/task/destroy/1" method="post">
+                                <input type="text" hidden="" value="zy3DAtfO71zzZmTCRaCvTitv1LTHdZ9b6loFVmyV" name="_token" />
+                                <button style="float: right" class="btn btn-danger btn-xs" type="submit">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                                    <tr>
+                        <td>Code</td>
+                        <td>12:00</td>
+                        <td>17:00</td>
+                        <td>5</td>
+                        <td>
+                            <div style="display: inline-block;" class="col-xs-9">
+                                worked defect number 127068
+                            </div>
+                            <form action="http://timetrax.dev/task/destroy/2" method="post">
+                                <input type="text" hidden="" value="zy3DAtfO71zzZmTCRaCvTitv1LTHdZ9b6loFVmyV" name="_token" />
+                                <button style="float: right" class="btn btn-danger btn-xs" type="submit">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                            </tbody>
+        </table>
+
+        
+    </div>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.9.1/bootstrap-table.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.8.8/jquery.timepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+
+<script src="/js/all.js"></script>
+
 </body></html>

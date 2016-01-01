@@ -9,7 +9,6 @@
 use Laracasts\Integrated\Extensions\Selenium;
 use Laracasts\Integrated\Services\Laravel\Application as Laravel;
 
-
 class testTaskViewInteractions extends Selenium
 {
     use Laravel;
@@ -94,5 +93,57 @@ class testTaskViewInteractions extends Selenium
             ->notSee('routeToTaskView');
     }
 
+    /**
+     * below tests test how the Task View drop-down box is populated.
+     */
+
+    /** @test */
+    function test_dropDown_check_first_element_code() {
+        $this->visit('/task/show/1')
+            ->see("Nov 12, 2015")->wait(1000)
+            ->select('#taskType', 1)
+            ->type('rich was here','#notes')
+            ->see('Code');
+    }
+
+    function test_create_type_code_of_lunch() {
+
+        // awkward part of the test.  You need to see the ch
+        $currentTaskTypeId = 32;
+        $nextTaskTypeId = $currentTaskTypeId + 2;
+
+        $this->visit('/task/show/1')
+            ->see("Nov 12, 2015")
+            ->notSee('Lunch')
+            ->click('#routeToTaskTypeView')
+            ->see('Task Type Maintenance')
+            ->type('Lunch', '#taskType01')
+            ->type('Lunch break','description')
+            ->tick('#taskType01')
+            ->click('saveButtonTaskType')
+            ->click('#routeToTaskView')
+            ->see('Nov 12, 2015')->wait(1000)
+            ->select('#taskType', $nextTaskTypeId)
+            ->deleteLunchFromOtherTypeTypeView()
+            ->see('Nov 12, 2015')->wait(1000)
+            ->select('#taskType', 0)
+            ->see('Nov 12, 2015')->wait(1000)
+            ->select('#taskType', 1)
+            ->see('Nov 12, 2015')->wait(1000)
+            ->notSee('Lunch');
+    }
+
+    function deleteLunchFromOtherTypeTypeView() {
+
+        $deleteLunch = new testTaskViewInteractions;
+
+        $deleteLunch->visit('/taskType/show/1')
+            ->click('Lunch')
+            ->notSee('Lunch');
+
+        $deleteLunch->tearDown();
+
+        return $this;
+    }
 
 }
