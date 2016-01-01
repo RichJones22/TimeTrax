@@ -37,9 +37,6 @@ class TaskTypeController extends Controller
 
         $taskType->save();
 
-        // reset the appGlobals::getTaskTypeTableName()
-        \Session::forget(appGlobals::getTaskTypeTableName());
-
         return redirect()->back();
     }
 
@@ -60,10 +57,17 @@ class TaskTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($clientId)
+    public function show($clientId, $timeCardId = null)
     {
         // get all task for a specific time_card.date.
         $taskTypes = TaskType::where('client_id', '=', $clientId)->get();
+
+        // correctly sets the back button if the $timeCardId has been passed, the back button is set, else not.
+        if (is_null($timeCardId)) {
+            \Session::forget('from_taskView');
+        } else {
+            \Session::set('from_taskView', $timeCardId);
+        }
 
         // pass the data to the view.
         return view('pages.userTaskTypeView')
@@ -102,11 +106,7 @@ class TaskTypeController extends Controller
      */
     public function destroy($id)
     {
-
         TaskType::destroy($id);
-
-        // reset the appGlobals::getTaskTypeTableName()
-        \Session::forget(appGlobals::getTaskTypeTableName());
 
         return redirect()->back();
     }

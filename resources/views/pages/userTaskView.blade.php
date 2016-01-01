@@ -22,8 +22,8 @@
                     <th>
                         <span class="col-xs-9" style="display: inline-block;">Type</span>
                         @if(count($tasks)>0)
-                            {{--{{Session::put('from_taskView', $timeCardId)}}--}}
-                            <form method="get" action="{{ route('taskType.show', $tasks[0]->TaskType->client_id) }}">
+                            {{Session::put('from_taskView', $timeCardId)}}
+                            <form method="get" action="{{ route('taskType.show', [$tasks[0]->TaskType->client_id, $timeCardId])}}">
                                 <button type ="submit" class = "btn btn-primary btn-xs" style="float: right">
                                     <span class="glyphicon glyphicon-open"></span>
                                 </button>

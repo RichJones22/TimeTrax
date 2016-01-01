@@ -21,22 +21,29 @@ use \App\Helpers\appGlobals;
                 <tr style="background-color: darkgray;">
                     <th>
                         <span class="col-xs-9" style="display: inline-block;">Type</span>
-                        {{--@if (Session::has('from_taskView'))--}}
-                            {{--<form method="get" action="{{ route('task.show', Session::get('from_taskView')) }}">--}}
-                                {{--{{Session::forget('from_taskView')}}--}}
-                                {{--<button type ="submit" class = "btn btn-primary btn-xs" style="float: right">--}}
-                                    {{--<span class="glyphicon glyphicon-step-backward"></span>--}}
-                                {{--</button>--}}
-                            {{--</form>--}}
-                        {{--@endif--}}
+                        @if (Session::has('from_taskView'))
+                            <form method="get" action="{{ route('task.show', Session::get('from_taskView')) }}">
+                                <button type ="submit" class = "btn btn-primary btn-xs" style="float: right">
+                                    <span class="glyphicon glyphicon-step-backward"></span>
+                                </button>
+                            </form>
+                        @endif
                     </th>
                     <th>
                         <span class="col-xs-9" style="display: inline-block;">Description</span>
-                        <form method="get" action="{{ route('taskType.show', $clientId) }}">
-                            <button type ="submit" class = "btn btn-primary btn-xs" style="float: right">
-                                   <span class="glyphicon glyphicon-refresh"></span>
-                            </button>
-                        </form>
+                        @if (Session::has('from_taskView'))
+                            <form method="get" action="{{ route('taskType.show', [$clientId, Session::get('from_taskView')])}}">
+                                <button type ="submit" class = "btn btn-primary btn-xs" style="float: right">
+                                    <span class="glyphicon glyphicon-refresh"></span>
+                                </button>
+                            </form>
+                        @else
+                            <form method="get" action="{{ route('taskType.show', $clientId)}}">
+                                <button type ="submit" class = "btn btn-primary btn-xs" style="float: right">
+                                    <span class="glyphicon glyphicon-refresh"></span>
+                                </button>
+                            </form>
+                        @endif
                     </th>
                 </tr>
                 <form method="post" action="{{ route('taskType.create', $clientId) }}">

@@ -47,7 +47,7 @@ Route::post('task/destroy/{id}', ['as' => 'task.destroy', 'uses' => 'TaskControl
 
 
 // route to task type view.
-Route::get('taskType/show/{id}', ['as' => 'taskType.show', 'uses' => 'TaskTypeController@show']);
+Route::get('taskType/show/{id}/{timeCardId?}', ['as' => 'taskType.show', 'uses' => 'TaskTypeController@show']);
 
 // insert a task type.
 Route::post('taskType/create/{id}', ['as' => 'taskType.create', 'uses' => 'TaskTypeController@create']);

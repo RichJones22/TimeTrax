@@ -1,21 +1,21 @@
 List of ToDo's...
 
-1)  Finish styling/coding the TaskType View.
- x a) put together client, server, and database test cases.
- x b) replace the save button with a glyphicon.
-      i) went with a fixed size save button.
+0)  worked out how to call the task_type from task and then by it's self.  In once case the back button is set, and
+    in the other it is not.  Additionally, the refresh button has been changed for this.  The trick was to use an
+    optional parameter of timeCardId to the task view controller, such that it has a value if routed from the
+    task view and it does not if not routing from the task view.
+
+    - the kicker is you need test cases for this...
+
+1)  Start working on the TimeCard View.
+ x a) it looks like the date_worked field on the time_card table needs to not be unique.
+   b) i'm going to algorithmically determine what the dates should be for the days of the
+      week on the time card view.  Either by defaulting to today's date, and or, using a
+      date picker from a calendar of some kind...
+
    c) i have a bug on the task page with the client edits; see if you can recreate it.
       i) it has something to do with blank spaces and then tabbing out, or
          causing the error some how and then not being able to clear it by tabbing back
          in...
- x d) i have what looks to be a cashing bug between Task and Task Type view.
-      i) it is creating records that were deleted prior.
-        I) SOLUTION:  It looks like the end points that add data are getting called.  When I route
-                      specifically to the Task Type view, I don't get the same behavior.
 
 
-2)  Start working on the TimeCard View.
-   a) it looks like the date_worked field on the time_card table needs to not be unique.
-   b) i'm going to algorithmically determine what the dates should be for the days of the
-      week on the time card view.  Either by defaulting to today's date, and or, using a
-      date picker from a calendar of some kind...
