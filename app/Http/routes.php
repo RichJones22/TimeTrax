@@ -46,7 +46,7 @@ Route::post('task/destroy/{id}', ['as' => 'task.destroy', 'uses' => 'TaskControl
 
 
 
-// route to task type view.
+// route to taskType view.
 Route::get('taskType/show/{id}/{timeCardId?}', ['as' => 'taskType.show', 'uses' => 'TaskTypeController@show']);
 
 // insert a task type.
@@ -54,6 +54,17 @@ Route::post('taskType/create/{id}', ['as' => 'taskType.create', 'uses' => 'TaskT
 
 // delete a task type.
 Route::post('taskType/destroy/{id}', ['as' => 'taskType.destroy', 'uses' => 'TaskTypeController@destroy']);
+
+
+
+// route to timeCard type view.
+Route::get('timeCard/show/{dateSelected?}', ['as' => 'timeCard.show', 'uses' => 'TimeCardController@show']);
+
+// insert a TimeCard record.
+Route::post('timeCard/create/{id}', ['as' => 'timeCard.create', 'uses' => 'TimeCardController@create']);
+
+// delete a TimeCard record.
+Route::post('timeCard/destroy/{id}', ['as' => 'timeCard.destroy', 'uses' => 'TimeCardController@destroy']);
 
 
 

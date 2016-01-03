@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests\PrepareTaskTypeRequest;
 use \App\TaskType;
-use \App\Helpers\appGlobals;
 
 class TaskTypeController extends Controller
 {

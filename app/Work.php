@@ -26,4 +26,12 @@ class Work extends Model
 
         return $work;
     }
+
+    public function workType() {
+        return $this->belongsTo('\App\WorkType');
+    }
+
+    public function timeCard() {
+        return $this->hasMany('\App\TimeCard');
+    }
 }

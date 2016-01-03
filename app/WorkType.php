@@ -34,4 +34,8 @@ class WorkType extends Model
 
         return $workType;
     }
+
+    public function work() {
+        return $this->hasMany('\App\Work');
+    }
 }

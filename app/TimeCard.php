@@ -37,4 +37,9 @@ class TimeCard extends Model
     public function task() {
         return $this->hasMany('\App\Task');
     }
+
+    public function work() {
+        return $this->belongsTo('\App\Work');
+    }
+
 }
