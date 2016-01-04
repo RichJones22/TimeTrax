@@ -131,7 +131,7 @@ function getStartTime() {
                              'useSelect' : false });
 }
 function getEndTime() {
-    $('#endt').timepicker({'show2400' : true,
+    $('#endt-search').timepicker({'show2400' : true,
                            'timeFormat': 'H:i',
                            'scrollDefault': 'now',
                            'useSelect' : false });
@@ -139,13 +139,13 @@ function getEndTime() {
 
 // calculate hours worked and populate the hours worked cell.
 function loseFocusOnEndTime() {
-    $("#endt").focusout(function(){
+    $("#endt-search").focusout(function(){
         var t1Str = $('#startt-search').text($(this)).val();
         var t1 = t1Str.split(':');
 
-        var t2Str = $('#endt').text($(this)).val();
+        var t2Str = $('#endt-search').text($(this)).val();
         if (!isValidHourMinute(t2Str) && !t2Str.isEmpty()) {
-            $('#endt').css('background-color', 'pink');
+            $('#endt-search').css('background-color', 'pink');
             saveButton.setEndt(false);
             enabledDisabledSaveButton();
             $('#hoursWorked').val("");
@@ -153,7 +153,7 @@ function loseFocusOnEndTime() {
             return;
         }
         else {
-            $('#endt').css('background-color', 'white');
+            $('#endt-search').css('background-color', 'white');
             saveButton.setEndt(true);
             enabledDisabledSaveButton();
         }
@@ -171,7 +171,7 @@ function loseFocusOnEndTime() {
             var beginningTime = moment({H: t1[0], s: t1[1]});
             var endTime = moment({H: t2[0], s: t2[1]});
             if (!beginningTime.isBefore(endTime)) {
-                $('#endt').css('background-color', 'pink');
+                $('#endt-search').css('background-color', 'pink');
                 saveButton.setEndt(false);
                 enabledDisabledSaveButton();
                 $('#hoursWorked').val("");
@@ -179,13 +179,13 @@ function loseFocusOnEndTime() {
                 return;
             }
             else {
-                $('#endt').css('background-color', 'white');
+                $('#endt-search').css('background-color', 'white');
                 saveButton.setEndt(true);
                 enabledDisabledSaveButton();
             }
 
-            if (rgb2hex($('#startt-search').css('background-color')) === rgb2hex($('#endt').css('background-color')) &&
-                rgb2hex($('#endt').css('background-color')) === "#ffffff") {
+            if (rgb2hex($('#startt-search').css('background-color')) === rgb2hex($('#endt-search').css('background-color')) &&
+                rgb2hex($('#endt-search').css('background-color')) === "#ffffff") {
                 var t1Min = Math.floor(t1[0]) *60 + Math.floor(t1[1]);
                 var t2Min = Math.floor(t2[0]) *60 + Math.floor(t2[1]);
 
@@ -209,7 +209,7 @@ function loseFocusOnStartTime() {
             return;
         }
         else {
-            $('#endt').css('background-color', 'white');
+            $('#endt-search').css('background-color', 'white');
             $('#startt-search').css('background-color', 'white');
             saveButton.setStartt(true);
             enabledDisabledSaveButton();
@@ -224,7 +224,7 @@ function loseFocusOnStartTime() {
             return;
         }
 
-        var t2Str = $('#endt').text($(this)).val();
+        var t2Str = $('#endt-search').text($(this)).val();
         var t2 = t2Str.split(':');
 
         if (t1Str.isEmpty() && t2Str.isEmpty()) {
@@ -248,8 +248,8 @@ function loseFocusOnStartTime() {
                 enabledDisabledSaveButton();
             }
 
-            if (rgb2hex($('#startt-search').css('background-color')) === rgb2hex($('#endt').css('background-color')) &&
-                rgb2hex($('#endt').css('background-color')) === "#ffffff") {
+            if (rgb2hex($('#startt-search').css('background-color')) === rgb2hex($('#endt-search').css('background-color')) &&
+                rgb2hex($('#endt-search').css('background-color')) === "#ffffff") {
                 var t1Min = Math.floor(t1[0]) *60 + Math.floor(t1[1]);
                 var t2Min = Math.floor(t2[0]) *60 + Math.floor(t2[1]);
 
@@ -342,7 +342,7 @@ function checkForEndTimeOverlaps() {
 
     var table = document.getElementById("taskTable");
     for (var i = 0, row; row = table.rows[i]; i++) {
-        var t1Str = $('#endt').text($(this)).val();
+        var t1Str = $('#endt-search').text($(this)).val();
         var t1 = t1Str.split(':');
         var timeToCheck = moment({H: t1[0], m: t1[1]});
         var timeToCheckLess1Second = moment({H: t1[0], m: t1[1]}).subtract(1, 'seconds');
@@ -358,7 +358,7 @@ function checkForEndTimeOverlaps() {
 
         if (!timeToCheck.isBefore(cellStartTime) && !timeToCheck.isAfter(cellEndTime)) {
             if (!timeToCheckLess1Second.isBefore(cellStartTime) && !timeToCheckLess1Second.isAfter(cellEndTime)) {
-                $('#endt').css('background-color', 'pink');
+                $('#endt-search').css('background-color', 'pink');
                 row.cells[1].style.color = "pink";
                 row.cells[1].style.fontWeight = 'bold';
                 row.cells[2].style.color = "pink";
@@ -366,7 +366,7 @@ function checkForEndTimeOverlaps() {
 
                 return false;
             } else {
-                $('#endt').css('background-color', 'white');
+                $('#endt-search').css('background-color', 'white');
                 row.cells[1].style.color = "black";
                 row.cells[1].style.fontWeight = 'normal';
                 row.cells[2].style.color = "black";

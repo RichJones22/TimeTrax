@@ -21,8 +21,8 @@ use \App\Helpers\appGlobals;
                 <tr style="background-color: darkgray;">
                     <th>
                         <span class="col-xs-9" style="display: inline-block;">Type</span>
-                        @if (Session::has('from_taskView'))
-                            {!! Form::open(array('route' => array('task.show', Session::get('from_taskView')))) !!}
+                        @if (Session::has(appGlobals::getTaskTableName()))
+                            {!! Form::open(array('route' => array('task.show', Session::get(appGlobals::getTaskTableName())))) !!}
                                 <input type="hidden" name="_method" value="GET">
                                 <input hidden type="text" name="_token" value="{{ csrf_token() }}">
                                 <button id="routeToTaskView" type ="submit" class = "btn btn-primary btn-xs" style="float: right">
@@ -33,8 +33,8 @@ use \App\Helpers\appGlobals;
                     </th>
                     <th>
                         <span class="col-xs-9" style="display: inline-block;">Description</span>
-                        @if (Session::has('from_taskView'))
-                            {!! Form::open(array('route' => array('taskType.task.show', $clientId, Session::get('from_taskView')))) !!}
+                        @if (Session::has(appGlobals::getTaskTableName()))
+                            {!! Form::open(array('route' => array('taskType.task.show', $clientId, Session::get(appGlobals::getTaskTableName())))) !!}
                                 <input type="hidden" name="_method" value="GET">
                                 <input hidden type="text" name="_token" value="{{ csrf_token() }}">
                                 <button id="taskTypeRefreshPage" type ="submit" class = "btn btn-primary btn-xs" style="float: right">
@@ -53,8 +53,9 @@ use \App\Helpers\appGlobals;
                         @endif
                     </th>
                 </tr>
-                <form method="post" action="{{ route('taskType.create', $clientId) }}">
-                    <input hidden type="text" name="_token" value="{{ csrf_token() }}">
+                {!! Form::open(array('route' => array('taskType.create'))) !!}
+                    <input type="hidden" name="_method" value="POST">
+                    <input hidden type="text" name="client_id" value="{{$clientId}}">
                     <div>
                         <tr class="info">
                             <th><input class="form-control" id="taskType01" placeholder="type" name="taskType"></th>

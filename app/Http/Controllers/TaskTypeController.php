@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Http\Requests\PrepareTaskTypeRequest;
+use \App\Http\Requests\PrepareTaskTypeRequest;
 use \App\TaskType;
+use \App\Helpers\appGlobals;
 
 class TaskTypeController extends Controller
 {
@@ -24,7 +25,7 @@ class TaskTypeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(PrepareTaskTypeRequest $request, $clientId)
+    public function create(PrepareTaskTypeRequest $request)
     {
         $taskRequestAttributes = $request->all();
 
@@ -32,7 +33,7 @@ class TaskTypeController extends Controller
 
         $taskType->type = $taskRequestAttributes['taskType'];
         $taskType->description = $taskRequestAttributes['description'];
-        $taskType->client_id = $clientId;
+        $taskType->client_id = $taskRequestAttributes['client_id'];
 
         $taskType->save();
 
@@ -63,9 +64,9 @@ class TaskTypeController extends Controller
 
         // correctly sets the back button if the $timeCardId has been passed, the back button is set, else not.
         if (is_null($timeCardId)) {
-            \Session::forget('from_taskView');
+            \Session::forget(appGlobals::getTaskTableName());
         } else {
-            \Session::set('from_taskView', $timeCardId);
+            \Session::set(appGlobals::getTaskTableName(), $timeCardId);
         }
 
         // pass the data to the view.

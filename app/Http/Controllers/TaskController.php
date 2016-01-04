@@ -28,7 +28,7 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(PrepareTaskRequest $request, $timeCardId)
+    public function create(PrepareTaskRequest $request)
     {
         $taskRequestAttributes = $request->all();
 
@@ -40,7 +40,7 @@ class TaskController extends Controller
         $task->notes = $taskRequestAttributes['notes'];
 
         $task->task_type_id = $taskRequestAttributes['taskType'];
-        $task->time_card_id = $timeCardId;
+        $task->time_card_id = $taskRequestAttributes['time_card_id'];
 
         $task->save();
 

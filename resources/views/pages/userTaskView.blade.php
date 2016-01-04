@@ -22,10 +22,10 @@
                     <th>
                         <span class="col-xs-9" style="display: inline-block;">Type</span>
                         @if(count($tasks)>0)
-                            {{Session::put('from_taskView', $timeCardId)}}
+                            {{Session::put(appGlobals::getTaskTableName(), $timeCardId)}}
                             {!! Form::open(array('route' => array('taskType.task.show', $tasks[0]->TaskType->client_id, $timeCardId))) !!}
                                 <input type="hidden" name="_method" value="GET">
-                                <input hidden type="text" name="_token" value="{{ csrf_token() }}">
+                                {{--<input hidden type="text" name="_token" value="{{ csrf_token() }}">--}}
                                 <button id="routeToTaskTypeView" type ="submit" class = "btn btn-primary btn-xs" style="float: right">
                                     <span class="glyphicon glyphicon-open"></span>
                                 </button>
@@ -39,16 +39,15 @@
                         <span class="col-xs-9" style="display: inline-block;">Notes</span>
                         {!! Form::open(array('route' => array('task.show', $timeCardId))) !!}
                             <input type="hidden" name="_method" value="GET">
-                            <input hidden type="text" name="_token" value="{{ csrf_token() }}">
                             <button type ="submit" class = "btn btn-primary btn-xs" style="float: right">
                                    <span class="glyphicon glyphicon-refresh"></span>
                             </button>
                         {!! Form::close() !!}
                     </th>
                 </tr>
-                {!! Form::open(array('route' => array('task.create', $timeCardId))) !!}
+                {!! Form::open(array('route' => array('task.create'))) !!}
                     <input type="hidden" name="_method" value="POST">
-                    <input hidden type="text" name="_token" value="{{ csrf_token() }}">
+                    <input hidden type="text" name="time_card_id" value="{{$timeCardId}}">
                     <div>
                         <tr class="info">
                             <th>
@@ -57,7 +56,7 @@
                                 </select>
                             </th>
                             <th><input class="form-control" id="startt-search" name="startt" placeholder="start"></th>
-                            <th><input class="form-control" id="endt" name="endt" placeholder="end"></th>
+                            <th><input class="form-control" id="endt-search" name="endt" placeholder="end"></th>
                             <th><input disabled type="text" class="form-control" id="hoursWorked" name="hoursWorked"></th>
                             <th>
                                 <div class="col-xs-9" style="display: inline-block;">
@@ -83,7 +82,6 @@
                             </div>
                             {!! Form::open(array('route' => array('task.destroy', $task->id))) !!}
                                 <input type="hidden" name="_method" value="POST">
-                                <input hidden type="text" name="_token" value="{{ csrf_token() }}">
                                 <button type ="submit" class = "btn btn-danger btn-xs" style="float: right">
                                     <span class="glyphicon glyphicon-trash"></span>
                                 </button>

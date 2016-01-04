@@ -39,7 +39,7 @@ Route::get('/', function () {
 Route::get('task/{task}'        , ['as' => 'task.show', 'uses' => 'TaskController@show']);
 
 // insert a task
-Route::post('task/create/{task}', ['as' => 'task.create', 'uses' => 'TaskController@create']);
+Route::post('task/create/'      , ['as' => 'task.create', 'uses' => 'TaskController@create']);
 
 // delete a task
 Route::post('task/{task}'       , ['as' => 'task.destroy', 'uses' => 'TaskController@destroy']);
@@ -51,7 +51,7 @@ Route::get('taskType/{taskType}'            , ['as' => 'taskType.show', 'uses' =
 Route::get('taskType/{taskType}/task/{task}', ['as' => 'taskType.task.show', 'uses' => 'TaskTypeController@show']);
 
 // insert a task type.
-Route::post('taskType/create/{taskType}'    , ['as' => 'taskType.create', 'uses' => 'TaskTypeController@create']);
+Route::post('taskType/create/'              , ['as' => 'taskType.create', 'uses' => 'TaskTypeController@create']);
 
 // delete a task type.
 Route::post('taskType/destroy/{taskType}'   , ['as' => 'taskType.destroy', 'uses' => 'TaskTypeController@destroy']);
@@ -69,7 +69,7 @@ Route::post('timeCard/destroy/{id}', ['as' => 'timeCard.destroy', 'uses' => 'Tim
 
 
 
-//Route::resource('taskType.task', 'TimeCardController');
+//Route::resource('zzbob', 'TimeCardController');
 
 
 
