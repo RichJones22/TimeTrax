@@ -24,18 +24,19 @@ class testTaskViewInteractions extends Selenium
 
    /** @test */
     function test_visits_task_view() {
-        $this->visit('/task/show/1')->see("Nov 12, 2015");
+        $this->visit('/task/1')->see("Nov 12, 2015");
     }
 
     /** @test */
     function test_route_taskType_view() {
-        $this->visit('/task/show/1')
-            ->click('#routeToTaskTypeView');
+        $this->visit('/task/1')
+            ->click('#routeToTaskTypeView')
+            ->see('Task Type Maintenance');
     }
 
     /** @test */
     function test_route_taskType_view_refresh_the_page_route_to_task_view() {
-        $this->visit('/task/show/1')
+        $this->visit('/task/1')
             ->click('#routeToTaskTypeView')
             ->see('Task Type Maintenance')
             ->click('#taskTypeRefreshPage')
@@ -45,7 +46,7 @@ class testTaskViewInteractions extends Selenium
 
     /** @test */
     function test_route_taskType_view_add_and_delete_a_record_route_back_to_task_view() {
-        $this->visit('/task/show/1')
+        $this->visit('/task/1')
             ->click('#routeToTaskTypeView')
             ->see('Task Type Maintenance')
             ->type('Lunch', '#taskType01')
@@ -66,20 +67,20 @@ class testTaskViewInteractions extends Selenium
 
     /** @test */
     function test_call_taskType_view() {
-        $this->visit('/taskType/show/1')
+        $this->visit('/taskType/1')
             ->see('Task Type Maintenance');
     }
 
     /** @test */
     function test_call_taskType_view_notSee_route_to_task_view() {
-        $this->visit('/taskType/show/1')
+        $this->visit('/taskType/1')
             ->see('Task Type Maintenance')
             ->notSee('routeToTaskView');
     }
 
     /** @test */
     function test_call_taskType_view_notSee_route_to_task_view_add_delete_refresh() {
-        $this->visit('/taskType/show/1')
+        $this->visit('/taskType/1')
             ->see('Task Type Maintenance')
             ->notSee('routeToTaskView')
             ->type('Lunch', '#taskType01')
@@ -99,7 +100,7 @@ class testTaskViewInteractions extends Selenium
 
     /** @test */
     function test_dropDown_check_first_element_code() {
-        $this->visit('/task/show/1')
+        $this->visit('/task/1')
             ->see("Nov 12, 2015")->wait(1000)
             ->select('#taskType', 1)
             ->type('rich was here','#notes')
@@ -109,10 +110,10 @@ class testTaskViewInteractions extends Selenium
     function test_create_type_code_of_lunch() {
 
         // awkward part of the test.  You need to see the ch
-        $currentTaskTypeId = 32;
-        $nextTaskTypeId = $currentTaskTypeId + 2;
+        $currentTaskTypeId = 4;
+        $nextTaskTypeId = $currentTaskTypeId + 3;
 
-        $this->visit('/task/show/1')
+        $this->visit('/task/1')
             ->see("Nov 12, 2015")
             ->notSee('Lunch')
             ->click('#routeToTaskTypeView')
@@ -137,7 +138,7 @@ class testTaskViewInteractions extends Selenium
 
         $deleteLunch = new testTaskViewInteractions;
 
-        $deleteLunch->visit('/taskType/show/1')
+        $deleteLunch->visit('/taskType/1')
             ->click('Lunch')
             ->notSee('Lunch');
 

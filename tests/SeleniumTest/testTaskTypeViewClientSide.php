@@ -34,12 +34,12 @@ class testTaskView extends Selenium
 
    /** @test */
     function test_visits_taskType_view() {
-        $this->visit('/taskType/show/1')->see("Type");
+        $this->visit('/taskType/1')->see("Type");
     }
 
     /** @test */
     function test_checks_for_valid_type_one_word() {
-        $this->visit('/taskType/show/1')
+        $this->visit('/taskType/1')
             ->type('Lunch', '#taskType01')
             ->type('Lunch break','description')
             ->notSee('Error: Type restricted to one word.');
@@ -47,7 +47,7 @@ class testTaskView extends Selenium
 
     /** @test */
     function test_checks_for_invalid_type_two_words() {
-        $this->visit('/taskType/show/1')
+        $this->visit('/taskType/1')
             ->type('coding tasks', '#taskType01')
             ->type('description','description')
             ->See('Error: Type restricted to one word.');
@@ -55,7 +55,7 @@ class testTaskView extends Selenium
 
     /** @test */
     function test_checks_for_invalid_word_cant_exist() {
-        $this->visit('/taskType/show/1')
+        $this->visit('/taskType/1')
             ->type('Code', '#taskType01')
             ->type('description','description')
             ->See('Error: Type already exists.');
@@ -64,7 +64,7 @@ class testTaskView extends Selenium
 
     /** @test */
     function test_checks_for_successful_insert() {
-        $this->visit('/taskType/show/1')
+        $this->visit('/taskType/1')
             ->type('Lunch', '#taskType01')
             ->type('Lunch break','description')
             ->tick('#taskType01')
@@ -74,14 +74,14 @@ class testTaskView extends Selenium
 
     /** @test */
     function test_checks_for_successful_delete() {
-        $this->visit('/taskType/show/1')
+        $this->visit('/taskType/1')
             ->click('Lunch')
             ->notSee('Lunch');
     }
 
     /** @test */
     function test_checks_for_unsuccessful_delete() {
-        $this->visit('/taskType/show/1')
+        $this->visit('/taskType/1')
             ->click('Code')
             ->see("Type (Code) currently exists on tasks.");
     }

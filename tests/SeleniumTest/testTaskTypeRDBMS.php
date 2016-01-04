@@ -28,7 +28,7 @@ class testTaskView extends Selenium
 
     /** @test */
     function test_checks_for_unsuccessful_delete() {
-        $this->visit('/taskType/show/1')
+        $this->visit('/taskType/1')
             ->click('Code')
             ->see("Integrity constraint violation: 1451");
     }
@@ -60,7 +60,7 @@ class testTaskView extends Selenium
     {
         $this->testDeleteTaskTypeTableData();
 
-        $this->visit('/taskType/show/1')->createData()
+        $this->visit('/taskType/1')->createData()
             ->type('Lunch', '#taskType01')
             ->type('Lunch break','description')
             ->tick('#taskType01')

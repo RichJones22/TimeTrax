@@ -41,7 +41,7 @@ class testTaskView extends Selenium
     {
         $this->testDeleteTaskTypeTableData();
 
-        $this->visit('/taskType/show/1')->createData()
+        $this->visit('/taskType/1')->createData()
             ->type('Lunch', '#taskType01')
             ->type('Lunch break','description')
             ->tick('#taskType01')

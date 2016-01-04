@@ -22,27 +22,34 @@ use \App\Helpers\appGlobals;
                     <th>
                         <span class="col-xs-9" style="display: inline-block;">Type</span>
                         @if (Session::has('from_taskView'))
-                            <form method="get" action="{{ route('task.show', Session::get('from_taskView')) }}">
+                            {!! Form::open(array('route' => array('task.show', Session::get('from_taskView')))) !!}
+                                <input type="hidden" name="_method" value="GET">
+                                <input hidden type="text" name="_token" value="{{ csrf_token() }}">
                                 <button id="routeToTaskView" type ="submit" class = "btn btn-primary btn-xs" style="float: right">
                                     <span class="glyphicon glyphicon-step-backward"></span>
                                 </button>
-                            </form>
+                            {!! Form::close() !!}
                         @endif
                     </th>
                     <th>
                         <span class="col-xs-9" style="display: inline-block;">Description</span>
                         @if (Session::has('from_taskView'))
-                            <form method="get" action="{{ route('taskType.show', [$clientId, Session::get('from_taskView')])}}">
+                            {!! Form::open(array('route' => array('taskType.task.show', $clientId, Session::get('from_taskView')))) !!}
+                                <input type="hidden" name="_method" value="GET">
+                                <input hidden type="text" name="_token" value="{{ csrf_token() }}">
                                 <button id="taskTypeRefreshPage" type ="submit" class = "btn btn-primary btn-xs" style="float: right">
                                     <span class="glyphicon glyphicon-refresh"></span>
                                 </button>
-                            </form>
+                            {!! Form::close() !!}
                         @else
-                            <form method="get" action="{{ route('taskType.show', $clientId)}}">
+                            {{--<form method="get" action="{{ route('taskType.show', $clientId)}}">--}}
+                            {!! Form::open(array('route' => array('taskType.show', $clientId))) !!}
+                                <input type="hidden" name="_method" value="GET">
+                                <input hidden type="text" name="_token" value="{{ csrf_token() }}">
                                 <button id="taskTypeRefreshPage" type ="submit" class = "btn btn-primary btn-xs" style="float: right">
                                     <span class="glyphicon glyphicon-refresh"></span>
                                 </button>
-                            </form>
+                            {!! Form::close() !!}
                         @endif
                     </th>
                 </tr>

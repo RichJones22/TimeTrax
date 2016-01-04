@@ -36,24 +36,25 @@ Route::get('/', function () {
 });
 
 // route to task view; show a specific task.
-Route::get('task/show/{id}', ['as' => 'task.show', 'uses' => 'TaskController@show']);
+Route::get('task/{task}'        , ['as' => 'task.show', 'uses' => 'TaskController@show']);
 
 // insert a task
-Route::post('task/create/{id}', ['as' => 'task.create', 'uses' => 'TaskController@create']);
+Route::post('task/create/{task}', ['as' => 'task.create', 'uses' => 'TaskController@create']);
 
 // delete a task
-Route::post('task/destroy/{id}', ['as' => 'task.destroy', 'uses' => 'TaskController@destroy']);
+Route::post('task/{task}'       , ['as' => 'task.destroy', 'uses' => 'TaskController@destroy']);
 
 
 
 // route to taskType view.
-Route::get('taskType/show/{id}/{timeCardId?}', ['as' => 'taskType.show', 'uses' => 'TaskTypeController@show']);
+Route::get('taskType/{taskType}'            , ['as' => 'taskType.show', 'uses' => 'TaskTypeController@show']);
+Route::get('taskType/{taskType}/task/{task}', ['as' => 'taskType.task.show', 'uses' => 'TaskTypeController@show']);
 
 // insert a task type.
-Route::post('taskType/create/{id}', ['as' => 'taskType.create', 'uses' => 'TaskTypeController@create']);
+Route::post('taskType/create/{taskType}'    , ['as' => 'taskType.create', 'uses' => 'TaskTypeController@create']);
 
 // delete a task type.
-Route::post('taskType/destroy/{id}', ['as' => 'taskType.destroy', 'uses' => 'TaskTypeController@destroy']);
+Route::post('taskType/destroy/{taskType}'   , ['as' => 'taskType.destroy', 'uses' => 'TaskTypeController@destroy']);
 
 
 
@@ -65,6 +66,10 @@ Route::post('timeCard/create/{id}', ['as' => 'timeCard.create', 'uses' => 'TimeC
 
 // delete a TimeCard record.
 Route::post('timeCard/destroy/{id}', ['as' => 'timeCard.destroy', 'uses' => 'TimeCardController@destroy']);
+
+
+
+//Route::resource('taskType.task', 'TimeCardController');
 
 
 

@@ -11,86 +11,53 @@
 <div class="container-fluid">
 
     <div style="margin: 60px;">
-        <input type="text" hidden="" value="zy3DAtfO71zzZmTCRaCvTitv1LTHdZ9b6loFVmyV" name="_token" /><div>
+        <input type="text" hidden="" value="Snn03w2iPz8eMIPoYG4uN5rnWsmv8g1DKAWY1bWM" name="_token" /><div>
                         </div><table class="table table-hover table-bordered">
             <thead>
                 <tr style="background-color: darkgray;">
-                                            <th class="text-center" colspan="5">Nov 12, 2015</th>
+                                            <th class="text-center" colspan="5" id="thAlertMessage"><span style="color: brown;font-weight: bold">Type already exists.  Your data has been refreshed.</span></th>
+                        <th style="display: none" class="text-center" colspan="5" id="thNoAlertMessage">Task Type Maintenance</th>
                                     </tr>
                 <tr style="background-color: darkgray;">
                     <th>
                         <span style="display: inline-block;" class="col-xs-9">Type</span>
-                                                    
-                            <form action="http://timetrax.dev/taskType/show/1/1" method="get">
-                                <button style="float: right" class="btn btn-primary btn-xs" type="submit" id="routeToTaskTypeView">
-                                    <span class="glyphicon glyphicon-open"></span>
+                                            </th>
+                    <th>
+                        <span style="display: inline-block;" class="col-xs-9">Description</span>
+                                                                                <form accept-charset="UTF-8" action="http://timetrax.dev/taskType/1" method="POST"><input type="hidden" value="Snn03w2iPz8eMIPoYG4uN5rnWsmv8g1DKAWY1bWM" name="_token" />
+                                <input type="hidden" value="GET" name="_method" />
+                                <input type="text" hidden="" value="Snn03w2iPz8eMIPoYG4uN5rnWsmv8g1DKAWY1bWM" name="_token" />
+                                <button style="float: right" class="btn btn-primary btn-xs" type="submit" id="taskTypeRefreshPage">
+                                    <span class="glyphicon glyphicon-refresh"></span>
                                 </button>
                             </form>
                                             </th>
-                    <th>Start Time</th>
-                    <th>End Time</th>
-                    <th><span style="color: blue; font-weight: bold"> ( 8.5 ) </span>Hours Worked</th>
-                    <th>
-                        <span style="display: inline-block;" class="col-xs-9">Notes</span>
-                        <form action="http://timetrax.dev/task/show/1" method="get">
-                            <button style="float: right" class="btn btn-primary btn-xs" type="submit">
-                                   <span class="glyphicon glyphicon-refresh"></span>
-                            </button>
-                        </form>
-                    </th>
                 </tr>
-                <form action="http://timetrax.dev/task/create/1" method="post"></form>
+                <form action="http://timetrax.dev/taskType/create/1" method="post"></form>
                     
                     <tr class="info">
-                            <th>
-                                <select class="form-control col-xs-12" name="taskType" id="taskType">
-                                    <option value="0">--Select Type--</option>
-                                <option value="1">Code</option><option value="2">Test</option><option value="3">Deployment</option><option value="4">Analysis</option><option value="13">Lunch</option></select>
-                            </th>
-                            <th><input placeholder="start" name="startt" id="startt-search" class="form-control ui-timepicker-input" autocomplete="off" /></th>
-                            <th><input placeholder="end" name="endt" id="endt" class="form-control ui-timepicker-input" autocomplete="off" /></th>
-                            <th><input type="text" name="hoursWorked" id="hoursWorked" class="form-control" disabled="disabled" /></th>
+                            <th><input name="taskType" placeholder="type" id="taskType01" class="form-control" /></th>
                             <th>
                                 <div style="display: inline-block;" class="col-xs-9">
-                                    <input type="text" name="notes" placeholder="notes" id="notes" class="form-control" />
+                                    <input type="text" name="description" placeholder="description" id="description" class="form-control" />
                                 </div>
-                                <button style="float: right" id="saveButton" class="btn btn-primary col-xs" type="submit" disabled="disabled">Save</button>
+                                <button style="float: right" id="saveButtonTaskType" class="btn btn-primary col-xs" type="submit" disabled="disabled">Save</button>
                             </th>
                         </tr>
                     
                 
             </thead>
 
-            <tbody id="taskTable">
+            <tbody id="taskTypeTable">
                                     <tr>
-                        <td>Code</td>
-                        <td>07:00</td>
-                        <td>11:30</td>
-                        <td>3.5</td>
+                        <td>Lunch</td>
                         <td>
                             <div style="display: inline-block;" class="col-xs-9">
-                                worked defect number 127068
+                                Lunch break
                             </div>
-                            <form action="http://timetrax.dev/task/destroy/1" method="post">
-                                <input type="text" hidden="" value="zy3DAtfO71zzZmTCRaCvTitv1LTHdZ9b6loFVmyV" name="_token" />
-                                <button style="float: right" class="btn btn-danger btn-xs" type="submit">
-                                    <span class="glyphicon glyphicon-trash"></span>
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                                    <tr>
-                        <td>Code</td>
-                        <td>12:00</td>
-                        <td>17:00</td>
-                        <td>5</td>
-                        <td>
-                            <div style="display: inline-block;" class="col-xs-9">
-                                worked defect number 127068
-                            </div>
-                            <form action="http://timetrax.dev/task/destroy/2" method="post">
-                                <input type="text" hidden="" value="zy3DAtfO71zzZmTCRaCvTitv1LTHdZ9b6loFVmyV" name="_token" />
-                                <button style="float: right" class="btn btn-danger btn-xs" type="submit">
+                            <form action="http://timetrax.dev/taskType/destroy/11" method="post">
+                                <input type="text" hidden="" value="Snn03w2iPz8eMIPoYG4uN5rnWsmv8g1DKAWY1bWM" name="_token" />
+                                <button style="float: right" class="btn btn-danger btn-xs" type="submit" id="Lunch">
                                     <span class="glyphicon glyphicon-trash"></span>
                                 </button>
                             </form>

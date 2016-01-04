@@ -42,7 +42,7 @@ class testTaskView extends Selenium
     {
         $this->testDeleteTaskTableData();
 
-        $this->visit('/task/show/1')->createDate()
+        $this->visit('/task/1')->createDate()
             ->type('13:00', '#startt-search')->wait(1000)
             ->type('14:00', '#endt')
             ->select('#taskType', 1)
@@ -55,7 +55,7 @@ class testTaskView extends Selenium
     {
         $this->testDeleteTaskTableData();
 
-        $this->visit('/task/show/1')->createDate()
+        $this->visit('/task/1')->createDate()
             ->type('11:30', '#startt-search')->wait(1000)
             ->type('14:00', '#endt')
             ->select('#taskType', 1)
@@ -68,7 +68,7 @@ class testTaskView extends Selenium
     {
         $this->testDeleteTaskTableData();
 
-        $this->visit('/task/show/1')->createDate()
+        $this->visit('/task/1')->createDate()
             ->type('16:00', '#startt-search')->wait(1000)
             ->type('18:00', '#endt')
             ->select('#taskType', 1)
