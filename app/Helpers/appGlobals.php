@@ -18,6 +18,8 @@ use \App\TimeCard;
 use \App\TaskType;
 use \App\Task;
 
+use \Carbon\Carbon;
+
 
 class appGlobals
 {
@@ -112,7 +114,6 @@ class appGlobals
         //var_dump($e);
     }
 
-
     static public function getInfoMessageType() {
         return self::$infoMessageType;
     }
@@ -127,6 +128,39 @@ class appGlobals
 
     static public function getTestRDBMS() {
         return self::$testRDBMS;
+    }
+
+    static public function getBeginningOfCurrentWeek($dateRange) {
+        if (substr($dateRange,0,1) == '(') {
+            $dateSelected = substr($dateRange,2,10);
+            $dateSelected = new Carbon($dateSelected, 'America/Chicago');
+            $dateRange = $dateSelected->AddDays(1); // one extra day to accommodate for iso standard of a Monday start to the week
+                                                    // this will push it into the next week.
+            return $dateRange->toDateString();
+        }
+        return $dateRange;
+    }
+
+    static public function getBeginningOfNextWeek($dateRange) {
+        if (substr($dateRange,0,1) == '(') {
+            $dateSelected = substr($dateRange,2,10);
+            $dateSelected = new Carbon($dateSelected, 'America/Chicago');
+            $dateRange = $dateSelected->AddDays(8); // extra days to accommodate for iso standard of a Monday start to the week
+                                                    // this will push it into the next week.
+            return $dateRange->toDateString();
+        }
+        return $dateRange;
+    }
+
+    static public function getBeginningOfPreviousWeek($dateRange) {
+        if (substr($dateRange,0,1) == '(') {
+            $dateSelected = substr($dateRange,2,10);
+            $dateSelected = new Carbon($dateSelected, 'America/Chicago');
+            $dateRange = $dateSelected->SubDays(6); // less day to accommodate for iso standard of a Monday start to the week
+                                                    // this will push it into the next week.
+            return $dateRange->toDateString();
+        }
+        return $dateRange;
     }
 
 }

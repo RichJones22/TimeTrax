@@ -4,14 +4,15 @@
     use \Carbon\Carbon;
     use \App\Helpers\appGlobals;
 
-    $timeCardFormats = ['dow_00' => 'SUN',
+    $timeCardFormats = [
+                'dow_00' =>'SUN',
                 'dow_01' =>'MON',
                 'dow_02' =>'TUE',
                 'dow_03' =>'WED',
                 'dow_04' =>'THU',
                 'dow_05' =>'FRI',
                 'dow_06' =>'SAT',
-            ]
+    ]
 ?>
 
 @section('content')
@@ -24,27 +25,37 @@
                         <th id="thAlertMessage" colspan="9" class="text-center"><span style="color: brown;font-weight: bold">{{ Session::get(appGlobals::getInfoMessageType()) }}</span></th>
                         <th id="thNoAlertMessage" colspan="9" class="text-center" style="display: none">{{$timeCardRange}}</th>
                     @else
-                        {{--<th colspan="9" class="text-center">{{$timeCardRange}}</th>--}}
-                        <form method="post" action="{{ route('timeCard.create', 1) }}">
-                            <th colspan="9">
-                                <select class="form-control center-block" style="background: darkgray; width: 315px; height: 20px">
-                                    <option value="0">{{$timeCardRange}}</option>
-                                </select>
-                            </th>
-                        </form>
+                        <th colspan="9" class="text-center">
+                            <span style="display: inline-block;">
+                                {!! Form::open(array('route' => array('timeCard.show', appGlobals::getBeginningOfPreviousWeek($timeCardRange)))) !!}
+                                    <input type="hidden" name="_method" value="GET">
+                                    <button type ="submit" style="background: darkgray">
+                                        <span class="glyphicon glyphicon-triangle-left"></span>
+                                    </button>
+                                {!! Form::close() !!}
+                            </span>
+                            <span style="display: inline-block;">
+                                {!! Form::open(array('route' => array('timeCard.show', appGlobals::getBeginningOfCurrentWeek($timeCardRange))
+                                                                     ,'id'    => 'formNext')) !!}
+                                    <input type="hidden" name="_method" value="GET">
+                                    <input id="timeCardCalendar" style="background: darkgray; border: inset; width: 185px" value="{{$timeCardRange}}">
+                                {!! Form::close() !!}
+                            </span>
+                            <input id="specificDay" type="hidden" name="specificDay" value="">
+                            <span style="display: inline-block;">
+                                {!! Form::open(array('route' => array('timeCard.show', appGlobals::getBeginningOfNextWeek($timeCardRange)))) !!}
+                                    <input type="hidden" name="_method" value="GET">
+                                    <button type ="submit" style="background: darkgray">
+                                        <span class="glyphicon glyphicon-triangle-right"></span>
+                                    </button>
+                                {!! Form::close() !!}
+                            </span>
+                        </th>
                     @endif
                 </tr>
                 <tr style="background-color: darkgray;">
                     <th>
                         <span class="col-xs-9" style="display: inline-block;">Type</span>
-                        {{--@if(count($workType)>0)--}}
-                            {{--{{Session::put(appGlobals::getTaskTableName(), $timeCardId)}}--}}
-                            {{--<form method="get" action="{{ route('taskType.show', [$tasks[0]->TaskType->client_id, $timeCardId])}}">--}}
-                                {{--<button id="routeToTaskTypeView" type ="submit" class = "btn btn-primary btn-xs" style="float: right">--}}
-                                    {{--<span class="glyphicon glyphicon-open"></span>--}}
-                                {{--</button>--}}
-                            {{--</form>--}}
-                        {{--@endif--}}
                     </th>
                     <th>{{$timeCardFormats['dow_00']}}</th>
                     <th>{{$timeCardFormats['dow_01']}}</th>
@@ -54,14 +65,6 @@
                     <th>{{$timeCardFormats['dow_05']}}</th>
                     <th>{{$timeCardFormats['dow_06']}}</th>
                     <th></th>
-                    {{--<th>--}}
-                        {{--<span class="col-xs-9" style="display: inline-block;">Notes</span>--}}
-                        {{--<form method="get" action="{{ route('task.show', $timeCardId) }}">--}}
-                            {{--<button type ="submit" class = "btn btn-primary btn-xs" style="float: right">--}}
-                                   {{--<span class="glyphicon glyphicon-refresh"></span>--}}
-                            {{--</button>--}}
-                        {{--</form>--}}
-                    {{--</th>--}}
                 </tr>
                 <form method="post" action="{{ route('timeCard.create', 1) }}">
                     <input hidden type="text" name="_token" value="{{ csrf_token() }}">

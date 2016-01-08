@@ -49,6 +49,8 @@ class TimeCardController extends Controller
      */
     public function show($dateSelected=null)
     {
+
+
         if(is_null($dateSelected)) {
             $dateSelected = Carbon::now('America/Chicago');
         } else {
@@ -73,13 +75,7 @@ class TimeCardController extends Controller
             $timeCardRow->work->load('workType');
         }
 
-        $timeCardRange = "Current ( " . $bwDate->toDateString() . " - " . $ewDate->toDateString() ." )";
-
-//        $fontSize = 14;
-//
-//        $textLength = imagefontwidth($fontSize) * strlen($timeCardRange);
-//
-//        dd(floor($textLength*.87)+1);
+        $timeCardRange = "( " . $bwDate->toDateString() . " - " . $ewDate->toDateString() ." )";
 
         // pass the data to the view.
         return view('pages.userTimeCardView')

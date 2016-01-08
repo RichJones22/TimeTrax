@@ -59,7 +59,7 @@ Route::post('taskType/destroy/{taskType}'   , ['as' => 'taskType.destroy', 'uses
 
 
 // route to timeCard type view.
-Route::get('timeCard/show/{dateSelected?}', ['as' => 'timeCard.show', 'uses' => 'TimeCardController@show']);
+Route::get('timeCard/{dateSelected?}', ['as' => 'timeCard.show', 'uses' => 'TimeCardController@show']);
 
 // insert a TimeCard record.
 Route::post('timeCard/create/{id}', ['as' => 'timeCard.create', 'uses' => 'TimeCardController@create']);
