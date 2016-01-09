@@ -163,7 +163,7 @@
         </table>
 
         @unless(count($timeCardRows))
-            <p class="text-center">No Work have been added as yet</p>
+            <p class="text-center">No work has been added to time card as yet</p>
         @endunless
 
     </div>

@@ -59,13 +59,13 @@ Route::post('taskType/destroy/{taskType}'   , ['as' => 'taskType.destroy', 'uses
 
 
 // route to timeCard type view.
-Route::get('timeCard/{dateSelected?}', ['as' => 'timeCard.show', 'uses' => 'TimeCardController@show']);
+Route::get(appGlobals::getTimeCardURI() . '{dateSelected?}', ['as' => 'timeCard.show', 'uses' => 'TimeCardController@show']);
 
 // insert a TimeCard record.
-Route::post('timeCard/create/{id}', ['as' => 'timeCard.create', 'uses' => 'TimeCardController@create']);
+Route::post(appGlobals::getTimeCardURI() . 'create/{id}', ['as' => 'timeCard.create', 'uses' => 'TimeCardController@create']);
 
 // delete a TimeCard record.
-Route::post('timeCard/destroy/{id}', ['as' => 'timeCard.destroy', 'uses' => 'TimeCardController@destroy']);
+Route::post(appGlobals::getTimeCardURI() . 'destroy/{id}', ['as' => 'timeCard.destroy', 'uses' => 'TimeCardController@destroy']);
 
 
 

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use \App\Http\Requests;
 use \App\TimeCard;
 use \Carbon\Carbon;
+use \App\Helpers\appGlobals;
 
 class TimeCardController extends Controller
 {
@@ -76,6 +77,12 @@ class TimeCardController extends Controller
         }
 
         $timeCardRange = "( " . $bwDate->toDateString() . " - " . $ewDate->toDateString() ." )";
+
+        // jeffery way package for moving php variables to the .js space.
+        // see https://github.com/laracasts/PHP-Vars-To-Js-Transformer.
+        \JavaScript::put([
+            'timeCardURI' => appGlobals::getDomain() . appGlobals::getTimeCardURI()
+        ]);
 
         // pass the data to the view.
         return view('pages.userTimeCardView')

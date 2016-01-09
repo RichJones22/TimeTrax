@@ -17,7 +17,7 @@ $("#timeCardCalendar").focusin(function() {
         onSelect: function()
         {
             var myVal = new Date($(this).datepicker('getDate'));
-            $("#formNext").attr("action", "http://timetrax.dev/timeCard/" + (myVal.toISOString()).substr(0,10));
+            $("#formNext").attr("action", appGlobal.timeCardURI + (myVal.toISOString()).substr(0,10));
             $("#formNext").submit();
         }
     });

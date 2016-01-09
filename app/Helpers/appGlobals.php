@@ -42,6 +42,10 @@ class appGlobals
     static protected $timeTaskTypeTableName;
     static protected $timeTaskTableName;
 
+    // routes used by both javascript and php
+    static protected $domain="http://timetrax.dev/";
+    static protected $timeCardURI="timeCard/";
+
     static protected $infoMessageType = 'info_message';
     static protected $messageText = [
         // app info messages
@@ -128,6 +132,14 @@ class appGlobals
 
     static public function getTestRDBMS() {
         return self::$testRDBMS;
+    }
+
+    static public function getDomain() {
+        return self::$domain;
+    }
+
+    static public function getTimeCardURI() {
+        return self::$timeCardURI;
     }
 
     static public function getBeginningOfCurrentWeek($dateRange) {
