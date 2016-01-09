@@ -59,13 +59,17 @@ class TimeCardController extends Controller
         }
 
         $bwDate = new Carbon($dateSelected);
-        $ewDate = new Carbon($dateSelected);
 
-        $bwDate->startOfWeek(); // iso standards is Monday.
-        $bwDate->subDay();      // Make Sunday the start.
+        if ($bwDate->dayOfWeek == 0 ) {
+            $ewDate = new Carbon($bwDate);
+            $ewDate->addDays(6);
+        } else {
+            $bwDate->startOfWeek();  // iso standard is Monday is the start of week
+            $bwDate->subDay();       // get it back to Sunday as this is our current offset.
 
-        $ewDate->endOfWeek();   // iso standard is Sunday.
-        $ewDate->subDay();      // Make Saturday the end.
+            $ewDate = new Carbon($bwDate);
+            $ewDate->addDays(6);
+        }
 
         // get all time card rows between $bwDate and $ewDate.
         $timeCardRows = TimeCard::whereBetween('date_worked', [$bwDate, $ewDate])->get();
@@ -80,6 +84,7 @@ class TimeCardController extends Controller
 
         // jeffery way package for moving php variables to the .js space.
         // see https://github.com/laracasts/PHP-Vars-To-Js-Transformer.
+        // also see javascript.php in the config dir for view and .js namespace used.
         \JavaScript::put([
             'timeCardURI' => appGlobals::getDomain() . appGlobals::getTimeCardURI()
         ]);
