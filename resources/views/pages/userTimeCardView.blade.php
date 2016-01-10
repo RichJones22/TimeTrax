@@ -38,11 +38,11 @@
                                 <span style="display: inline-block;">
                                     {!! Form::open(array('route' => array('timeCard.show', appGlobals::getBeginningOfCurrentWeek($timeCardRange))
                                                                          ,'id'    => 'formNext')) !!}
-                                    <input type="hidden" name="_method" value="GET">
+                                        <input type="hidden" name="_method" value="GET">
+                                        <input id="specificDay" type="hidden" name="specificDay" value="">
                                         <input id="timeCardCalendar" style="background: darkgray; border: inset; width: 185px" value="{{$timeCardRange}}">
                                     {!! Form::close() !!}
                                 </span>
-                                    <input id="specificDay" type="hidden" name="specificDay" value="">
                                 <span style="display: inline-block;">
                                     {!! Form::open(array('route' => array('timeCard.show', appGlobals::getBeginningOfNextWeek($timeCardRange)))) !!}
                                     <input type="hidden" name="_method" value="GET">
@@ -57,7 +57,7 @@
                 </tr>
                 <tr style="background-color: darkgray;" class="tbl-h2-height">
                     <th>
-                        <span class="col-xs-9" style="display: inline-block;">Type</span>
+                        <span class="col-xs-9" style="display: inline-block;">Work Type</span>
                     </th>
                     <th>{{$timeCardFormats['dow_00']}}</th>
                     <th>{{$timeCardFormats['dow_01']}}</th>
@@ -73,7 +73,7 @@
                         <input hidden type="text" name="_token" value="{{ csrf_token() }}">
                         <th>
                             <select id="workType" name ="workType" class="form-control col-xs-12">
-                                <option value="0">--Work Type--</option>
+                                <option value="0">--Select Type--</option>
                             </select>
                         </th>
                         <th style="width: 75px"><input class="form-control" id="dow_00" name="dow_00" placeholder="0"></th>
@@ -82,12 +82,9 @@
                         <th style="width: 75px"><input class="form-control" id="dow_03" name="dow_03" placeholder="0"></th>
                         <th style="width: 75px"><input class="form-control" id="dow_04" name="dow_04" placeholder="0"></th>
                         <th style="width: 75px"><input class="form-control" id="dow_05" name="dow_05" placeholder="0"></th>
-                        <th style="width: 75px"><input class="form-control" id="dow_05" name="dow_06" placeholder="0"></th>
+                        <th style="width: 75px"><input class="form-control" id="dow_06" name="dow_06" placeholder="0"></th>
                         <th style="width: 150px">
-                            {{--<div class="col-xs-9" style="display: inline-block;">--}}
-                                {{--<input class="form-control" id="dow_06" name="dow_06">--}}
-                            {{--</div>--}}
-                            <button disabled type="submit" class="btn btn-primary col-xs" id="saveWorkType" style="float: right">Save</button>
+                            <button disabled type="submit" class="btn btn-primary col-xs" id="saveButtonTimeCard" style="float: right">Save</button>
                         </th>
                     </form>
                 </tr>
