@@ -45,6 +45,7 @@ class appGlobals
     // routes used by both javascript and php
     static protected $domain="http://timetrax.dev/";
     static protected $timeCardURI="timeCard/";
+    static protected $workURI="work/";
 
     static protected $infoMessageType = 'info_message';
     static protected $messageText = [
@@ -142,6 +143,10 @@ class appGlobals
         return self::$timeCardURI;
     }
 
+    static public function getWorkURI() {
+        return self::$workURI;
+    }
+
     static public function getBeginningOfCurrentWeek($dateRange) {
         if (substr($dateRange,0,1) == '(') {
             $dateSelected = substr($dateRange,2,10);
@@ -173,6 +178,12 @@ class appGlobals
             return $dateRange->toDateString();
         }
         return $dateRange;
+    }
+
+    static public function getClientIdOfProjectRecordingTimeFor() {
+        $data = \DB::table('project')->where('flag_recording_time_for', 1)->first();
+
+        return $data->client_id;
     }
 
 }

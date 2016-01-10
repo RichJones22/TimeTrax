@@ -44,6 +44,18 @@ Route::post('task/create/'      , ['as' => 'task.create', 'uses' => 'TaskControl
 // delete a task
 Route::post('task/{task}'       , ['as' => 'task.destroy', 'uses' => 'TaskController@destroy']);
 
+Route::get('get_all_tasks', function() {
+
+    $tasks = TaskType::all();
+
+    foreach($tasks as $task) {
+        $data[] = ['id' => $task->id, 'type' => $task->type];
+    }
+
+    return $data;
+
+});
+
 
 
 // route to taskType view.
@@ -66,6 +78,18 @@ Route::post(appGlobals::getTimeCardURI() . 'create/{id}', ['as' => 'timeCard.cre
 
 // delete a TimeCard record.
 Route::post(appGlobals::getTimeCardURI() . 'destroy/{id}', ['as' => 'timeCard.destroy', 'uses' => 'TimeCardController@destroy']);
+
+Route::get(appGlobals::getTimeCardURI() . appGlobals::getWorkURI() . '{clientId}', function($client_id) {
+
+    $data = \DB::table('project')->where('project.client_id', $client_id)
+        ->join('work', 'project.id', '=', 'work.project_id')
+        ->join('work_type', 'work.work_type_id', '=', 'work_type.id')
+        ->select('work_type.type', 'work.work_type_description')
+        ->orderby('work.work_type_id')
+        ->get();
+
+    return $data;
+});
 
 
 
@@ -102,6 +126,7 @@ Route::get('create_data', function() {
 
         $project->name = 'Magento Development';
         $project->client_id = $client->id;
+        $project->flag_recording_time_for = true;
 
         $project->save();
     }
@@ -598,16 +623,5 @@ Route::get('unset_all_clients', function() {
 
 });
 
-Route::get('get_all_tasks', function() {
 
-
-    $tasks = TaskType::all();
-
-    foreach($tasks as $task) {
-        $data[] = ['id' => $task->id, 'type' => $task->type];
-    }
-
-    return $data;
-
-});
 

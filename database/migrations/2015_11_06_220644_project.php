@@ -18,6 +18,7 @@ class Project extends Migration
         Schema::create('project', function(Blueprint $table){
             $table->increments('id');
             $table->string('name')->unique();
+            $table->boolean('flag_recording_time_for');
             $table->timestamps();
         });
 

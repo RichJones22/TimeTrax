@@ -25,7 +25,6 @@
                             {{Session::put(appGlobals::getTaskTableName(), $timeCardId)}}
                             {!! Form::open(array('route' => array('taskType.task.show', $tasks[0]->TaskType->client_id, $timeCardId))) !!}
                                 <input type="hidden" name="_method" value="GET">
-                                {{--<input hidden type="text" name="_token" value="{{ csrf_token() }}">--}}
                                 <button id="routeToTaskTypeView" type ="submit" class = "btn btn-primary btn-xs" style="float: right">
                                     <span class="glyphicon glyphicon-open"></span>
                                 </button>
