@@ -69,8 +69,12 @@
                     <th></th>
                 </tr>
                 <tr class="info tbl-h2-height">
-                    <form method="post" action="{{ route('timeCard.create', 1) }}">
-                        <input hidden type="text" name="_token" value="{{ csrf_token() }}">
+                    {!! Form::open(array('route' => array('timeCard.create', appGlobals::getBeginningOfCurrentWeek($timeCardRange)))) !!}
+                        <input type="hidden" name="_method" value="POST">
+                        @if (count($timeCardRows) > 0)
+                            <input type="hidden" name="time_card_format_id" value="{{$timeCardRows[0]->timeCardFormat->id}}">
+                            <input type="hidden" name="work_id" value="{{$timeCardRows[0]->work->id}}">
+                        @endif
                         <th>
                             <select id="workType" name ="workType" class="form-control col-xs-12">
                                 <option value="0">--Select Type--</option>
@@ -86,7 +90,7 @@
                         <th style="width: 150px">
                             <button disabled type="submit" class="btn btn-primary col-xs" id="saveButtonTimeCard" style="float: right">Save</button>
                         </th>
-                    </form>
+                    {!! Form::close() !!}
                 </tr>
             </thead>
 
@@ -97,42 +101,42 @@
                             <td>{{$timeCardRow->Work->WorkType->type}}--{{$timeCardRow->Work->work_type_description}}</td>
                             <td>
                                 @if ($timeCardRow->dow == $timeCardFormats['dow_00'])
-                                    {{$timeCardRow->total_hours_worked}}
+                                    {{$timeCardRow->hours_worked}}
                                 @else
                                     {{0}}
                                 @endif
                             </td>
                             <td>
                                 @if ($timeCardRow->dow == $timeCardFormats['dow_01'])
-                                    {{$timeCardRow->total_hours_worked}}
+                                    {{$timeCardRow->hours_worked}}
                                 @else
                                     {{0}}
                                 @endif
                             </td>
                             <td>
                                 @if ($timeCardRow->dow == $timeCardFormats['dow_02'])
-                                    {{$timeCardRow->total_hours_worked}}
+                                    {{$timeCardRow->hours_worked}}
                                 @else
                                     {{0}}
                                 @endif
                             </td>
                             <td>
                                 @if ($timeCardRow->dow == $timeCardFormats['dow_03'])
-                                    {{$timeCardRow->total_hours_worked}}
+                                    {{$timeCardRow->hours_worked}}
                                 @else
                                     {{0}}
                                 @endif
                             </td>
                             <td>
                                 @if ($timeCardRow->dow == $timeCardFormats['dow_04'])
-                                    {{$timeCardRow->total_hours_worked}}
+                                    {{$timeCardRow->hours_worked}}
                                 @else
                                     {{0}}
                                 @endif
                             </td>
                             <td>
                                 @if ($timeCardRow->dow == $timeCardFormats['dow_05'])
-                                    {{$timeCardRow->total_hours_worked}}
+                                    {{$timeCardRow->hours_worked}}
                                 @else
                                     {{0}}
                                 @endif
@@ -140,7 +144,7 @@
                             <td>
                                 <div class="col-xs-9" style="display: inline-block;">
                                     @if ($timeCardRow->dow == $timeCardFormats['dow_06'])
-                                        {{$timeCardRow->total_hours_worked}}
+                                        {{$timeCardRow->hours_worked}}
                                     @else
                                         {{0}}
                                     @endif

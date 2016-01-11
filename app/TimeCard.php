@@ -18,7 +18,7 @@ class TimeCard extends Model
     protected $fillable = [
         'date_worked',
         'dow',
-        'total_hours_worked'];
+        'hours_worked'];
 
     static public function checkIfExists($data) {
         $timeCard = TimeCard::where('date_worked', '=', $data)->first();
@@ -40,6 +40,10 @@ class TimeCard extends Model
 
     public function work() {
         return $this->belongsTo('\App\Work');
+    }
+
+    public function timeCardFormat() {
+        return $this->belongsTo('\App\TimeCardFormat');
     }
 
 }

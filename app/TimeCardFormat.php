@@ -34,4 +34,8 @@ class TimeCardFormat extends Model
 
         return $timeCardFormat;
     }
+
+    public function timeCard() {
+        return $this->hasOne('\App\TimeCard');
+    }
 }

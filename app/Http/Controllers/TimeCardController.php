@@ -75,8 +75,9 @@ class TimeCardController extends Controller
         // get all time card rows between $bwDate and $ewDate.
         $timeCardRows = TimeCard::whereBetween('date_worked', [$bwDate, $ewDate])->get();
 
-        // eager load work and workType.
+        // eager load timeCardFormat, work and workType.
         $timeCardRows->load('work');
+        $timeCardRows->load('timeCardFormat');
         foreach($timeCardRows as $timeCardRow) {
             $timeCardRow->work->load('workType');
         }

@@ -19,7 +19,7 @@ class Timecard extends Migration
             $table->increments('id');
             $table->date('date_worked')->index();
             $table->char('dow',10);
-            $table->float('total_hours_worked');
+            $table->float('hours_worked');
             $table->timestamps();
         });
 

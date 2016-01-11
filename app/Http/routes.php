@@ -280,7 +280,7 @@ Route::get('create_data', function() {
 
         $timeCard->date_worked = $date;
         $timeCard->dow = "THU";
-        $timeCard->total_hours_worked = 8.0;
+        $timeCard->hours_worked = 8.0;
 
         $timeCard->time_card_format_id = $timeCardFormat->id;
         $timeCard->work_id = $work->id;
@@ -301,7 +301,7 @@ Route::get('create_data', function() {
 
         $timeCard->date_worked = $date;
         $timeCard->dow = "FRI";
-        $timeCard->total_hours_worked = 8.0;
+        $timeCard->hours_worked = 8.0;
 
         $timeCard->time_card_format_id = $timeCardFormat->id;
         $timeCard->work_id = $work->id;
@@ -322,7 +322,7 @@ Route::get('create_data', function() {
 
         $timeCard->date_worked = $date;
         $timeCard->dow = "MON";
-        $timeCard->total_hours_worked = 8.0;
+        $timeCard->hours_worked = 8.0;
 
         $timeCard->time_card_format_id = $timeCardFormat->id;
         $timeCard->work_id = $work->id;
@@ -343,7 +343,7 @@ Route::get('create_data', function() {
 
         $timeCard->date_worked = $date;
         $timeCard->dow = "TUE";
-        $timeCard->total_hours_worked = 8.0;
+        $timeCard->hours_worked = 8.0;
 
         $timeCard->time_card_format_id = $timeCardFormat->id;
         $timeCard->work_id = $work->id;
@@ -364,7 +364,7 @@ Route::get('create_data', function() {
 //
 //        $timeCard->date_worked = $date;
 //        $timeCard->dow = "WED";
-//        $timeCard->total_hours_worked = 8.0;
+//        $timeCard->hours_worked = 8.0;
 //
 //        $timeCard->time_card_format_id = $timeCardFormat->id;
 //        $timeCard->work_id = $work->id;
