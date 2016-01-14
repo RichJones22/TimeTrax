@@ -47,17 +47,22 @@ timeCard.WorkType = function() {
 }
 
 // SaveButton class to save state of required input fields.
-timeCard.SaveButton = function(hours, type, calledFrom) {
-    this.hours = hours;
+timeCard.SaveButton = function(type, calledFrom, bInError) {
+    this.hours = [0,0,0,0,0,0,0];
+    this.isHourInError=[0,0,0,0,0,0,0];
     this.type = type;
-    //this.lastColumnInError=col;
     this.calledFromWorkType=calledFrom;
 }
+timeCard.SaveButton.prototype.areHoursSet = function() {
+    var sum=0;
+    this.hours.forEach(function(pos){sum+=pos});
+    return sum;
+};
 timeCard.SaveButton.prototype.getHours = function() {
     return this.hours;
 };
-timeCard.SaveButton.prototype.setHours = function(hours) {
-    this.hours = hours;
+timeCard.SaveButton.prototype.setHours = function(pos, value) {
+    this.hours[pos] = value ? 1 : 0;
 };
 timeCard.SaveButton.prototype.getType = function() {
     return this.type;
@@ -65,27 +70,31 @@ timeCard.SaveButton.prototype.getType = function() {
 timeCard.SaveButton.prototype.setType = function(type) {
     this.type = type;
 };
-//timeCard.SaveButton.prototype.getCol = function() {
-//    return this.lastColumnInError;
-//};
-//timeCard.SaveButton.prototype.setCol = function(col) {
-//    this.lastColumnInError = col;
-//};
 timeCard.SaveButton.prototype.getCalledFromWorkType = function() {
     return this.calledFromWorkType;
 };
 timeCard.SaveButton.prototype.setCalledFromWorkType = function(bool) {
     this.calledFromWorkType = bool;
 };
+timeCard.SaveButton.prototype.getIsHourInError = function() {
+    var sum=0;
+    this.isHourInError.forEach(function(pos){sum+=pos});
+    return sum;
+};
+timeCard.SaveButton.prototype.setIsHourInError = function(pos, value){
+    this.isHourInError[pos] = value ? 1 : 0;
+};
 timeCard.SaveButton.prototype.isReady = function() {
-    if (this.hours && this.type) {
+    //var sum=0;
+    //this.hours.forEach(function(pos){sum+=pos});
+    if (this.areHoursSet() && this.type && !this.getIsHourInError()) {
         return true;
     }
 
     return false;
 };
 
-timeCard.saveButton = new timeCard.SaveButton(false,false,false);
+timeCard.saveButton = new timeCard.SaveButton(false,false);
 
 timeCard.enabledDisabledSaveButton = function () {
     if (timeCard.saveButton.isReady()) {
@@ -100,54 +109,58 @@ timeCard.loseFocusOnDOW = function() {
 
     var dow00 = $('#dow_00');
     dow00.focusout(function(){
-        timeCard.processDOW(dow00);
-        timeCard.doHoursExistForWorkTypeDescription(1,dow00);
+        timeCard.checkHours(timeCard.convertDOWToNumber(dow00),dow00);
     });
     var dow01 = $('#dow_01');
     dow01.focusout(function(){
-        timeCard.processDOW(dow01);
-        timeCard.doHoursExistForWorkTypeDescription(2,dow01);
+        timeCard.checkHours(timeCard.convertDOWToNumber(dow01),dow01);
     });
     var dow02 = $('#dow_02');
     dow02.focusout(function(){
-        timeCard.processDOW(dow02);
-        timeCard.doHoursExistForWorkTypeDescription(3,dow02);
+        timeCard.checkHours(timeCard.convertDOWToNumber(dow02),dow02);
     });
     var dow03 = $('#dow_03');
     dow03.focusout(function(){
-        timeCard.processDOW(dow03);
-        timeCard.doHoursExistForWorkTypeDescription(4,dow03);
+        timeCard.checkHours(timeCard.convertDOWToNumber(dow03),dow03);
     });
     var dow04 = $('#dow_04');
     dow04.focusout(function(){
-        timeCard.processDOW(dow04);
-        timeCard.doHoursExistForWorkTypeDescription(5,dow04);
+        timeCard.checkHours(timeCard.convertDOWToNumber(dow04),dow04);
     });
     var dow05 = $('#dow_05');
     dow05.focusout(function(){
-        timeCard.processDOW(dow05);
-        timeCard.doHoursExistForWorkTypeDescription(6,dow05);
+        timeCard.checkHours(timeCard.convertDOWToNumber(dow05),dow05);
     });
     var dow06 = $('#dow_06');
     dow06.focusout(function(){
-        timeCard.processDOW(dow06);
-        timeCard.doHoursExistForWorkTypeDescription(7,dow06);
+        timeCard.checkHours(timeCard.convertDOWToNumber(dow06),dow06);
     });
+
+    timeCard.checkHours = function(i,dow) {
+        timeCard.processDOW(dow);
+        timeCard.doHoursExistForWorkTypeDescription(i,dow);
+        timeCard.enabledDisabledSaveButton();
+    }
 
     timeCard.processDOW = function(dow) {
         var value = dow.text($(this)).val();
         if (Number(value) == 0) {
             timeCard.setColorSuccess(dow);
             timeCard.setHoursFailure(dow);
-            return;
-        }
-        if (Number(value) < 0 ||
+        } else if (Number(value) < 0 ||
             Number(value) > 24 ||
             isNaN(Number(value))) {
             timeCard.setFalseState(dow);
         } else {
             timeCard.setTrueState(dow);
         }
+    }
+
+    timeCard.setResetState = function(dow) {
+        timeCard.setColorSuccess(dow);
+        //if (timeCard.processDOW(dow)) {
+        //    timeCard.setColorSuccess(dow);
+        //}
     }
 
     timeCard.setTrueState = function(dow) {
@@ -162,20 +175,22 @@ timeCard.loseFocusOnDOW = function() {
 
     timeCard.setColorSuccess = function(dow) {
         dow.css('background-color', 'white');
+        timeCard.saveButton.setIsHourInError(timeCard.convertDOWToNumber(dow),false);
     }
 
     timeCard.setColorFailure = function(dow) {
         dow.css('background-color', 'pink');
+        timeCard.saveButton.setIsHourInError(timeCard.convertDOWToNumber(dow),true);
     }
 
     timeCard.setHoursSuccess = function(dow) {
-        timeCard.saveButton.setHours(true);
-        timeCard.enabledDisabledSaveButton();
+        timeCard.saveButton.setHours(timeCard.convertDOWToNumber(dow), true);
+        //timeCard.enabledDisabledSaveButton();
     }
 
     timeCard.setHoursFailure = function(dow) {
-        timeCard.saveButton.setHours(false);
-        timeCard.enabledDisabledSaveButton();
+        timeCard.saveButton.setHours(timeCard.convertDOWToNumber(dow), false);
+        //timeCard.enabledDisabledSaveButton();
     }
 
 
@@ -194,35 +209,78 @@ timeCard.loseFocusOnDOW = function() {
         cell.style.fontWeight = 'bold';
     }
 
+    timeCard.changeNullToZero = function(value) {
+        if (value == "") {
+            return 0;
+        }
+
+        return value;
+    }
+
     timeCard.doHoursExistForWorkTypeDescription = function(column,dow) {
 
         var colWorkTypeDesc=0;
+        var dowValue=0;
+        var tblValue=0;
 
         var workTypeDesc = $('#workType option:selected').text();
+        var tblWorkTypeDesc="";
 
         var table = document.getElementById("timeCardTable");
+
+        // early exit when the time card has no rows.
+        if (table == null) {
+            return;
+        }
+
         for (var i = 0, row; row = table.rows[i]; i++) {
-            if (workTypeDesc == row.cells[colWorkTypeDesc].innerText) {
-                if (dow.val() == row.cells[column].innerText) {
+            tblWorkTypeDesc = row.cells[colWorkTypeDesc].innerText;
+            if (workTypeDesc == tblWorkTypeDesc) {
+                dowValue=Number(timeCard.changeNullToZero(dow.val()));
+                tblValue=Number(row.cells[column].innerText);
+                if (dowValue>0 && tblValue>0) {
+                    //if ((dowValue == tblValue)) {
                     timeCard.setFalseState(dow);
                     timeCard.setFalseStateTableCell(row.cells[column]);
-                    timeCard.saveButton.setCol(column);
-                } else {
+                    timeCard.saveButton.setCalledFromWorkType(false);
+                    //} else {
+                    //    timeCard.setTrueState(dow);
+                    //    timeCard.setTrueStateTableCell(row.cells[column]);
+                    //}
+                } else if (dowValue==0 && tblValue>0 ||
+                           dowValue==0 && tblValue==0 ) {
+                    timeCard.setResetState(dow);
+                    timeCard.setTrueStateTableCell(row.cells[column]);
+                } else if (dowValue>0 && tblValue==0) {
                     timeCard.setTrueState(dow);
                     timeCard.setTrueStateTableCell(row.cells[column]);
                 }
-            } else if (timeCard.saveButton.getCalledFromWorkType()) {
-                timeCard.setTrueState(dow);
-                timeCard.setTrueStateTableCell(row.cells[column]);
+            } else {
+                if (timeCard.saveButton.getCalledFromWorkType()) {
+                    timeCard.setColorSuccess(dow);
+                    timeCard.setTrueStateTableCell(row.cells[column]);
+                }
             }
         }
     }
 }
 
+
 timeCard.loseFocusOnType = function() {
-    $("#workType").change(function () {
+
+    timeCard.checkForTableResets = function() {
+        for (var i=1;i<8;i++) {
+            timeCard.saveButton.setCalledFromWorkType(true);
+            timeCard.doHoursExistForWorkTypeDescription(i,timeCard.convertColumnToDOW(i));
+        }
+        timeCard.saveButton.setCalledFromWorkType(false);
+    }
+
+    $("#workType").focusout(function () {
         var v1 = Math.floor($('#workType').val());
 
+        timeCard.saveButton.setType(false);
+        timeCard.enabledDisabledSaveButton();
         if (v1 === 0) {
             timeCard.saveButton.setType(false);
             timeCard.enabledDisabledSaveButton();
@@ -230,49 +288,14 @@ timeCard.loseFocusOnType = function() {
             $('#workType').append("<option value='0'>--Select Type--</option>");
             timeCard.WorkType();
         } else {
-            timeCard.saveButton.setType(true);
-            timeCard.enabledDisabledSaveButton();
             timeCard.checkForTableResets();
+
+            if (!timeCard.saveButton.getIsHourInError()) {
+                timeCard.saveButton.setType(true);
+                timeCard.enabledDisabledSaveButton();
+            }
         }
     });
-
-    timeCard.checkForTableResets = function() {
-        timeCard.saveButton.setCalledFromWorkType(true);
-        timeCard.doHoursExistForWorkTypeDescription(1,$('#dow_00'));
-        timeCard.doHoursExistForWorkTypeDescription(2,$('#dow_01'));
-        timeCard.doHoursExistForWorkTypeDescription(3,$('#dow_02'));
-        timeCard.doHoursExistForWorkTypeDescription(4,$('#dow_03'));
-        timeCard.doHoursExistForWorkTypeDescription(5,$('#dow_04'));
-        timeCard.doHoursExistForWorkTypeDescription(6,$('#dow_05'));
-        timeCard.doHoursExistForWorkTypeDescription(7,$('#dow_06'));
-        timeCard.saveButton.setCalledFromWorkType(false);
-    }
-
-
-
-        //for (var i = 1; i < 8; i++) {
-        //    timeCard.doHoursExistForWorkTypeDescription(i, timeCard.convertColumnToDOW(i));
-        //}
-        //
-        //if (timeCard.saveButton.getCol()) {
-        //    timeCard.saveButton.setCalledFromWorkType(true);
-        //    timeCard.doHoursExistForWorkTypeDescription(timeCard.saveButton.getCol(), timeCard.convertColumnToDOW(timeCard.saveButton.getCol()));
-        //    timeCard.saveButton.setCol(null);
-        //    timeCard.saveButton.setCalledFromWorkType(false);
-        //} else {
-        //    var colWorkTypeDesc=0;
-        //    var found=false;
-        //    var workTypeDesc = $('#workType option:selected').text();
-        //
-        //    var table = document.getElementById("timeCardTable");
-        //    for (var i = 0, row; row = table.rows[i]; i++) {
-        //        if (workTypeDesc == row.cells[colWorkTypeDesc].innerText) {
-        //            found=true;
-        //        }
-        //    }
-        //
-        //}
-
 }
 
 timeCard.convertColumnToDOW = function(col) {
@@ -300,6 +323,26 @@ timeCard.convertColumnToDOW = function(col) {
     }
 }
 
+timeCard.convertDOWToNumber = function(dow) {
+
+    var value = dow.selector;
+
+    if (value == "#dow_00") {
+        return 1;
+    } else if (value  == "#dow_01") {
+        return 2;
+    } else if (value  == "#dow_02") {
+        return 3;
+    } else if (value  == "#dow_03") {
+        return 4;
+    } else if (value  == "#dow_04") {
+        return 5;
+    } else if (value  == "#dow_05") {
+        return 6;
+    } else if (value  == "#dow_06") {
+        return 7;
+    }
+}
 
 
 
