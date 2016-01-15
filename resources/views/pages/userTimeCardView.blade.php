@@ -80,13 +80,13 @@
                                 <option value="0">--Select Type--</option>
                             </select>
                         </th>
-                        <th style="width: 75px"><input class="form-control" id="dow_00" name="dow_00" placeholder="0"></th>
-                        <th style="width: 75px"><input class="form-control" id="dow_01" name="dow_01" placeholder="0"></th>
-                        <th style="width: 75px"><input class="form-control" id="dow_02" name="dow_02" placeholder="0"></th>
-                        <th style="width: 75px"><input class="form-control" id="dow_03" name="dow_03" placeholder="0"></th>
-                        <th style="width: 75px"><input class="form-control" id="dow_04" name="dow_04" placeholder="0"></th>
-                        <th style="width: 75px"><input class="form-control" id="dow_05" name="dow_05" placeholder="0"></th>
-                        <th style="width: 75px"><input class="form-control" id="dow_06" name="dow_06" placeholder="0"></th>
+                        <th style="width: 80px"><input class="form-control" id="dow_00" name="dow_00" placeholder="0"></th>
+                        <th style="width: 80px"><input class="form-control" id="dow_01" name="dow_01" placeholder="0"></th>
+                        <th style="width: 80px"><input class="form-control" id="dow_02" name="dow_02" placeholder="0"></th>
+                        <th style="width: 80px"><input class="form-control" id="dow_03" name="dow_03" placeholder="0"></th>
+                        <th style="width: 80px"><input class="form-control" id="dow_04" name="dow_04" placeholder="0"></th>
+                        <th style="width: 80px"><input class="form-control" id="dow_05" name="dow_05" placeholder="0"></th>
+                        <th style="width: 80px"><input class="form-control" id="dow_06" name="dow_06" placeholder="0"></th>
                         <th style="width: 150px">
                             <button disabled type="submit" class="btn btn-primary col-xs" id="saveButtonTimeCard" style="float: right">Save</button>
                         </th>
