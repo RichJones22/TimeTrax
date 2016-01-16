@@ -21,7 +21,7 @@ class TrigTaskBeforeInsert extends Migration
         BEGIN
             IF (select count(1)
                   from task
-                 where NEW.time_card_id = task.time_card_id
+                 where NEW.time_card_hours_worked_id = task.time_card_hours_worked_id
                    and
                        (NEW.start_time =  task.start_time) or
                        (NEW.start_time >  task.start_time  and

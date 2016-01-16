@@ -28,8 +28,8 @@ class Task extends Migration
          * create foreign key to the task table
          */
         Schema::table('task', function (Blueprint $table) {
-            $table->integer('time_card_id')->unsigned()->nullable();
-            $table->foreign('time_card_id')->references('id')->on('time_card')->nullable();
+            $table->integer('time_card_hours_worked_id')->unsigned()->nullable();
+            $table->foreign('time_card_hours_worked_id')->references('id')->on('time_card_hours_worked')->nullable();
         });
     }
 

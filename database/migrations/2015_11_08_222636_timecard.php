@@ -17,10 +17,9 @@ class Timecard extends Migration
          */
         Schema::create('time_card', function(Blueprint $table){
             $table->increments('id');
-            $table->date('date_worked')->index();
-            $table->char('dow',10);
-            $table->float('hours_worked');
+            $table->integer('work_id')->unsigned()->unique();
             $table->timestamps();
+//            $table->unique(['work_id', 'id']);
         });
 
         /**
@@ -32,10 +31,9 @@ class Timecard extends Migration
         });
 
         /**
-         * create foreign key to the time_card_format table
+         * create foreign key to the work table
          */
         Schema::table('time_card', function(Blueprint $table) {
-            $table->integer('work_id')->unsigned();
             $table->foreign('work_id')->references('id')->on('work');
         });
 

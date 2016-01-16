@@ -15,6 +15,7 @@ use \App\TimeCardFormat;
 use \App\WorkType;
 use \App\Work;
 use \App\TimeCard;
+use \App\TimeCardHoursWorked;
 use \App\TaskType;
 use \App\Task;
 
@@ -39,6 +40,7 @@ class appGlobals
     static protected $timeCardFormatTableName;
     static protected $workTableName;
     static protected $timeCardTableName;
+    static protected $timeCardHoursWorkedTableName;
     static protected $timeTaskTypeTableName;
     static protected $timeTaskTableName;
 
@@ -67,6 +69,7 @@ class appGlobals
         self::$timeCardFormatTableName = with(new TimeCardFormat)->getTable();
         self::$workTableName = with(new Work)->getTable();
         self::$timeCardTableName = with(new TimeCard)->getTable();
+        self::$timeCardHoursWorkedTableName = with(new TimeCardHoursWorked)->getTable();
         self::$timeTaskTypeTableName = with(new TaskType)->getTable();
         self::$timeTaskTableName = with(new Task)->getTable();
     }
@@ -93,6 +96,10 @@ class appGlobals
 
     static public function getTimeCardTableName() {
         return self::$timeCardTableName;
+    }
+
+    static public function getTimeCardHoursWorkedTableName() {
+        return self::$timeCardHoursWorkedTableName;
     }
 
     static public function getTaskTypeTableName() {

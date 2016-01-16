@@ -74,6 +74,7 @@
                         @if (count($timeCardRows) > 0)
                             <input type="hidden" name="time_card_format_id" value="{{$timeCardRows[0]->timeCardFormat->id}}">
                             <input type="hidden" name="work_id" value="{{$timeCardRows[0]->work->id}}">
+                            <input type="hidden" name="time_card_range" value="{{$timeCardRange}}">
                         @endif
                         <th>
                             <select id="workType" name ="workType" class="form-control col-xs-12">

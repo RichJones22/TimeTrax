@@ -16,15 +16,14 @@ class TimeCard extends Model
      * fillable fields
      */
     protected $fillable = [
-        'date_worked',
-        'dow',
-        'hours_worked'];
+        'work_id'];
 
-    static public function checkIfExists($data) {
-        $timeCard = TimeCard::where('date_worked', '=', $data)->first();
+    static public function checkIfExists($work) {
+
+        $timeCard = TimeCard::where('work_id', '=', $work->id)->first();
 
         if (!is_null($timeCard)) {
-            appGlobals::existsMessage(appGlobals::getTimeCardTableName(), $timeCard->date_worked, $timeCard->id);
+            appGlobals::existsMessage(appGlobals::getTimeCardTableName(), $timeCard->work_id, $timeCard->id);
         }
 
         return $timeCard;
@@ -34,8 +33,8 @@ class TimeCard extends Model
      * Eager load Task model.
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function task() {
-        return $this->hasMany('\App\Task');
+    public function timeCardHoursWorked() {
+        return $this->hasMany('\App\TimeCardHoursWorked');
     }
 
     public function work() {
