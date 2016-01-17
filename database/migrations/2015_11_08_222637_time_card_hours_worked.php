@@ -17,7 +17,6 @@ class TimeCardHoursWorked extends Migration
          */
         Schema::create('time_card_hours_worked', function(Blueprint $table){
             $table->increments('id');
-            $table->integer('work_id')->unsigned()->nullable();
             $table->date('date_worked');
             $table->char('dow',3);
             $table->float('hours_worked');
@@ -29,7 +28,8 @@ class TimeCardHoursWorked extends Migration
          * create foreign key to the time_card table
          */
         Schema::table('time_card_hours_worked', function(Blueprint $table) {
-            $table->foreign('work_id')->references('work_id')->on('time_card')->nullable();
+            $table->integer('time_card_id')->unsigned()->nullable();
+            $table->foreign('time_card_id')->references('work_id')->on('time_card')->nullable();
         });
     }
 

@@ -33,16 +33,16 @@ class TimeCard extends Model
      * Eager load Task model.
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function timeCardHoursWorked() {
-        return $this->hasMany('\App\TimeCardHoursWorked');
-    }
-
     public function work() {
         return $this->belongsTo('\App\Work');
     }
 
     public function timeCardFormat() {
         return $this->belongsTo('\App\TimeCardFormat');
+    }
+
+    public function timeCardHoursWorked() {
+        return $this->hasMany('\App\TimeCardHoursWorked');
     }
 
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use \App\Http\Requests\prepareTimeCardRequest;
 use DB;
+use App\Http\Controllers\TimeCardHoursWorkedController;
 
 use \App\Http\Requests;
 use \App\Task;
@@ -79,23 +80,24 @@ class TimeCardController extends Controller
     {
         $timeCardRequestAttributes = $request->all();
 
-//        $myDate = appGlobals::getBeginningOfCurrentWeek($timeCardRequestAttributes['time_card_range']);
-//
-//        dd($this->getDateWorked($myDate, 0)->dayOfWeek);
-
         try {
             DB::transaction(function() use ($timeCardRequestAttributes) {
+                $timeCard = new TimeCard();
+
+                $timeCard->time_card_format_id = $timeCardRequestAttributes['time_card_format_id'];
+                $timeCard->work_id = $timeCardRequestAttributes['work_id'];
+
+                $timeCard->save();
+
                 for ($i=0;$i<appGlobals::DAYS_IN_WEEK_NUM;$i++) {
+                    $timeCardHoursWorked = new TimeCardHoursWorked();
                     if ($timeCardRequestAttributes['dow_0' . $i]) {
-                        $timeCard = new TimeCard();
+                        $timeCardHoursWorked->work_id = $timeCardRequestAttributes['work_id'];
+                        $timeCardHoursWorked->date_worked = $this->getDateWorked(appGlobals::getBeginningOfCurrentWeek($timeCardRequestAttributes['time_card_range']), $i);
+                        $timeCardHoursWorked->dow = $this->getDOW($timeCard->date_worked);
+                        $timeCardHoursWorked->hours_worked = $timeCardRequestAttributes['dow_0' . $i];
 
-                        $timeCard->time_card_format_id = $timeCardRequestAttributes['time_card_format_id'];
-                        $timeCard->work_id = $timeCardRequestAttributes['work_id'];
-                        $timeCard->date_worked = $this->getDateWorked(appGlobals::getBeginningOfCurrentWeek($timeCardRequestAttributes['time_card_range']), $i);
-                        $timeCard->dow = $this->getDOW($timeCard->date_worked);
-                        $timeCard->hours_worked = $timeCardRequestAttributes['dow_0' . $i];
-
-                        $timeCard->save();
+                        $timeCardHoursWorked->save();
                     }
                 }
             });
@@ -171,58 +173,17 @@ class TimeCardController extends Controller
             $ewDate->addDays(6);
         }
 
-        /**
-        // get all time card rows between $bwDate and $ewDate.
-        $timeCardRows = TimeCard::whereBetween('date_worked', [$bwDate, $ewDate])->get();
+        // get all time_card_hours_worked rows between $bwDate and $ewDate.
+        $timeCardHoursWorkedRows = TimeCardHoursWorked::whereBetween('date_worked', [$bwDate, $ewDate])->get();
 
-        // eager load timeCardFormat, work and workType.
-        $timeCardRows->load('work');
-        $timeCardRows->load('timeCardFormat');
-        foreach($timeCardRows as $timeCardRow) {
-            $timeCardRow->work->load('workType');
-        }
-         *
-         *     $data = \DB::table('project')->where('project.client_id', $client_id)
-        ->join('work', 'project.id', '=', 'work.project_id')
-        ->join('work_type', 'work.work_type_id', '=', 'work_type.id')
-        ->select('work_type.id', 'work_type.type', 'work.work_type_description')
-        ->orderby('work.work_type_id')
-        ->get();
-         */
-
-        // get all time card rows between $bwDate and $ewDate.
-        $timeCardHoursWorkedRows = TimeCardHoursWorked::whereBetween('date_worked', [$bwDate, $ewDate])
-            ->join('time_card', 'time_card_hours_worked.work_id', '=', 'time_card.work_id')
-            ->join('work', 'time_card.work_id', '=', 'work.id')
-            ->orderBy('work.work_type_description')
-            ->get();
-
+        // eager load task, timeCard, work, timeCardFormat and workType.
         $timeCardHoursWorkedRows->load('task');
+        $timeCardHoursWorkedRows->load('timeCard');
         foreach($timeCardHoursWorkedRows as $timeCardHoursWorkedRow) {
-            $timeCardHoursWorkedRow->load('timeCard');
+            $timeCardHoursWorkedRow->timeCard->load('work');
+            $timeCardHoursWorkedRow->timeCard->load('timeCardFormat');
+            $timeCardHoursWorkedRow->timeCard->work->load('workType');
         }
-
-
-        dd($timeCardHoursWorkedRows);
-
-//        $data = DB::table('time_card_hours_worked')
-//            ->whereBetween('date_worked', [$bwDate, $ewDate])
-//            ->join('time_card', 'time_card_hours_worked.work_id', '=', 'time_card.work_id')
-//            ->join('work', 'time_card.work_id', '=', 'work.id')
-//            ->orderBy('work.work_type_description')
-//            ->get();
-
-
-
-
-        // eager load timeCardFormat, work and workType.
-//        $timeCardHoursWorkedRows->load('task');
-//        $timeCardHoursWorkedRows->load('timeCard');
-//        $timeCardHoursWorkedRows->load('timeCardFormat');
-//        foreach($timeCardHoursWorkedRows as $timeCardHoursWorkedRow) {
-//            $timeCardHoursWorkedRow->task->load('timeCard');
-//        }
-
 
         $timeCardRange = "( " . $bwDate->toDateString() . " - " . $ewDate->toDateString() . " )";
 

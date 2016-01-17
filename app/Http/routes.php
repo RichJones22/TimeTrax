@@ -348,12 +348,11 @@ Route::get('create_data', function() {
         $timeCardHoursWorked->dow = "THU";
         $timeCardHoursWorked->hours_worked = 8.0;
 
-        $timeCardHoursWorked->work_id = $work->id;
+        $timeCardHoursWorked->time_card_id = $work->id;
 
         $timeCardHoursWorked->save();
 
     }
-
 
     $date = '2015-11-13';
 
@@ -367,7 +366,7 @@ Route::get('create_data', function() {
         $timeCardHoursWorked->dow = "FRI";
         $timeCardHoursWorked->hours_worked = 8.0;
 
-        $timeCardHoursWorked->work_id = $work->id;
+        $timeCardHoursWorked->time_card_id = $work->id;
 
         $timeCardHoursWorked->save();
 
@@ -386,7 +385,7 @@ Route::get('create_data', function() {
         $timeCardHoursWorked->dow = "MON";
         $timeCardHoursWorked->hours_worked = 8.0;
 
-        $timeCardHoursWorked->work_id = $work->id;
+        $timeCardHoursWorked->time_card_id = $work->id;
 
         $timeCardHoursWorked->save();
 

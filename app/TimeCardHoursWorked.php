@@ -22,7 +22,7 @@ class TimeCardHoursWorked extends Model
 
     static public function checkIfExists($work) {
 
-        $timeCardHoursWorked = TimeCardHoursWorked::where('work_id', '=', $work->id)->first();
+        $timeCardHoursWorked = TimeCardHoursWorked::where('time_card_id', '=', $work->id)->first();
 
         if (!is_null($timeCardHoursWorked)) {
             appGlobals::existsMessage(appGlobals::getTimeCardHoursWorkedTableName(), $timeCardHoursWorked->date_worked, $timeCardHoursWorked->id);

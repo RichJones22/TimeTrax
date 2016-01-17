@@ -72,8 +72,8 @@
                     {!! Form::open(array('route' => array('timeCard.create', appGlobals::getBeginningOfCurrentWeek($timeCardRange)))) !!}
                         <input type="hidden" name="_method" value="POST">
                         @if (count($timeCardRows) > 0)
-                            <input type="hidden" name="time_card_format_id" value="{{$timeCardRows[0]->timeCardFormat->id}}">
-                            <input type="hidden" name="work_id" value="{{$timeCardRows[0]->work->id}}">
+                            <input type="hidden" name="time_card_format_id" value="{{$timeCardRows[0]->timeCard->timeCardFormat->id}}">
+                            <input type="hidden" name="work_id" value="{{$timeCardRows[0]->timeCard->work->id}}">
                             <input type="hidden" name="time_card_range" value="{{$timeCardRange}}">
                         @endif
                         <th>
@@ -99,7 +99,7 @@
                 <tbody id="timeCardTable">
                     @foreach ($timeCardRows as $timeCardRow)
                         <tr>
-                            <td>{{$timeCardRow->Work->WorkType->type}}--{{$timeCardRow->Work->work_type_description}}</td>
+                            <td>{{$timeCardRow->timeCard->Work->WorkType->type}}--{{$timeCardRow->timeCard->Work->work_type_description}}</td>
                             <td>
                                 @if ($timeCardRow->dow == $timeCardFormats['dow_00'])
                                     {{$timeCardRow->hours_worked}}
