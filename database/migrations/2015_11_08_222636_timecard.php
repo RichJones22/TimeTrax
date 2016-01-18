@@ -18,7 +18,7 @@ class Timecard extends Migration
         Schema::create('time_card', function(Blueprint $table){
             $table->increments('id');
             $table->date('iso_beginning_dow_date');
-            $table->integer('work_id')->unsigned()->unique();
+            $table->integer('work_id')->unsigned();
             $table->timestamps();
             $table->unique(['iso_beginning_dow_date', 'work_id']);
         });

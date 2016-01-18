@@ -29,7 +29,7 @@ class TimeCardHoursWorked extends Migration
          */
         Schema::table('time_card_hours_worked', function(Blueprint $table) {
             $table->integer('time_card_id')->unsigned()->nullable();
-            $table->foreign('time_card_id')->references('work_id')->on('time_card')->nullable();
+            $table->foreign('time_card_id')->references('id')->on('time_card')->nullable();
         });
     }
 

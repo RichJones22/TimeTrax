@@ -69,11 +69,11 @@
                     <th></th>
                 </tr>
                 <tr class="info tbl-h2-height">
-                    {!! Form::open(array('route' => array('timeCard.create', appGlobals::getBeginningOfCurrentWeek($timeCardRange)))) !!}
+                    {{--{!! Form::open(array('route' => array('timeCard.create', appGlobals::getBeginningOfCurrentWeek($timeCardRange)))) !!}--}}
+                    {!! Form::open(array('route' => array('timeCard.create', $timeCardRange))) !!}
                         <input type="hidden" name="_method" value="POST">
                         @if (count($timeCardRows) > 0)
-                            <input type="hidden" name="time_card_format_id" value="{{$timeCardRows[0]->timeCard->timeCardFormat->id}}">
-                            <input type="hidden" name="work_id" value="{{$timeCardRows[0]->timeCard->work->id}}">
+                            <input type="hidden" name="time_card_format_id" value="{{$timeCardRows[0]->timeCardFormat->id}}">
                             <input type="hidden" name="time_card_range" value="{{$timeCardRange}}">
                         @endif
                         <th>
@@ -99,65 +99,38 @@
                 <tbody id="timeCardTable">
                     @foreach ($timeCardRows as $timeCardRow)
                         <tr>
-                            <td>{{$timeCardRow->timeCard->Work->WorkType->type}}--{{$timeCardRow->timeCard->Work->work_type_description}}</td>
-                            <td>
-                                @if ($timeCardRow->dow == $timeCardFormats['dow_00'])
-                                    {{$timeCardRow->hours_worked}}
-                                @else
-                                    {{0}}
-                                @endif
-                            </td>
-                            <td>
-                                @if ($timeCardRow->dow == $timeCardFormats['dow_01'])
-                                    {{$timeCardRow->hours_worked}}
-                                @else
-                                    {{0}}
-                                @endif
-                            </td>
-                            <td>
-                                @if ($timeCardRow->dow == $timeCardFormats['dow_02'])
-                                    {{$timeCardRow->hours_worked}}
-                                @else
-                                    {{0}}
-                                @endif
-                            </td>
-                            <td>
-                                @if ($timeCardRow->dow == $timeCardFormats['dow_03'])
-                                    {{$timeCardRow->hours_worked}}
-                                @else
-                                    {{0}}
-                                @endif
-                            </td>
-                            <td>
-                                @if ($timeCardRow->dow == $timeCardFormats['dow_04'])
-                                    {{$timeCardRow->hours_worked}}
-                                @else
-                                    {{0}}
-                                @endif
-                            </td>
-                            <td>
-                                @if ($timeCardRow->dow == $timeCardFormats['dow_05'])
-                                    {{$timeCardRow->hours_worked}}
-                                @else
-                                    {{0}}
-                                @endif
-                            </td>
-                            <td>
-                                <div class="col-xs-9" style="display: inline-block;">
-                                    @if ($timeCardRow->dow == $timeCardFormats['dow_06'])
-                                        {{$timeCardRow->hours_worked}}
-                                    @else
-                                        {{0}}
-                                    @endif
-                                </div>
-                                {{--<form method="post" action="{{ route('task.destroy', $task->id) }}">--}}
+                            <td>{{$timeCardRow->Work->WorkType->type}}--{{$timeCardRow->Work->work_type_description}}</td>
+                                <td>
+                                    {{isset($timeCardRow->timeCardHoursWorked[$timeCardFormats['dow_00']]) ? $timeCardRow->timeCardHoursWorked[$timeCardFormats['dow_00']] : 0}}
+                                </td>
+                                <td>
+                                    {{isset($timeCardRow->timeCardHoursWorked[$timeCardFormats['dow_01']]) ? $timeCardRow->timeCardHoursWorked[$timeCardFormats['dow_01']] : 0}}
+                                </td>
+                                <td>
+                                    {{isset($timeCardRow->timeCardHoursWorked[$timeCardFormats['dow_02']]) ? $timeCardRow->timeCardHoursWorked[$timeCardFormats['dow_02']] : 0}}
+                                </td>
+                                <td>
+                                    {{isset($timeCardRow->timeCardHoursWorked[$timeCardFormats['dow_03']]) ? $timeCardRow->timeCardHoursWorked[$timeCardFormats['dow_03']] : 0}}
+                                </td>
+                                <td>
+                                    {{isset($timeCardRow->timeCardHoursWorked[$timeCardFormats['dow_04']]) ? $timeCardRow->timeCardHoursWorked[$timeCardFormats['dow_04']] : 0}}
+                                </td>
+                                <td>
+                                    {{isset($timeCardRow->timeCardHoursWorked[$timeCardFormats['dow_05']]) ? $timeCardRow->timeCardHoursWorked[$timeCardFormats['dow_05']] : 0}}
+                                </td>
+                                <td>
+                                    <div class="col-xs-9" style="display: inline-block;">
+                                        {{isset($timeCardRow->timeCardHoursWorked[$timeCardFormats['dow_06']]) ? $timeCardRow->timeCardHoursWorked[$timeCardFormats['dow_06']] : 0}}
+                                    </div>
+                                    {{--<form method="post" action="{{ route('task.destroy', $task->id) }}">--}}
                                     {{--<input hidden type="text" name="_token" value="{{ csrf_token() }}">--}}
                                     {{--<button type ="submit" class = "btn btn-danger btn-xs" style="float: right">--}}
-                                        {{--<span class="glyphicon glyphicon-trash"></span>--}}
+                                    {{--<span class="glyphicon glyphicon-trash"></span>--}}
                                     {{--</button>--}}
-                                {{--</form>--}}
-                            </td>
-                            <td></td>
+                                    {{--</form>--}}
+                                </td>
+                                <td></td>
+                            {{--@endforeach--}}
                         </tr>
                     @endforeach
                 </tbody>

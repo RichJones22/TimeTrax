@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use \App\Helpers\appGlobals;
+use \Carbon\Carbon;
+use DB;
 
 class TimeCard extends Model
 {
@@ -18,12 +20,16 @@ class TimeCard extends Model
     protected $fillable = [
         'work_id'];
 
-    static public function checkIfExists($work) {
+    static public function checkIfExists($inTimeCard) {
 
-        $timeCard = TimeCard::where('work_id', '=', $work->id)->first();
+        $timeCard = TimeCard::where('iso_beginning_dow_date', '=', $inTimeCard->iso_beginning_dow_date)
+            ->where('work_id', '=', $inTimeCard->work_id)
+            ->first();
 
-        if (!is_null($timeCard)) {
-            appGlobals::existsMessage(appGlobals::getTimeCardTableName(), $timeCard->work_id, $timeCard->id);
+        if (is_null($timeCard)) {
+            return $inTimeCard;
+        } else {
+            appGlobals::existsMessage(appGlobals::getTimeCardTableName(), $timeCard->iso_begninning_dow_date, $timeCard->work_id);
         }
 
         return $timeCard;

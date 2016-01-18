@@ -20,9 +20,9 @@ class TimeCardHoursWorked extends Model
         'dow',
         'hours_worked'];
 
-    static public function checkIfExists($work) {
+    static public function checkIfExists($timeCard) {
 
-        $timeCardHoursWorked = TimeCardHoursWorked::where('time_card_id', '=', $work->id)->first();
+        $timeCardHoursWorked = TimeCardHoursWorked::where('time_card_id', '=', $timeCard->id)->first();
 
         if (!is_null($timeCardHoursWorked)) {
             appGlobals::existsMessage(appGlobals::getTimeCardHoursWorkedTableName(), $timeCardHoursWorked->date_worked, $timeCardHoursWorked->id);
