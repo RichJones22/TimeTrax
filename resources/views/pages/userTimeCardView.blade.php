@@ -69,13 +69,8 @@
                     <th></th>
                 </tr>
                 <tr class="info tbl-h2-height">
-                    {{--{!! Form::open(array('route' => array('timeCard.create', appGlobals::getBeginningOfCurrentWeek($timeCardRange)))) !!}--}}
                     {!! Form::open(array('route' => array('timeCard.create', $timeCardRange))) !!}
                         <input type="hidden" name="_method" value="POST">
-                        @if (count($timeCardRows) > 0)
-                            <input type="hidden" name="time_card_format_id" value="{{$timeCardRows[0]->timeCardFormat->id}}">
-                            <input type="hidden" name="time_card_range" value="{{$timeCardRange}}">
-                        @endif
                         <th>
                             <select id="workType" name ="workType" class="form-control col-xs-12">
                                 <option value="0">--Select Type--</option>

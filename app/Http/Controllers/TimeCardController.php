@@ -59,28 +59,36 @@ class TimeCardController extends Controller
         }
     }
 
-    private function getWorkIdViaWorkTypeId($workType, $timeCardRange) {
-        $bwDate = new Carbon(appGlobals::getBeginningOfCurrentWeek($timeCardRange), 'America/Chicago');
-        $bwDate->subDay();
-        $ewDate = new Carbon($bwDate, 'America/Chicago');
-        $ewDate->addDays(6);
-
-        $data = $timeCardRows = TimeCard::whereBetween('time_card_hours_worked.date_worked', [$bwDate->toDateString(), $ewDate->toDateString()])
-            ->join('time_card_hours_worked', 'time_card_hours_worked.time_card_id', '=', 'time_card.id')
-            ->join('work', 'time_card.work_id', '=', 'work.id')
-            ->join('work_type', 'work.work_type_id', '=', 'work_type.id')
-            ->where('time_card_hours_worked.hours_worked', ">", 0)
-            ->where('work_type.id', $workType)
+    private function getClientId($workTypeId) {
+        $data = DB::table('work_type')->where('work_type.id', $workTypeId)
+            ->select('client_id')
             ->first();
 
-        if ($data) {
-            return $data->work_id;
-        } else {
-            return $workType;
+        foreach($data as $k => $v) {
+            return $v;
         }
+    }
 
-//
-//        return ($data->work_id) ? $workType : $data->work_id;
+    private function getTimeCardFormatId($clientId) {
+
+        $data = DB::table('time_card_format')->where('client_id', $clientId)
+            ->select('time_card_format.id')
+            ->first();
+
+        foreach($data as $k => $v) {
+            return $v;
+        }
+    }
+
+    private function getWorkIdViaWorkTypeId($workTypeId) {
+
+        $data = DB::table('work')->where('work_type_id', $workTypeId)
+            ->select('work.id')
+            ->first();
+
+        foreach($data as $k => $v) {
+            return $v;
+        }
     }
 
     /**
@@ -92,27 +100,22 @@ class TimeCardController extends Controller
     {
         $timeCardRequestAttributes = $request->all();
 
-        dd($timeCardRequestAttributes);
-
         try {
             DB::transaction(function() use ($timeCardRequestAttributes, $timeCardRange) {
                 $timeCard = new TimeCard();
 
-//                $timeCard->iso_beginning_dow_date = appGlobals::getBeginningOfCurrentWeek($timeCardRequestAttributes['time_card_range']);
                 $timeCard->iso_beginning_dow_date = appGlobals::getBeginningOfCurrentWeek($timeCardRange);
-                $timeCard->work_id = $timeCardRequestAttributes['workType'];
-                $timeCard->time_card_format_id = $timeCardRequestAttributes['time_card_format_id'];
+                $timeCard->work_id = $this->getWorkIdViaWorkTypeId($timeCardRequestAttributes['workType']);
+                $timeCard->time_card_format_id = $this->getTimeCardFormatId($this->getClientId($timeCardRequestAttributes['workType']));
 
-                if (is_null($timeCard = TimeCard::checkIfExists($timeCard))) {
+                if (is_null(TimeCard::checkIfExists($timeCard, true))) {
                     $timeCard->save();
                 }
 
                 for ($i=0;$i<appGlobals::DAYS_IN_WEEK_NUM;$i++) {
                     $timeCardHoursWorked = new TimeCardHoursWorked();
                     if ($timeCardRequestAttributes['dow_0' . $i]) {
-//                        $timeCardHoursWorked->time_card_id = $this->getWorkIdViaWorkTypeId($timeCardRequestAttributes['workType'], $timeCardRequestAttributes['time_card_range']);
-//                        $timeCardHoursWorked->date_worked = $this->getDateWorked(appGlobals::getBeginningOfCurrentWeek($timeCardRequestAttributes['time_card_range']), $i);
-                        $timeCardHoursWorked->time_card_id = $this->getWorkIdViaWorkTypeId($timeCardRequestAttributes['workType'], $timeCardRange);
+                        $timeCardHoursWorked->time_card_id = $timeCard->id;
                         $timeCardHoursWorked->date_worked = $this->getDateWorked(appGlobals::getBeginningOfCurrentWeek($timeCardRange), $i);
                         $timeCardHoursWorked->dow = $this->getDOW($timeCardHoursWorked->date_worked);
                         $timeCardHoursWorked->hours_worked = $timeCardRequestAttributes['dow_0' . $i];
@@ -177,7 +180,6 @@ class TimeCardController extends Controller
             ->join('work_type', 'work.work_type_id', '=', 'work_type.id')
             ->where('time_card_hours_worked.hours_worked', ">", 0)
             ->select('time_card.id', 'time_card.iso_beginning_dow_date', 'time_card.work_id','time_card.time_card_format_id')
-//            ->select('time_card.work_id', 'time_card.time_card_format_id', 'time_card_hours_worked.id', 'time_card_hours_worked.time_card_id')
             ->groupBy('work_type.type')
             ->orderBy('work_type.type')
             ->get();
@@ -190,14 +192,10 @@ class TimeCardController extends Controller
                 ->join('time_card', 'time_card_hours_worked.time_card_id', '=', 'time_card.id')
                 ->where('time_card_hours_worked.hours_worked', ">", 0)
                 ->where('time_card_hours_worked.time_card_id', '=', $timeCardRow->id)
-//                ->groupBy('time_card.work_id')
-//                ->orderBy('time_card.work_id')
                 ->get();
         }
 
-
         $temp[] = [];
-
         foreach($hoursWorkedPerWorkId as $hoursWorked) {
             foreach($hoursWorked as $hoursWork) {
                 $temp[$hoursWork->work_id][$hoursWork->dow] = $hoursWork->hours_worked;
