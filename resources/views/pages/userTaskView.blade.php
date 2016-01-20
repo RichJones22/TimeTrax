@@ -22,8 +22,8 @@
                     <th>
                         <span class="col-xs-9" style="display: inline-block;">Type</span>
                         @if(count($tasks)>0)
-                            {{Session::put(appGlobals::getTaskTableName(), $timeCardId)}}
-                            {!! Form::open(array('route' => array('taskType.task.show', $tasks[0]->TaskType->client_id, $timeCardId))) !!}
+                            {{Session::put(appGlobals::getTaskTableName(), $timeCardHoursWorkedId)}}
+                            {!! Form::open(array('route' => array('taskType.task.show', $tasks[0]->TaskType->client_id, $timeCardHoursWorkedId))) !!}
                                 <input type="hidden" name="_method" value="GET">
                                 <button id="routeToTaskTypeView" type ="submit" class = "btn btn-primary btn-xs" style="float: right">
                                     <span class="glyphicon glyphicon-open"></span>
@@ -36,7 +36,7 @@
                     <th><span style="color: blue; font-weight: bold"> ( {{ $totalHoursWorked }} ) </span>Hours Worked</th>
                     <th>
                         <span class="col-xs-9" style="display: inline-block;">Notes</span>
-                        {!! Form::open(array('route' => array('task.show', $timeCardId))) !!}
+                        {!! Form::open(array('route' => array('task.show', $timeCardHoursWorkedId))) !!}
                             <input type="hidden" name="_method" value="GET">
                             <button type ="submit" class = "btn btn-primary btn-xs" style="float: right">
                                    <span class="glyphicon glyphicon-refresh"></span>
@@ -46,7 +46,7 @@
                 </tr>
                 {!! Form::open(array('route' => array('task.create'))) !!}
                     <input type="hidden" name="_method" value="POST">
-                    <input hidden type="text" name="time_card_id" value="{{$timeCardId}}">
+                    <input hidden type="text" name="time_card_hours_worked_id" value="{{$timeCardHoursWorkedId}}">
                     <div>
                         <tr class="info">
                             <th>

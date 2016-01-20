@@ -195,17 +195,23 @@ class TimeCardController extends Controller
                 ->get();
         }
 
+
+
         $temp[] = [];
+        $temp01[] = [];
         foreach($hoursWorkedPerWorkId as $hoursWorked) {
             foreach($hoursWorked as $hoursWork) {
                 $temp[$hoursWork->work_id][$hoursWork->dow] = $hoursWork->hours_worked;
+                $temp01[$hoursWork->work_id][$hoursWork->dow] = $hoursWork->id;
             }
         }
         array_shift($temp);
+        array_shift($temp01);
 
         // attached $hoursWorkedPerWorkId to the instance of $timeCardRows[$i]->timeCardHoursWorked
         for($i=0;$i<count($timeCardRows);$i++) {
             $timeCardRows[$i]->timeCardHoursWorked = $temp[$i];
+            $timeCardRows[$i]->timeCardHoursWorkedId = $temp01[$i];
         }
 
         // eager load work, timeCardFormat and workType.
@@ -263,6 +269,20 @@ class TimeCardController extends Controller
      */
     public function destroy($id)
     {
+
+
+        try {
+            DB::transaction(function() use ($id) {
+                // first remove all time_card_hours_worked rows
+                DB::table('time_card_hours_worked')->where('time_card_id', $id)->delete();
+
+                // then delete the time_card row.
+                TimeCard::destroy($id);
+            });
+        } catch (Exception $e) {
+            // session()->flash(appGlobals::getInfoMessageType(), appGlobals::getInfoMessageText(appGlobals::INFO_TIME_VALUE_OVERLAP));
+        }
+
         return redirect()->back();
     }
 }

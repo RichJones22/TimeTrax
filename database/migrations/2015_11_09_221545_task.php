@@ -17,18 +17,19 @@ class Task extends Migration
          */
         Schema::create('task', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('time_card_hours_worked_id')->unsigned()->nullable();
             $table->time('start_time')->unique();
             $table->time('end_time');
             $table->float('hours_worked', 8,4);
             $table->string('notes')->nullable();
             $table->timestamps();
+            $table->unique(['time_card_hours_worked_id', 'start_time']);
         });
 
         /**
          * create foreign key to the task table
          */
         Schema::table('task', function (Blueprint $table) {
-            $table->integer('time_card_hours_worked_id')->unsigned()->nullable();
             $table->foreign('time_card_hours_worked_id')->references('id')->on('time_card_hours_worked')->nullable();
         });
     }
