@@ -44,6 +44,8 @@ class TaskController extends Controller
         $task->task_type_id = $taskRequestAttributes['taskType'];
         $task->time_card_hours_worked_id = $taskRequestAttributes['time_card_hours_worked_id'];
 
+//        dd($task);
+
         $task->save();
 
         return redirect()->back();
@@ -68,6 +70,12 @@ class TaskController extends Controller
      */
     public function show($timeCardHoursWorkedId)
     {
+        if (is_null($timeCardHoursWorkedId)) {
+            \Session::forget(appGlobals::getTimeCardTableName());
+        } else {
+            \Session::set(appGlobals::getTimeCardTableName(), $timeCardHoursWorkedId);
+        }
+
         // get all task for a specific time_card.date.
         $tasks = Task::where('time_card_hours_worked_id', '=', $timeCardHoursWorkedId)->get()->sortBy('start_time');
 

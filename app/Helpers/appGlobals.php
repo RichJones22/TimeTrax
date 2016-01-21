@@ -193,6 +193,16 @@ class appGlobals
         return $data->client_id;
     }
 
+    static public function getIsoBeginningDowDate($timeCardHoursWorkedId) {
+        $data = \DB::table('time_card_hours_worked')
+            ->join('time_card', 'time_card_hours_worked.time_card_id', '=', 'time_card.id')
+            ->where('time_card_hours_worked.id', $timeCardHoursWorkedId)
+            ->select('time_card.iso_beginning_dow_date')
+            ->first();
+
+        return $data->iso_beginning_dow_date;
+    }
+
 }
 
 global $appGlobals;

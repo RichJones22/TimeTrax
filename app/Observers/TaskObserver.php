@@ -18,7 +18,7 @@ class TaskObserver
             return true;
         }
 
-        if ($task->checkIfTimeOverLaps($task->time_card_id, $task->start_time, $task->end_time)) {
+        if ($task->checkIfTimeOverLaps($task->time_card_hours_worked_id, $task->start_time, $task->end_time)) {
             session()->flash(appGlobals::getInfoMessageType(), appGlobals::getInfoMessageText(appGlobals::INFO_TIME_VALUE_OVERLAP));
 
             return false;

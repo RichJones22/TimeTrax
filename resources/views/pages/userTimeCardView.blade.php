@@ -108,37 +108,42 @@
                                 @else
                                     0
                                 @endif
-                           </td>
+                            </td>
                             <td>
                                 @if (isset($timeCardRow->timeCardHoursWorked[$timeCardFormats['dow_02']]))
                                     {!! link_to_route('task.show', $timeCardRow->timeCardHoursWorked[$timeCardFormats['dow_02']], $timeCardRow->timeCardHoursWorkedId[$timeCardFormats['dow_02']]) !!}
                                 @else
                                     0
-                                @endif                            </td>
+                                @endif
+                            </td>
                             <td>
                                 @if (isset($timeCardRow->timeCardHoursWorked[$timeCardFormats['dow_03']]))
                                     {!! link_to_route('task.show', $timeCardRow->timeCardHoursWorked[$timeCardFormats['dow_03']], $timeCardRow->timeCardHoursWorkedId[$timeCardFormats['dow_03']]) !!}
                                 @else
                                     0
-                                @endif                            </td>
+                                @endif
+                            </td>
                             <td>
                                 @if (isset($timeCardRow->timeCardHoursWorked[$timeCardFormats['dow_04']]))
                                     {!! link_to_route('task.show', $timeCardRow->timeCardHoursWorked[$timeCardFormats['dow_04']], $timeCardRow->timeCardHoursWorkedId[$timeCardFormats['dow_04']]) !!}
                                 @else
                                     0
-                                @endif                            </td>
+                                @endif
+                            </td>
                             <td>
                                 @if (isset($timeCardRow->timeCardHoursWorked[$timeCardFormats['dow_05']]))
                                     {!! link_to_route('task.show', $timeCardRow->timeCardHoursWorked[$timeCardFormats['dow_05']], $timeCardRow->timeCardHoursWorkedId[$timeCardFormats['dow_05']]) !!}
                                 @else
                                     0
-                                @endif                            </td>
+                                @endif
+                            </td>
                             <td>
                                 @if (isset($timeCardRow->timeCardHoursWorked[$timeCardFormats['dow_06']]))
                                     {!! link_to_route('task.show', $timeCardRow->timeCardHoursWorked[$timeCardFormats['dow_06']], $timeCardRow->timeCardHoursWorkedId[$timeCardFormats['dow_06']]) !!}
                                 @else
                                     0
-                                @endif                            </td>
+                                @endif
+                            </td>
                             <td>
                                 <form method="post" action="{{ route('timeCard.destroy', $timeCardRow->id) }}">
                                     <input hidden type="text" name="_token" value="{{ csrf_token() }}">

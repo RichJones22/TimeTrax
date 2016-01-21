@@ -19,17 +19,33 @@
                     @endif
                 </tr>
                 <tr style="background-color: darkgray;">
-                    <th>
-                        <span class="col-xs-9" style="display: inline-block;">Type</span>
-                        @if(count($tasks)>0)
-                            {{Session::put(appGlobals::getTaskTableName(), $timeCardHoursWorkedId)}}
-                            {!! Form::open(array('route' => array('taskType.task.show', $tasks[0]->TaskType->client_id, $timeCardHoursWorkedId))) !!}
-                                <input type="hidden" name="_method" value="GET">
-                                <button id="routeToTaskTypeView" type ="submit" class = "btn btn-primary btn-xs" style="float: right">
-                                    <span class="glyphicon glyphicon-open"></span>
-                                </button>
-                            {!! Form::close() !!}
-                        @endif
+                    <th style="padding-right: 0px;border-right-width: 0px;padding-left: 0px;border-left-width: 0px;">
+                        <div class="col-xs-12" style="display: inline-block;">
+                            <label class="col-xs-2" style="padding: 0 0 0 0;">Type</label>
+                            <div class="col-xs-6"></div>
+                            <div class="col-xs-2" >
+                                @if (Session::has(appGlobals::getTimeCardTableName()))
+                                    {!! Form::open(array('route' => array('timeCard.show', appGlobals::getIsoBeginningDowDate(Session::get(appGlobals::getTimeCardTableName()))))) !!}
+                                    <input type="hidden" name="_method" value="GET">
+                                    <input hidden type="text" name="_token" value="{{ csrf_token() }}">
+                                    <button id="routeToTaskView" type ="submit" class = "btn btn-primary btn-xs" style="float: right">
+                                        <span class="glyphicon glyphicon-step-backward"></span>
+                                    </button>
+                                    {!! Form::close() !!}
+                                @endif
+                            </div>
+                            <div class="col-xs-2" style="padding-left: 0;float: left">
+                                @if(count($tasks)>0)
+                                    {{Session::put(appGlobals::getTaskTableName(), $timeCardHoursWorkedId)}}
+                                    {!! Form::open(array('route' => array('taskType.task.show', $tasks[0]->TaskType->client_id, $timeCardHoursWorkedId))) !!}
+                                    <input type="hidden" name="_method" value="GET">
+                                    <button id="routeToTaskTypeView" type ="submit" class = "btn btn-primary btn-xs" style="float: right">
+                                        <span class="glyphicon glyphicon-open"></span>
+                                    </button>
+                                    {!! Form::close() !!}
+                                @endif
+                            </div>
+                        </div>
                     </th>
                     <th>Start Time</th>
                     <th>End Time</th>

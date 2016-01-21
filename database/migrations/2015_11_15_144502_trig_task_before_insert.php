@@ -19,15 +19,14 @@ class TrigTaskBeforeInsert extends Migration
             BEFORE INSERT
             ON task FOR EACH ROW
         BEGIN
-            IF (select count(1)
+            IF (select count(*)
                   from task
                  where NEW.time_card_hours_worked_id = task.time_card_hours_worked_id
                    and
-                       (NEW.start_time =  task.start_time) or
-                       (NEW.start_time >  task.start_time  and
-                        NEW.start_time < task.end_time)   or
-                       (NEW.end_time   >  task.start_time  and
-                        NEW.end_time   <   task.end_time))
+                       ((NEW.start_time >  task.start_time  and
+                         NEW.start_time <  task.end_time)   or
+                        (NEW.end_time   >  task.start_time  and
+                         NEW.end_time   <  task.end_time)))
             THEN
                 SIGNAL SQLSTATE '%d'
                 SET MESSAGE_TEXT = 'task table can not have start_time > end_time';
