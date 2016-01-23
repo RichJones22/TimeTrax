@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\TimeCard;
+use App\TimeCardHoursWorked;
 use Illuminate\Http\Request;
 
 use \App\Http\Requests\PrepareTaskRequest;
@@ -32,6 +32,8 @@ class TaskController extends Controller
     {
         $taskRequestAttributes = $request->all();
 
+//        dd($taskRequestAttributes);
+
         $task = new Task();
 
         $task->start_time = $taskRequestAttributes['startt'];
@@ -40,7 +42,9 @@ class TaskController extends Controller
         $task->notes = $taskRequestAttributes['notes'];
 
         $task->task_type_id = $taskRequestAttributes['taskType'];
-        $task->time_card_id = $taskRequestAttributes['time_card_id'];
+        $task->time_card_hours_worked_id = $taskRequestAttributes['time_card_hours_worked_id'];
+
+//        dd($task);
 
         $task->save();
 
@@ -64,10 +68,16 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($timeCardId)
+    public function show($timeCardHoursWorkedId)
     {
+        if (is_null($timeCardHoursWorkedId)) {
+            \Session::forget(appGlobals::getTimeCardTableName());
+        } else {
+            \Session::set(appGlobals::getTimeCardTableName(), $timeCardHoursWorkedId);
+        }
+
         // get all task for a specific time_card.date.
-        $tasks = Task::where('time_card_id', '=', $timeCardId)->get()->sortBy('start_time');
+        $tasks = Task::where('time_card_hours_worked_id', '=', $timeCardHoursWorkedId)->get()->sortBy('start_time');
 
         // derive total hours worked.
         $totalHoursWorked=0;
@@ -79,13 +89,13 @@ class TaskController extends Controller
         $tasks->load('taskType');
 
         // get time_card data.
-        $timeCard = TimeCard::where('id', '=', $timeCardId)->get();
+        $timeCard = TimeCardHoursWorked::where('id', '=', $timeCardHoursWorkedId)->get();
 
         // pass the data to the view.
         return view('pages.userTaskView')
             ->with('tasks', $tasks)
             ->with('timeCard', $timeCard)
-            ->with('timeCardId', $timeCardId)
+            ->with('timeCardHoursWorkedId', $timeCardHoursWorkedId)
             ->with('totalHoursWorked', $totalHoursWorked);
     }
 

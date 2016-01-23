@@ -15,6 +15,7 @@ use \App\TimeCardFormat;
 use \App\WorkType;
 use \App\Work;
 use \App\TimeCard;
+use \App\TimeCardHoursWorked;
 use \App\TaskType;
 use \App\Task;
 
@@ -39,6 +40,7 @@ class appGlobals
     static protected $timeCardFormatTableName;
     static protected $workTableName;
     static protected $timeCardTableName;
+    static protected $timeCardHoursWorkedTableName;
     static protected $timeTaskTypeTableName;
     static protected $timeTaskTableName;
 
@@ -67,6 +69,7 @@ class appGlobals
         self::$timeCardFormatTableName = with(new TimeCardFormat)->getTable();
         self::$workTableName = with(new Work)->getTable();
         self::$timeCardTableName = with(new TimeCard)->getTable();
+        self::$timeCardHoursWorkedTableName = with(new TimeCardHoursWorked)->getTable();
         self::$timeTaskTypeTableName = with(new TaskType)->getTable();
         self::$timeTaskTableName = with(new Task)->getTable();
     }
@@ -93,6 +96,10 @@ class appGlobals
 
     static public function getTimeCardTableName() {
         return self::$timeCardTableName;
+    }
+
+    static public function getTimeCardHoursWorkedTableName() {
+        return self::$timeCardHoursWorkedTableName;
     }
 
     static public function getTaskTypeTableName() {
@@ -184,6 +191,16 @@ class appGlobals
         $data = \DB::table('project')->where('flag_recording_time_for', 1)->first();
 
         return $data->client_id;
+    }
+
+    static public function getIsoBeginningDowDate($timeCardHoursWorkedId) {
+        $data = \DB::table('time_card_hours_worked')
+            ->join('time_card', 'time_card_hours_worked.time_card_id', '=', 'time_card.id')
+            ->where('time_card_hours_worked.id', $timeCardHoursWorkedId)
+            ->select('time_card.iso_beginning_dow_date')
+            ->first();
+
+        return $data->iso_beginning_dow_date;
     }
 
 }

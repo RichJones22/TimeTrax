@@ -12,6 +12,6 @@ use \App\Helpers\appGlobals;
 class TimeCardObserver
 {
     public function created($timeCard) {
-        appGlobals::createdMessage(appGlobals::getTimeCardTableName(), $timeCard->date_worked , $timeCard->id);
+        appGlobals::createdMessage(appGlobals::getTimeCardTableName(), $timeCard->work_id , $timeCard->id);
     }
 }

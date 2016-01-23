@@ -9,6 +9,7 @@ use \App\WorkType;
 use \App\TimeCardFormat;
 use \App\Work;
 use \App\TimeCard;
+use \App\TimeCardHoursWorked;
 use \App\TaskType;
 use \App\Task;
 
@@ -207,7 +208,7 @@ Route::get('create_data', function() {
     /*******************************************************************************************************************
      * work insert(s)
      ******************************************************************************************************************/
-    $description = 'This thing does not work right.';
+    $description = 'The catalog view is performing too slowly.';
     if (is_null($work = Work::checkIfExists($description))) {
 
         // get $project->id
@@ -267,110 +268,151 @@ Route::get('create_data', function() {
     /*******************************************************************************************************************
      * time_card insert(s)
      ******************************************************************************************************************/
-    $date = '2015-11-12';
-    if (is_null($timeCard = TimeCard::checkIfExists($date))) {
+    // get $work->id
+    $work = Work::where('work_type_description', '=', 'The catalog view is performing too slowly.')->first();
 
-        // get $work->id
-        $work = Work::where('work_type_description', '=', 'This thing does not work right.')->first();
+    $timeCard = new TimeCard();
+    $timeCard->iso_beginning_dow_date = '2015-11-09';
+    $timeCard->work_id = $work->id;
+
+    if (is_null($timeCard = TimeCard::checkIfExists($timeCard))) {
 
         // get $timeCardFormat->id
         $timeCardFormat = TimeCardFormat::where('description', '=', 'Day of week starts on SAT and ends on SUN')->first();
 
         $timeCard = new TimeCard;
 
-        $timeCard->date_worked = $date;
-        $timeCard->dow = "THU";
-        $timeCard->hours_worked = 8.0;
-
-        $timeCard->time_card_format_id = $timeCardFormat->id;
         $timeCard->work_id = $work->id;
+        $timeCard->time_card_format_id = $timeCardFormat->id;
+        $timeCard->iso_beginning_dow_date = '2015-11-09';
 
         $timeCard->save();
     }
+
+    // get $work->id
+    $work = Work::where('work_type_description', '=', 'The Task table needs three additional columns.')->first();
+
+    $timeCard = new TimeCard();
+    $timeCard->iso_beginning_dow_date = '2015-11-09';
+    $timeCard->work_id = $work->id;
+
+    if (is_null($timeCard = TimeCard::checkIfExists($timeCard))) {
+
+        // get $timeCardFormat->id
+        $timeCardFormat = TimeCardFormat::where('description', '=', 'Day of week starts on SAT and ends on SUN')->first();
+
+        $timeCard = new TimeCard;
+
+        $timeCard->work_id = $work->id;
+        $timeCard->time_card_format_id = $timeCardFormat->id;
+        $timeCard->iso_beginning_dow_date = '2015-11-09';
+
+        $timeCard->save();
+    }
+
+    // get $work->id
+    $work = Work::where('work_type_description', '=', 'A new landing page is required to support Fall 2016 GNO.')->first();
+
+    $timeCard = new TimeCard();
+    $timeCard->iso_beginning_dow_date = '2015-11-16';
+    $timeCard->work_id = $work->id;
+
+    if (is_null($timeCard = TimeCard::checkIfExists($timeCard))) {
+
+        // get $timeCardFormat->id
+        $timeCardFormat = TimeCardFormat::where('description', '=', 'Day of week starts on SAT and ends on SUN')->first();
+
+        $timeCard = new TimeCard;
+
+        $timeCard->work_id = $work->id;
+        $timeCard->time_card_format_id = $timeCardFormat->id;
+        $timeCard->iso_beginning_dow_date = '2015-11-16';
+
+        $timeCard->save();
+    }
+
+    /*******************************************************************************************************************
+     * time_card_hours_worked insert(s)
+     ******************************************************************************************************************/
+
+    $date = '2015-11-12';
+
+    // get $work->id
+    $work = Work::where('work_type_description', '=', 'The catalog view is performing too slowly.')->first();
+
+    $timeCard = new TimeCard();
+    $timeCard->iso_beginning_dow_date = '2015-11-09';
+    $timeCard->work_id = $work->id;
+
+    if (!is_null($timeCard = TimeCard::checkIfExists($timeCard))) {
+        if (is_null($timeCardHoursWorked = TimeCardHoursWorked::checkIfExists($timeCard))) {
+
+            $timeCardHoursWorked = new TimeCardHoursWorked;
+
+            $timeCardHoursWorked->date_worked = $date;
+            $timeCardHoursWorked->dow = "THU";
+            $timeCardHoursWorked->hours_worked = 8.0;
+
+            $timeCardHoursWorked->time_card_id = $work->id;
+
+            $timeCardHoursWorked->save();
+
+        }
+    }
+
+
 
     $date = '2015-11-13';
-    if (is_null($timeCard = TimeCard::checkIfExists($date))) {
 
-        // get $work->id
-        $work = Work::where('work_type_description', '=', 'The Task table needs three additional columns.')->first();
+    // get $work->id
+    $work = Work::where('work_type_description', '=', 'The Task table needs three additional columns.')->first();
 
-        // get $timeCardFormat->id
-        $timeCardFormat = TimeCardFormat::where('description', '=', 'Day of week starts on SAT and ends on SUN')->first();
+    $timeCard = new TimeCard();
+    $timeCard->iso_beginning_dow_date = '2015-11-09';
+    $timeCard->work_id = $work->id;
 
-        $timeCard = new TimeCard;
+    if (!is_null($timeCard = TimeCard::checkIfExists($timeCard))) {
+        if (is_null($timeCardHoursWorked = TimeCardHoursWorked::checkIfExists($timeCard))) {
 
-        $timeCard->date_worked = $date;
-        $timeCard->dow = "FRI";
-        $timeCard->hours_worked = 8.0;
+            $timeCardHoursWorked = new TimeCardHoursWorked;
 
-        $timeCard->time_card_format_id = $timeCardFormat->id;
-        $timeCard->work_id = $work->id;
+            $timeCardHoursWorked->date_worked = $date;
+            $timeCardHoursWorked->dow = "FRI";
+            $timeCardHoursWorked->hours_worked = 8.0;
 
-        $timeCard->save();
+            $timeCardHoursWorked->time_card_id = $work->id;
+
+            $timeCardHoursWorked->save();
+
+        }
     }
+
 
     $date = '2015-11-16';
-    if (is_null($timeCard = TimeCard::checkIfExists($date))) {
 
-        // get $work->id
-        $work = Work::where('work_type_description', '=', 'A new landing page is required to support Fall 2016 GNO.')->first();
+    // get $work->id
+    $work = Work::where('work_type_description', '=', 'A new landing page is required to support Fall 2016 GNO.')->first();
 
-        // get $timeCardFormat->id
-        $timeCardFormat = TimeCardFormat::where('description', '=', 'Day of week starts on SAT and ends on SUN')->first();
+    $timeCard = new TimeCard();
+    $timeCard->iso_beginning_dow_date = '2015-11-16';
+    $timeCard->work_id = $work->id;
 
-        $timeCard = new TimeCard;
+    if (!is_null($timeCard = TimeCard::checkIfExists($timeCard))) {
+        if (is_null($timeCardHoursWorked = TimeCardHoursWorked::checkIfExists($timeCard))) {
 
-        $timeCard->date_worked = $date;
-        $timeCard->dow = "MON";
-        $timeCard->hours_worked = 8.0;
+            $timeCardHoursWorked = new TimeCardHoursWorked;
 
-        $timeCard->time_card_format_id = $timeCardFormat->id;
-        $timeCard->work_id = $work->id;
+            $timeCardHoursWorked->date_worked = $date;
+            $timeCardHoursWorked->dow = "MON";
+            $timeCardHoursWorked->hours_worked = 8.0;
 
-        $timeCard->save();
+            $timeCardHoursWorked->time_card_id = $work->id;
+
+            $timeCardHoursWorked->save();
+
+        }
     }
 
-    $date = '2015-11-17';
-    if (is_null($timeCard = TimeCard::checkIfExists($date))) {
-
-        // get $work->id
-        $work = Work::where('work_type_description', '=', 'This thing does not work right.')->first();
-
-        // get $timeCardFormat->id
-        $timeCardFormat = TimeCardFormat::where('description', '=', 'Day of week starts on SAT and ends on SUN')->first();
-
-        $timeCard = new TimeCard;
-
-        $timeCard->date_worked = $date;
-        $timeCard->dow = "TUE";
-        $timeCard->hours_worked = 8.0;
-
-        $timeCard->time_card_format_id = $timeCardFormat->id;
-        $timeCard->work_id = $work->id;
-
-        $timeCard->save();
-    }
-
-//    $date = '2015-11-18';
-//    if (is_null($timeCard = TimeCard::checkIfExists($date))) {
-//
-//        // get $work->id
-//        $work = Work::where('work_type_description', '=', 'This thing does not work right.')->first();
-//
-//        // get $timeCardFormat->id
-//        $timeCardFormat = TimeCardFormat::where('description', '=', 'Day of week starts on SAT and ends on SUN')->first();
-//
-//        $timeCard = new TimeCard;
-//
-//        $timeCard->date_worked = $date;
-//        $timeCard->dow = "WED";
-//        $timeCard->hours_worked = 8.0;
-//
-//        $timeCard->time_card_format_id = $timeCardFormat->id;
-//        $timeCard->work_id = $work->id;
-//
-//        $timeCard->save();
-//    }
 
     /*******************************************************************************************************************
      * task_type insert(s)
@@ -452,7 +494,7 @@ Route::get('create_data', function() {
         $taskType = TaskType::where('type', '=', 'Code')->first();
 
         // get $timeCard->id
-        $timeCard = TimeCard::where('date_worked', '=', '2015-11-12')->first();
+        $timeHoursWorkedCard = TimeCardHoursWorked::where('date_worked', '=', '2015-11-12')->first();
 
         $task = new Task;
 
@@ -462,7 +504,7 @@ Route::get('create_data', function() {
         $task->notes = $notes;
 
         $task->task_type_id = $taskType->id;
-        $task->time_card_id = $timeCard->id;
+        $task->time_card_hours_worked_id = $timeHoursWorkedCard->id;
 
         $task->save();
     }
@@ -477,7 +519,7 @@ Route::get('create_data', function() {
         $taskType = TaskType::where('type', '=', 'Code')->first();
 
         // get $timeCard->id
-        $timeCard = TimeCard::where('date_worked', '=', '2015-11-12')->first();
+        $timeHoursWorkedCard = TimeCardHoursWorked::where('date_worked', '=', '2015-11-12')->first();
 
         $task = new Task;
 
@@ -487,7 +529,7 @@ Route::get('create_data', function() {
         $task->notes = $notes;
 
         $task->task_type_id = $taskType->id;
-        $task->time_card_id = $timeCard->id;
+        $task->time_card_hours_worked_id = $timeHoursWorkedCard->id;
 
         $task->save();
     }
@@ -517,7 +559,7 @@ Route::get('add_task_data_firstPass', function() {
         $taskType = TaskType::where('type', '=', 'Code')->first();
 
         // get $timeCard->id
-        $timeCard = TimeCard::where('date_worked', '=', '2015-11-12')->first();
+        $timeHoursWorkedCard = TimeCardHoursWorked::where('date_worked', '=', '2015-11-12')->first();
 
         $task = new Task;
 
@@ -527,7 +569,7 @@ Route::get('add_task_data_firstPass', function() {
         $task->notes = $notes;
 
         $task->task_type_id = $taskType->id;
-        $task->time_card_id = $timeCard->id;
+        $task->time_card_hours_worked_id = $timeHoursWorkedCard->id;
 
         $task->save();
     }
@@ -542,7 +584,7 @@ Route::get('add_task_data_firstPass', function() {
         $taskType = TaskType::where('type', '=', 'Code')->first();
 
         // get $timeCard->id
-        $timeCard = TimeCard::where('date_worked', '=', '2015-11-12')->first();
+        $timeHoursWorkedCard = TimeCardHoursWorked::where('date_worked', '=', '2015-11-12')->first();
 
         $task = new Task;
 
@@ -552,7 +594,7 @@ Route::get('add_task_data_firstPass', function() {
         $task->notes = $notes;
 
         $task->task_type_id = $taskType->id;
-        $task->time_card_id = $timeCard->id;
+        $task->time_card_hours_worked_id = $timeHoursWorkedCard->id;
 
         $task->save();
     }
