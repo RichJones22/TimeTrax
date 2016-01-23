@@ -215,17 +215,18 @@ class TimeCardController extends Controller
         array_shift($temp);
         array_shift($temp01);
 
-        // attached $hoursWorkedPerWorkId to the instance of $timeCardRows[$i]->timeCardHoursWorked
-        for($i=0;$i<count($timeCardRows);$i++) {
-            $timeCardRows[$i]->timeCardHoursWorked = $temp[$i];
-            $timeCardRows[$i]->timeCardHoursWorkedId = $temp01[$i];
-        }
-
         // eager load work, timeCardFormat and workType.
         foreach($timeCardRows as $timeCardRow) {
             $timeCardRow->load('work');
             $timeCardRow->load('timeCardFormat');
             $timeCardRow->work->load('workType');
+        }
+
+        // attached $hoursWorkedPerWorkId to the instance of $timeCardRows[$i]->timeCardHoursWorked
+        for($i=0;$i<count($timeCardRows);$i++) {
+            $timeCardRows[$i]->timeCardHoursWorked = $temp[$i];
+            $timeCardRows[$i]->timeCardHoursWorkedId = $temp01[$i];
+            $timeCardRows[$i]->timeCardWorkId = $timeCardRows[$i]->Work->work_type_id;
         }
 
         $timeCardRange = "( " . $bwDate->toDateString() . " - " . $ewDate->toDateString() . " )";
@@ -276,15 +277,19 @@ class TimeCardController extends Controller
      */
     public function destroy($id)
     {
-
-
         try {
             DB::transaction(function() use ($id) {
-                // first remove all time_card_hours_worked rows
+
+                // remove all task rows
+                DB::table('task')->join('time_card_hours_worked', 'task.time_card_hours_worked_id', '=', 'time_card_hours_worked.id')
+                    ->where('time_card_id', $id)->delete();
+
+                // remove all time_card_hours_worked rows
                 DB::table('time_card_hours_worked')->where('time_card_id', $id)->delete();
 
-                // then delete the time_card row.
-                TimeCard::destroy($id);
+                // remove time_card row.
+                DB::table('time_card')->where('id', $id)->delete();
+//                TimeCard::destroy($id);
             });
         } catch (Exception $e) {
             // session()->flash(appGlobals::getInfoMessageType(), appGlobals::getInfoMessageText(appGlobals::INFO_TIME_VALUE_OVERLAP));

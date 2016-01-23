@@ -559,7 +559,7 @@ Route::get('add_task_data_firstPass', function() {
         $taskType = TaskType::where('type', '=', 'Code')->first();
 
         // get $timeCard->id
-        $timeCard = TimeCard::where('date_worked', '=', '2015-11-12')->first();
+        $timeHoursWorkedCard = TimeCardHoursWorked::where('date_worked', '=', '2015-11-12')->first();
 
         $task = new Task;
 
@@ -569,7 +569,7 @@ Route::get('add_task_data_firstPass', function() {
         $task->notes = $notes;
 
         $task->task_type_id = $taskType->id;
-        $task->time_card_id = $timeCard->id;
+        $task->time_card_hours_worked_id = $timeHoursWorkedCard->id;
 
         $task->save();
     }
@@ -584,7 +584,7 @@ Route::get('add_task_data_firstPass', function() {
         $taskType = TaskType::where('type', '=', 'Code')->first();
 
         // get $timeCard->id
-        $timeCard = TimeCard::where('date_worked', '=', '2015-11-12')->first();
+        $timeHoursWorkedCard = TimeCardHoursWorked::where('date_worked', '=', '2015-11-12')->first();
 
         $task = new Task;
 
@@ -594,7 +594,7 @@ Route::get('add_task_data_firstPass', function() {
         $task->notes = $notes;
 
         $task->task_type_id = $taskType->id;
-        $task->time_card_id = $timeCard->id;
+        $task->time_card_hours_worked_id = $timeHoursWorkedCard->id;
 
         $task->save();
     }

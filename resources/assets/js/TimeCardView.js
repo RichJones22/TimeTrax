@@ -154,9 +154,6 @@ timeCard.loseFocusOnDOW = function() {
 
     timeCard.setResetState = function(dow) {
         timeCard.setColorSuccess(dow);
-        //if (timeCard.processDOW(dow)) {
-        //    timeCard.setColorSuccess(dow);
-        //}
     };
 
     timeCard.setTrueState = function(dow) {
@@ -181,12 +178,10 @@ timeCard.loseFocusOnDOW = function() {
 
     timeCard.setHoursSuccess = function(dow) {
         timeCard.saveButton.setHours(timeCard.convertDOWToNumber(dow), true);
-        //timeCard.enabledDisabledSaveButton();
     };
 
     timeCard.setHoursFailure = function(dow) {
         timeCard.saveButton.setHours(timeCard.convertDOWToNumber(dow), false);
-        //timeCard.enabledDisabledSaveButton();
     };
 
 
@@ -235,14 +230,9 @@ timeCard.loseFocusOnDOW = function() {
                 dowValue=Number(timeCard.changeNullToZero(dow.val()));
                 tblValue=Number(row.cells[column].innerText);
                 if (dowValue>0 && tblValue>0) {
-                    //if ((dowValue == tblValue)) {
                     timeCard.setFalseState(dow);
                     timeCard.setFalseStateTableCell(row.cells[column]);
                     timeCard.saveButton.setCalledFromWorkType(false);
-                    //} else {
-                    //    timeCard.setTrueState(dow);
-                    //    timeCard.setTrueStateTableCell(row.cells[column]);
-                    //}
                 } else if (dowValue==0 && tblValue>0 ||
                            dowValue==0 && tblValue==0 ) {
                     timeCard.setResetState(dow);
@@ -290,9 +280,6 @@ timeCard.loseFocusOnType = function() {
 
             timeCard.saveButton.setType(true);
             timeCard.enabledDisabledSaveButton();
-            //if (!timeCard.saveButton.getIsHourInError()) {
-            //    timeCard.enabledDisabledSaveButton();
-            //}
         }
     };
 
@@ -347,6 +334,14 @@ timeCard.convertDOWToNumber = function(dow) {
     }
 };
 
+//timeCard.deleteButton = function() {
+//    var value=$("button:contains('deleteButton')").val();
+//    //if (value != undefined) {
+//        value = value.split(' ').join('_');
+//        $("button:contains('deleteButton')").val(value);
+//    //}
+//};
+//
 
 
 

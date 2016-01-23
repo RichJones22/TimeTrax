@@ -12,7 +12,8 @@
                 'dow_04' =>'THU',
                 'dow_05' =>'FRI',
                 'dow_06' =>'SAT',
-    ]
+    ];
+    $i=0;
 ?>
 
 @section('content')
@@ -147,7 +148,7 @@
                             <td>
                                 <form method="post" action="{{ route('timeCard.destroy', $timeCardRow->id) }}">
                                     <input hidden type="text" name="_token" value="{{ csrf_token() }}">
-                                    <button type ="submit" class = "btn btn-danger btn-xs" style="float: right">
+                                    <button id="deleteButton{{$timeCardRow->Work->work_type_id}}" type ="submit" class = "btn btn-danger btn-xs" style="float: right">
                                         <span class="glyphicon glyphicon-trash"></span>
                                     </button>
                                 </form>
