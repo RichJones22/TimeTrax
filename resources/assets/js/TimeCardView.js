@@ -225,10 +225,12 @@ timeCard.loseFocusOnDOW = function() {
         }
 
         for (var i = 0, row; row = table.rows[i]; i++) {
-            tblWorkTypeDesc = row.cells[colWorkTypeDesc].innerText;
+            // firefox has an issue with .innerText
+            var tmpCell = row.cells[colWorkTypeDesc];
+            tblWorkTypeDesc = tmpCell.innerText || tmpCell.textContent;
             if (workTypeDesc == tblWorkTypeDesc) {
                 dowValue=Number(timeCard.changeNullToZero(dow.val()));
-                tblValue=Number(row.cells[column].innerText);
+                tblValue=Number(row.cells[column].innerText || row.cells[column].textContent);
                 if (dowValue>0 && tblValue>0) {
                     timeCard.setFalseState(dow);
                     timeCard.setFalseStateTableCell(row.cells[column]);
