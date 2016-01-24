@@ -45,7 +45,7 @@ class appGlobals
     static protected $timeTaskTableName;
 
     // routes used by both javascript and php
-    static protected $domain="http://timetrax.dev/";
+    //static protected $domain="http://timetrax.dev/";
     static protected $timeCardURI="timeCard/";
     static protected $workURI="work/";
 

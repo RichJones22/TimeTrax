@@ -148,7 +148,7 @@ class TimeCardController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($dateSelected=null)
+    public function show($dateSelected=null, Request $request)
     {
         $client_id=null;
 
@@ -235,7 +235,7 @@ class TimeCardController extends Controller
         // see https://github.com/laracasts/PHP-Vars-To-Js-Transformer.
         // also see javascript.php in the config dir for view and .js namespace used.
         \JavaScript::put([
-            'timeCardURI' => appGlobals::getDomain() . appGlobals::getTimeCardURI(),
+            'timeCardURI' => $request->root() . "/" . appGlobals::getTimeCardURI(),
             'workURI'     => appGlobals::getWorkURI(),
             'clientId'    => appGlobals::getClientIdOfProjectRecordingTimeFor()
         ]);
