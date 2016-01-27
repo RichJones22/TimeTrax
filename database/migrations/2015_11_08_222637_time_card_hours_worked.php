@@ -21,7 +21,7 @@ class TimeCardHoursWorked extends Migration
             $table->char('dow',3);
             $table->float('hours_worked');
             $table->timestamps();
-//            $table->unique(['work_id', 'id']);
+            $table->unique(['date_worked', 'dow']);
         });
 
         /**

@@ -5,10 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use \App\Http\Requests\prepareTimeCardRequest;
 use DB;
-use App\Http\Controllers\TimeCardHoursWorkedController;
-
 use \App\Http\Requests;
-use \App\Task;
 use \App\TimeCard;
 use \App\TimeCardHoursWorked;
 use \Carbon\Carbon;
@@ -108,7 +105,7 @@ class TimeCardController extends Controller
                 $timeCard->work_id = $this->getWorkIdViaWorkTypeId($timeCardRequestAttributes['workType']);
                 $timeCard->time_card_format_id = $this->getTimeCardFormatId($this->getClientId($timeCardRequestAttributes['workType']));
 
-                if (is_null(TimeCard::checkIfExists($timeCard, true))) {
+                if (is_null(TimeCard::checkIfExists($timeCard))) {
                     $timeCard->save();
                 }
 
@@ -120,12 +117,16 @@ class TimeCardController extends Controller
                         $timeCardHoursWorked->dow = $this->getDOW($timeCardHoursWorked->date_worked);
                         $timeCardHoursWorked->hours_worked = $timeCardRequestAttributes['dow_0' . $i];
 
-                        $timeCardHoursWorked->save();
+                        if (is_null(TimeCardHoursWorked::checkIfDateWorkedDowExists($timeCardHoursWorked))) {
+                            $timeCardHoursWorked->save();
+                        } else {
+                            throw new \Exception();
+                        }
                     }
                 }
             });
-        } catch (Exception $e) {
-            // session()->flash(appGlobals::getInfoMessageType(), appGlobals::getInfoMessageText(appGlobals::INFO_TIME_VALUE_OVERLAP));
+        } catch (\Exception $e) {
+            session()->flash(appGlobals::getInfoMessageType(), appGlobals::getInfoMessageText(appGlobals::INFO_TIME_VALUE_OVERLAP));
         }
 
         return redirect()->back();

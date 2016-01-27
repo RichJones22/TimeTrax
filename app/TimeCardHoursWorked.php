@@ -20,12 +20,32 @@ class TimeCardHoursWorked extends Model
         'dow',
         'hours_worked'];
 
-    static public function checkIfExists($timeCard) {
+    static public function checkIfExists(&$inTimeCard) {
 
-        $timeCardHoursWorked = TimeCardHoursWorked::where('time_card_id', '=', $timeCard->id)->first();
+        $timeCardHoursWorked = TimeCardHoursWorked::where('time_card_id', '=', $inTimeCard->id)->first();
 
         if (!is_null($timeCardHoursWorked)) {
+            $inTimeCard = $timeCardHoursWorked;
+
             appGlobals::existsMessage(appGlobals::getTimeCardHoursWorkedTableName(), $timeCardHoursWorked->date_worked, $timeCardHoursWorked->id);
+        }
+
+        return $timeCardHoursWorked;
+    }
+
+    static public function checkIfDateWorkedDowExists(&$inTimeCard) {
+
+
+
+//        $myDate = $inTimeCard->date_worked->toDateString();
+//
+//        dd($myDate);
+
+        $timeCardHoursWorked = TimeCardHoursWorked::where('date_worked', '=', $inTimeCard->date_worked->toDateString())
+                ->where('dow', '=', $inTimeCard->dow)->first();
+
+        if (!is_null($timeCardHoursWorked)) {
+            $inTimeCard = $timeCardHoursWorked;
         }
 
         return $timeCardHoursWorked;

@@ -1,8 +1,28 @@
+/**
+ * Created by richjones on 1/26/16.
+ */
+
 
 // load all javascript once the document is ready.
 $(document).ready(function(){
-    //$("body").css("display", "none");
-    //$("body").fadeIn(1500);
+
+    causeTheTopLineOfTableHeaderToFade();
+
+});
+
+function causeTheTopLineOfTableHeaderToFade() {
+    var valueIs = $('#thAlertMessage').val();
+    if (typeof valueIs != 'undefined') {
+        (setTimeout(function () {
+            document.getElementById('thAlertMessage').style.display='none';
+            $('#thNoAlertMessage').fadeIn(3000);
+        }, 10000))();
+    }
+}
+
+
+// load all javascript once the document is ready.
+$(document).ready(function(){
 
     String.prototype.isEmpty = function() {
         return (this.length === 0 || !this.trim());
@@ -20,28 +40,6 @@ $(document).ready(function(){
     causeTheTopLineOfTableHeaderToFade();
 
 });
-
-function causeTheTopLineOfTableHeaderToFade() {
-    var valueIs = $('#thAlertMessage').val();
-    if (typeof valueIs != 'undefined') {
-        (setTimeout(function () {
-            document.getElementById('thAlertMessage').style.display='none';
-            $('#thNoAlertMessage').fadeIn(3000);
-            //document.getElementById('thAlertMessage').style.display='none';
-            //document.getElementById('thNoAlertMessage').style.display='block';
-            //$('#thNoAlertMessage').css('display', '');
-        }, 10000))();
-    }
-}
-
-//// set the width of the td for the second table to th width of the first table.
-//function setTheWidthOfTheTableDetailForTheSecondTableToTableHeadingWidthOfTheFirstTable() {
-//    document.getElementById("tdTypeId").style.width=$("#thTypeId").css("width");
-//    document.getElementById("tdStartt").style.width=$("#thStartt").css("width");
-//    document.getElementById("tdEndt").style.width=$("#thEndt").css("width");
-//    document.getElementById("tdHoursWorked").style.width=$("#thHoursWorked").css("width");
-//    document.getElementById("tdNotes").style.width=$("#thNotes").css("width");
-//}
 
 // convert rgb into hex for ez'er comparisons.
 function rgb2hex(rgb){
