@@ -96,7 +96,9 @@ Route::get(appGlobals::getTimeCardURI() . appGlobals::getWorkURI() . '{clientId}
 
 //Route::resource('zzbob', 'TimeCardController');
 
-
+/*******************************************************************************************************************
+ * below routes are for development purposes.
+ *******************************************************************************************************************/
 
 /**
  * creating records

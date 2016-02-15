@@ -205,6 +205,9 @@ class TimeCardController extends Controller
 
 //        dd($hoursWorkedPerWorkId);
 
+        // create arrays for:
+        // - hours worked for dow
+        // - hours worked id for dow
         $temp[] = [];
         $temp01[] = [];
         foreach($hoursWorkedPerWorkId as $hoursWorked) {
@@ -232,7 +235,7 @@ class TimeCardController extends Controller
 
         $timeCardRange = "( " . $bwDate->toDateString() . " - " . $ewDate->toDateString() . " )";
 
-        // jeffery way package for moving php variables to the .js space.
+        // jeffery way's package for moving php variables to the .js space.
         // see https://github.com/laracasts/PHP-Vars-To-Js-Transformer.
         // also see javascript.php in the config dir for view and .js namespace used.
         \JavaScript::put([

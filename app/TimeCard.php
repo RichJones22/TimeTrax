@@ -17,7 +17,8 @@ class TimeCard extends Model
      * fillable fields
      */
     protected $fillable = [
-        'work_id'];
+        'work_id'
+    ];
 
 
     /**
