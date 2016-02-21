@@ -50,6 +50,17 @@ class testTaskView extends Selenium
     }
 
     /** @test */
+    function test_saveButton_is_disabled_when_start_end_times_are_empty() {
+        $this->visit('/task/1')
+            ->type('', '#startt-search')
+            ->type('', '#endt-search')
+            ->select('#taskType', 2)
+            ->click('#saveButton')
+            ->click('#refresh')
+            ->notSee("Test");
+    }
+
+    /** @test */
     function test_checks_for_valid_start_time() {
        $this->visit('/task/1')
            ->type('18:00', '#startt-search')
@@ -142,6 +153,7 @@ class testTaskView extends Selenium
             ->click('#taskType')
             ->see('pink');
     }
+
 
     /** @test */
     function test_write_record() {

@@ -28,7 +28,7 @@
                                     {!! Form::open(array('route' => array('timeCard.show', appGlobals::getIsoBeginningDowDate(Session::get(appGlobals::getTimeCardTableName()))))) !!}
                                     <input type="hidden" name="_method" value="GET">
                                     <input hidden type="text" name="_token" value="{{ csrf_token() }}">
-                                    <button id="routeToTaskView" type ="submit" class = "btn btn-primary btn-xs" style="float: right">
+                                    <button id="routeToTimeCardView" type ="submit" class = "btn btn-primary btn-xs" style="float: right">
                                         <span class="glyphicon glyphicon-step-backward"></span>
                                     </button>
                                     {!! Form::close() !!}
@@ -54,7 +54,7 @@
                         <span class="col-xs-9" style="display: inline-block;">Notes</span>
                         {!! Form::open(array('route' => array('task.show', $timeCardHoursWorkedId))) !!}
                             <input type="hidden" name="_method" value="GET">
-                            <button type ="submit" class = "btn btn-primary btn-xs" style="float: right">
+                            <button type ="submit" class = "btn btn-primary btn-xs" id="refresh" style="float: right">
                                    <span class="glyphicon glyphicon-refresh"></span>
                             </button>
                         {!! Form::close() !!}

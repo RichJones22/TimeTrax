@@ -369,8 +369,8 @@ function clearTaskTable() {
         row.cells[2].style.color = "black";
         row.cells[2].style.fontWeight = 'normal';
     }
-    saveButton.setStartt(true);
-    saveButton.setEndt(true);
+    saveButton.setStartt(false);
+    saveButton.setEndt(false);
     enabledDisabledSaveButton();
 
     return true;

@@ -30,11 +30,15 @@ use \App\Task;
 
 
 /***********************************************************************************************************************
- * routes
+ * home, or root, or splash page route
  **********************************************************************************************************************/
 Route::get('/', function () {
     return view('welcome');
 });
+
+/***********************************************************************************************************************
+ * task routes
+ **********************************************************************************************************************/
 
 // route to task view; show a specific task.
 Route::get('task/{task}'        , ['as' => 'task.show', 'uses' => 'TaskController@show']);
@@ -45,6 +49,7 @@ Route::post('task/create/'      , ['as' => 'task.create', 'uses' => 'TaskControl
 // delete a task
 Route::post('task/{task}'       , ['as' => 'task.destroy', 'uses' => 'TaskController@destroy']);
 
+// ajax call to list all tasks.
 Route::get('get_all_tasks', function() {
 
     $tasks = TaskType::all();
@@ -58,9 +63,14 @@ Route::get('get_all_tasks', function() {
 });
 
 
+/***********************************************************************************************************************
+* taskType routes
+ **********************************************************************************************************************/
 
-// route to taskType view.
-Route::get('taskType/{taskType}'            , ['as' => 'taskType.show', 'uses' => 'TaskTypeController@show']);
+// route taskType.show denotes that we hit the endpoint directly, i.e.: www.timetrax.com/taskType/1
+Route::get('taskType/{taskType}'            , ['as' => 'taskType.show',      'uses' => 'TaskTypeController@show']);
+
+// route taskType.task.show denotes that we entered via the task view, clicking a glyphicon...
 Route::get('taskType/{taskType}/task/{task}', ['as' => 'taskType.task.show', 'uses' => 'TaskTypeController@show']);
 
 // insert a task type.
@@ -70,6 +80,9 @@ Route::post('taskType/create/'              , ['as' => 'taskType.create', 'uses'
 Route::post('taskType/destroy/{taskType}'   , ['as' => 'taskType.destroy', 'uses' => 'TaskTypeController@destroy']);
 
 
+/***********************************************************************************************************************
+ * timeCard routes
+ **********************************************************************************************************************/
 
 // route to timeCard type view.
 Route::get(appGlobals::getTimeCardURI() . '{dateSelected?}', ['as' => 'timeCard.show', 'uses' => 'TimeCardController@show']);
@@ -80,6 +93,7 @@ Route::post(appGlobals::getTimeCardURI() . 'create/{id}', ['as' => 'timeCard.cre
 // delete a TimeCard record.
 Route::post(appGlobals::getTimeCardURI() . 'destroy/{id}', ['as' => 'timeCard.destroy', 'uses' => 'TimeCardController@destroy']);
 
+// ajax call list Work Type's
 Route::get(appGlobals::getTimeCardURI() . appGlobals::getWorkURI() . '{clientId}', function($client_id) {
 
     $data = \DB::table('project')->where('project.client_id', $client_id)
@@ -93,7 +107,8 @@ Route::get(appGlobals::getTimeCardURI() . appGlobals::getWorkURI() . '{clientId}
 });
 
 
-
+// route 'zzbob' is used to display all REST APIs for reference.  uncomment it and view all routes via the
+// artisan routes:view command.
 //Route::resource('zzbob', 'TimeCardController');
 
 /*******************************************************************************************************************
@@ -617,6 +632,45 @@ Route::get('add_taskType_data', function() {
         $taskType->client_id = $client->id;
 
         $taskType->save();
+    }
+});
+
+$date = '2015-11-09';
+Route::get('add_timeCard_data', function() use($date) {
+
+    // get $work->id
+    $work = Work::where('work_type_description', '=', 'A new landing page is required to support Fall 2016 GNO.')->first();
+
+    $timeCard = new TimeCard();
+    $timeCard->iso_beginning_dow_date = $date;
+    $timeCard->work_id = $work->id;
+
+    if (is_null($timeCard = TimeCard::checkIfExists($timeCard))) {
+
+        // get $timeCardFormat->id
+        $timeCardFormat = TimeCardFormat::where('description', '=', 'Day of week starts on SAT and ends on SUN')->first();
+
+        $timeCard = new TimeCard();
+
+        $timeCard->work_id = $work->id;
+        $timeCard->time_card_format_id = $timeCardFormat->id;
+        $timeCard->iso_beginning_dow_date = $date;
+
+        $timeCard->save();
+
+        if (is_null($timeCardHoursWorked = TimeCardHoursWorked::checkIfExists($timeCard))) {
+
+            $timeCardHoursWorked = new TimeCardHoursWorked;
+
+            $timeCardHoursWorked->date_worked = $date;
+            $timeCardHoursWorked->dow = "MON";
+            $timeCardHoursWorked->hours_worked = 8.0;
+
+            $timeCardHoursWorked->time_card_id = $timeCard->id;
+
+            $timeCardHoursWorked->save();
+
+        }
     }
 });
 

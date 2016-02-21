@@ -20,6 +20,10 @@ class TimeCardHoursWorked extends Model
         'dow',
         'hours_worked'];
 
+    /**
+     * @param [in/out] $inTimeCard
+     * @return mixed
+     */
     static public function checkIfExists(&$inTimeCard) {
 
         $timeCardHoursWorked = TimeCardHoursWorked::where('time_card_id', '=', $inTimeCard->id)->first();
@@ -33,13 +37,11 @@ class TimeCardHoursWorked extends Model
         return $timeCardHoursWorked;
     }
 
+    /**
+     * @param [in/out] $inTimeCard
+     * @return mixed
+     */
     static public function checkIfDateWorkedDowExists(&$inTimeCard) {
-
-
-
-//        $myDate = $inTimeCard->date_worked->toDateString();
-//
-//        dd($myDate);
 
         $timeCardHoursWorked = TimeCardHoursWorked::where('date_worked', '=', $inTimeCard->date_worked->toDateString())
                 ->where('dow', '=', $inTimeCard->dow)->first();
@@ -52,13 +54,15 @@ class TimeCardHoursWorked extends Model
     }
 
     /**
-     * Eager load Task model.
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function task() {
         return $this->hasMany('\App\Task');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function timeCard() {
         return $this->belongsTo('\App\TimeCard');
     }

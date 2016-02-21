@@ -97,7 +97,7 @@ class TimeCardController extends Controller
     {
         $timeCardRequestAttributes = $request->all();
 
-        try {
+//        try {
             DB::transaction(function() use ($timeCardRequestAttributes, $timeCardRange) {
                 $timeCard = new TimeCard();
 
@@ -105,13 +105,12 @@ class TimeCardController extends Controller
                 $timeCard->work_id = $this->getWorkIdViaWorkTypeId($timeCardRequestAttributes['workType']);
                 $timeCard->time_card_format_id = $this->getTimeCardFormatId($this->getClientId($timeCardRequestAttributes['workType']));
 
-                if (is_null(TimeCard::checkIfExists($timeCard))) {
-                    $timeCard->save();
-                }
+                $timeCard->save();
 
                 for ($i=0;$i<appGlobals::DAYS_IN_WEEK_NUM;$i++) {
-                    $timeCardHoursWorked = new TimeCardHoursWorked();
                     if ($timeCardRequestAttributes['dow_0' . $i]) {
+                        $timeCardHoursWorked = new TimeCardHoursWorked();
+
                         $timeCardHoursWorked->time_card_id = $timeCard->id;
                         $timeCardHoursWorked->date_worked = $this->getDateWorked(appGlobals::getBeginningOfCurrentWeek($timeCardRange), $i);
                         $timeCardHoursWorked->dow = $this->getDOW($timeCardHoursWorked->date_worked);
@@ -119,15 +118,16 @@ class TimeCardController extends Controller
 
                         if (is_null(TimeCardHoursWorked::checkIfDateWorkedDowExists($timeCardHoursWorked))) {
                             $timeCardHoursWorked->save();
-                        } else {
-                            throw new \Exception();
                         }
+//                        } else {
+//                            throw new \Exception();
+//                        }
                     }
                 }
             });
-        } catch (\Exception $e) {
-            session()->flash(appGlobals::getInfoMessageType(), appGlobals::getInfoMessageText(appGlobals::INFO_TIME_VALUE_OVERLAP));
-        }
+//        } catch (\Exception $e) {
+//            session()->flash(appGlobals::getInfoMessageType(), appGlobals::getInfoMessageText(appGlobals::INFO_TIME_VALUE_OVERLAP));
+//        }
 
         return redirect()->back();
     }
@@ -153,13 +153,11 @@ class TimeCardController extends Controller
     {
         $client_id=null;
 
-
         if(is_null($dateSelected)) {
             $dateSelected = Carbon::now('America/Chicago');
         } else {
             $dateSelected = new Carbon($dateSelected, 'America/Chicago');
         }
-
         $bwDate = new Carbon($dateSelected);
 
         if ($bwDate->dayOfWeek == 0 ) {

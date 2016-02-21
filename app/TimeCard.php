@@ -49,9 +49,19 @@ class TimeCard extends Model
     public function work() {
         return $this->belongsTo('\App\Work');
     }
+
+    /**
+    * establish relations.
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function timeCardFormat() {
         return $this->belongsTo('\App\TimeCardFormat');
     }
+
+    /**
+     * establish relations.
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function timeCardHoursWorked() {
         return $this->hasMany('\App\TimeCardHoursWorked');
     }

@@ -59,7 +59,7 @@ class appGlobals
     ];
 
     //used for testing Relational Database Management System fail cases.
-    // set $testRDBMS = true to test the SeleniumRDBMSTest.php file.
+    // - set to true for the RDBMS test files.
     static protected $testRDBMS = false;
 
     public function __construct() {
@@ -136,6 +136,10 @@ class appGlobals
         } else {
             return "error message not found for error number -- $messageNum";
         }
+    }
+
+    static public function setTestRDBMS($value) {
+        self::$testRDBMS = $value;
     }
 
     static public function getTestRDBMS() {

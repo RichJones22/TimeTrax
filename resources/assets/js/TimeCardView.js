@@ -27,7 +27,7 @@ $("#timeCardCalendar").focusin(function() {
     });
 });
 
-// populate the work type drop-down box on the Task View.
+// populate the work type drop-down box on the TimeCard View.
 timeCard.WorkType = function() {
     if (appGlobal.clientId) {
         $.ajax({
