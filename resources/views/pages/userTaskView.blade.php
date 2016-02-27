@@ -20,31 +20,91 @@
                 </tr>
                 <tr style="background-color: darkgray;">
                     <th style="padding-right: 0px;border-right-width: 0px;padding-left: 0px;border-left-width: 0px;">
-                        <div class="col-xs-12" style="display: inline-block;">
-                            <label class="col-xs-2" style="padding: 0 0 0 0;">Type</label>
-                            <div class="col-xs-6"></div>
-                            <div class="col-xs-2" >
-                                @if (Session::has(appGlobals::getTimeCardTableName()))
-                                    {!! Form::open(array('route' => array('timeCard.show', appGlobals::getIsoBeginningDowDate(Session::get(appGlobals::getTimeCardTableName()))))) !!}
-                                    <input type="hidden" name="_method" value="GET">
-                                    <input hidden type="text" name="_token" value="{{ csrf_token() }}">
-                                    <button id="routeToTimeCardView" type ="submit" class = "btn btn-primary btn-xs" style="float: right">
-                                        <span class="glyphicon glyphicon-step-backward"></span>
-                                    </button>
-                                    {!! Form::close() !!}
-                                @endif
+                        <div>
+                            <label>Type</label>
+                            <div class="btn-toolbar" role="toolbar" style="float: right">
+                                <div class="btn-group" role="group">
+                                    {{--<div class="btn btn-secondary" style="margin-right: 5px;">--}}
+                                        {{--<button type="submit" >1</button>--}}
+                                    {{--</div>--}}
+                                    {{--<div class="btn btn-secondary" style="margin-right: 5px;">--}}
+                                        {{--<button type="submit">2</button>--}}
+                                    {{--</div>--}}
+                                    {{--<button type="submit" class="btn btn-secondary" style="margin-right: 5px;">1</button>--}}
+                                    {{--<button type="submit" class="btn btn-secondary" style="margin-right: 5px;">2</button>--}}
+                                </div>
                             </div>
-                            <div class="col-xs-2" style="padding-left: 0;float: left">
-                                @if(count($tasks)>0)
-                                    {{Session::put(appGlobals::getTaskTableName(), $timeCardHoursWorkedId)}}
-                                    {!! Form::open(array('route' => array('taskType.task.show', $tasks[0]->TaskType->client_id, $timeCardHoursWorkedId))) !!}
-                                    <input type="hidden" name="_method" value="GET">
-                                    <button id="routeToTaskTypeView" type ="submit" class = "btn btn-primary btn-xs" style="float: right">
-                                        <span class="glyphicon glyphicon-open"></span>
-                                    </button>
-                                    {!! Form::close() !!}
-                                @endif
-                            </div>
+                            {{--<div class="input-group col-xs-offset-0">--}}
+                                {{--<label class="col-xs-2">Type</label>--}}
+                                {{--<span class="input-group-btn">--}}
+                                    {{--<button class="btn btn-secondary" type="submit" style="margin-right: 5px;">1</button>--}}
+                                    {{--<button class="btn btn-secondary" type="submit" >2</button>--}}
+                                {{--</span>--}}
+                            {{--</div>--}}
+                            {{--<div class="btn-toolbar" role="toolbar">--}}
+                                {{--<section class="row col-xs-offset-0">--}}
+                                    {{--@if (Session::has(appGlobals::getTimeCardTableName()))--}}
+                                        {{--{!! Form::open(array('route' => array('timeCard.show', appGlobals::getIsoBeginningDowDate(Session::get(appGlobals::getTimeCardTableName()))))) !!}--}}
+                                        {{--<input type="hidden" name="_method" value="GET">--}}
+                                        {{--<input hidden type="text" name="_token" value="{{ csrf_token() }}">--}}
+                                        {{--<button id="routeToTimeCardView" type ="button" class = "btn btn-secondary btn-primary btn-xs" style="float: right;">--}}
+                                            {{--<span class="glyphicon glyphicon-step-backward"></span>--}}
+                                        {{--</button>--}}
+                                        {{--{!! Form::close() !!}--}}
+                                    {{--@endif--}}
+                                    {{--@if(count($tasks)>0)--}}
+                                        {{--{{Session::put(appGlobals::getTaskTableName(), $timeCardHoursWorkedId)}}--}}
+                                        {{--{!! Form::open(array('route' => array('taskType.task.show', $tasks[0]->TaskType->client_id, $timeCardHoursWorkedId))) !!}--}}
+                                        {{--<input type="hidden" name="_method" value="GET">--}}
+                                        {{--<button id="routeToTaskTypeView" type ="button" class = "btn btn-secondary btn-primary btn-xs" style="float: right">--}}
+                                            {{--<span class="glyphicon glyphicon-open"></span>--}}
+                                        {{--</button>--}}
+                                        {{--{!! Form::close() !!}--}}
+                                    {{--@endif--}}
+                                {{--</section>--}}
+                            {{--</div>--}}
+                            {{--<section class="row col-xs-offset-0">--}}
+                                {{--@if (Session::has(appGlobals::getTimeCardTableName()))--}}
+                                    {{--{!! Form::open(array('route' => array('timeCard.show', appGlobals::getIsoBeginningDowDate(Session::get(appGlobals::getTimeCardTableName()))))) !!}--}}
+                                    {{--<input type="hidden" name="_method" value="GET">--}}
+                                    {{--<input hidden type="text" name="_token" value="{{ csrf_token() }}">--}}
+                                    {{--<button id="routeToTimeCardView" type ="button" class = "btn btn-secondary btn-primary btn-xs" style="float: right;">--}}
+                                        {{--<span class="glyphicon glyphicon-step-backward"></span>--}}
+                                    {{--</button>--}}
+                                    {{--{!! Form::close() !!}--}}
+                                {{--@endif--}}
+                                {{--@if(count($tasks)>0)--}}
+                                    {{--{{Session::put(appGlobals::getTaskTableName(), $timeCardHoursWorkedId)}}--}}
+                                    {{--{!! Form::open(array('route' => array('taskType.task.show', $tasks[0]->TaskType->client_id, $timeCardHoursWorkedId))) !!}--}}
+                                    {{--<input type="hidden" name="_method" value="GET">--}}
+                                    {{--<button id="routeToTaskTypeView" type ="button" class = "btn btn-secondary btn-primary btn-xs" style="float: right">--}}
+                                        {{--<span class="glyphicon glyphicon-open"></span>--}}
+                                    {{--</button>--}}
+                                    {{--{!! Form::close() !!}--}}
+                                {{--@endif--}}
+                            {{--</section>--}}
+                            {{--<div class="col-xs-2" >--}}
+                                {{--@if (Session::has(appGlobals::getTimeCardTableName()))--}}
+                                    {{--{!! Form::open(array('route' => array('timeCard.show', appGlobals::getIsoBeginningDowDate(Session::get(appGlobals::getTimeCardTableName()))))) !!}--}}
+                                    {{--<input type="hidden" name="_method" value="GET">--}}
+                                    {{--<input hidden type="text" name="_token" value="{{ csrf_token() }}">--}}
+                                    {{--<button id="routeToTimeCardView" type ="submit" class = "btn btn-primary btn-xs" style="float: right">--}}
+                                        {{--<span class="glyphicon glyphicon-step-backward"></span>--}}
+                                    {{--</button>--}}
+                                    {{--{!! Form::close() !!}--}}
+                                {{--@endif--}}
+                            {{--</div>--}}
+                            {{--<div class="col-xs-2" style="padding-left: 0;float: left">--}}
+                                {{--@if(count($tasks)>0)--}}
+                                    {{--{{Session::put(appGlobals::getTaskTableName(), $timeCardHoursWorkedId)}}--}}
+                                    {{--{!! Form::open(array('route' => array('taskType.task.show', $tasks[0]->TaskType->client_id, $timeCardHoursWorkedId))) !!}--}}
+                                    {{--<input type="hidden" name="_method" value="GET">--}}
+                                    {{--<button id="routeToTaskTypeView" type ="submit" class = "btn btn-primary btn-xs" style="float: right">--}}
+                                        {{--<span class="glyphicon glyphicon-open"></span>--}}
+                                    {{--</button>--}}
+                                    {{--{!! Form::close() !!}--}}
+                                {{--@endif--}}
+                            {{--</div>--}}
                         </div>
                     </th>
                     <th>Start Time</th>
