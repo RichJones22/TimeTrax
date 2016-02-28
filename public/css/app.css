@@ -15,3 +15,7 @@
 .tbl-h2-height {
   height: 41px;
 }
+
+.glyphicon {
+  line-height: inherit;
+}

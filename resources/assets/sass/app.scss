@@ -20,6 +20,13 @@
   height: 41px;
 }
 
+// override the css in https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css
+// my glyphicons were getting chopped off at the top.
+.glyphicon {
+  line-height: inherit;
+}
+
+
 //// task view css.
 //.table-header-colors {
 //  background-color: darkgray;
