@@ -10,7 +10,7 @@ use \App\Helpers\appGlobals;
     <div style="margin: 60px;">
         <table class="table table-hover table-bordered">
             <thead>
-                <tr style="background-color: darkgray;">
+                <tr style="background-color: darkgray;" class="tbl-h1-row-height">
                     @if (Session::has(appGlobals::getInfoMessageType()))
                         <th id="thAlertMessage" colspan="5" class="text-center" id="taskTypeHeader"><span style="color: brown;font-weight: bold">{{ Session::get(appGlobals::getInfoMessageType()) }}</span></th>
                         <th id="thNoAlertMessage" colspan="5" class="text-center" id="taskTypeHeader" style="display: none">Task Type Maintenance</th>

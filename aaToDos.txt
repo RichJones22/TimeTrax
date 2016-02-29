@@ -2,11 +2,29 @@ List of ToDo's...
 
 0)  The basics for Time Card, Hours Worked, Tasks, and Task types are now in place.
     - Things to finish:
-        - Finish test cases for Time Card and Hours Worked.
-        - Update test cases for Tasks and Task Types.
+A       x Task Maintenance heading need to be restyled to match the other views.
         - Review and refactor code as necessary.
+        - Review the bootstrap article at: http://www.helloerik.com/the-subtle-magic-behind-why-the-bootstrap-3-grid-works
 
 1)  Deploy to production as v0.1.1.
     - place this guy on your main web site as one of your current projects.
-    - try to get this out by 1/24/16.
+
+2)  Styling.
+    - continue to consolidate your css and javascript into a single http call each.
+        - currently, the 'halflings' bootstrap fonts are giving me an issue.
+            - I need to make sure that I have installed bootstrap correctly.  Compare this to you blog baseline
+              project.
+        - get the other libs into a single http each, if you can't get bootstrap.
+        - also, look to replacing your fonts with a font-awesome lib as well.
+
+    - stop using inline styling.
+        - you need to move this to your css file or separate it by views into separate css files..
+
+    - breakup your blade views into partials if you can.
+        - I currently don't see an obvious way to do this, but keep looking.
+
+3)  Task View.
+    - Add a work drop down, so that you can create time card entries directly.
+        - workout the concept of 'unreconciled hours' between Task and Time Card View.
+    - Add a date control.
 

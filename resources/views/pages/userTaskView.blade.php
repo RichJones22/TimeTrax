@@ -75,10 +75,16 @@
                             <th><input class="form-control" id="endt-search" name="endt" placeholder="end"></th>
                             <th><input disabled type="text" class="form-control" id="hoursWorked" name="hoursWorked"></th>
                             <th>
-                                <div class="col-xs-9" style="display: inline-block;">
-                                    <input type="text" class="form-control" id="notes" placeholder="notes" name="notes">
+                                <div class="col-xs-8" style="display: inline-block;">
+                                    <input style="padding-bottom: 0px;margin-bottom: 0px;margin-right: 0px" type="text" class="form-control" id="notes" placeholder="notes" name="notes">
                                 </div>
-                                <button disabled type="submit" class="btn btn-primary col-xs" id="saveButton" style="float: right">Save</button>
+                                <div class="btn-toolbar" role="toolbar" style="float: right">
+                                    <div class="btn-group" role="group">
+                                        <button hidden>
+                                            <button disabled type="submit" class="btn btn-primary col-xs" id="saveButton" style="float: right;margin-left: 0px">Save</button>
+                                        </button>
+                                    </div>
+                                </div>
                             </th>
                         </tr>
                     </div>
