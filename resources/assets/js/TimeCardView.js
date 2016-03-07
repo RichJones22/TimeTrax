@@ -52,7 +52,7 @@ timeCard.SaveButton = function(type, calledFrom, bInError) {
     this.isHourInError=[0,0,0,0,0,0,0];
     this.type = type;
     this.calledFromWorkType=calledFrom;
-}
+};
 timeCard.SaveButton.prototype.areHoursSet = function() {
     var sum=0;
     this.hours.forEach(function(pos){sum+=pos});

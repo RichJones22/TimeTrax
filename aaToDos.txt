@@ -23,6 +23,8 @@ A       x Task Maintenance heading need to be restyled to match the other views.
     - breakup your blade views into partials if you can.
         - I currently don't see an obvious way to do this, but keep looking.
 
+    - look into Russian Doll caching for the drop-downs... These queries seem to be creating some latency.
+
 3)  Task View.
     - Add a work drop down, so that you can create time card entries directly.
         - workout the concept of 'unreconciled hours' between Task and Time Card View.
