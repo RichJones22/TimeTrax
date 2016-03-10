@@ -236,11 +236,7 @@ class TimeCardController extends Controller
         // jeffery way's package for moving php variables to the .js space.
         // see https://github.com/laracasts/PHP-Vars-To-Js-Transformer.
         // also see javascript.php in the config dir for view and .js namespace used.
-        \JavaScript::put([
-            'timeCardURI' => $request->root() . "/" . appGlobals::getTimeCardURI(),
-            'workURI'     => appGlobals::getWorkURI(),
-            'clientId'    => appGlobals::getClientIdOfProjectRecordingTimeFor()
-        ]);
+        appGlobals::populateJsGlobalSpace($request);
 
         // pass the data to the view.
         return view('pages.userTimeCardView')

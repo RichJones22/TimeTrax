@@ -197,6 +197,26 @@ class appGlobals
         return $data->client_id;
     }
 
+    static public function populateJsGlobalSpace($request) {
+        // jeffery way's package for moving php variables to the .js space.
+        // see https://github.com/laracasts/PHP-Vars-To-Js-Transformer.
+        // also see javascript.php in the config dir for view and .js namespace used.
+        \JavaScript::put([
+            'timeCardURI' => $request->root() . "/" . appGlobals::getTimeCardURI(),
+            'workURI'     => appGlobals::getWorkURI(),
+            'clientId'    => self::populateJsGlobalClient()
+        ]);
+    }
+
+    static public function populateJsGlobalClient() {
+        // jeffery way's package for moving php variables to the .js space.
+        // see https://github.com/laracasts/PHP-Vars-To-Js-Transformer.
+        // also see javascript.php in the config dir for view and .js namespace used.
+        \JavaScript::put([
+            'clientId'    => appGlobals::getClientIdOfProjectRecordingTimeFor()
+        ]);
+    }
+
     static public function getIsoBeginningDowDate($timeCardHoursWorkedId) {
         $data = \DB::table('time_card_hours_worked')
             ->join('time_card', 'time_card_hours_worked.time_card_id', '=', 'time_card.id')

@@ -59,6 +59,9 @@ class TaskTypeController extends Controller
      */
     public function show($clientId, $timeCardId = null)
     {
+        // set appGlobal.clientId current view, otherwise 'if (appGlobal.clientId)' in TimeCard.js causes js load failure.
+        appGlobals::populateJsGlobalClient();
+
         // get all task for a specific time_card.date.
         $taskTypes = TaskType::where('client_id', '=', $clientId)->get();
 

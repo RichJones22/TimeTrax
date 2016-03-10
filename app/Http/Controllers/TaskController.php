@@ -32,8 +32,6 @@ class TaskController extends Controller
     {
         $taskRequestAttributes = $request->all();
 
-//        dd($taskRequestAttributes);
-
         $task = new Task();
 
         $task->start_time = $taskRequestAttributes['startt'];
@@ -43,8 +41,6 @@ class TaskController extends Controller
 
         $task->task_type_id = $taskRequestAttributes['taskType'];
         $task->time_card_hours_worked_id = $taskRequestAttributes['time_card_hours_worked_id'];
-
-//        dd($task);
 
         $task->save();
 
@@ -70,6 +66,9 @@ class TaskController extends Controller
      */
     public function show($timeCardHoursWorkedId)
     {
+        // set appGlobal.clientId current view, otherwise 'if (appGlobal.clientId)' in TimeCard.js causes js load failure.
+        appGlobals::populateJsGlobalClient();
+
         if (is_null($timeCardHoursWorkedId)) {
             \Session::forget(appGlobals::getTimeCardTableName());
         } else {

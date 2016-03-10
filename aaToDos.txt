@@ -6,8 +6,7 @@ A       x Task Maintenance heading need to be restyled to match the other views.
         - Review and refactor code as necessary.
         - Review the bootstrap article at: http://www.helloerik.com/the-subtle-magic-behind-why-the-bootstrap-3-grid-works
 
-1)  Deploy to production as v0.1.1.
-    - place this guy on your main web site as one of your current projects.
+1)  Clean up all javascript errors from the log.
 
 2)  Styling.
     - continue to consolidate your css and javascript into a single http call each.
@@ -23,10 +22,15 @@ A       x Task Maintenance heading need to be restyled to match the other views.
     - breakup your blade views into partials if you can.
         - I currently don't see an obvious way to do this, but keep looking.
 
-    - look into Russian Doll caching for the drop-downs... These queries seem to be creating some latency.
+ A1 - look into Russian Doll caching for the drop-downs... These queries seem to be creating some latency.
 
 3)  Task View.
     - Add a work drop down, so that you can create time card entries directly.
         - workout the concept of 'unreconciled hours' between Task and Time Card View.
     - Add a date control.
+
+4)  Toggl... Use Toggl as a way to style your app. work flow.
+    - where to start?
+        - the header?
+
 
