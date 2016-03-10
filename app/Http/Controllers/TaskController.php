@@ -66,7 +66,7 @@ class TaskController extends Controller
      */
     public function show($timeCardHoursWorkedId)
     {
-        // set appGlobal.clientId current view, otherwise 'if (appGlobal.clientId)' in TimeCard.js causes js load failure.
+        // set appGlobal.clientId to current view, otherwise 'if (appGlobal.clientId)' in TimeCard.js causes js load failure.
         appGlobals::populateJsGlobalClient();
 
         if (is_null($timeCardHoursWorkedId)) {
