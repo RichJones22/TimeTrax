@@ -6,7 +6,7 @@ A       x Task Maintenance heading need to be restyled to match the other views.
         - Review and refactor code as necessary.
         - Review the bootstrap article at: http://www.helloerik.com/the-subtle-magic-behind-why-the-bootstrap-3-grid-works
 
-1)  Clean up all javascript errors from the log.
+1) x Clean up all javascript errors from the log.
 
 2)  Styling.
     - continue to consolidate your css and javascript into a single http call each.

@@ -203,9 +203,10 @@ class appGlobals
         // also see javascript.php in the config dir for view and .js namespace used.
         \JavaScript::put([
             'timeCardURI' => $request->root() . "/" . appGlobals::getTimeCardURI(),
-            'workURI'     => appGlobals::getWorkURI(),
-            'clientId'    => self::populateJsGlobalClient()
+            'workURI'     => appGlobals::getWorkURI()
         ]);
+
+        self::populateJsGlobalClient();
     }
 
     static public function populateJsGlobalClient() {
