@@ -66,4 +66,23 @@ class TimeCard extends Model
         return $this->hasMany('\App\TimeCardHoursWorked');
     }
 
+    /**
+     * @param $bwDate
+     * @param $ewDate
+     * @return mixed
+     */
+    static public function getTimeCardRows($bwDate, $ewDate)
+    {
+        $timeCardRows = TimeCard::whereBetween('time_card_hours_worked.date_worked', [$bwDate, $ewDate])
+            ->join('time_card_hours_worked', 'time_card_hours_worked.time_card_id', '=', 'time_card.id')
+            ->join('work', 'time_card.work_id', '=', 'work.id')
+            ->join('work_type', 'work.work_type_id', '=', 'work_type.id')
+            ->where('time_card_hours_worked.hours_worked', ">", 0)
+            ->select('time_card.id', 'time_card.iso_beginning_dow_date', 'time_card.work_id', 'time_card.time_card_format_id')
+            ->groupBy('work_type.type')
+            ->orderBy('work_type.type')
+            ->get();
+        return $timeCardRows;
+    }
+
 }
