@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use \App\Helpers\appGlobals;
 use DB;
@@ -71,7 +72,7 @@ class TimeCard extends Model
      * @param $ewDate
      * @return mixed
      */
-    static public function getTimeCardRows($bwDate, $ewDate)
+    static public function getTimeCardRows(Carbon $bwDate, Carbon $ewDate)
     {
         $timeCardRows = TimeCard::whereBetween('time_card_hours_worked.date_worked', [$bwDate, $ewDate])
             ->join('time_card_hours_worked', 'time_card_hours_worked.time_card_id', '=', 'time_card.id')

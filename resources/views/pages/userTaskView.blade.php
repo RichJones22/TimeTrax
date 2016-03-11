@@ -61,11 +61,11 @@
                         {!! Form::close() !!}
                     </th>
                 </tr>
-                {!! Form::open(array('route' => array('task.create'))) !!}
-                    <input type="hidden" name="_method" value="POST">
-                    <input hidden type="text" name="time_card_hours_worked_id" value="{{$timeCardHoursWorkedId}}">
-                    <div>
-                        <tr class="info">
+                <tr class="info tbl-h2-height">
+                    {!! Form::open(array('route' => array('task.create'))) !!}
+                        <input type="hidden" name="_method" value="POST">
+                        <input hidden type="text" name="time_card_hours_worked_id" value="{{$timeCardHoursWorkedId}}">
+                        <div>
                             <th>
                                 <select id="taskType" name ="taskType" class="form-control col-xs-12">
                                     <option value="0">--Select Type--</option>
@@ -86,9 +86,9 @@
                                     </div>
                                 </div>
                             </th>
-                        </tr>
-                    </div>
-                {!! Form::close() !!}
+                        </div>
+                    {!! Form::close() !!}
+                </tr>
             </thead>
 
             <tbody id="taskTable">

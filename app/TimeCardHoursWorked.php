@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use \App\Helpers\appGlobals;
 
@@ -73,7 +74,7 @@ class TimeCardHoursWorked extends Model
      * @param $ewDate
      * @return array
      */
-    static public function deriveTimeCardHoursWorkedFromBeginningAndEndingWeekDates($timeCardRows, $bwDate, $ewDate)
+    static public function deriveTimeCardHoursWorkedFromBeginningAndEndingWeekDates($timeCardRows, Carbon $bwDate, Carbon $ewDate)
     {
         $hoursWorkedPerWorkId = [];
 

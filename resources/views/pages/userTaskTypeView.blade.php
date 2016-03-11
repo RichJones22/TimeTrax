@@ -53,11 +53,11 @@ use \App\Helpers\appGlobals;
                         @endif
                     </th>
                 </tr>
-                {!! Form::open(array('route' => array('taskType.create'))) !!}
-                    <input type="hidden" name="_method" value="POST">
-                    <input hidden type="text" name="client_id" value="{{$clientId}}">
-                    <div>
-                        <tr class="info">
+                <tr class="info tbl-h2-height">
+                    {!! Form::open(array('route' => array('taskType.create'))) !!}
+                        <input type="hidden" name="_method" value="POST">
+                        <input hidden type="text" name="client_id" value="{{$clientId}}">
+                        <div>
                             <th><input class="form-control" id="taskType01" placeholder="type" name="taskType"></th>
                             <th>
                                 <div class="col-xs-9" style="display: inline-block;">
@@ -65,9 +65,9 @@ use \App\Helpers\appGlobals;
                                 </div>
                                 <button disabled type="submit" class="btn btn-primary col-xs" id="saveButtonTaskType" style="float: right">Save</button>
                             </th>
-                        </tr>
-                    </div>
-                </form>
+                        </div>
+                    {!! Form::close() !!}
+                </tr>
             </thead>
 
             <tbody id="taskTypeTable">
