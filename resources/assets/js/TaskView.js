@@ -254,9 +254,16 @@ function loseFocusOnType() {
     });
 }
 
+// - hoursWorked needs to be enabled prior to send to server or the hourWorked input field will not get passed in the
+//   request otherwise.
+// - here we are checking for the return key being pressed once the save button has been enabled.
 function onClickOnSaveButton() {
-    $("#saveButton").click(function () {
-        $("#hoursWorked").prop('disabled', false);
+    $(document).keypress(function(e) {
+        if(e.which == 13 && saveButton.isReady()) {
+            $("#hoursWorked").css('background-color', '#eee');
+            $("#hoursWorked").prop('disabled', false);
+            $("#saveButton").click();
+        }
     });
 }
 
