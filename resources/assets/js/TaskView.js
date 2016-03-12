@@ -256,10 +256,11 @@ function loseFocusOnType() {
 
 // - hoursWorked needs to be enabled prior to send to server or the hourWorked input field will not get passed in the
 //   request otherwise.
-// - here we are checking for the return key being pressed once the save button has been enabled.
+// - here we are checking for the return key being pressed once the save button has been enabled, and the #hoursWorked
+//   element contains a value
 function onClickOnSaveButton() {
     $(document).keypress(function(e) {
-        if(e.which == 13 && saveButton.isReady()) {
+        if(e.which == 13 && saveButton.isReady() && $('#hoursWorked').val() !== "") {
             $("#hoursWorked").css('background-color', '#eee');
             $("#hoursWorked").prop('disabled', false);
             $("#saveButton").click();

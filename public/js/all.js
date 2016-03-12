@@ -1,25 +1,3 @@
-/**
- * Created by richjones on 1/26/16.
- */
-
-
-// load all javascript once the document is ready.
-$(document).ready(function(){
-
-    causeTheTopLineOfTableHeaderToFade();
-
-});
-
-function causeTheTopLineOfTableHeaderToFade() {
-    var valueIs = $('#thAlertMessage').val();
-    if (typeof valueIs != 'undefined') {
-        (setTimeout(function () {
-            document.getElementById('thAlertMessage').style.display='none';
-            $('#thNoAlertMessage').fadeIn(3000);
-        }, 10000))();
-    }
-}
-
 
 // load all javascript once the document is ready.
 $(document).ready(function(){
@@ -278,10 +256,11 @@ function loseFocusOnType() {
 
 // - hoursWorked needs to be enabled prior to send to server or the hourWorked input field will not get passed in the
 //   request otherwise.
-// - here we are checking for the return key being pressed once the save button has been enabled.
+// - here we are checking for the return key being pressed once the save button has been enabled, and the #hoursWorked
+//   element contains a value
 function onClickOnSaveButton() {
     $(document).keypress(function(e) {
-        if(e.which == 13 && saveButton.isReady()) {
+        if(e.which == 13 && saveButton.isReady() && $('#hoursWorked').val() !== "") {
             $("#hoursWorked").css('background-color', '#eee');
             $("#hoursWorked").prop('disabled', false);
             $("#saveButton").click();
@@ -894,19 +873,19 @@ timeCard.convertDOWToNumber = function(dow) {
     var value = dow.selector;
 
     if (value == "#dow_00") {
-        return 1;
+        return 0;
     } else if (value  == "#dow_01") {
-        return 2;
+        return 1;
     } else if (value  == "#dow_02") {
-        return 3;
+        return 2;
     } else if (value  == "#dow_03") {
-        return 4;
+        return 3;
     } else if (value  == "#dow_04") {
-        return 5;
+        return 4;
     } else if (value  == "#dow_05") {
-        return 6;
+        return 5;
     } else if (value  == "#dow_06") {
-        return 7;
+        return 6;
     }
 };
 
@@ -932,5 +911,31 @@ timeCard.convertDOWToNumber = function(dow) {
 
 
 
+
+/**
+ * Created by richjones on 1/26/16.
+ */
+
+
+// load all javascript once the document is ready.
+$(document).ready(function(){
+
+    causeTheTopLineOfTableHeaderToFade();
+
+});
+
+function causeTheTopLineOfTableHeaderToFade() {
+    var valueIs = $('#thAlertMessage').val();
+    if (typeof valueIs != 'undefined') {
+
+        // reload time card work type drop down on RDBMS failure.
+        timeCard.WorkType();
+
+        setTimeout(function () {
+            document.getElementById('thAlertMessage').style.display='none';
+            $('#thNoAlertMessage').fadeIn(3000);
+        }, 10000);
+    }
+}
 
 //# sourceMappingURL=all.js.map

@@ -17,7 +17,7 @@ use \App\Helpers\appGlobals;
  */
 class TimeCardController extends Controller
 {
-    /*******************************************************************************************************************
+  /*******************************************************************************************************************
      * main routines.
      ******************************************************************************************************************/
 
@@ -32,16 +32,7 @@ class TimeCardController extends Controller
     {
         $timeCardRequestAttributes = $request->all();
 
-        DB::transaction(function() use ($timeCardRequestAttributes, $timeCardRange) {
-
-            $timeCard = $this->saveTimeCard($timeCardRange, $timeCardRequestAttributes);
-
-            for ($i=0; $i<appGlobals::DAYS_IN_WEEK_NUM; $i++) {
-                if ($timeCardRequestAttributes['dow_0' . $i]) {
-                    $this->saveTimeCardHoursWorked($timeCard, $timeCardRange, $i, $timeCardRequestAttributes);
-                }
-            }
-        });
+        $this->createTimeCardData($timeCardRange, $timeCardRequestAttributes);
 
         return redirect()->back();
     }
@@ -359,5 +350,45 @@ class TimeCardController extends Controller
         if (is_null(TimeCardHoursWorked::checkIfDateWorkedDowExists($timeCardHoursWorked))) {
             $timeCardHoursWorked->save();
         }
+    }
+
+    /**
+     * @param $timeCardRange
+     * @param $timeCardRequestAttributes
+     */
+    private function createTimeCardData($timeCardRange, $timeCardRequestAttributes)
+    {
+        try {
+            $this->createTimeCardDataTransaction($timeCardRange, $timeCardRequestAttributes);
+        } catch(\Exception $e) {
+            $this->timeOverlapError();
+        }
+    }
+
+    /**
+     * set session flash message for appGlobals::INFO_TIME_VALUE_OVERLAP message.
+     */
+    private function timeOverlapError()
+    {
+        session()->forget(appGlobals::getInfoMessageType());
+        session()->flash(appGlobals::getInfoMessageType(), appGlobals::getInfoMessageText(appGlobals::INFO_TIME_VALUE_OVERLAP));
+    }
+
+    /**
+     * @param $timeCardRange
+     * @param $timeCardRequestAttributes
+     */
+    private function createTimeCardDataTransaction($timeCardRange, $timeCardRequestAttributes)
+    {
+        DB::transaction(function () use ($timeCardRequestAttributes, $timeCardRange) {
+
+            $timeCard = $this->saveTimeCard($timeCardRange, $timeCardRequestAttributes);
+
+            for ($i = 0; $i < appGlobals::DAYS_IN_WEEK_NUM; $i++) {
+                if ($timeCardRequestAttributes['dow_0' . $i]) {
+                    $this->saveTimeCardHoursWorked($timeCard, $timeCardRange, $i, $timeCardRequestAttributes);
+                }
+            }
+        });
     }
 }

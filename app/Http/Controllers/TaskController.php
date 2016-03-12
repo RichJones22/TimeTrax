@@ -32,6 +32,13 @@ class TaskController extends Controller
     {
         $taskRequestAttributes = $request->all();
 
+        // if the hoursWorked has not been set, then just return to the client.  hoursWorked is calculated via .js
+        // and does not seem to be populated before being sent to the server in some cases.  this has to do with
+        // the return key being pressed prior to leaving the End Time field.
+        if (!isset($taskRequestAttributes['hoursWorked'])) {
+            return redirect()->back();
+        }
+
         $task = new Task();
 
         $task->start_time = $taskRequestAttributes['startt'];
@@ -66,7 +73,7 @@ class TaskController extends Controller
      */
     public function show($timeCardHoursWorkedId)
     {
-        // set appGlobal.clientId to current view, otherwise 'if (appGlobal.clientId)' in TimeCard.js causes js load failure.
+        // set appGlobal.clientId to current view, otherwise 'if (appGlobal.clientId)' in TimeCard.js causes a js load failure.
         appGlobals::populateJsGlobalClient();
 
         if (is_null($timeCardHoursWorkedId)) {

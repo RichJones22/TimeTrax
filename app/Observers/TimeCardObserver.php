@@ -9,9 +9,11 @@
 namespace app\Observers;
 
 use \App\Helpers\appGlobals;
+use App\TimeCard;
+
 class TimeCardObserver
 {
-    public function creating($timeCard) {
+    public function creating(TimeCard $timeCard) {
 
         // check if getTestRDBMS is set for testing the Database triggers.
         if (appGlobals::getTestRDBMS()) {
@@ -19,11 +21,10 @@ class TimeCardObserver
         }
 
         if (!is_null($timeCard->checkIfExists($timeCard))) {
-            session()->forget(appGlobals::getInfoMessageType());
-            session()->flash(appGlobals::getInfoMessageType(), appGlobals::getInfoMessageText(appGlobals::INFO_TIME_VALUE_OVERLAP));
-
-            return false;
+           return new \Exception();
         }
+
+        return true;
     }
 
     public function created($timeCard) {

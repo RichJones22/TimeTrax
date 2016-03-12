@@ -13,8 +13,8 @@ var elixir = require('laravel-elixir');
 
 elixir(function(mix) {
     mix.sass('app.scss');
-    mix.scripts(['appGlobal.js'
-                ,'TaskView.js'
+    mix.scripts(['TaskView.js'
                 ,'TaskTypeView.js'
-                ,'TimeCardView.js']);
+                ,'TimeCardView.js'
+                ,'appGlobal.js']);
 });

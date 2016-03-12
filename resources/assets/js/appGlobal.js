@@ -13,9 +13,13 @@ $(document).ready(function(){
 function causeTheTopLineOfTableHeaderToFade() {
     var valueIs = $('#thAlertMessage').val();
     if (typeof valueIs != 'undefined') {
-        (setTimeout(function () {
+
+        // reload time card work type drop down on RDBMS failure.
+        timeCard.WorkType();
+
+        setTimeout(function () {
             document.getElementById('thAlertMessage').style.display='none';
             $('#thNoAlertMessage').fadeIn(3000);
-        }, 10000))();
+        }, 10000);
     }
 }
