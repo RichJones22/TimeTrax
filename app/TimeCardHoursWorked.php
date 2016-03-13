@@ -74,22 +74,13 @@ class TimeCardHoursWorked extends Model
      * @param $ewDate
      * @return array
      */
-    static public function deriveTimeCardHoursWorkedFromBeginningAndEndingWeekDates($timeCardRows, Carbon $bwDate, Carbon $ewDate)
+    static public function deriveTimeCardHoursWorkedFromBeginningAndEndingWeekDates($timeCardRows, $iso_beginning_dow_date)
     {
         $hoursWorkedPerWorkId = [];
 
         // populate the time_card_hours_worked data by $timeCardRow->id.
         foreach ($timeCardRows as $timeCardRow) {
-            $hoursWorkedPerWorkId[$timeCardRow->id] = TimeCardHoursWorked::whereBetween('time_card_hours_worked.date_worked', [$bwDate, $ewDate])
-                ->join('time_card', 'time_card_hours_worked.time_card_id', '=', 'time_card.id')
-                ->where('time_card_hours_worked.hours_worked', ">", 0)
-                ->where('time_card_hours_worked.time_card_id', '=', $timeCardRow->id)
-                ->select('time_card.work_id'
-                    , 'time_card_hours_worked.dow'
-                    , 'time_card_hours_worked.hours_worked'
-                    , 'time_card_hours_worked.id'
-                    , 'time_card_hours_worked.date_worked')
-                ->get();
+            $hoursWorkedPerWorkId = TimeCard::getHoursWorkedForTimeCard($iso_beginning_dow_date, $timeCardRow, $hoursWorkedPerWorkId);
         }
         return $hoursWorkedPerWorkId;
     }

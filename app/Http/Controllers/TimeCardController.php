@@ -47,10 +47,10 @@ class TimeCardController extends Controller
     public function show($dateSelected=null, Request $request)
     {
         // get beginning and ending week dates.
-        list($bwDate, $ewDate) = $this->getBeginningAndEndingWeekDates($dateSelected);
+        list($bwDate, $ewDate, $iso_beginning_dow_date) = $this->getBeginningAndEndingWeekDates($dateSelected);
 
         // get time_card data
-        list($timeCardRows, $hoursWorkedDow, $hoursWorkedIdDow) = $this->getTimeCardData($bwDate, $ewDate);
+        list($timeCardRows, $hoursWorkedDow, $hoursWorkedIdDow) = $this->getTimeCardData($iso_beginning_dow_date);
 
         // build view variables.
         $timeCardRange = $this->buildViewVariables($timeCardRows, $hoursWorkedDow, $hoursWorkedIdDow, $bwDate, $ewDate);
@@ -195,19 +195,19 @@ class TimeCardController extends Controller
         $bwDate = new Carbon($dateSelected);
 
         if ($bwDate->dayOfWeek == 0) {
-            $ewDate = new Carbon($bwDate);
+            $ewDate                 = new Carbon($bwDate);
+            $iso_beginning_dow_date = new Carbon($bwDate);
             $ewDate->addDays(6);
-
-            return array($bwDate, $ewDate);
         } else {
             $bwDate->startOfWeek();  // iso standard; Monday is the start of week.
+            $iso_beginning_dow_date = new Carbon($bwDate);
             $bwDate->subDay();       // adjust to Sunday as this is our current offset.
 
             $ewDate = new Carbon($bwDate);
             $ewDate->addDays(6);
-
-            return array($bwDate, $ewDate);
         }
+
+        return array($bwDate, $ewDate, $iso_beginning_dow_date);
     }
 
 
@@ -269,18 +269,18 @@ class TimeCardController extends Controller
         return $timeCardRange;
     }
 
+
     /**
-     * @param $bwDate
-     * @param $ewDate
+     * @param $iso_beginning_dow_date
      * @return array
      */
-    protected function getTimeCardData(Carbon $bwDate, Carbon $ewDate)
+    protected function getTimeCardData($iso_beginning_dow_date)
     {
         // get all time_card rows between $bwDate and $ewDate.
-        $timeCardRows = TimeCard::getTimeCardRows($bwDate, $ewDate);
+        $timeCardRows = TimeCard::getTimeCardRows($iso_beginning_dow_date);
 
         // derive time_card_hours data via bwDate and ewDate
-        $hoursWorkedPerWorkId = TimeCardHoursWorked::deriveTimeCardHoursWorkedFromBeginningAndEndingWeekDates($timeCardRows, $bwDate, $ewDate);
+        $hoursWorkedPerWorkId = TimeCardHoursWorked::deriveTimeCardHoursWorkedFromBeginningAndEndingWeekDates($timeCardRows, $iso_beginning_dow_date);
 
         // create arrays for:
         // - hours worked for dow
@@ -294,6 +294,7 @@ class TimeCardController extends Controller
 
         return array($timeCardRows, $hoursWorkedDow, $hoursWorkedIdDow);
     }
+
 
     /**
      * @param $timeCardRows
