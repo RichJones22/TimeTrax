@@ -25,7 +25,7 @@
                             <div class="btn-group" role="group">
                                 <button hidden>
                                     @if (Session::has(appGlobals::getTimeCardTableName()))
-                                        {!! Form::open(array('route' => array('timeCard.show', appGlobals::getIsoBeginningDowDate(Session::get(appGlobals::getTimeCardTableName()))))) !!}
+                                        {!! Form::open(array('route' => array('timeCard.show', appGlobals::getBeginningDowDate(Session::get(appGlobals::getTimeCardTableName()))))) !!}
                                             <input type="hidden" name="_method" value="GET">
                                             <input hidden type="text" name="_token" value="{{ csrf_token() }}">
                                             <button id="routeToTimeCardView" type="submit" class="btn btn-primary btn-xs" style="margin-right: 3px;-webkit-border-radius: 2px;-moz-border-radius: 2px;border-radius: 2px;">
@@ -36,8 +36,8 @@
                                 </button>
                                 <button hidden>
                                     @if(count($tasks)>0)
-                                        {{Session::put(appGlobals::getTaskTableName(), $timeCardHoursWorkedId)}}
-                                        {!! Form::open(array('route' => array('taskType.task.show', $tasks[0]->TaskType->client_id, $timeCardHoursWorkedId))) !!}
+                                        {{Session::put(appGlobals::getTaskTableName(), $timeCardId)}}
+                                        {!! Form::open(array('route' => array('taskType.task.show', $tasks[0]->TaskType->client_id, $timeCardId))) !!}
                                             <input type="hidden" name="_method" value="GET">
                                             <button id="routeToTaskTypeView" type ="submit" class="btn btn-secondary btn-primary btn-xs" style="margin-right: 3px;-webkit-border-radius: 2px;-moz-border-radius: 2px;border-radius: 2px;">
                                                 <span class="glyphicon glyphicon-open"></span>
@@ -53,7 +53,7 @@
                     <th><span style="color: blue; font-weight: bold"> ( {{ $totalHoursWorked }} ) </span>Hours Worked</th>
                     <th>
                         <span class="col-xs-9" style="display: inline-block;">Notes</span>
-                        {!! Form::open(array('route' => array('task.show', $timeCardHoursWorkedId))) !!}
+                        {!! Form::open(array('route' => array('task.show', $timeCardId))) !!}
                             <input type="hidden" name="_method" value="GET">
                             <button type ="submit" class = "btn btn-primary btn-xs" id="refresh" style="float: right">
                                    <span class="glyphicon glyphicon-refresh"></span>
@@ -64,7 +64,7 @@
                 <tr class="info tbl-h2-height">
                     {!! Form::open(array('route' => array('task.create'))) !!}
                         <input type="hidden" name="_method" value="POST">
-                        <input hidden type="text" name="time_card_hours_worked_id" value="{{$timeCardHoursWorkedId}}">
+                        <input hidden type="text" name="time_card_id" value="{{$timeCardId}}">
                         <div>
                             <th>
                                 <select id="taskType" name ="taskType" class="form-control col-xs-12">

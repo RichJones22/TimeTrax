@@ -17,7 +17,7 @@ class Task extends Model
      * fillable fields
      */
     protected $fillable = [
-        'time_card_hours_worked_id',
+        'time_card_id',
         'task_type_id',
         'start_time',
         'end_time',
@@ -62,7 +62,7 @@ class Task extends Model
     public function checkIfStartTimeExists($timeCardId, $startTime) {
 
         $val = Task::where('start_time', '=', $startTime)
-            ->where('time_card_hours_worked_id', '=', $timeCardId)
+            ->where('time_card_id', '=', $timeCardId)
             ->first();
 
         if (is_null($val)) {
@@ -74,7 +74,7 @@ class Task extends Model
 
     public function checkIfStartTimeOverLaps($timeCardId, $startTime) {
 
-        $val = Task::where('time_card_hours_worked_id', '=', $timeCardId)
+        $val = Task::where('time_card_id', '=', $timeCardId)
             ->where('start_time', '<=', $startTime)
             ->where('end_time', '>', $startTime)
             ->first();
@@ -88,7 +88,7 @@ class Task extends Model
 
     public function checkIfEndTimeOverLaps($timeCardId, $endTime) {
 
-        $val = Task::where('time_card_hours_worked_id', '=', $timeCardId)
+        $val = Task::where('time_card_id', '=', $timeCardId)
             ->where('start_time', '<', $endTime)
             ->where('end_time', '>=', $endTime)
             ->first();

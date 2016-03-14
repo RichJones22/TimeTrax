@@ -47,13 +47,14 @@ class TimeCardController extends Controller
     public function show($dateSelected=null, Request $request)
     {
         // get beginning and ending week dates.
-        list($bwDate, $ewDate, $iso_beginning_dow_date) = $this->getBeginningAndEndingWeekDates($dateSelected);
+        list($bwDate, $ewDate) = $this->getBeginningAndEndingWeekDates($dateSelected);
 
         // get time_card data
-        list($timeCardRows, $hoursWorkedDow, $hoursWorkedIdDow) = $this->getTimeCardData($iso_beginning_dow_date);
+        list($timeCardRows) = $this->getTimeCardData($bwDate, $ewDate);
+//        list($timeCardRows, $hoursWorkedDow, $hoursWorkedIdDow) = $this->getTimeCardData($bwDate, $ewDate);
 
         // build view variables.
-        $timeCardRange = $this->buildViewVariables($timeCardRows, $hoursWorkedDow, $hoursWorkedIdDow, $bwDate, $ewDate);
+        $timeCardRange = $this->buildViewVariables($bwDate, $ewDate);
 
         // jeffery way's package for moving php variables to the .js space.
         // see https://github.com/laracasts/PHP-Vars-To-Js-Transformer.
@@ -77,11 +78,8 @@ class TimeCardController extends Controller
         DB::transaction(function() use ($id) {
 
             // remove all task rows
-            DB::table('task')->join('time_card_hours_worked', 'task.time_card_hours_worked_id', '=', 'time_card_hours_worked.id')
+            DB::table('task')->join('time_card', 'task.time_card_id', '=', 'time_card.id')
                 ->where('time_card_id', $id)->delete();
-
-            // remove all time_card_hours_worked rows
-            DB::table('time_card_hours_worked')->where('time_card_id', $id)->delete();
 
             // remove time_card row.
             DB::table('time_card')->where('id', $id)->delete();
@@ -196,18 +194,16 @@ class TimeCardController extends Controller
 
         if ($bwDate->dayOfWeek == 0) {
             $ewDate                 = new Carbon($bwDate);
-            $iso_beginning_dow_date = new Carbon($bwDate);
             $ewDate->addDays(6);
         } else {
             $bwDate->startOfWeek();  // iso standard; Monday is the start of week.
-            $iso_beginning_dow_date = new Carbon($bwDate);
             $bwDate->subDay();       // adjust to Sunday as this is our current offset.
 
             $ewDate = new Carbon($bwDate);
             $ewDate->addDays(6);
         }
 
-        return array($bwDate, $ewDate, $iso_beginning_dow_date);
+        return array($bwDate, $ewDate);
     }
 
 
@@ -274,25 +270,32 @@ class TimeCardController extends Controller
      * @param $iso_beginning_dow_date
      * @return array
      */
-    protected function getTimeCardData($iso_beginning_dow_date)
+    protected function getTimeCardData($bwDate, $ewDate)
     {
         // get all time_card rows between $bwDate and $ewDate.
-        $timeCardRows = TimeCard::getTimeCardRows($iso_beginning_dow_date);
+        $timeCardRows = TimeCard::getTimeCardRows($bwDate, $ewDate);
 
         // derive time_card_hours data via bwDate and ewDate
-        $hoursWorkedPerWorkId = TimeCardHoursWorked::deriveTimeCardHoursWorkedFromBeginningAndEndingWeekDates($timeCardRows, $iso_beginning_dow_date);
+        //$hoursWorkedPerWorkId = TimeCardHoursWorked::deriveTimeCardHoursWorkedFromBeginningAndEndingWeekDates($timeCardRows, $bwDate, $ewDate);
 
         // create arrays for:
         // - hours worked for dow
         // - hours worked id for dow
-        $hoursWorkedDow[] = [];
-        $hoursWorkedIdDow[] = [];
-        list($hoursWorkedDow, $hoursWorkedIdDow) = $this->deriveHoursWorkDowAndHoursWorkedIdDow($hoursWorkedPerWorkId, $hoursWorkedDow, $hoursWorkedIdDow);
+        //$hoursWorkedDow[] = [];
+        //$hoursWorkedIdDow[] = [];
+//        list($hoursWorkedDow, $hoursWorkedIdDow) = $this->deriveHoursWorkDowAndHoursWorkedIdDow($hoursWorkedPerWorkId, $hoursWorkedDow, $hoursWorkedIdDow);
+
+        for ($i = 0; $i < count($timeCardRows); $i++) {
+            if ($timeCardRows[$i]->hours_worked) {
+                $timeCardRows[$i]->dow = $this->getDOW($timeCardRows[$i]->date_worked);
+            }
+        }
 
         // eager load related data.
         $this->egerloadRelations($timeCardRows);
 
-        return array($timeCardRows, $hoursWorkedDow, $hoursWorkedIdDow);
+        return array($timeCardRows);
+//        return array($timeCardRows, $hoursWorkedDow, $hoursWorkedIdDow);
     }
 
 
@@ -304,10 +307,10 @@ class TimeCardController extends Controller
      * @param $ewDate
      * @return string
      */
-    protected function buildViewVariables($timeCardRows, $hoursWorkedDow, $hoursWorkedIdDow, $bwDate, $ewDate)
+    protected function buildViewVariables($bwDate, $ewDate)
     {
         // build timeCardRows var.
-        $this->buildTimeCardRowsVar($timeCardRows, $hoursWorkedDow, $hoursWorkedIdDow);
+//        $this->buildTimeCardRowsVar($timeCardRows, $hoursWorkedDow, $hoursWorkedIdDow);
 
         // build the timeCardRange var
         $timeCardRange = $this->buildTimeCardRangeVar($bwDate, $ewDate);
@@ -324,7 +327,7 @@ class TimeCardController extends Controller
     {
         $timeCard = new TimeCard();
 
-        $timeCard->iso_beginning_dow_date = appGlobals::getBeginningOfCurrentWeek($timeCardRange);
+        $timeCard->date_worked = appGlobals::getBeginningOfCurrentWeek($timeCardRange);
         $timeCard->work_id = $this->getWorkIdViaWorkTypeId($timeCardRequestAttributes['workType']);
         $timeCard->time_card_format_id = $this->getTimeCardFormatId($this->getClientId($timeCardRequestAttributes['workType']));
 
@@ -339,19 +342,19 @@ class TimeCardController extends Controller
      * @param $i
      * @param $timeCardRequestAttributes
      */
-    protected function saveTimeCardHoursWorked($timeCard, $timeCardRange, $i, $timeCardRequestAttributes)
-    {
-        $timeCardHoursWorked = new TimeCardHoursWorked();
-
-        $timeCardHoursWorked->time_card_id = $timeCard->id;
-        $timeCardHoursWorked->date_worked = $this->getDateWorked(appGlobals::getBeginningOfCurrentWeek($timeCardRange), $i);
-        $timeCardHoursWorked->dow = $this->getDOW($timeCardHoursWorked->date_worked);
-        $timeCardHoursWorked->hours_worked = $timeCardRequestAttributes['dow_0' . $i];
-
-        if (is_null(TimeCardHoursWorked::checkIfDateWorkedDowExists($timeCardHoursWorked))) {
-            $timeCardHoursWorked->save();
-        }
-    }
+//    protected function saveTimeCardHoursWorked($timeCard, $timeCardRange, $i, $timeCardRequestAttributes)
+//    {
+//        $timeCardHoursWorked = new TimeCardHoursWorked();
+//
+//        $timeCardHoursWorked->time_card_id = $timeCard->id;
+//        $timeCardHoursWorked->date_worked = $this->getDateWorked(appGlobals::getBeginningOfCurrentWeek($timeCardRange), $i);
+//        $timeCardHoursWorked->dow = $this->getDOW($timeCardHoursWorked->date_worked);
+//        $timeCardHoursWorked->hours_worked = $timeCardRequestAttributes['dow_0' . $i];
+//
+//        if (is_null(TimeCardHoursWorked::checkIfDateWorkedDowExists($timeCardHoursWorked))) {
+//            $timeCardHoursWorked->save();
+//        }
+//    }
 
     /**
      * @param $timeCardRange
@@ -383,13 +386,28 @@ class TimeCardController extends Controller
     {
         DB::transaction(function () use ($timeCardRequestAttributes, $timeCardRange) {
 
-            $timeCard = $this->saveTimeCard($timeCardRange, $timeCardRequestAttributes);
+            //$this->saveTimeCard($timeCardRange, $timeCardRequestAttributes);
 
             for ($i = 0; $i < appGlobals::DAYS_IN_WEEK_NUM; $i++) {
-                if ($timeCardRequestAttributes['dow_0' . $i]) {
-                    $this->saveTimeCardHoursWorked($timeCard, $timeCardRange, $i, $timeCardRequestAttributes);
+
+                if (!empty($timeCardRequestAttributes['dow_0' . $i])) {
+                    $timeCard = new TimeCard();
+
+                    $timeCard->date_worked = $this->getDateWorked(appGlobals::getBeginningOfCurrentWeek($timeCardRange), $i);
+                    $timeCard->work_id = $this->getWorkIdViaWorkTypeId($timeCardRequestAttributes['workType']);
+                    $timeCard->time_card_format_id = $this->getTimeCardFormatId($this->getClientId($timeCardRequestAttributes['workType']));
+                    $timeCard->hours_worked = $timeCardRequestAttributes['dow_0' . $i];
+
+                    $timeCard->save();
                 }
             }
+
+
+//            for ($i = 0; $i < appGlobals::DAYS_IN_WEEK_NUM; $i++) {
+//                if ($timeCardRequestAttributes['dow_0' . $i]) {
+//                    $this->saveTimeCardHoursWorked($timeCard, $timeCardRange, $i, $timeCardRequestAttributes);
+//                }
+//            }
         });
     }
 }

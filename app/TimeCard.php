@@ -53,11 +53,8 @@ class TimeCard extends Model
      */
     static public function checkIfExists(&$inTimeCard) {
 
-        $timeCard = TimeCard::where('iso_beginning_dow_date', '=', $inTimeCard->iso_beginning_dow_date)
+        $timeCard = TimeCard::where('date_worked', '=', $inTimeCard->date_worked)
             ->where('work_id', '=', $inTimeCard->work_id)
-            ->join('time_card_hours_worked', 'time_card_hours_worked.time_card_id', '=', 'time_card.id')
-            ->where('time_card_hours_worked.hours_worked', "=", 0)
-            ->where('time_card_hours_worked.time_card_id', '=', $inTimeCard->id)
             ->first();
 
         if (!is_null($timeCard)) {
@@ -74,10 +71,10 @@ class TimeCard extends Model
      * @param $ewDate
      * @return mixed
      */
-    static public function getTimeCardRows($iso_beginning_dow_date)
+    static public function getTimeCardRows($bwDate, $ewDate)
     {
-        $timeCardRows = TimeCard::where('iso_beginning_dow_date', '=', $iso_beginning_dow_date)
-            ->select('time_card.id', 'time_card.iso_beginning_dow_date', 'time_card.work_id', 'time_card.time_card_format_id')
+        $timeCardRows = TimeCard::whereBetween('date_worked', [$bwDate, $ewDate])
+            ->select('time_card.id', 'time_card.date_worked', 'time_card.work_id', 'time_card.time_card_format_id', 'time_card.hours_worked')
             ->get();
         return $timeCardRows;
     }
@@ -88,20 +85,20 @@ class TimeCard extends Model
      * @param $hoursWorkedPerWorkId
      * @return mixed
      */
-    static public function getHoursWorkedForTimeCard($iso_beginning_dow_date, $timeCardRow, $hoursWorkedPerWorkId)
-    {
-        $hoursWorkedPerWorkId[$timeCardRow->id] = TimeCard::where('iso_beginning_dow_date', '=', $iso_beginning_dow_date)
-            ->join('time_card_hours_worked', 'time_card_hours_worked.time_card_id', '=', 'time_card.id')
-            ->where('time_card_hours_worked.hours_worked', ">", 0)
-            ->where('time_card_hours_worked.time_card_id', '=', $timeCardRow->id)
-            ->select('time_card.work_id'
-                , 'time_card_hours_worked.dow'
-                , 'time_card_hours_worked.hours_worked'
-                , 'time_card_hours_worked.id'
-                , 'time_card_hours_worked.date_worked')
-            ->get();
-        return $hoursWorkedPerWorkId;
-    }
+//    static public function getHoursWorkedForTimeCard($bwDate, $ewDate, $timeCardRow, $hoursWorkedPerWorkId)
+//    {
+//        $hoursWorkedPerWorkId[$timeCardRow->id] = TimeCard::whereBetween('date_worked', [$bwDate, $ewDate])
+//            ->join('time_card_hours_worked', 'time_card_hours_worked.time_card_id', '=', 'time_card.id')
+//            ->where('time_card_hours_worked.hours_worked', ">", 0)
+//            ->where('time_card_hours_worked.time_card_id', '=', $timeCardRow->id)
+//            ->select('time_card.work_id'
+//                , 'time_card_hours_worked.dow'
+//                , 'time_card_hours_worked.hours_worked'
+//                , 'time_card_hours_worked.id'
+//                , 'time_card_hours_worked.date_worked')
+//            ->get();
+//        return $hoursWorkedPerWorkId;
+//    }
 
 
 }

@@ -289,8 +289,9 @@ Route::get('create_data', function() {
     $work = Work::where('work_type_description', '=', 'The catalog view is performing too slowly.')->first();
 
     $timeCard = new TimeCard();
-    $timeCard->iso_beginning_dow_date = '2015-11-09';
     $timeCard->work_id = $work->id;
+    $timeCard->date_worked = '2015-11-12';
+
 
     if (is_null($timeCard = TimeCard::checkIfExists($timeCard))) {
 
@@ -301,7 +302,8 @@ Route::get('create_data', function() {
 
         $timeCard->work_id = $work->id;
         $timeCard->time_card_format_id = $timeCardFormat->id;
-        $timeCard->iso_beginning_dow_date = '2015-11-09';
+        $timeCard->date_worked = '2015-11-12';
+        $timeCard->hours_worked = 8;
 
         $timeCard->save();
     }
@@ -310,8 +312,9 @@ Route::get('create_data', function() {
     $work = Work::where('work_type_description', '=', 'The Task table needs three additional columns.')->first();
 
     $timeCard = new TimeCard();
-    $timeCard->iso_beginning_dow_date = '2015-11-09';
     $timeCard->work_id = $work->id;
+    $timeCard->date_worked = '2015-11-13';
+
 
     if (is_null($timeCard = TimeCard::checkIfExists($timeCard))) {
 
@@ -322,7 +325,8 @@ Route::get('create_data', function() {
 
         $timeCard->work_id = $work->id;
         $timeCard->time_card_format_id = $timeCardFormat->id;
-        $timeCard->iso_beginning_dow_date = '2015-11-09';
+        $timeCard->date_worked = '2015-11-13';
+        $timeCard->hours_worked = 8;
 
         $timeCard->save();
     }
@@ -331,8 +335,9 @@ Route::get('create_data', function() {
     $work = Work::where('work_type_description', '=', 'A new landing page is required to support Fall 2016 GNO.')->first();
 
     $timeCard = new TimeCard();
-    $timeCard->iso_beginning_dow_date = '2015-11-16';
     $timeCard->work_id = $work->id;
+    $timeCard->date_worked = '2015-11-16';
+
 
     if (is_null($timeCard = TimeCard::checkIfExists($timeCard))) {
 
@@ -343,92 +348,96 @@ Route::get('create_data', function() {
 
         $timeCard->work_id = $work->id;
         $timeCard->time_card_format_id = $timeCardFormat->id;
-        $timeCard->iso_beginning_dow_date = '2015-11-16';
+        $timeCard->date_worked = '2015-11-16';
+        $timeCard->hours_worked = 8;
 
         $timeCard->save();
     }
 
-    /*******************************************************************************************************************
-     * time_card_hours_worked insert(s)
-     ******************************************************************************************************************/
-
-    $date = '2015-11-12';
-
-    // get $work->id
-    $work = Work::where('work_type_description', '=', 'The catalog view is performing too slowly.')->first();
-
-    $timeCard = new TimeCard();
-    $timeCard->iso_beginning_dow_date = '2015-11-09';
-    $timeCard->work_id = $work->id;
-
-    if (!is_null($timeCard = TimeCard::checkIfExists($timeCard))) {
-        if (is_null($timeCardHoursWorked = TimeCardHoursWorked::checkIfExists($timeCard))) {
-
-            $timeCardHoursWorked = new TimeCardHoursWorked;
-
-            $timeCardHoursWorked->date_worked = $date;
-            $timeCardHoursWorked->dow = "THU";
-            $timeCardHoursWorked->hours_worked = 8.0;
-
-            $timeCardHoursWorked->time_card_id = $work->id;
-
-            $timeCardHoursWorked->save();
-
-        }
-    }
-
-
-
-    $date = '2015-11-13';
-
-    // get $work->id
-    $work = Work::where('work_type_description', '=', 'The Task table needs three additional columns.')->first();
-
-    $timeCard = new TimeCard();
-    $timeCard->iso_beginning_dow_date = '2015-11-09';
-    $timeCard->work_id = $work->id;
-
-    if (!is_null($timeCard = TimeCard::checkIfExists($timeCard))) {
-        if (is_null($timeCardHoursWorked = TimeCardHoursWorked::checkIfExists($timeCard))) {
-
-            $timeCardHoursWorked = new TimeCardHoursWorked;
-
-            $timeCardHoursWorked->date_worked = $date;
-            $timeCardHoursWorked->dow = "FRI";
-            $timeCardHoursWorked->hours_worked = 8.0;
-
-            $timeCardHoursWorked->time_card_id = $work->id;
-
-            $timeCardHoursWorked->save();
-
-        }
-    }
-
-
-    $date = '2015-11-16';
-
-    // get $work->id
-    $work = Work::where('work_type_description', '=', 'A new landing page is required to support Fall 2016 GNO.')->first();
-
-    $timeCard = new TimeCard();
-    $timeCard->iso_beginning_dow_date = '2015-11-16';
-    $timeCard->work_id = $work->id;
-
-    if (!is_null($timeCard = TimeCard::checkIfExists($timeCard))) {
-        if (is_null($timeCardHoursWorked = TimeCardHoursWorked::checkIfExists($timeCard))) {
-
-            $timeCardHoursWorked = new TimeCardHoursWorked;
-
-            $timeCardHoursWorked->date_worked = $date;
-            $timeCardHoursWorked->dow = "MON";
-            $timeCardHoursWorked->hours_worked = 8.0;
-
-            $timeCardHoursWorked->time_card_id = $work->id;
-
-            $timeCardHoursWorked->save();
-
-        }
-    }
+//    /*******************************************************************************************************************
+//     * time_card_hours_worked insert(s)
+//     ******************************************************************************************************************/
+//
+//    $date = '2015-11-12';
+//
+//    // get $work->id
+//    $work = Work::where('work_type_description', '=', 'The catalog view is performing too slowly.')->first();
+//
+//    $timeCard = new TimeCard();
+//    $timeCard->iso_beginning_dow_date = '2015-11-09';
+//    $timeCard->work_id = $work->id;
+//    $timeCard->dow = "THU";
+//
+//    if (!is_null($timeCard = TimeCard::checkIfExists($timeCard))) {
+//        if (is_null($timeCardHoursWorked = TimeCardHoursWorked::checkIfExists($timeCard))) {
+//
+//            $timeCardHoursWorked = new TimeCardHoursWorked;
+//
+//            $timeCardHoursWorked->date_worked = $date;
+//            $timeCardHoursWorked->dow = "THU";
+//            $timeCardHoursWorked->hours_worked = 8.0;
+//
+//            $timeCardHoursWorked->time_card_id = $work->id;
+//
+//            $timeCardHoursWorked->save();
+//
+//        }
+//    }
+//
+//
+//
+//    $date = '2015-11-13';
+//
+//    // get $work->id
+//    $work = Work::where('work_type_description', '=', 'The Task table needs three additional columns.')->first();
+//
+//    $timeCard = new TimeCard();
+//    $timeCard->iso_beginning_dow_date = '2015-11-09';
+//    $timeCard->work_id = $work->id;
+//    $timeCard->dow = "FRI";
+//
+//    if (!is_null($timeCard = TimeCard::checkIfExists($timeCard))) {
+//        if (is_null($timeCardHoursWorked = TimeCardHoursWorked::checkIfExists($timeCard))) {
+//
+//            $timeCardHoursWorked = new TimeCardHoursWorked;
+//
+//            $timeCardHoursWorked->date_worked = $date;
+//            $timeCardHoursWorked->dow = "FRI";
+//            $timeCardHoursWorked->hours_worked = 8.0;
+//
+//            $timeCardHoursWorked->time_card_id = $work->id;
+//
+//            $timeCardHoursWorked->save();
+//
+//        }
+//    }
+//
+//
+//    $date = '2015-11-16';
+//
+//    // get $work->id
+//    $work = Work::where('work_type_description', '=', 'A new landing page is required to support Fall 2016 GNO.')->first();
+//
+//    $timeCard = new TimeCard();
+//    $timeCard->iso_beginning_dow_date = '2015-11-16';
+//    $timeCard->work_id = $work->id;
+//    $timeCard->dow = "MON";
+//
+//    if (!is_null($timeCard = TimeCard::checkIfExists($timeCard))) {
+//        if (is_null($timeCardHoursWorked = TimeCardHoursWorked::checkIfExists($timeCard))) {
+//
+//            $timeCardHoursWorked = new TimeCardHoursWorked;
+//
+//            $timeCardHoursWorked->date_worked = $date;
+//            $timeCardHoursWorked->dow = "MON";
+//            $timeCardHoursWorked->hours_worked = 8.0;
+//
+//            $timeCardHoursWorked->time_card_id = $work->id;
+//
+//            $timeCardHoursWorked->save();
+//
+//        }
+//    }
 
 
     /*******************************************************************************************************************
@@ -510,8 +519,13 @@ Route::get('create_data', function() {
         // get $taskType->id
         $taskType = TaskType::where('type', '=', 'Code')->first();
 
+        // get work->id
+        $work = Work::where('work_type_description', '=', 'The catalog view is performing too slowly.')->first();
+
         // get $timeCard->id
-        $timeHoursWorkedCard = TimeCardHoursWorked::where('date_worked', '=', '2015-11-12')->first();
+        $timeCard = TimeCard::where('date_worked', '=', '2015-11-12')
+            ->where('work_id', '=', $work->id)
+            ->first();
 
         $task = new Task;
 
@@ -521,7 +535,7 @@ Route::get('create_data', function() {
         $task->notes = $notes;
 
         $task->task_type_id = $taskType->id;
-        $task->time_card_hours_worked_id = $timeHoursWorkedCard->id;
+        $task->time_card_id = $timeCard->id;
 
         $task->save();
     }
@@ -535,8 +549,13 @@ Route::get('create_data', function() {
         // get $taskType->id
         $taskType = TaskType::where('type', '=', 'Code')->first();
 
+        // get work->id
+        $work = Work::where('work_type_description', '=', 'The catalog view is performing too slowly.')->first();
+
         // get $timeCard->id
-        $timeHoursWorkedCard = TimeCardHoursWorked::where('date_worked', '=', '2015-11-12')->first();
+        $timeCard = TimeCard::where('date_worked', '=', '2015-11-12')
+            ->where('work_id', '=', $work->id)
+            ->first();
 
         $task = new Task;
 
@@ -546,7 +565,7 @@ Route::get('create_data', function() {
         $task->notes = $notes;
 
         $task->task_type_id = $taskType->id;
-        $task->time_card_hours_worked_id = $timeHoursWorkedCard->id;
+        $task->time_card_id = $timeCard->id;
 
         $task->save();
     }
@@ -575,8 +594,13 @@ Route::get('add_task_data_firstPass', function() {
         // get $taskType->id
         $taskType = TaskType::where('type', '=', 'Code')->first();
 
+        // get work->id
+        $work = Work::where('work_type_description', '=', 'The catalog view is performing too slowly.')->first();
+
         // get $timeCard->id
-        $timeHoursWorkedCard = TimeCardHoursWorked::where('date_worked', '=', '2015-11-12')->first();
+        $timeCard = TimeCard::where('date_worked', '=', '2015-11-12')
+            ->where('work_id', '=', $work->id)
+            ->first();
 
         $task = new Task;
 
@@ -586,7 +610,7 @@ Route::get('add_task_data_firstPass', function() {
         $task->notes = $notes;
 
         $task->task_type_id = $taskType->id;
-        $task->time_card_hours_worked_id = $timeHoursWorkedCard->id;
+        $task->time_card_id = $timeCard->id;
 
         $task->save();
     }
@@ -600,8 +624,13 @@ Route::get('add_task_data_firstPass', function() {
         // get $taskType->id
         $taskType = TaskType::where('type', '=', 'Code')->first();
 
+        // get work->id
+        $work = Work::where('work_type_description', '=', 'The catalog view is performing too slowly.')->first();
+
         // get $timeCard->id
-        $timeHoursWorkedCard = TimeCardHoursWorked::where('date_worked', '=', '2015-11-12')->first();
+        $timeCard = TimeCard::where('date_worked', '=', '2015-11-12')
+            ->where('work_id', '=', $work->id)
+            ->first();
 
         $task = new Task;
 
@@ -611,7 +640,7 @@ Route::get('add_task_data_firstPass', function() {
         $task->notes = $notes;
 
         $task->task_type_id = $taskType->id;
-        $task->time_card_hours_worked_id = $timeHoursWorkedCard->id;
+        $task->time_card_id = $timeCard->id;
 
         $task->save();
     }
@@ -642,7 +671,7 @@ Route::get('add_timeCard_data', function() use($date) {
     $work = Work::where('work_type_description', '=', 'A new landing page is required to support Fall 2016 GNO.')->first();
 
     $timeCard = new TimeCard();
-    $timeCard->iso_beginning_dow_date = $date;
+    $timeCard->date_worked = $date;
     $timeCard->work_id = $work->id;
 
     if (is_null($timeCard = TimeCard::checkIfExists($timeCard))) {
@@ -654,7 +683,7 @@ Route::get('add_timeCard_data', function() use($date) {
 
         $timeCard->work_id = $work->id;
         $timeCard->time_card_format_id = $timeCardFormat->id;
-        $timeCard->iso_beginning_dow_date = $date;
+        $timeCard->date_worked = $date;
 
         $timeCard->save();
 

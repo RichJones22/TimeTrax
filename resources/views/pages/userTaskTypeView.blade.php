@@ -42,7 +42,6 @@ use \App\Helpers\appGlobals;
                                 </button>
                             {!! Form::close() !!}
                         @else
-                            {{--<form method="get" action="{{ route('taskType.show', $clientId)}}">--}}
                             {!! Form::open(array('route' => array('taskType.show', $clientId))) !!}
                                 <input type="hidden" name="_method" value="GET">
                                 <input hidden type="text" name="_token" value="{{ csrf_token() }}">

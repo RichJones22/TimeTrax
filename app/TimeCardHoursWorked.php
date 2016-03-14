@@ -74,14 +74,14 @@ class TimeCardHoursWorked extends Model
      * @param $ewDate
      * @return array
      */
-    static public function deriveTimeCardHoursWorkedFromBeginningAndEndingWeekDates($timeCardRows, $iso_beginning_dow_date)
-    {
-        $hoursWorkedPerWorkId = [];
-
-        // populate the time_card_hours_worked data by $timeCardRow->id.
-        foreach ($timeCardRows as $timeCardRow) {
-            $hoursWorkedPerWorkId = TimeCard::getHoursWorkedForTimeCard($iso_beginning_dow_date, $timeCardRow, $hoursWorkedPerWorkId);
-        }
-        return $hoursWorkedPerWorkId;
-    }
+//    static public function deriveTimeCardHoursWorkedFromBeginningAndEndingWeekDates($timeCardRows, $bwDate, $ewDate)
+//    {
+//        $hoursWorkedPerWorkId = [];
+//
+//        // populate the time_card_hours_worked data by $timeCardRow->id.
+//        foreach ($timeCardRows as $timeCardRow) {
+//            $hoursWorkedPerWorkId = TimeCard::getHoursWorkedForTimeCard($bwDate, $ewDate, $timeCardRow, $hoursWorkedPerWorkId);
+//        }
+//        return $hoursWorkedPerWorkId;
+//    }
 }

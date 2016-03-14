@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 use \App\Helpers\appGlobals;
@@ -21,7 +20,7 @@ class TrigTaskBeforeInsert extends Migration
         BEGIN
             IF (select count(*)
                   from task
-                 where NEW.time_card_hours_worked_id = task.time_card_hours_worked_id
+                 where NEW.time_card_id = task.time_card_id
                    and
                        ((NEW.start_time >  task.start_time  and
                          NEW.start_time <  task.end_time)   or

@@ -6,6 +6,15 @@ use Illuminate\Database\Migrations\Migration;
 class TaskType extends Migration
 {
     /**
+     * abstract:
+     *          why duplicate hours_worked on both the time_card and task tables. The idea being that you could just
+     *          add hours to the time_card table, as you would in a classical time card; but, you could also add hours
+     *          to the task table, if you wanted to break those hours down by task.  In order to do this, hours would
+     *          need to be recorded separately, once on the time_card table as an aggregate for the day, and then again
+     *          on the task table, as a breakdown by task.
+     */
+
+    /**
      * Run the migrations.
      *
      * @return void
