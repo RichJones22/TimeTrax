@@ -45,7 +45,9 @@ class TimeCardHoursWorked extends Model
     static public function checkIfDateWorkedDowExists(&$inTimeCard) {
 
         $timeCardHoursWorked = TimeCardHoursWorked::where('date_worked', '=', $inTimeCard->date_worked->toDateString())
-                ->where('dow', '=', $inTimeCard->dow)->first();
+            ->where('dow', '=', $inTimeCard->dow)
+            ->where('work_id', '=', $inTimeCard->work_id)
+            ->first();
 
         if (!is_null($timeCardHoursWorked)) {
             $inTimeCard = $timeCardHoursWorked;

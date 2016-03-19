@@ -328,7 +328,10 @@ class TimeCardController extends Controller
         $timeCard->work_id = $this->getWorkIdViaWorkTypeId($timeCardRequestAttributes['workType']);
         $timeCard->time_card_format_id = $this->getTimeCardFormatId($this->getClientId($timeCardRequestAttributes['workType']));
 
-        $timeCard->save();
+        // if time car does not exist save it; otherwise, return $timeCard to caller.
+        if (! $timeCard->doesTimeCardExist($timeCard)) {
+            $timeCard->save();
+        }
 
         return $timeCard;
     }
@@ -343,6 +346,7 @@ class TimeCardController extends Controller
     {
         $timeCardHoursWorked = new TimeCardHoursWorked();
 
+        $timeCardHoursWorked->work_id = $timeCard->work_id;
         $timeCardHoursWorked->time_card_id = $timeCard->id;
         $timeCardHoursWorked->date_worked = $this->getDateWorked(appGlobals::getBeginningOfCurrentWeek($timeCardRange), $i);
         $timeCardHoursWorked->dow = $this->getDOW($timeCardHoursWorked->date_worked);

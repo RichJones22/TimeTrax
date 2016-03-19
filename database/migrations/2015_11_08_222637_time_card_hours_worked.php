@@ -17,11 +17,12 @@ class TimeCardHoursWorked extends Migration
          */
         Schema::create('time_card_hours_worked', function(Blueprint $table){
             $table->increments('id');
+            $table->integer('work_id')->unsigned();
             $table->date('date_worked');
             $table->char('dow',3);
             $table->float('hours_worked');
             $table->timestamps();
-            $table->unique(['date_worked', 'dow']);
+            $table->unique(['work_id', 'date_worked', 'dow']);
         });
 
         /**

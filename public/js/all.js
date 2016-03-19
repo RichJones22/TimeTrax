@@ -254,18 +254,70 @@ function loseFocusOnType() {
     });
 }
 
-// - hoursWorked needs to be enabled prior to send to server or the hourWorked input field will not get passed in the
-//   request otherwise.
-// - here we are checking for the return key being pressed once the save button has been enabled, and the #hoursWorked
-//   element contains a value
+// special case trap for two form events:
+// - clicking the save button.
+// - hitting the return key when enough info has been filled out by the user to send to the server.
+
+// override for events for click and key press.
+// this is to allow for the user to be able to hit the return key, and if the form has the data it needs it will
+// create the record.  In essence, a time saver for the user.
+//
+// Note: the #hourWorked id on the form has been set to disabled via the html.  In order to pass the value to the
+//       server the #hoursWored id needs to be set to disabled false.  Once the refresh happens by the http request
+//       response cycle, the #hourWorked id will be set back to disabled.
+//
 function onClickOnSaveButton() {
+
+    $('#saveButton').click(function() {
+        $("#hoursWorked").prop('disabled', false);
+    });
+
     $(document).keypress(function(e) {
-        if(e.which == 13 && saveButton.isReady() && $('#hoursWorked').val() !== "") {
+        forKeyPress(e);
+    });
+
+    // the return key pressed, check to see if enough info has been populated to send to the server.
+    var forKeyPress = function(e) {
+        var startT = $('#startt-search').text($(this)).val();
+        var endT = $('#endt-search').text($(this)).val();
+        var hoursWorked = $('#hoursWorked').val();
+
+        // return key pressed (e.which == 13) and the start and end times have a value, but hours worked has NOT been calculated.
+        if (e.which == 13 && startT !== "" && endT !== "" && hoursWorked === "") {
+            var t1 = startT.split(':');
+            var t2 = endT.split(':');
+
+            var t1Min = Math.floor(t1[0]) *60 + Math.floor(t1[1]);
+            var t2Min = Math.floor(t2[0]) *60 + Math.floor(t2[1]);
+
+            var diff = (t2Min - t1Min)/60;
+
             $("#hoursWorked").css('background-color', '#eee');
             $("#hoursWorked").prop('disabled', false);
+            $('#hoursWorked').val(Math.round(diff * 10000 )/10000);
             $("#saveButton").click();
+        } else {
+            // return key pressed (e.which == 13) and the start, end, and hoursWorked have values.
+            if (e.which == 13 && saveButton.isReady() && hoursWorked !== "") {
+                $("#hoursWorked").css('background-color', '#eee');
+                $("#hoursWorked").prop('disabled', false);
+                $('#hoursWorked').val(hoursWorked);
+                $("#saveButton").click();
+            }
+            //else {
+            //    // the default case; the save button has been clicked.
+            //    $("#hoursWorked").prop('disabled', false);
+            //    $("#saveButton").click();
+            //}
         }
-    });
+
+    };
+//
+//// override for events for click and key press.
+//    $(document)
+//        .click(forKeyPress)
+//        .keypress(forKeyPress)
+//    ;
 }
 
 function enabledDisabledSaveButton() {
@@ -873,19 +925,19 @@ timeCard.convertDOWToNumber = function(dow) {
     var value = dow.selector;
 
     if (value == "#dow_00") {
-        return 0;
-    } else if (value  == "#dow_01") {
         return 1;
-    } else if (value  == "#dow_02") {
+    } else if (value  == "#dow_01") {
         return 2;
-    } else if (value  == "#dow_03") {
+    } else if (value  == "#dow_02") {
         return 3;
-    } else if (value  == "#dow_04") {
+    } else if (value  == "#dow_03") {
         return 4;
-    } else if (value  == "#dow_05") {
+    } else if (value  == "#dow_04") {
         return 5;
-    } else if (value  == "#dow_06") {
+    } else if (value  == "#dow_05") {
         return 6;
+    } else if (value  == "#dow_06") {
+        return 7;
     }
 };
 

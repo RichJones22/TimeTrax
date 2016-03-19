@@ -366,6 +366,7 @@ Route::get('create_data', function() {
 
             $timeCardHoursWorked = new TimeCardHoursWorked;
 
+            $timeCardHoursWorked->work_id = $timeCard->work_id;
             $timeCardHoursWorked->date_worked = $date;
             $timeCardHoursWorked->dow = "THU";
             $timeCardHoursWorked->hours_worked = 8.0;
@@ -393,6 +394,7 @@ Route::get('create_data', function() {
 
             $timeCardHoursWorked = new TimeCardHoursWorked;
 
+            $timeCardHoursWorked->work_id = $timeCard->work_id;
             $timeCardHoursWorked->date_worked = $date;
             $timeCardHoursWorked->dow = "FRI";
             $timeCardHoursWorked->hours_worked = 8.0;
@@ -419,6 +421,7 @@ Route::get('create_data', function() {
 
             $timeCardHoursWorked = new TimeCardHoursWorked;
 
+            $timeCardHoursWorked->work_id = $timeCard->work_id;
             $timeCardHoursWorked->date_worked = $date;
             $timeCardHoursWorked->dow = "MON";
             $timeCardHoursWorked->hours_worked = 8.0;

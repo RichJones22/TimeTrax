@@ -20,9 +20,9 @@ class TimeCardObserver
             return true;
         }
 
-        if (!is_null($timeCard->checkIfExists($timeCard))) {
-           return new \Exception();
-        }
+//        if (!is_null($timeCard->checkIfExists($timeCard))) {
+//           return new \Exception();
+//        }
 
         return true;
     }

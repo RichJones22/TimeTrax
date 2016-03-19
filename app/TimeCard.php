@@ -55,9 +55,6 @@ class TimeCard extends Model
 
         $timeCard = TimeCard::where('iso_beginning_dow_date', '=', $inTimeCard->iso_beginning_dow_date)
             ->where('work_id', '=', $inTimeCard->work_id)
-            ->join('time_card_hours_worked', 'time_card_hours_worked.time_card_id', '=', 'time_card.id')
-            ->where('time_card_hours_worked.hours_worked', "=", 0)
-            ->where('time_card_hours_worked.time_card_id', '=', $inTimeCard->id)
             ->first();
 
         if (!is_null($timeCard)) {
@@ -67,6 +64,24 @@ class TimeCard extends Model
         }
 
         return $timeCard;
+    }
+
+    /**
+     * @param TimeCard $timeCard
+     * @return bool
+     */
+    static public function doesTimeCardExist(TimeCard &$inTimeCard) {
+
+        $timeCard = TimeCard::where('iso_beginning_dow_date', '=', $inTimeCard->iso_beginning_dow_date)
+            ->where('work_id', '=', $inTimeCard->work_id)
+            ->first();
+
+        if (is_null($timeCard)) {
+            return false;
+        } else {
+            $inTimeCard = $timeCard;
+            return true;
+        }
     }
 
     /**
