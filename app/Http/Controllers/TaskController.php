@@ -76,11 +76,8 @@ class TaskController extends Controller
         // set appGlobal.clientId to current view, otherwise 'if (appGlobal.clientId)' in TimeCard.js causes a js load failure.
         appGlobals::populateJsGlobalClient();
 
-        if (is_null($timeCardHoursWorkedId)) {
-            \Session::forget(appGlobals::getTimeCardTableName());
-        } else {
-            \Session::set(appGlobals::getTimeCardTableName(), $timeCardHoursWorkedId);
-        }
+        // used for routing.
+        appGlobals::setSessionVariableAppGlobalTimeCardTableName($timeCardHoursWorkedId);
 
         // get all task for a specific time_card.date.
         $tasks = Task::where('time_card_hours_worked_id', '=', $timeCardHoursWorkedId)->get()->sortBy('start_time');
@@ -118,4 +115,6 @@ class TaskController extends Controller
 
         return redirect()->back();
     }
+
+
 }

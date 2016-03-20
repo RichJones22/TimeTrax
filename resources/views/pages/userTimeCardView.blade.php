@@ -52,7 +52,16 @@
                     <th>{{$timeCardFormats['dow_04']}}</th>
                     <th>{{$timeCardFormats['dow_05']}}</th>
                     <th>{{$timeCardFormats['dow_06']}}</th>
-                    <th></th>
+                    <th>
+                        @if (count($timeCardRows) > 0)
+                            {!! Form::open(array('route' => array('timeCard.show', appGlobals::getIsoBeginningDowDate(Session::get(appGlobals::getTimeCardTableName()))))) !!}
+                            <input type="hidden" name="_method" value="GET">
+                            <button type ="submit" class = "btn btn-primary btn-xs" id="refresh" style="float: right">
+                                <span class="glyphicon glyphicon-refresh"></span>
+                            </button>
+                            {!! Form::close() !!}
+                        @endif
+                    </th>
                 </tr>
                 <tr class="info tbl-h2-height">
                     {!! Form::open(array('route' => array('timeCard.create', $timeCardRange))) !!}
@@ -61,6 +70,8 @@
                             <select id="workType" name ="workType" class="form-control col-xs-12">
                                 <option value="0">--Select Type--</option>
                             </select>
+
+
                         </th>
                         <th style="width: 80px"><input class="form-control" id="dow_00" name="dow_00" placeholder="0"></th>
                         <th style="width: 80px"><input class="form-control" id="dow_01" name="dow_01" placeholder="0"></th>

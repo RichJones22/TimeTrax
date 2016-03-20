@@ -228,6 +228,18 @@ class appGlobals
         return $data->iso_beginning_dow_date;
     }
 
+    /**
+     * @param $timeCardHoursWorkedId
+     */
+    static public function setSessionVariableAppGlobalTimeCardTableName($timeCardHoursWorkedId)
+    {
+        if (is_null($timeCardHoursWorkedId)) {
+            \Session::forget(appGlobals::getTimeCardTableName());
+        } else {
+            \Session::set(appGlobals::getTimeCardTableName(), $timeCardHoursWorkedId);
+        }
+    }
+
 }
 
 global $appGlobals;

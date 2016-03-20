@@ -17,9 +17,9 @@ use \App\Helpers\appGlobals;
  */
 class TimeCardController extends Controller
 {
-  /*******************************************************************************************************************
-     * main routines.
-     ******************************************************************************************************************/
+  /*********************************************************************************************************************
+  * main routines.
+  *********************************************************************************************************************/
 
     /**
      * create time card entries.
@@ -55,10 +55,8 @@ class TimeCardController extends Controller
         // build view variables.
         $timeCardRange = $this->buildViewVariables($timeCardRows, $hoursWorkedDow, $hoursWorkedIdDow, $bwDate, $ewDate);
 
-        // jeffery way's package for moving php variables to the .js space.
-        // see https://github.com/laracasts/PHP-Vars-To-Js-Transformer.
-        // also see javascript.php in the config dir for view and .js namespace used.
-        appGlobals::populateJsGlobalSpace($request);
+        // set values use by appGlobal class.
+        $this->setValueUseByAppGlobal($request, $timeCardRows);
 
         // pass the data to the view.
         return view('pages.userTimeCardView')
@@ -90,9 +88,9 @@ class TimeCardController extends Controller
         return redirect()->back();
     }
 
-    /*******************************************************************************************************************
-     * supporting routines
-     ******************************************************************************************************************/
+  /*********************************************************************************************************************
+  * supporting routines
+  *********************************************************************************************************************/
 
     /**
      * @param $date
@@ -395,5 +393,35 @@ class TimeCardController extends Controller
                 }
             }
         });
+    }
+
+    /**
+     * set the refresh button on the Time View to use the correct timeCardWorkId.
+     * @param $timeCardRows
+     */
+    private function setRefreshButtonToCorrectTimeCardWorkedId($timeCardRows)
+    {
+        foreach ($timeCardRows as $timeCardRow) {
+            $timeCardHoursWorkedIdRows = $timeCardRow->timeCardHoursWorkedId;
+            foreach ($timeCardHoursWorkedIdRows as $timeCardHoursWorkedId) {
+                appGlobals::setSessionVariableAppGlobalTimeCardTableName($timeCardHoursWorkedId);
+                break 2; // only need the first occurrence...
+            }
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @param $timeCardRows
+     */
+    private function setValueUseByAppGlobal(Request $request, $timeCardRows)
+    {
+        // jeffery way's package for moving php variables to the .js space.
+        // see https://github.com/laracasts/PHP-Vars-To-Js-Transformer.
+        // also see javascript.php in the config dir for view and .js namespace used.
+        appGlobals::populateJsGlobalSpace($request);
+
+        // used for routing.
+        $this->setRefreshButtonToCorrectTimeCardWorkedId($timeCardRows);
     }
 }
