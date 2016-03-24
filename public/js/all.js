@@ -255,16 +255,16 @@ function loseFocusOnType() {
 }
 
 // special case trap for two form events:
-// - clicking the save button.
-// - hitting the return key when enough info has been filled out by the user to send to the server.
+// - clicking the save button via jquery.
+// - hitting the return key when enough info has been filled out by the user to send to the server via javascript.
 
 // override for events for click and key press.
 // this is to allow for the user to be able to hit the return key, and if the form has the data it needs it will
 // create the record.  In essence, a time saver for the user.
 //
-// Note: the #hourWorked id on the form has been set to disabled via the html.  In order to pass the value to the
-//       server the #hoursWored id needs to be set to disabled false.  Once the refresh happens by the http request
-//       response cycle, the #hourWorked id will be set back to disabled.
+// Note: the #hourWorked ID on the form has been set to disabled via the html.  In order to pass the value to the
+//       server the #hoursWored ID needs to be set to disabled = false.  Once the refresh happens by the http request
+//       response cycle, the #hourWorked ID will be set back to disabled = true.
 //
 function onClickOnSaveButton() {
 
@@ -304,20 +304,9 @@ function onClickOnSaveButton() {
                 $('#hoursWorked').val(hoursWorked);
                 $("#saveButton").click();
             }
-            //else {
-            //    // the default case; the save button has been clicked.
-            //    $("#hoursWorked").prop('disabled', false);
-            //    $("#saveButton").click();
-            //}
         }
 
     };
-//
-//// override for events for click and key press.
-//    $(document)
-//        .click(forKeyPress)
-//        .keypress(forKeyPress)
-//    ;
 }
 
 function enabledDisabledSaveButton() {
@@ -364,10 +353,6 @@ function checkForStartTimeOverlaps() {
         }
     }
 
-    //if (!timeToCheck.isBefore(cellEndTime)) {
-    //    clearTaskTable();
-    //}
-
     saveButton.setStartt(true);
     enabledDisabledSaveButton();
 
@@ -411,9 +396,6 @@ function checkForEndTimeOverlaps() {
         }
     }
 
-    //if (!timeToCheck.isAfter(cellStartTime)) {
-    //    clearTaskTable();
-    //}
     saveButton.setEndt(true);
     enabledDisabledSaveButton();
 
