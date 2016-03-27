@@ -29,15 +29,38 @@ class TaskTypeController extends Controller
     {
         $taskRequestAttributes = $request->all();
 
-        $taskType = new TaskType();
+        $newTaskType = new TaskType();
 
-        $taskType->type = $taskRequestAttributes['taskType'];
-        $taskType->description = $taskRequestAttributes['description'];
-        $taskType->client_id = $taskRequestAttributes['client_id'];
+        $newTaskType->type = $taskRequestAttributes['taskType'];
+        $newTaskType->description = $taskRequestAttributes['description'];
+        $newTaskType->client_id = $taskRequestAttributes['client_id'];
 
-        $taskType->save();
+        // check if record exists
+        $oldTaskType = TaskType::where('id', '=', $taskRequestAttributes['saveTaskType_id'])->first();
+        if ($oldTaskType) {
+            if ($this->dataChanged($newTaskType, $oldTaskType)) {
+                $oldTaskType->id = $taskRequestAttributes['saveTaskType_id'];
+                $oldTaskType->type = $taskRequestAttributes['taskType'];
+                $oldTaskType->description = $taskRequestAttributes['description'];
+                $oldTaskType->client_id = $taskRequestAttributes['client_id'];
+
+                $oldTaskType->update();
+            }
+        } else {
+            $newTaskType->save();
+        }
 
         return redirect()->back();
+    }
+
+    protected function dataChanged($new, $old) {
+        if ($new->type == $old->type &&
+            $new->description == $old->description &&
+            $new->client_id == $old->client_id) {
+            return false;
+        }
+
+        return true;
     }
 
     /**

@@ -269,7 +269,7 @@ function loseFocusOnType() {
 function onClickOnSaveButton() {
 
     $('#saveButton').click(function() {
-        $("#hoursWorked").prop('disabled', false);
+        $('#hoursWorked').prop('disabled', false);
     });
 
     $(document).keypress(function(e) {
@@ -292,17 +292,17 @@ function onClickOnSaveButton() {
 
             var diff = (t2Min - t1Min)/60;
 
-            $("#hoursWorked").css('background-color', '#eee');
-            $("#hoursWorked").prop('disabled', false);
+            $('#hoursWorked').css('background-color', '#eee');
+            $('#hoursWorked').prop('disabled', false);
             $('#hoursWorked').val(Math.round(diff * 10000 )/10000);
             $("#saveButton").click();
         } else {
             // return key pressed (e.which == 13) and the start, end, and hoursWorked have values.
             if (e.which == 13 && saveButton.isReady() && hoursWorked !== "") {
-                $("#hoursWorked").css('background-color', '#eee');
-                $("#hoursWorked").prop('disabled', false);
+                $('#hoursWorked').css('background-color', '#eee');
+                $('#hoursWorked').prop('disabled', false);
                 $('#hoursWorked').val(hoursWorked);
-                $("#saveButton").click();
+                $('#saveButton').click();
             }
         }
 

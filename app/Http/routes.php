@@ -79,7 +79,6 @@ Route::post('taskType/create/'              , ['as' => 'taskType.create', 'uses'
 // delete a task type.
 Route::post('taskType/destroy/{taskType}'   , ['as' => 'taskType.destroy', 'uses' => 'TaskTypeController@destroy']);
 
-
 /***********************************************************************************************************************
  * timeCard routes
  **********************************************************************************************************************/

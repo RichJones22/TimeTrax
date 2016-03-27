@@ -42,7 +42,6 @@ use \App\Helpers\appGlobals;
                                 </button>
                             {!! Form::close() !!}
                         @else
-                            {{--<form method="get" action="{{ route('taskType.show', $clientId)}}">--}}
                             {!! Form::open(array('route' => array('taskType.show', $clientId))) !!}
                                 <input type="hidden" name="_method" value="GET">
                                 <input hidden type="text" name="_token" value="{{ csrf_token() }}">
@@ -57,6 +56,7 @@ use \App\Helpers\appGlobals;
                     {!! Form::open(array('route' => array('taskType.create'))) !!}
                         <input type="hidden" name="_method" value="POST">
                         <input hidden type="text" name="client_id" value="{{$clientId}}">
+                        <input hidden type="text" name="saveTaskType_id" value="">
                         <div>
                             <th><input class="form-control" id="taskType01" placeholder="type" name="taskType"></th>
                             <th>
@@ -73,17 +73,35 @@ use \App\Helpers\appGlobals;
             <tbody id="taskTypeTable">
                 @foreach ($taskTypes as $taskType)
                     <tr>
-                        <td>{{ $taskType->type }}</td>
+                        <td class="rowTaskType">
+                            {{ $taskType->type }}
+                        </td>
                         <td>
-                            <div class="col-xs-9" style="display: inline-block;">
+                            <div class="col-xs-9 rowTaskDesc" style="display: inline-block;">
                                 {{ $taskType->description }}
                             </div>
-                            <form method="post" action="{{ route('taskType.destroy', $taskType->id) }}">
-                                <input hidden type="text" name="_token" value="{{ csrf_token() }}">
-                                <button id="{{ $taskType->type }}" type ="submit" class = "btn btn-danger btn-xs" style="float: right">
-                                    <span class="glyphicon glyphicon-trash"></span>
-                                </button>
-                            </form>
+                            <div style="display: inline-block;float: right;">
+                                <div>
+                                    <div class="btn-toolbar" role="toolbar">
+                                        <div class="btn-group" role="group">
+                                            <button hidden>
+                                                <button type ="submit" class = "btn btn-xs taskTypeEditButton" style="margin-right: 3px;-webkit-border-radius: 2px;-moz-border-radius: 2px;border-radius: 2px;">
+                                                    <input hidden type="text" name="rowTaskType_id" value="{{$taskType->id}}">
+                                                    <span class="glyphicon glyphicon-pencil"></span>
+                                                </button>
+                                            </button>
+                                            <button hidden>
+                                                <form method="post" action="{{ route('taskType.destroy', $taskType->id) }}">
+                                                    <input hidden type="text" name="_token" value="{{ csrf_token() }}">
+                                                    <button type ="submit" class = "btn btn-danger btn-xs" style="margin-right: 0px;-webkit-border-radius: 2px;-moz-border-radius: 2px;border-radius: 2px;">
+                                                        <span class="glyphicon glyphicon-trash"></span>
+                                                    </button>
+                                                </form>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 @endforeach

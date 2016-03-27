@@ -269,7 +269,7 @@ function loseFocusOnType() {
 function onClickOnSaveButton() {
 
     $('#saveButton').click(function() {
-        $("#hoursWorked").prop('disabled', false);
+        $('#hoursWorked').prop('disabled', false);
     });
 
     $(document).keypress(function(e) {
@@ -292,17 +292,17 @@ function onClickOnSaveButton() {
 
             var diff = (t2Min - t1Min)/60;
 
-            $("#hoursWorked").css('background-color', '#eee');
-            $("#hoursWorked").prop('disabled', false);
+            $('#hoursWorked').css('background-color', '#eee');
+            $('#hoursWorked').prop('disabled', false);
             $('#hoursWorked').val(Math.round(diff * 10000 )/10000);
             $("#saveButton").click();
         } else {
             // return key pressed (e.which == 13) and the start, end, and hoursWorked have values.
             if (e.which == 13 && saveButton.isReady() && hoursWorked !== "") {
-                $("#hoursWorked").css('background-color', '#eee');
-                $("#hoursWorked").prop('disabled', false);
+                $('#hoursWorked').css('background-color', '#eee');
+                $('#hoursWorked').prop('disabled', false);
                 $('#hoursWorked').val(hoursWorked);
-                $("#saveButton").click();
+                $('#saveButton').click();
             }
         }
 
@@ -419,7 +419,7 @@ function clearTaskTable() {
 }
 
 
-// namespace.
+// namespace for userTaskView.blade.php
 var taskType = {};
 
 // load all javascript once the document is ready.
@@ -427,6 +427,7 @@ $(document).ready(function(){
     taskType.loseFocusOnTaskType();
     taskType.loseFocusOnDescription();
     taskType.causeTheTopLineOfTableHeaderToFade();
+    taskType.pencilButtonClicked();
 });
 
 // SaveButton class to save state of required input fields.
@@ -470,12 +471,9 @@ taskType.causeTheTopLineOfTableHeaderToFade = function() {
         (setTimeout(function () {
             document.getElementById('thAlertMessage').style.display='none';
             $('#thNoAlertMessage').fadeIn(3000);
-            //document.getElementById('thAlertMessage').style.display='none';
-            //document.getElementById('thNoAlertMessage').style.display='block';
-            //$('#thNoAlertMessage').css('display', '');
         }, 10000))();
     }
-}
+};
 
 // rom http://www.mediacollege.com/internet/javascript/text/count-words.html
 taskType.countWords = function countWords(s){
@@ -487,11 +485,19 @@ taskType.countWords = function countWords(s){
 
 taskType.isTaskTypeADuplicate = function() {
 
+    if(!String.prototype.trim) {
+        String.prototype.trim = function () {
+            return this.replace(/^\s+|\s+$/g,'');
+        };
+    }
+
     var table = document.getElementById("taskTypeTable");
     for (var i = 0, row; row = table.rows[i]; i++) {
         var t1Str = $('#taskType01').text($(this)).val();
+        t1Str = t1Str.trim();
 
         var t2Str = row.cells[0].innerHTML;
+        t2Str = t2Str.trim();
 
         if (t1Str.toUpperCase() === t2Str.toUpperCase()) {
             return true;
@@ -524,6 +530,11 @@ taskType.loseFocusOnTaskType = function() {
             taskType.saveButton.setType(false);
             enabledDisabledSaveButton01();
 
+            // set error condition back to a none error color.
+            $('#taskType01').css('background-color', 'white');
+            $('#taskTypeHeader').text("Task Type Maintenance");
+            $('#taskTypeHeader').css('color', 'black');
+
             return;
         }
 
@@ -538,6 +549,7 @@ taskType.loseFocusOnTaskType = function() {
 
             return;
         } else {
+            // set error condition back to a none error color.
             $('#taskType01').css('background-color', 'white');
             document.getElementById("taskTypeHeader").style.color=$("#taskTypeId").css("color");
             $('#taskTypeHeader').text("Task Type Maintenance");
@@ -552,7 +564,7 @@ taskType.loseFocusOnTaskType = function() {
         enabledDisabledSaveButton01();
 
     });
-}
+};
 
 // must have a value.
 taskType.loseFocusOnDescription = function() {
@@ -579,8 +591,37 @@ taskType.loseFocusOnDescription = function() {
         $("#saveButtonTaskType").focus();
 
     });
-}
+};
 
+
+// when the taskTypeEditButton is clicked.
+taskType.pencilButtonClicked = function () {
+    $('.taskTypeEditButton').click(function() {
+
+        // get childern
+        //var rowTaskType_id = $('.taskTypeEditButton input[name=rowTaskType_id]').val();
+
+        // parse current row.
+        var $row = jQuery(this).closest('tr');
+        var $columns = $row.find('td');
+        var rowTaskType_id = $columns.find('input[name=rowTaskType_id]').val();
+
+        // derive type and description values.
+        var vType = $columns[0].outerText;
+        var vDesc = $columns[1].outerText;
+
+        // populate the type and description fields on the form.
+        $('#taskType01').val(vType);
+        $('#description').val(vDesc);
+        $('input[name=saveTaskType_id]').val(rowTaskType_id);
+
+        // set save button to true.
+        taskType.saveButton.setType(true);
+        taskType.saveButton.setDescription(true);
+        enabledDisabledSaveButton01();
+    });
+
+};
 
 
 
