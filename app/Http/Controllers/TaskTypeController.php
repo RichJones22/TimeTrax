@@ -10,18 +10,13 @@ use \App\Helpers\appGlobals;
 
 class TaskTypeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
+
+    /*******************************************************************************************************************
+     * main routines.
+     ******************************************************************************************************************/
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new and updating an existing resource.
      *
      * @return \Illuminate\Http\Response
      */
@@ -29,49 +24,10 @@ class TaskTypeController extends Controller
     {
         $taskRequestAttributes = $request->all();
 
-        $newTaskType = new TaskType();
-
-        $newTaskType->type = $taskRequestAttributes['taskType'];
-        $newTaskType->description = $taskRequestAttributes['description'];
-        $newTaskType->client_id = $taskRequestAttributes['client_id'];
-
-        // check if record exists
-        $oldTaskType = TaskType::where('id', '=', $taskRequestAttributes['saveTaskType_id'])->first();
-        if ($oldTaskType) {
-            if ($this->dataChanged($newTaskType, $oldTaskType)) {
-                $oldTaskType->id = $taskRequestAttributes['saveTaskType_id'];
-                $oldTaskType->type = $taskRequestAttributes['taskType'];
-                $oldTaskType->description = $taskRequestAttributes['description'];
-                $oldTaskType->client_id = $taskRequestAttributes['client_id'];
-
-                $oldTaskType->update();
-            }
-        } else {
-            $newTaskType->save();
-        }
+        $this->saveOrUpdate($taskRequestAttributes);
 
         return redirect()->back();
-    }
 
-    protected function dataChanged($new, $old) {
-        if ($new->type == $old->type &&
-            $new->description == $old->description &&
-            $new->client_id == $old->client_id) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
@@ -102,29 +58,6 @@ class TaskTypeController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
@@ -135,5 +68,47 @@ class TaskTypeController extends Controller
         TaskType::destroy($id);
 
         return redirect()->back();
+    }
+
+    /*******************************************************************************************************************
+     * supporting routines
+     ******************************************************************************************************************/
+
+    protected function saveOrUpdate($taskRequestAttributes) {
+
+        // check if record exists
+        $oldTaskTypeExists = TaskType::where('id', '=', $taskRequestAttributes['saveTaskType_id'])->first();
+        if ($oldTaskTypeExists) {
+            if ($this->dataChanged($taskRequestAttributes, $oldTaskTypeExists)) {
+                // interesting note:  for some reason eloquent wants me to use the old record when updating.  If I use
+                // $newTaskType the ->update() method does not work and does not fail?
+                $oldTaskTypeExists->id = $taskRequestAttributes['saveTaskType_id'];
+                $oldTaskTypeExists->type = $taskRequestAttributes['taskType'];
+                $oldTaskTypeExists->description = $taskRequestAttributes['description'];
+                $oldTaskTypeExists->client_id = $taskRequestAttributes['client_id'];
+
+                $oldTaskTypeExists->update();
+            } else {
+                return; // no change; just route back to the caller.
+            }
+        } else {
+            $newTaskType = new TaskType();
+
+            $newTaskType->type = $taskRequestAttributes['taskType'];
+            $newTaskType->description = $taskRequestAttributes['description'];
+            $newTaskType->client_id = $taskRequestAttributes['client_id'];
+
+            $newTaskType->save();
+        }
+    }
+
+    protected function dataChanged($taskRequestAttributes, $old) {
+        if ($taskRequestAttributes['taskType'] == $old->type &&
+            $taskRequestAttributes['description'] == $old->description &&
+            $taskRequestAttributes['client_id'] == $old->client_id) {
+            return false;
+        }
+
+        return true;
     }
 }
