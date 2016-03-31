@@ -73,11 +73,11 @@ use \App\Helpers\appGlobals;
             <tbody id="taskTypeTable">
                 @foreach ($taskTypes as $taskType)
                     <tr>
-                        <td class="rowTaskType">
+                        <td class="rowTaskType taskTypeEditButton">
                             {{ $taskType->type }}
                         </td>
                         <td>
-                            <div class="col-xs-9 rowTaskDesc" style="display: inline-block;">
+                            <div class="col-xs-9 rowTaskDesc taskTypeEditButton" style="display: inline-block;">
                                 {{ $taskType->description }}
                             </div>
                             <div style="display: inline-block;float: right;">
