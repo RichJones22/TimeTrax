@@ -73,8 +73,8 @@ use \App\Helpers\appGlobals;
             <tbody id="taskTypeTable">
                 @foreach ($taskTypes as $taskType)
                     <tr>
-                        <td class="rowTaskType taskTypeEditButton">
-                            {{ $taskType->type }}
+                        <td class="rowTaskType">
+                           <input class="taskTypeEditButton" type="text" value="{{ $taskType->type }}" readonly>
                         </td>
                         <td>
                             <div class="col-xs-9 rowTaskDesc taskTypeEditButton" style="display: inline-block;">
