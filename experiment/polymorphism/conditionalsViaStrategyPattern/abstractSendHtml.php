@@ -3,16 +3,13 @@
  * Created by PhpStorm.
  * User: Rich Jones
  * Date: 4/17/16
- * Time: 9:05 AM
+ * Time: 12:50 PM
  */
 
 namespace experiment\polymorphism\conditionalsViaStrategyPattern;
 
 
-class SendText
+class abstractSendHtml extends SendHtml implements SendInterface
 {
-    public function send($textToSend)
-    {
-        var_dump("text sent: " . $textToSend);
-    }
+    // allows decoupling of the SendHtml class
 }

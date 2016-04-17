@@ -9,7 +9,7 @@
 namespace experiment\polymorphism\conditionalsViaStrategyPattern;
 
 
-class SendHtml implements SendInterface
+class SendHtml
 {
     public function send($textToSend)
     {
