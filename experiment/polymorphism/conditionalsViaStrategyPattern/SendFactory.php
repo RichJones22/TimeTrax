@@ -14,7 +14,7 @@ class SendFactory
     private $builtClass;
 
     public function __construct($type) {
-        $className = "experiment\\polymorphism\\conditionalsViaStrategyPattern\\" . "abstractSend" . ucfirst($type);
+        $className = "experiment\\polymorphism\\conditionalsViaStrategyPattern\\" . "decouple" . "Send" . ucfirst($type);
 
         if (! class_exists($className)) {
             throw new \RuntimeException('Incorrect email Send type');
