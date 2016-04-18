@@ -9,7 +9,7 @@
 namespace experiment\polymorphism\conditionalsViaStrategyPattern;
 
 
-class SendText
+abstract class SendText
 {
     public function send($textToSend)
     {

@@ -20,6 +20,14 @@ class SendFactory
             throw new \RuntimeException('Incorrect email Send type');
         }
 
+        // verify that the $className implements the SendInterface.
+        $interfaceCheck = class_implements($className);
+        foreach($interfaceCheck as $interface) {
+            if ($interface !== 'experiment\polymorphism\conditionalsViaStrategyPattern\SendInterface') {
+                throw new \RuntimeException("class $className must implement the SendInterface");
+            }
+        }
+
         $this->builtClass = new $className;
     }
 
