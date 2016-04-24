@@ -12,7 +12,8 @@ var elixir = require('laravel-elixir');
  */
 
 elixir(function(mix) {
-    mix.sass('app.scss');
+    mix.sass(['app.scss'
+             ,'TaskTypeView.scss']);
     mix.scripts(['TaskView.js'
                 ,'TaskTypeView.js'
                 ,'TimeCardView.js'

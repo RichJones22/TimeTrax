@@ -182,7 +182,7 @@ taskType.pencilButtonClicked = function () {
         //var rowTaskType_id = $('.taskTypeEditButton input[name=rowTaskType_id]').val();
 
         // parse current row.
-        var $row = jQuery(this).closest('tr');
+        var $row = $(this).closest('tr');
         var $columns = $row.find('td');
         var rowTaskType_id = $columns.find('input[name=rowTaskType_id]').val();
 

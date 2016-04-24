@@ -1,24 +1,7 @@
-* {
-  font-size: 14px;
-}
 
-.tbl-h1-row-height {
-  height: 58px;
-}
 
-.tbl-h1-height {
-  margin-top: 7px;
-  margin-bottom: 3px;
-  height: 30px;
-}
+// styles for the Task Type View.
 
-.tbl-h2-height {
-  height: 41px;
-}
-
-.glyphicon {
-  line-height: inherit;
-}
 .ttv-container {
   margin: 60px;
 }
@@ -33,10 +16,14 @@
 
 .ttv-btn-left {
   margin-right: 3px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
   border-radius: 2px;
 }
 
 .ttv-btn-right {
   margin-right: 0px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
   border-radius: 2px;
 }
