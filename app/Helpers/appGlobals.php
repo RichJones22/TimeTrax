@@ -45,9 +45,10 @@ class appGlobals
     static protected $timeTaskTableName;
 
     // routes used by both javascript and php
-    //static protected $domain="http://timetrax.dev/";
+    // static protected $domain="http://timetrax.dev/";
     static protected $timeCardURI="timeCard/";
     static protected $workURI="work/";
+    static protected $taskTypeUpdateURI="taskType/update/";
 
     static protected $infoMessageType = 'info_message';
     static protected $messageText = [
@@ -158,6 +159,10 @@ class appGlobals
         return self::$workURI;
     }
 
+    static public function getTaskTypeUpdateURI() {
+        return self::$taskTypeUpdateURI;
+    }
+
     static public function getBeginningOfCurrentWeek($dateRange) {
         if (substr($dateRange,0,1) == '(') {
             $dateSelected = substr($dateRange,2,10);
@@ -202,8 +207,8 @@ class appGlobals
         // see https://github.com/laracasts/PHP-Vars-To-Js-Transformer.
         // also see javascript.php in the config dir for view and .js namespace used.
         \JavaScript::put([
-            'timeCardURI' => $request->root() . "/" . appGlobals::getTimeCardURI(),
-            'workURI'     => appGlobals::getWorkURI()
+            'timeCardURI'       => $request->root() . "/" . appGlobals::getTimeCardURI(),
+            'workURI'           => appGlobals::getWorkURI()
         ]);
 
         self::populateJsGlobalClient();
@@ -215,6 +220,15 @@ class appGlobals
         // also see javascript.php in the config dir for view and .js namespace used.
         \JavaScript::put([
             'clientId'    => appGlobals::getClientIdOfProjectRecordingTimeFor()
+        ]);
+    }
+
+    static public function populateJsGlobalTaskTypeUpdateURI() {
+        // jeffery way's package for moving php variables to the .js space.
+        // see https://github.com/laracasts/PHP-Vars-To-Js-Transformer.
+        // also see javascript.php in the config dir for view and .js namespace used.
+        \JavaScript::put([
+            'taskTypeUpdateURI' => appGlobals::getTaskTypeUpdateURI()
         ]);
     }
 

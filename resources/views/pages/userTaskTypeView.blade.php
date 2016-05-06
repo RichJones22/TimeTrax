@@ -6,7 +6,6 @@
 use \App\Helpers\appGlobals as appGlobals;
 ?>
 
-
 @section('content')
 
     <div class="ttv-container">
@@ -58,9 +57,9 @@ use \App\Helpers\appGlobals as appGlobals;
                     {!! Form::open(array('route' => array('taskType.create'))) !!}
                         <input type="hidden" name="_method" value="POST">
                         <input hidden type="text" name="client_id" value="{{$clientId}}">
-                        <input hidden type="text" name="saveTaskType_id" value="">
+                        <input hidden type="text" name="_token" value="{{ csrf_token() }}">
                         <div>
-                            <th><input class="form-control" id="taskType01" placeholder="type" name="taskType"></th>
+                            <th><input class="form-control" id="taskType" placeholder="type" name="type"></th>
                             <th>
                                 <div class="col-xs-9 ttv-inline-block">
                                     <input type="text" class="form-control" id="description" placeholder="description" name="description">
@@ -73,24 +72,24 @@ use \App\Helpers\appGlobals as appGlobals;
             </thead>
 
             <tbody id="taskTypeTable">
+            <?php $rowCount=0; ?>
                 @foreach ($taskTypes as $taskType)
                     <tr>
-                        <td class="rowTaskType">
-                           <input class="taskTypeEditButton" type="text" value="{{ $taskType->type }}" readonly>
+                        <td>
+                            <div class="rowTaskType taskTypeEditButton">
+                                <input id="rowTaskTypeId_{{ $rowCount }}" name="rowTaskType_type" type="text" value="{{ $taskType->type }}">
+                            </div>
                         </td>
                         <td>
                             <div class="col-xs-9 rowTaskDesc taskTypeEditButton ttv-inline-block">
-                                {{ $taskType->description }}
+                                <input name="rowTaskDesc_desc" type="text" value="{{ $taskType->description }}">
                             </div>
                             <div class="ttv-inline-block pull-right">
                                 <div>
                                     <div class="btn-toolbar" role="toolbar">
                                         <div class="btn-group" role="group">
                                             <button hidden>
-                                                <button type="submit" class="btn btn-xs taskTypeEditButton ttv-btn-left">
-                                                    <input hidden type="text" name="rowTaskType_id" value="{{$taskType->id}}">
-                                                    <span class="glyphicon glyphicon-pencil"></span>
-                                                </button>
+                                                <input hidden type="text" name="rowTaskType_id" value="{{$taskType->id}}">
                                             </button>
                                             <button hidden>
                                                 <form method="post" action="{{ route('taskType.destroy', $taskType->id) }}">
@@ -106,6 +105,7 @@ use \App\Helpers\appGlobals as appGlobals;
                             </div>
                         </td>
                     </tr>
+                    <?php $rowCount++; ?>
                 @endforeach
             </tbody>
         </table>

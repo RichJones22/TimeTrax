@@ -13,6 +13,8 @@ use \App\TimeCardHoursWorked;
 use \App\TaskType;
 use \App\Task;
 
+use \App\Http\Controllers\TaskTypeController;
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -52,6 +54,8 @@ Route::post('task/{task}'       , ['as' => 'task.destroy', 'uses' => 'TaskContro
 // ajax call to list all tasks.
 Route::get('get_all_tasks', function() {
 
+    $data = [];
+
     $tasks = TaskType::all();
 
     foreach($tasks as $task) {
@@ -67,17 +71,26 @@ Route::get('get_all_tasks', function() {
 * taskType routes
  **********************************************************************************************************************/
 
+//Route::post('taskType/create/'                , ['as' => 'taskType.create',    'uses' => 'TaskTypeController@create']);
+
 // route taskType.show denotes that we hit the endpoint directly, i.e.: www.timetrax.com/taskType/1
-Route::get('taskType/{taskType}'            , ['as' => 'taskType.show',      'uses' => 'TaskTypeController@show']);
+Route::get('taskType/{taskType}'              , ['as' => 'taskType.show',      'uses' => 'TaskTypeController@show']);
 
 // route taskType.task.show denotes that we entered via the task view, clicking a glyphicon...
-Route::get('taskType/{taskType}/task/{task}', ['as' => 'taskType.task.show', 'uses' => 'TaskTypeController@show']);
+Route::get('taskType/{taskType}/task/{task}'  , ['as' => 'taskType.task.show', 'uses' => 'TaskTypeController@show']);
 
-// insert a task type.
-Route::post('taskType/create/'              , ['as' => 'taskType.create', 'uses' => 'TaskTypeController@create']);
+// form request to insert a task type.
+// This is the only way that I found to get this to work?
+Route::post('taskType/create/', function(){
+    (new TaskTypeController())->create($_POST);
+    return redirect()->back();
+})->name('taskType.create');
+
+// ajax request to update a task type.
+Route::get('taskType/{id}/update/'            , ['as' => 'taskType.update',    'uses' => 'TaskTypeController@update']);
 
 // delete a task type.
-Route::post('taskType/destroy/{taskType}'   , ['as' => 'taskType.destroy', 'uses' => 'TaskTypeController@destroy']);
+Route::post('taskType/destroy/{taskType}'     , ['as' => 'taskType.destroy',   'uses' => 'TaskTypeController@destroy']);
 
 /***********************************************************************************************************************
  * timeCard routes
@@ -87,10 +100,10 @@ Route::post('taskType/destroy/{taskType}'   , ['as' => 'taskType.destroy', 'uses
 Route::get(appGlobals::getTimeCardURI() . '{dateSelected?}', ['as' => 'timeCard.show', 'uses' => 'TimeCardController@show']);
 
 // insert a TimeCard record.
-Route::post(appGlobals::getTimeCardURI() . 'create/{id}', ['as' => 'timeCard.create', 'uses' => 'TimeCardController@create']);
+Route::post(appGlobals::getTimeCardURI() . 'create/{id}'   , ['as' => 'timeCard.create', 'uses' => 'TimeCardController@create']);
 
 // delete a TimeCard record.
-Route::post(appGlobals::getTimeCardURI() . 'destroy/{id}', ['as' => 'timeCard.destroy', 'uses' => 'TimeCardController@destroy']);
+Route::post(appGlobals::getTimeCardURI() . 'destroy/{id}'  , ['as' => 'timeCard.destroy', 'uses' => 'TimeCardController@destroy']);
 
 // ajax call list Work Type's
 Route::get(appGlobals::getTimeCardURI() . appGlobals::getWorkURI() . '{clientId}', function($client_id) {

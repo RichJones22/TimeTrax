@@ -21,9 +21,34 @@
   border-radius: 2px;
 }
 
+input {
+  border: none;
+  background: inherit;
+}
+
 .ttv-btn-right {
   margin-right: 0px;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   border-radius: 2px;
 }
+
+td input:focus, td textarea:focus {
+  width:90%;
+
+  background: #fff;
+  border:1px solid #555;
+  box-shadow: 0 0 3px #aaa;
+}
+
+td input,  td textarea { /* add this to the already existing style */
+  -moz-transition: width .25s;
+  -webkit-transition: width .25s;
+  -o-transition: width .25s;
+  transition: width .25s;
+
+  width:40%;
+  cursor: pointer;
+}
+
+

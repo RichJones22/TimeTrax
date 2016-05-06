@@ -26,6 +26,8 @@ class TaskTypeObserver
 
             return false;
         }
+
+        return true;
     }
 
     public function creating($taskType) {
@@ -42,9 +44,25 @@ class TaskTypeObserver
 
             return false;
         }
+
+        return true;
     }
 
     public function created($taskType) {
         appGlobals::createdMessage(appGlobals::getTaskTypeTableName(), $taskType->type , $taskType->id);
+    }
+
+    public function updating($taskType) {
+
+        // check to see if the task_type.type exists.
+        $result = $taskType->checkIfTypeExists($taskType);
+        if ($result > 0) {
+            session()->forget(appGlobals::getInfoMessageType());
+            session()->flash(appGlobals::getInfoMessageType(), appGlobals::getInfoMessageText($result));
+
+            return false;
+        }
+
+        return true;
     }
 }

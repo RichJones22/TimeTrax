@@ -67,7 +67,7 @@
                         <input hidden type="text" name="time_card_hours_worked_id" value="{{$timeCardHoursWorkedId}}">
                         <div>
                             <th>
-                                <select id="taskType" name ="taskType" class="form-control col-xs-12">
+                                <select id="taskTypeSelection" name ="taskType" class="form-control col-xs-12">
                                     <option value="0">--Select Type--</option>
                                 </select>
                             </th>

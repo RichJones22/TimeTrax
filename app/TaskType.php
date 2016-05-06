@@ -104,4 +104,28 @@ class TaskType extends Model
 
         return 0;
     }
+
+    public function updateRec($att) {
+
+        $arrUpdate = [];
+
+        $taskType = TaskType::where('id', '=', $att->id)->first();
+
+        // if taskType exists, create an update array of those fields that changed; then update the record.
+        if ($taskType) {
+            if ($taskType->type !== $att->type) {
+                $arrUpdate['type'] = $att->type;
+            }
+            if ($taskType->description !== $att->desc) {
+                $arrUpdate['description'] = $att->desc;
+            }
+            if ($taskType->client_id !== $att->client_id) {
+                $arrUpdate['client_id'] = $att->client_id;
+            }
+
+            \DB::table('task_type')
+                ->where('id', $att->id)
+                ->update($arrUpdate);
+        }
+    }
 }

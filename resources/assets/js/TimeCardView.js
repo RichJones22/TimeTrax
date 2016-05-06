@@ -44,7 +44,7 @@ timeCard.WorkType = function() {
             }
         });
     }
-}
+};
 
 // SaveButton class to save state of required input fields.
 timeCard.SaveButton = function(type, calledFrom, bInError) {
