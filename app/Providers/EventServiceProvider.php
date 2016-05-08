@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\TimeCardHoursWorked;
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -59,7 +60,7 @@ class EventServiceProvider extends ServiceProvider
         // register the TimeCardObserver class.
         TimeCard::observe(new TimeCardObserver);
         // register the TimeCardHoursWorkedObserver class.
-        TimeCard::observe(new TimeCardHoursWorkedObserver);
+        TimeCardHoursWorked::observe(new TimeCardHoursWorkedObserver);
         // register the TaskTypeObserver class.
         TaskType::observe(new TaskTypeObserver);
         // register the TaskObserver class.

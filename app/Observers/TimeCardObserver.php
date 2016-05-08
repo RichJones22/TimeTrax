@@ -20,14 +20,10 @@ class TimeCardObserver
             return true;
         }
 
-//        if (!is_null($timeCard->checkIfExists($timeCard))) {
-//           return new \Exception();
-//        }
-
         return true;
     }
 
     public function created($timeCard) {
-        appGlobals::createdMessage(appGlobals::getTimeCardTableName(), $timeCard->work_id , $timeCard->id);
+        appGlobals::createdMessage(appGlobals::getTimeCardTableName(), $timeCard->iso_beginning_dow_date, $timeCard->id);
     }
 }

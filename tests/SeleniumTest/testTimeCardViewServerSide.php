@@ -14,12 +14,27 @@ class testTimeCardView extends Selenium
 {
     use Laravel;
 
-    function testDeleteTaskTableData()
+    protected $baseUrl = 'http://timetrax.dev';
+
+    private $delayMe = 15000;
+
+    function deleteData()
     {
         $newTestClass = new testTimeCardView();
 
-        // note:  currently this test requires that you 'artisan migrate:refresh' the db
-        $newTestClass->visit('create_data');
+        $newTestClass->visit("/delete_data");
+
+        $newTestClass->tearDown();
+
+        return $this;
+
+    }
+
+    function createData()
+    {
+        $newTestClass = new testTimeCardView();
+
+        $newTestClass->visit("/create_data");
 
         $newTestClass->tearDown();
 
@@ -40,14 +55,15 @@ class testTimeCardView extends Selenium
 
     function testDuplicateTimeCardIntegrityConstraintViolationCaught()
     {
-        $this->testDeleteTaskTableData();
+        $this->deleteData();
+        $this->createData();
 
         $this->visit("/timeCard/2015-11-12")->see("( 2015-11-08 - 2015-11-14 )")->waitClosure()
             ->type('8', '#dow_01')
             ->tick('#dow_01')
-            ->select('#workType', 3)
-            ->click('#saveButtonTimeCard')
-            ->see("One of your entered time values overlaps with existing data.  Your data has been refreshed.")->wait(15000)
+            ->select('#workType', 2)
+            ->click('#saveButtonTimeCard')->wait($this->delayMe)
+            ->see("One of your entered time values overlaps with existing data.  Your data has been refreshed.")
             ->see("( 2015-11-08 - 2015-11-14 )");
     }
 

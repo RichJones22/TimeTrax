@@ -53,14 +53,14 @@ class TimeCard extends Model
      */
     static public function checkIfExists(&$inTimeCard) {
 
-        $timeCard = TimeCard::where('iso_beginning_dow_date', '=', $inTimeCard->iso_beginning_dow_date)
-            ->where('work_id', '=', $inTimeCard->work_id)
+        $timeCard = TimeCard::where('work_id', $inTimeCard->work_id)
+            ->where('time_card_format_id', '=', $inTimeCard->time_card_format_id)
             ->first();
 
         if (!is_null($timeCard)) {
             $inTimeCard = $timeCard;
 
-            appGlobals::existsMessage(appGlobals::getTimeCardTableName(), $timeCard->iso_begninning_dow_date, $timeCard->work_id);
+            appGlobals::existsMessage(appGlobals::getTimeCardTableName(), $timeCard->iso_beginning_dow_date, $timeCard->id);
         }
 
         return $timeCard;

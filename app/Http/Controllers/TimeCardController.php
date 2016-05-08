@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use \App\Http\Requests\prepareTimeCardRequest;
 use DB;
+use \App;
 use \App\Http\Requests;
 use \App\TimeCard;
 use \App\TimeCardHoursWorked;
@@ -326,10 +327,7 @@ class TimeCardController extends Controller
         $timeCard->work_id = $this->getWorkIdViaWorkTypeId($timeCardRequestAttributes['workType']);
         $timeCard->time_card_format_id = $this->getTimeCardFormatId($this->getClientId($timeCardRequestAttributes['workType']));
 
-        // if time car does not exist save it; otherwise, return $timeCard to caller.
-        if (! $timeCard->doesTimeCardExist($timeCard)) {
-            $timeCard->save();
-        }
+        $timeCard->save();
 
         return $timeCard;
     }
@@ -355,16 +353,26 @@ class TimeCardController extends Controller
         }
     }
 
+    private function testingRDBMS() {
+        return env('APP_RDBMS_TESTING', false);
+    }
+
     /**
      * @param $timeCardRange
      * @param $timeCardRequestAttributes
      */
     private function createTimeCardData($timeCardRange, $timeCardRequestAttributes)
     {
-        try {
+
+        // check if getTestRDBMS is set for testing the Database triggers.
+        if ($this->testingRDBMS()) {
             $this->createTimeCardDataTransaction($timeCardRange, $timeCardRequestAttributes);
-        } catch(\Exception $e) {
-            $this->timeOverlapError();
+        } else {
+            try {
+                $this->createTimeCardDataTransaction($timeCardRange, $timeCardRequestAttributes);
+            } catch(\Exception $e) {
+                $this->timeOverlapError();
+            }
         }
     }
 

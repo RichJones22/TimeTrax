@@ -25,14 +25,12 @@ class TimeCardHoursWorked extends Model
      * @param [in/out] $inTimeCard
      * @return mixed
      */
-    static public function checkIfExists(&$inTimeCard) {
+    static public function checkIfExists($timeCardHoursWorked) {
 
-        $timeCardHoursWorked = TimeCardHoursWorked::where('time_card_id', '=', $inTimeCard->id)->first();
+        $timeCardHoursWorked = TimeCardHoursWorked::where('time_card_id', '=', $timeCardHoursWorked->time_card_id)->first();
 
         if (!is_null($timeCardHoursWorked)) {
-            $inTimeCard = $timeCardHoursWorked;
-
-            appGlobals::existsMessage(appGlobals::getTimeCardHoursWorkedTableName(), $timeCardHoursWorked->date_worked, $timeCardHoursWorked->id);
+            appGlobals::existsMessage(appGlobals::getTimeCardHoursWorkedTableName(), $timeCardHoursWorked->time_card_id, $timeCardHoursWorked->date_worked);
         }
 
         return $timeCardHoursWorked;
@@ -42,16 +40,16 @@ class TimeCardHoursWorked extends Model
      * @param [in/out] $inTimeCard
      * @return mixed
      */
-    static public function checkIfDateWorkedDowExists(&$inTimeCard) {
+    static public function checkIfDateWorkedDowExists($timeCardHoursWorked) {
 
-        $timeCardHoursWorked = TimeCardHoursWorked::where('date_worked', '=', $inTimeCard->date_worked->toDateString())
-            ->where('dow', '=', $inTimeCard->dow)
-            ->where('work_id', '=', $inTimeCard->work_id)
+        $timeCardHoursWorked = TimeCardHoursWorked::where('date_worked', $timeCardHoursWorked->date_worked)
+            ->where('dow', $timeCardHoursWorked->dow)
+            ->where('work_id', $timeCardHoursWorked->work_id)
             ->first();
 
-        if (!is_null($timeCardHoursWorked)) {
-            $inTimeCard = $timeCardHoursWorked;
-        }
+//        if (!is_null($timeCardHoursWorked)) {
+//            $inTimeCard = $timeCardHoursWorked;
+//        }
 
         return $timeCardHoursWorked;
     }

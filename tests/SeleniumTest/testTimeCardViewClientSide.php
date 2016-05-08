@@ -14,14 +14,38 @@ class testTimeCardView extends Selenium
 {
     use Laravel;
 
-    /** @test */
-    function test_visits_root() {
-        $this->visit('/');
+    protected $baseUrl = 'http://timetrax.dev';
+
+    private $delayMe = 1000;
+
+    function deleteData() {
+        $newTestClass = new testTimeCardView();
+
+        $newTestClass->visit("/delete_data");
+
+        $newTestClass->tearDown();
+
+        return $this;
+    }
+
+    function createData() {
+        $newTestClass = new testTimeCardView();
+
+        $newTestClass->visit("/create_data");
+
+        $newTestClass->tearDown();
+
+        return $this;
+
     }
 
     /** @test */
     function test_reset_data() {
-        $this->visit("/create_data");
+
+        $this->deleteData();
+        $this->createData();
+
+        return $this;
     }
 
    /** @test */
@@ -51,7 +75,7 @@ class testTimeCardView extends Selenium
 
     /** @test */
     function test_visits_timeCard_hours_for_day_exist() {
-        $this->visit("/timeCard/2015-11-12")->wait(1000)
+        $this->visit("/timeCard/2015-11-12")->wait($this->delayMe)
             ->select('#workType', 2)
             ->type('8', '#dow_04')
             ->tick('#dow_05')
@@ -78,16 +102,16 @@ class testTimeCardView extends Selenium
 
     /** @test */
     function test_visits_timeCard_toggle_type_between_two_days() {
-        $this->visit("/timeCard/2015-11-12")->wait(1000)
+        $this->visit("/timeCard/2015-11-12")->wait($this->delayMe)
             ->select('#workType', 2)
             ->type('8', '#dow_04')
             ->type('8', '#dow_05')
             ->tick('#dow_06')
-            ->select('#workType', 1)->wait(2000)
-            ->select('#workType', 2)->wait(2000)
-            ->select('#workType', 3)->wait(2000)
-            ->select('#workType', 2)->wait(2000)
-            ->click('#saveButtonTimeCard')->wait(2000)
+            ->select('#workType', 1)->wait($this->delayMe)
+            ->select('#workType', 2)->wait($this->delayMe)
+            ->select('#workType', 3)->wait($this->delayMe)
+            ->select('#workType', 2)->wait($this->delayMe)
+            ->click('#saveButtonTimeCard')->wait($this->delayMe)
             ->see('pink');
     }
 
