@@ -12,6 +12,7 @@ use \App\TimeCard;
 use \App\TimeCardHoursWorked;
 use \App\TaskType;
 use \App\Task;
+use \App\TestingSeleniumVariables;
 
 use \App\Http\Controllers\TaskTypeController;
 
@@ -561,10 +562,21 @@ Route::get('create_data', function() {
         $task->save();
     }
 
-    /*******************************************************************************************************************
-     * testing_selenium_variables insert(s)
-     ******************************************************************************************************************/
+});
 
+Route::get('set_rdbms_true', function() {
+
+    DB::table('testing_selenium_variables')->truncate();
+
+    $seleniumVars = new TestingSeleniumVariables();
+    $seleniumVars->testingRDBMS = true;
+    $seleniumVars->save();
+
+
+});
+
+Route::get('set_rdbms_false', function() {
+    DB::table('testing_selenium_variables')->truncate();
 });
 
 Route::get('delete_task_data', function() {

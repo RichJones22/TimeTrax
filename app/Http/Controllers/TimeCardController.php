@@ -354,7 +354,7 @@ class TimeCardController extends Controller
     }
 
     private function testingRDBMS() {
-        return env('APP_RDBMS_TESTING', false);
+        return DB::table('testing_selenium_variables')->select('testingRDBMS')->where('id', 1)->first();
     }
 
     /**

@@ -16,7 +16,7 @@ class testTimeCardView extends Selenium
 
     protected $baseUrl = 'http://timetrax.dev';
 
-    private $delayMe = 1000;
+    private $delayMe = 2000;
 
     function deleteData() {
         $newTestClass = new testTimeCardView();
@@ -60,7 +60,7 @@ class testTimeCardView extends Selenium
     function test_visits_timeCard_add_sun_hours() {
         $this->visit("/timeCard/2015-11-12")->see("( 2015-11-08 - 2015-11-14 )")
             ->type('8', '#dow_00')
-            ->tick('#dow_01')
+            ->tick('#dow_01')->wait($this->delayMe)
             ->select('#workType', 3)
             ->click('#saveButtonTimeCard')
             ->see('Feature--A new landing page is required to support Fall 2016 GNO.');
@@ -94,7 +94,7 @@ class testTimeCardView extends Selenium
     function test_visits_add_data_for_timeCard_toggle_type_between_two_days() {
         $this->visit("/timeCard/2015-11-12")->see("( 2015-11-08 - 2015-11-14 )")
             ->type('8', '#dow_04')
-            ->tick('#dow_05')
+            ->tick('#dow_05')->wait($this->delayMe)
             ->select('#workType', 2)
             ->click('#saveButtonTimeCard')
             ->see('Defect--The catalog view is performing too slowly.');
