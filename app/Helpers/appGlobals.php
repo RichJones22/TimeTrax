@@ -144,7 +144,9 @@ class appGlobals
     }
 
     static public function getTestRDBMS() {
-        return self::$testRDBMS;
+//        return self::$testRDBMS;
+        return \DB::table('testing_selenium_variables')->select('testingRDBMS')->where('id', 1)->first();
+
     }
 
     static public function getDomain() {

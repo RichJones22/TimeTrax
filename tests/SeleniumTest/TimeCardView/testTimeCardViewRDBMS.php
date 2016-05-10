@@ -9,6 +9,9 @@
 use Laracasts\Integrated\Extensions\Selenium;
 use Laracasts\Integrated\Services\Laravel\Application as Laravel;
 
+use \App\Traits\Tests\DataReset;
+
+
 
 /**
  * Note:  For this test to work the 'static protected $testRDBMS' needs to be set to true
@@ -18,51 +21,19 @@ use Laracasts\Integrated\Services\Laravel\Application as Laravel;
 
 class testTimeCardView extends Selenium
 {
-    use Laravel;
+    use Laravel, DataReset;
 
-    protected $baseUrl = 'http://timetrax.dev';
 
-    function deleteData() {
-        $newTestClass = new testTimeCardView();
+    /**
+     * these tests are run as a unit, so we begin by resetting the data.
+     * @test
+     */
+    function test_reset_data() {
 
-        $newTestClass->visit("/delete_data");
-
-        $newTestClass->tearDown();
-
-        return $this;
-    }
-
-    function createData() {
-        $newTestClass = new testTimeCardView();
-
-        $newTestClass->visit("/create_data");
-
-        $newTestClass->tearDown();
+        $this->deleteData($this->getClassName($this));
+        $this->createData($this->getClassName($this));
 
         return $this;
-
-    }
-
-    function setRDBMSTrue() {
-        $newTestClass = new testTimeCardView();
-
-        $newTestClass->visit("set_rdbms_true");
-
-        $newTestClass->tearDown();
-
-        return $this;
-
-    }
-
-    function setRDBMSFalse() {
-        $newTestClass = new testTimeCardView();
-
-        $newTestClass->visit("set_rdbms_false");
-
-        $newTestClass->tearDown();
-
-        return $this;
-
     }
 
     public function waitClosure()
@@ -81,10 +52,7 @@ class testTimeCardView extends Selenium
     function testDuplicateTimeCardIntegrityConstraintViolationNotCaught()
     {
 
-        $this->deleteData();
-        $this->createData();
-
-        $this->setRDBMSTrue();
+        $this->setRDBMSTrue($this->getClassName($this));
 
         $this->visit("/timeCard/2015-11-12")
             ->see("( 2015-11-08 - 2015-11-14 )")
@@ -95,7 +63,7 @@ class testTimeCardView extends Selenium
             ->click('#saveButtonTimeCard')
             ->see("2300");
 
-        $this->setRDBMSFalse();
+        $this->setRDBMSFalse($this->getClassName($this));
 
 
     }

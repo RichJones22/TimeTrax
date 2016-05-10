@@ -8,38 +8,26 @@
 
 use Laracasts\Integrated\Extensions\Selenium;
 use Laracasts\Integrated\Services\Laravel\Application as Laravel;
-use \App\Helpers\appGlobals;
+
+use \App\Traits\Tests\DataReset;
+
 
 class testTimeCardView extends Selenium
 {
-    use Laravel;
-
-    protected $baseUrl = 'http://timetrax.dev';
+    use Laravel, DataReset;
 
     private $delayMe = 15000;
 
-    function deleteData()
-    {
-        $newTestClass = new testTimeCardView();
+    /**
+     * these tests are run as a unit, so we begin by resetting the data.
+     * @test
+     */
+    function test_reset_data() {
 
-        $newTestClass->visit("/delete_data");
-
-        $newTestClass->tearDown();
-
-        return $this;
-
-    }
-
-    function createData()
-    {
-        $newTestClass = new testTimeCardView();
-
-        $newTestClass->visit("/create_data");
-
-        $newTestClass->tearDown();
+        $this->deleteData($this->getClassName($this));
+        $this->createData($this->getClassName($this));
 
         return $this;
-
     }
 
     public function waitClosure()
@@ -55,8 +43,6 @@ class testTimeCardView extends Selenium
 
     function testDuplicateTimeCardIntegrityConstraintViolationCaught()
     {
-        $this->deleteData();
-        $this->createData();
 
         $this->visit("/timeCard/2015-11-12")->see("( 2015-11-08 - 2015-11-14 )")->waitClosure()
             ->type('8', '#dow_01')

@@ -10,10 +10,12 @@ use Laracasts\Integrated\Extensions\Selenium;
 use Laracasts\Integrated\Services\Laravel\Application as Laravel;
 
 use \App\Helpers\appGlobals;
+use \App\Traits\Tests\DataReset;
+
 
 class testTaskView extends Selenium
 {
-    use Laravel;
+    use Laravel, DataReset;
 
     function testDeleteTaskTableData()
     {
@@ -42,6 +44,8 @@ class testTaskView extends Selenium
     {
         $this->testDeleteTaskTableData();
 
+        $this->setRDBMSTrue($this->getClassName($this));
+
         $this->visit('/task/1')->createDate()
             ->type('13:00', '#startt-search')->wait(1000)
             ->type('14:00', '#endt')
@@ -49,11 +53,16 @@ class testTaskView extends Selenium
             ->type('rich was here','#notes')
             ->click('#saveButton')
             ->notSee(appGlobals::getInfoMessageText(appGlobals::INFO_TIME_VALUE_OVERLAP));
+
+        $this->setRDBMSFalse($this->getClassName($this));
+
     }
 
     function testDataCreatedAfterViewWasDisplayedOverLapStartTime()
     {
         $this->testDeleteTaskTableData();
+
+        $this->setRDBMSTrue($this->getClassName($this));
 
         $this->visit('/task/1')->createDate()
             ->type('11:30', '#startt-search')->wait(1000)
@@ -62,11 +71,16 @@ class testTaskView extends Selenium
             ->type('rich was here','#notes')
             ->click('#saveButton')
             ->notSee(appGlobals::getInfoMessageText(appGlobals::INFO_TIME_VALUE_OVERLAP));
+
+        $this->setRDBMSFalse($this->getClassName($this));
+
     }
 
     function testDataCreatedAfterViewWasDisplayedOverLapEndTime()
     {
         $this->testDeleteTaskTableData();
+
+        $this->setRDBMSTrue($this->getClassName($this));
 
         $this->visit('/task/1')->createDate()
             ->type('16:00', '#startt-search')->wait(1000)
@@ -75,6 +89,9 @@ class testTaskView extends Selenium
             ->type('rich was here','#notes')
             ->click('#saveButton')
             ->notSee(appGlobals::getInfoMessageText(appGlobals::INFO_TIME_VALUE_OVERLAP));
+
+        $this->setRDBMSFalse($this->getClassName($this));
+
     }
 
 }

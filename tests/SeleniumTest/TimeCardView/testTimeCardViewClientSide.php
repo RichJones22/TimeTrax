@@ -9,41 +9,23 @@
 use Laracasts\Integrated\Extensions\Selenium;
 use Laracasts\Integrated\Services\Laravel\Application as Laravel;
 
+use \App\Traits\Tests\DataReset;
+
 
 class testTimeCardView extends Selenium
 {
-    use Laravel;
-
-    protected $baseUrl = 'http://timetrax.dev';
+    use Laravel, DataReset;
 
     private $delayMe = 2000;
 
-    function deleteData() {
-        $newTestClass = new testTimeCardView();
-
-        $newTestClass->visit("/delete_data");
-
-        $newTestClass->tearDown();
-
-        return $this;
-    }
-
-    function createData() {
-        $newTestClass = new testTimeCardView();
-
-        $newTestClass->visit("/create_data");
-
-        $newTestClass->tearDown();
-
-        return $this;
-
-    }
-
-    /** @test */
+    /**
+     * these tests are run as a unit, so we begin by resetting the data.
+     * @test
+     */
     function test_reset_data() {
 
-        $this->deleteData();
-        $this->createData();
+        $this->deleteData($this->getClassName($this));
+        $this->createData($this->getClassName($this));
 
         return $this;
     }

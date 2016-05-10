@@ -353,10 +353,6 @@ class TimeCardController extends Controller
         }
     }
 
-    private function testingRDBMS() {
-        return DB::table('testing_selenium_variables')->select('testingRDBMS')->where('id', 1)->first();
-    }
-
     /**
      * @param $timeCardRange
      * @param $timeCardRequestAttributes
@@ -365,7 +361,7 @@ class TimeCardController extends Controller
     {
 
         // check if getTestRDBMS is set for testing the Database triggers.
-        if ($this->testingRDBMS()) {
+        if (appGlobals::getTestRDBMS()) {
             $this->createTimeCardDataTransaction($timeCardRange, $timeCardRequestAttributes);
         } else {
             try {

@@ -94,7 +94,7 @@ use \App\Helpers\appGlobals as appGlobals;
                                             <button hidden>
                                                 <form method="post" action="{{ route('taskType.destroy', $taskType->id) }}">
                                                     <input hidden type="text" name="_token" value="{{ csrf_token() }}">
-                                                    <button type ="submit" class = "btn btn-danger btn-xs ttv-btn-right">
+                                                    <button id="{{ $taskType->type }}" type ="submit" class = "btn btn-danger btn-xs ttv-btn-right">
                                                         <span class="glyphicon glyphicon-trash"></span>
                                                     </button>
                                                 </form>

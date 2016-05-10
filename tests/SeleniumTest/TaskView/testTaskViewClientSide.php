@@ -9,10 +9,26 @@
 use Laracasts\Integrated\Extensions\Selenium;
 use Laracasts\Integrated\Services\Laravel\Application as Laravel;
 
+use \App\Traits\Tests\DataReset;
+
 
 class testTaskView extends Selenium
 {
-    use Laravel;
+    use Laravel, DataReset;
+
+    private $delayMe = 2000;
+
+    /**
+     * these tests are run as a unit, so we begin by resetting the data.
+     * @test
+     */
+    function test_reset_data() {
+
+        $this->deleteData($this->getClassName($this));
+        $this->createData($this->getClassName($this));
+
+        return $this;
+    }
 
     /** @test */
     function test_visits_root() {
@@ -53,7 +69,7 @@ class testTaskView extends Selenium
     function test_saveButton_is_disabled_when_start_end_times_are_empty() {
         $this->visit('/task/1')
             ->type('', '#startt-search')
-            ->type('', '#endt-search')
+            ->type('', '#endt-search')->wait($this->delayMe)
             ->select('#taskType', 2)
             ->click('#saveButton')
             ->click('#refresh')
@@ -159,9 +175,9 @@ class testTaskView extends Selenium
     function test_write_record() {
         $this->visit('/task/1')
             ->type('11:30', '#startt-search')
-            ->type('12:00', '#endt-search')
+            ->type('12:00', '#endt-search')->wait($this->delayMe)
             ->select('#taskType', 2)
-            ->click('#saveButton')->wait(5000)
+            ->click('#saveButton')
             ->see("Test");
     }
 

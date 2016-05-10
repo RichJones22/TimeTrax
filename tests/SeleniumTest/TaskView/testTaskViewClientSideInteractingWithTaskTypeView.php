@@ -9,9 +9,23 @@
 use Laracasts\Integrated\Extensions\Selenium;
 use Laracasts\Integrated\Services\Laravel\Application as Laravel;
 
+use \App\Traits\Tests\DataReset;
+
 class testTaskViewInteractions extends Selenium
 {
-    use Laravel;
+    use Laravel, DataReset;
+
+    /**
+     * these tests are run as a unit, so we begin by resetting the data.
+     * @test
+     */
+    function test_reset_data() {
+
+        $this->deleteData($this->getClassName($this));
+        $this->createData($this->getClassName($this));
+
+        return $this;
+    }
 
     /** @test */
     function test_visits_root() {
@@ -49,9 +63,9 @@ class testTaskViewInteractions extends Selenium
         $this->visit('/task/1')
             ->click('#routeToTaskTypeView')
             ->see('Task Type Maintenance')
-            ->type('Lunch', '#taskType01')
+            ->type('Lunch', '#taskType')
             ->type('Lunch break','description')
-            ->tick('#taskType01')
+            ->tick('#taskType')
             ->click('saveButtonTaskType')
             ->see('Lunch')
             ->click('Lunch')
@@ -83,9 +97,9 @@ class testTaskViewInteractions extends Selenium
         $this->visit('/taskType/1')
             ->see('Task Type Maintenance')
             ->notSee('routeToTaskView')
-            ->type('Lunch', '#taskType01')
+            ->type('Lunch', '#taskType')
             ->type('Lunch break','description')
-            ->tick('#taskType01')
+            ->tick('#taskType')
             ->click('saveButtonTaskType')
             ->see('Lunch')
             ->click('Lunch')
@@ -118,9 +132,9 @@ class testTaskViewInteractions extends Selenium
             ->notSee('Lunch')
             ->click('#routeToTaskTypeView')
             ->see('Task Type Maintenance')
-            ->type('Lunch', '#taskType01')
+            ->type('Lunch', '#taskType')
             ->type('Lunch break','description')
-            ->tick('#taskType01')
+            ->tick('#taskType')
             ->click('saveButtonTaskType')
             ->click('#routeToTaskView')
             ->see('Nov 12, 2015')->wait(1000)

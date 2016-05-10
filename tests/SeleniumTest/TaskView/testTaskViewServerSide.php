@@ -9,10 +9,14 @@
 use Laracasts\Integrated\Extensions\Selenium;
 use Laracasts\Integrated\Services\Laravel\Application as Laravel;
 
+use \App\Traits\Tests\DataReset;
+
 
 class testTaskView extends Selenium
 {
-    use Laravel;
+    use Laravel, DataReset;
+
+    private $delayMe = 2000;
 
 
     function testDeleteTaskTableData()
