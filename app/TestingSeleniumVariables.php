@@ -17,20 +17,4 @@ class TestingSeleniumVariables extends Model
     protected $fillable = [
         'testingRDBMS'
     ];
-
-    public static function setRDBMSTrue()
-    {
-        $tmp = new TestingSeleniumVariables();
-
-        $tmp->where('id', '1')->truncate();
-
-        dd($tmp);
-
-        TestingSeleniumVariables::where('id', '1')->update(['testingRDBMS' => true]);
-
-        dd("im here");
-
-//        return TestingSeleniumVariables::where('id', '1')->select('testingRDBMS')->first();
-
-    }
 }

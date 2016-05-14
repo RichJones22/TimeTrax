@@ -47,10 +47,6 @@ class TimeCardHoursWorked extends Model
             ->where('work_id', $timeCardHoursWorked->work_id)
             ->first();
 
-//        if (!is_null($timeCardHoursWorked)) {
-//            $inTimeCard = $timeCardHoursWorked;
-//        }
-
         return $timeCardHoursWorked;
     }
 

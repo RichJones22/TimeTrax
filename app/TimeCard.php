@@ -14,11 +14,15 @@ class TimeCard extends Model
      */
     protected $table = 'time_card';
 
+    public $row=null;
+
     /**
      * fillable fields
      */
     protected $fillable = [
-        'work_id'
+        'work_id',
+        'time_card_format_id',
+        'iso_beginning_dow_date'
     ];
 
     /**
@@ -84,6 +88,16 @@ class TimeCard extends Model
         }
     }
 
+
+    public function rowExists()
+    {
+        $this->row = TimeCard::where('work_id', '=', $this->work_id)
+            ->where('iso_beginning_dow_date',   '=', $this->iso_beginning_dow_date)
+            ->first();
+
+        return $this->row ? true : false;
+    }
+
     /**
      * @param $bwDate
      * @param $ewDate
@@ -92,7 +106,10 @@ class TimeCard extends Model
     static public function getTimeCardRows($iso_beginning_dow_date)
     {
         $timeCardRows = TimeCard::where('iso_beginning_dow_date', '=', $iso_beginning_dow_date)
+            ->join('work', 'work.id' ,'=', 'time_card.work_id')
+            ->join('work_type', 'work_type.id' ,'=', 'work.work_type_id')
             ->select('time_card.id', 'time_card.iso_beginning_dow_date', 'time_card.work_id', 'time_card.time_card_format_id')
+            ->orderBy('work_type.type')
             ->get();
         return $timeCardRows;
     }

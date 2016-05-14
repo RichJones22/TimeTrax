@@ -327,6 +327,10 @@ class TimeCardController extends Controller
         $timeCard->work_id = $this->getWorkIdViaWorkTypeId($timeCardRequestAttributes['workType']);
         $timeCard->time_card_format_id = $this->getTimeCardFormatId($this->getClientId($timeCardRequestAttributes['workType']));
 
+        if ($timeCard->rowExists()) {
+            $timeCard = $timeCard->row;
+        }
+
         $timeCard->save();
 
         return $timeCard;
@@ -348,9 +352,8 @@ class TimeCardController extends Controller
         $timeCardHoursWorked->dow = $this->getDOW($timeCardHoursWorked->date_worked);
         $timeCardHoursWorked->hours_worked = $timeCardRequestAttributes['dow_0' . $i];
 
-        if (is_null(TimeCardHoursWorked::checkIfDateWorkedDowExists($timeCardHoursWorked))) {
-            $timeCardHoursWorked->save();
-        }
+        $timeCardHoursWorked->save();
+
     }
 
     /**
@@ -367,7 +370,7 @@ class TimeCardController extends Controller
             try {
                 $this->createTimeCardDataTransaction($timeCardRange, $timeCardRequestAttributes);
             } catch(\Exception $e) {
-                $this->timeOverlapError();
+                $this->timeOverlapError(appGlobals::INFO_TIME_VALUE_OVERLAP);
             }
         }
     }
@@ -375,10 +378,10 @@ class TimeCardController extends Controller
     /**
      * set session flash message for appGlobals::INFO_TIME_VALUE_OVERLAP message.
      */
-    private function timeOverlapError()
+    private function timeOverlapError($messageNum)
     {
         session()->forget(appGlobals::getInfoMessageType());
-        session()->flash(appGlobals::getInfoMessageType(), appGlobals::getInfoMessageText(appGlobals::INFO_TIME_VALUE_OVERLAP));
+        session()->flash(appGlobals::getInfoMessageType(), appGlobals::getInfoMessageText($messageNum));
     }
 
     /**

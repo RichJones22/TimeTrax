@@ -57,7 +57,7 @@ class testTimeCardView extends Selenium
         $this->visit("/timeCard/2015-11-12")
             ->see("( 2015-11-08 - 2015-11-14 )")
             ->waitClosure()
-            ->type('8', '#dow_01')
+            ->type('7', '#dow_01')
             ->tick('#dow_01')
             ->select('#workType', 2)
             ->click('#saveButtonTimeCard')

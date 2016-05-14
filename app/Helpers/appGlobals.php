@@ -18,9 +18,10 @@ use \App\TimeCard;
 use \App\TimeCardHoursWorked;
 use \App\TaskType;
 use \App\Task;
+use \App\TestingSeleniumVariables;
 
 use \Carbon\Carbon;
-
+use Illuminate\Support\Facades\Schema;
 
 class appGlobals
 {
@@ -43,6 +44,7 @@ class appGlobals
     static protected $timeCardHoursWorkedTableName;
     static protected $timeTaskTypeTableName;
     static protected $timeTaskTableName;
+    static protected $testingSeleniumVariablesTableName;
 
     // routes used by both javascript and php
     // static protected $domain="http://timetrax.dev/";
@@ -73,6 +75,7 @@ class appGlobals
         self::$timeCardHoursWorkedTableName = with(new TimeCardHoursWorked)->getTable();
         self::$timeTaskTypeTableName = with(new TaskType)->getTable();
         self::$timeTaskTableName = with(new Task)->getTable();
+        self::$testingSeleniumVariablesTableName = with(new TestingSeleniumVariables)->getTable();
     }
 
     static public function getClientTableName() {
@@ -111,6 +114,10 @@ class appGlobals
         return self::$timeTaskTableName;
     }
 
+    static public function getTestingSeleniumVariablesTableName() {
+        return self::$testingSeleniumVariablesTableName;
+    }
+
     static public function existsMessage($table, $text, $key) {
         echo $table . ": " . "'" . $text . "'" . " with key of " . $key . ' exists.<br>';
     }
@@ -144,9 +151,18 @@ class appGlobals
     }
 
     static public function getTestRDBMS() {
-//        return self::$testRDBMS;
-        return \DB::table('testing_selenium_variables')->select('testingRDBMS')->where('id', 1)->first();
 
+        $result = Schema::hasTable('testing_selenium_variables');
+
+        if ($result) {
+            $result = \DB::table('testing_selenium_variables')->select('testingRDBMS')->where('id', 1)->first();
+
+            if ($result) {
+                return $result->testingRDBMS;
+            }
+        }
+
+        return false;
     }
 
     static public function getDomain() {

@@ -29,6 +29,6 @@ class TestingSeleniumVariables extends Migration
      */
     public function down()
     {
-        Schema::drop('testing_selenium_variables');
+        Schema::dropIfExists('testing_selenium_variables');
     }
 }

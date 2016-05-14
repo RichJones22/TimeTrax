@@ -9,10 +9,26 @@
 use Laracasts\Integrated\Extensions\Selenium;
 use Laracasts\Integrated\Services\Laravel\Application as Laravel;
 
+use \App\Traits\Tests\DataReset;
+
 
 class testTaskView extends Selenium
 {
-    use Laravel;
+    use Laravel, DataReset;
+
+    private $delayMe = 2000;
+
+    /**
+     * these tests are run as a unit, so we begin by resetting the data.
+     * @test
+     */
+    function test_reset_data() {
+
+        $this->deleteData($this->getClassName($this));
+        $this->createData($this->getClassName($this));
+
+        return $this;
+    }
 
     /** @test */
     function test_visits_root() {
@@ -40,7 +56,7 @@ class testTaskView extends Selenium
     /** @test */
     function test_checks_for_valid_type_one_word() {
         $this->visit('/taskType/1')
-            ->type('Lunch', '#taskType01')
+            ->type('Lunch', '#taskType')
             ->type('Lunch break','description')
             ->notSee('Error: Type restricted to one word.');
     }
@@ -48,7 +64,7 @@ class testTaskView extends Selenium
     /** @test */
     function test_checks_for_invalid_type_two_words() {
         $this->visit('/taskType/1')
-            ->type('coding tasks', '#taskType01')
+            ->type('coding tasks', '#taskType')
             ->type('description','description')
             ->See('Error: Type restricted to one word.');
     }
@@ -56,7 +72,7 @@ class testTaskView extends Selenium
     /** @test */
     function test_checks_for_invalid_word_cant_exist() {
         $this->visit('/taskType/1')
-            ->type('Code', '#taskType01')
+            ->type('Code', '#taskType')
             ->type('description','description')
             ->See('Error: Type already exists.');
     }
@@ -65,9 +81,9 @@ class testTaskView extends Selenium
     /** @test */
     function test_checks_for_successful_insert() {
         $this->visit('/taskType/1')
-            ->type('Lunch', '#taskType01')
+            ->type('Lunch', '#taskType')
             ->type('Lunch break','description')
-            ->tick('#taskType01')
+            ->tick('#taskType')
             ->click('saveButtonTaskType')
             ->see('Lunch');
     }

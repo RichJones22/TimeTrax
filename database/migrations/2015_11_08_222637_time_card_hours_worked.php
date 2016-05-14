@@ -29,8 +29,8 @@ class TimeCardHoursWorked extends Migration
          * create foreign key to the time_card table
          */
         Schema::table('time_card_hours_worked', function(Blueprint $table) {
-            $table->integer('time_card_id')->unsigned()->nullable();
-            $table->foreign('time_card_id')->references('id')->on('time_card')->nullable();
+            $table->integer('time_card_id')->unsigned();
+            $table->foreign('time_card_id')->references('id')->on('time_card');
         });
     }
 
