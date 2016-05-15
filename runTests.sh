@@ -43,3 +43,22 @@ echo "==========================================================================
 echo "running ./tests/SeleniumTest/TaskView/testTaskViewClientSideInteractingWithTaskTypeView.php"
 echo "=============================================================================="
 phpunit ./tests/SeleniumTest/TaskView/testTaskViewClientSideInteractingWithTaskTypeView.php
+
+echo ""
+echo " Task Type View Tests"
+echo ""
+echo ""
+echo "=============================================================================="
+echo "running ./tests/SeleniumTest/TaskTypeView/testTaskTypeViewClientSide.php"
+echo "=============================================================================="
+phpunit ./tests/SeleniumTest/TaskTypeView/testTaskTypeViewClientSide.php
+
+echo "=============================================================================="
+echo "running ./tests/SeleniumTest/TaskTypeView/testTaskTypeServerSide.php"
+echo "=============================================================================="
+phpunit ./tests/SeleniumTest/TaskTypeView/testTaskTypeServerSide.php
+
+echo "=============================================================================="
+echo "running ./tests/SeleniumTest/TaskTypeView/testTaskTypeRDBMS.php"
+echo "=============================================================================="
+phpunit ./tests/SeleniumTest/TaskTypeView/testTaskTypeRDBMS.php

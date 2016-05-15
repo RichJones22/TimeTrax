@@ -9,24 +9,28 @@
 use Laracasts\Integrated\Extensions\Selenium;
 use Laracasts\Integrated\Services\Laravel\Application as Laravel;
 
+use \App\Traits\Tests\DataReset;
+
 
 class testTaskView extends Selenium
 {
-    use Laravel;
+    use Laravel, DataReset;
 
-    function testDeleteTaskTypeTableData()
-    {
-        $newTestClass = new testTaskView();
+    private $delayMe = 2000;
 
-        $newTestClass->visit('delete_taskType_data');
+    /**
+     * these tests are run as a unit, so we begin by resetting the data.
+     * @test
+     */
+    function test_reset_data() {
 
-        $newTestClass->tearDown();
+        $this->deleteData($this->getClassName($this));
+        $this->createData($this->getClassName($this));
 
         return $this;
-
     }
 
-    public function createData()
+    public function createTaskTypeData()
     {
         $newTestClass = new testTaskView();
 
@@ -39,12 +43,11 @@ class testTaskView extends Selenium
 
     function testCreatingDataThatAlreadyExists()
     {
-        $this->testDeleteTaskTypeTableData();
-
-        $this->visit('/taskType/1')->createData()
-            ->type('Lunch', '#taskType01')
-            ->type('Lunch break','description')
-            ->tick('#taskType01')
+        $this->visit('/taskType/1')->wait($this->delayMe)
+            ->createTaskTypeData()
+            ->type('Lunch', '#taskType')
+            ->type('Lunch break','#description')
+            ->tick('#taskType')
             ->click('saveButtonTaskType')->wait(15000)
             ->see('Task Type Maintenance');
     }

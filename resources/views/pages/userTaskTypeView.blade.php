@@ -82,7 +82,7 @@ use \App\Helpers\appGlobals as appGlobals;
                         </td>
                         <td>
                             <div class="col-xs-9 rowTaskDesc taskTypeEditButton ttv-inline-block">
-                                <input name="rowTaskDesc_desc" type="text" value="{{ $taskType->description }}">
+                                <input id="rowTaskTypeDesc_{{ $rowCount }}" name="rowTaskDesc_desc" type="text" value="{{ $taskType->description }}">
                             </div>
                             <div class="ttv-inline-block pull-right">
                                 <div>

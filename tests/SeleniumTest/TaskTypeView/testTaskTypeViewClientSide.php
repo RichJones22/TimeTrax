@@ -35,19 +35,6 @@ class testTaskView extends Selenium
         $this->visit('/');
     }
 
-    /** @test */
-    public function testCreateData()
-    {
-        $newTestClass = new testTaskView();
-
-        $newTestClass->visit('create_data');
-
-        $newTestClass->tearDown();
-
-        return $this;
-
-    }
-
    /** @test */
     function test_visits_taskType_view() {
         $this->visit('/taskType/1')->see("Type");
@@ -77,7 +64,6 @@ class testTaskView extends Selenium
             ->See('Error: Type already exists.');
     }
 
-
     /** @test */
     function test_checks_for_successful_insert() {
         $this->visit('/taskType/1')
@@ -100,6 +86,29 @@ class testTaskView extends Selenium
         $this->visit('/taskType/1')
             ->click('Code')
             ->see("Type (Code) currently exists on tasks.");
+    }
+
+    /** @test */
+    function test_grid_updates() {
+        $this->visit('/taskType/1')
+            ->click('#rowTaskTypeId_0')
+            ->type("",'#rowTaskTypeId_0')
+            ->click('#rowTaskTypeDesc_0')->wait($this->delayMe)
+            ->see('Error: Type must contain a value.')
+            ->click('#rowTaskTypeId_0')
+            ->type("test",'#rowTaskTypeId_0')
+            ->click('#rowTaskTypeDesc_0')->wait($this->delayMe)
+            ->see('Error: Type already exists.')
+            ->click('#rowTaskTypeId_0')
+            ->type("this is it",'#rowTaskTypeId_0')
+            ->click('#rowTaskTypeDesc_0')->wait($this->delayMe)
+            ->see('Error: Type restricted to one word.')
+            ->click('#rowTaskTypeId_0')
+            ->type("Lunch",'#rowTaskTypeId_0')
+            ->click('#rowTaskTypeDesc_0')
+            ->click('#taskTypeRefreshPage')->wait($this->delayMe)
+            ->see('Lunch');
+
     }
 
 }

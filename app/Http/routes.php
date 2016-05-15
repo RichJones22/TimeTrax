@@ -585,12 +585,12 @@ Route::get('delete_task_data', function() {
     echo "task data deleted!";
 });
 
-Route::get('delete_taskType_data', function() {
-    DB::table('task')->delete();
-    DB::table('task_type')->delete();
-
-    echo "task data deleted!";
-});
+//Route::get('delete_taskType_data', function() {
+//    DB::table('task')->delete();
+//    DB::table('task_type')->delete();
+//
+//    echo "task data deleted!";
+//});
 
 Route::get('add_task_data_firstPass', function() {
     $startTime = '07:00:00';
@@ -664,42 +664,6 @@ Route::get('add_taskType_data', function() {
 
 
 Route::get('add_timeCard_data', function() {
-
-//    // get $work->id
-//    $work = Work::where('work_type_description', '=', 'A new landing page is required to support Fall 2016 GNO.')->first();
-//
-//    $timeCard = new TimeCard();
-//    $timeCard->iso_beginning_dow_date = $date;
-//    $timeCard->work_id = $work->id;
-//
-//    if (is_null($timeCard = TimeCard::checkIfExists($timeCard))) {
-//
-//        // get $timeCardFormat->id
-//        $timeCardFormat = TimeCardFormat::where('description', '=', 'Day of week starts on SAT and ends on SUN')->first();
-//
-//        $timeCard = new TimeCard();
-//
-//        $timeCard->work_id = $work->id;
-//        $timeCard->time_card_format_id = $timeCardFormat->id;
-//        $timeCard->iso_beginning_dow_date = $date;
-//
-//        $timeCard->save();
-//
-//        if (is_null($timeCardHoursWorked = TimeCardHoursWorked::checkIfExists($timeCard))) {
-//
-//            $timeCardHoursWorked = new TimeCardHoursWorked;
-//
-//            $timeCardHoursWorked->date_worked = $date;
-//            $timeCardHoursWorked->dow = "MON";
-//            $timeCardHoursWorked->hours_worked = 8.0;
-//
-//            $timeCardHoursWorked->time_card_id = $timeCard->id;
-//            $timeCardHoursWorked->work_id = $work->id;
-//
-//            $timeCardHoursWorked->save();
-//
-//        }
-//    }
 
     $date = '2015-11-09';
 
