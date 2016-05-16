@@ -170,7 +170,6 @@ class testTaskView extends Selenium
             ->see('pink');
     }
 
-
     /** @test */
     function test_write_record() {
         $this->visit('/task/1')

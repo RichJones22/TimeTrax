@@ -80,6 +80,9 @@ class TaskTypeController extends Controller
         // set appGlobal.taskTypeUpdateURI for ajax update routing.
         appGlobals::populateJsGlobalTaskTypeUpdateURI();
 
+        // set appGlobal.ttvTypeClearText when phpunit selenium testing, only.
+        appGlobals::populateJsGlobalTtvTypeClearTextTrue();
+
         // correctly sets the back button if the $timeCardId has been passed, the back button is set, else not.
         if (is_null($timeCardId)) {
             \Session::forget(appGlobals::getTaskTableName());

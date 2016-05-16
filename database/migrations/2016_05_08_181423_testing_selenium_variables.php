@@ -12,14 +12,17 @@ class TestingSeleniumVariables extends Migration
      */
     public function up()
     {
-        /**
-         * create task table
-         */
-        Schema::create('testing_selenium_variables', function(Blueprint $table){
-            $table->increments('id');
-            $table->boolean('testingRDBMS')->default(0);
-            $table->timestamps();
-        });
+        if (App::environment('local', 'staging')) {
+            /**
+             * create task table
+             */
+            Schema::create('testing_selenium_variables', function(Blueprint $table){
+                $table->increments('id');
+                $table->boolean('testingRDBMS')->default(0);
+                $table->boolean('ttvTypeClearText')->default(0);
+                $table->timestamps();
+            });
+        }
     }
 
     /**

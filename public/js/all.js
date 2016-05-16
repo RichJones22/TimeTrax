@@ -659,9 +659,11 @@ taskType.pencilButtonClicked = function () {
     $('.rowTaskType').focusin(function() {
         var row = $(this).closest('tr');
 
-        if (row.find('input[name=rowTaskType_type]').val() !== "") {
-            taskType.saveButton.setTypeValue(row.find('input[name=rowTaskType_type]').val());
-            row.find('input[name=rowTaskType_type]').val("");
+        if (appGlobal.ttvTypeClearText) {
+            if (row.find('input[name=rowTaskType_type]').val() !== "") {
+                taskType.saveButton.setTypeValue(row.find('input[name=rowTaskType_type]').val());
+                row.find('input[name=rowTaskType_type]').val("");
+            }
         }
     });
 
@@ -671,89 +673,166 @@ taskType.pencilButtonClicked = function () {
         var typeRowId = $(typeRow).attr('id').split('_');
         var $whichOne = typeRowId;
 
-        $('.taskTypeEditButton').trigger( "change", {'whichOne': $whichOne});
+        //$('.taskTypeEditButton').trigger( "change", {'whichOne': $whichOne});
+        taskType.editGridItems({'outerObj': this, 'whichOne': $whichOne});
     });
 
-    $('.taskTypeEditButton').change(function(e, params) {
+    $('.rowTaskDesc').focusout(function() {
         var row = $(this).closest('tr');
-        var columns = row.find('td');
+        var descRow = $(row.find('input[name=rowTaskDesc_desc]'));
+        var descRowId = $(descRow).attr('id').split('_');
+        var $whichOne = descRowId;
 
-        // find values for Type and Description
-        var vType = row.find('input[name=rowTaskType_type]').val();
-        var vDesc = row.find('input[name=rowTaskDesc_desc]').val();
-
-        var typeRow = $(row.find('input[name=rowTaskType_type]'));
-        var typeRowVal = $(typeRow).val();
-        var typeRowId = $(typeRow).attr('id').split('_');
-
-        // only process the row that changed.
-        if (params.whichOne[1] === typeRowId[1]) {
-            // perform validations.
-            if (! taskType.allowOneWord(typeRow)) {
-                return false;
-            }
-
-            if (! taskType.isTaskTypeEmpty(typeRow)) {
-                return false;
-            }
-
-            if (taskType.isTaskTypeADuplicate(typeRowVal, typeRowId[1])) {
-                $(row.find('input[name=rowTaskType_type]')).css('background-color', 'pink');
-
-                $('#taskTypeHeader').text("Error: Type already exists.");
-                $('#taskTypeHeader').css('color', 'brown');
-                $('#taskTypeHeader').css('font-weight', 'bold');
-                taskType.saveButton.setType(false);
-                enabledDisabledSaveButton01();
-
-                return false;
-            } else {
-                // set error condition back to a none error color.
-                $(typeRow).css('background-color', 'white');
-                document.getElementById("taskTypeHeader").style.color=$(typeRow).css("color");
-                $('#taskTypeHeader').text("Task Type Maintenance");
-            }
-
-            // place in correct format.
-            vType = taskType.placeInCorrectFormat(vType);
-            vDesc = taskType.placeInCorrectFormat(vDesc);
-
-            // update client with new format.
-            row.find('input[name=rowTaskType_type]').val(vType);
-            row.find('input[name=rowTaskDesc_desc]').val(vDesc);
-
-            // bundle data for server send.
-            var rowTaskType_id = columns.find('input[name=rowTaskType_id]').val();
-            var data = {
-                id: rowTaskType_id,
-                type: vType,
-                desc: vDesc,
-                client_id: appGlobal.clientId
-            };
-            data = JSON.stringify(data);
-            data = {data: data};
-
-            // send request to server
-            taskType.ajaxPostReq(data, rowTaskType_id);
-
-            // set save button to true.
-            taskType.saveButton.setType(false);
-            taskType.saveButton.setDescription(false);
-            enabledDisabledSaveButton01();
-        }
+        //$('.taskTypeEditButton').trigger( "change", {'whichOne': $whichOne});
+        taskType.editGridItems({'outerObj': this, 'whichOne': $whichOne});
     });
+
+    //$('.taskTypeEditButton').change(function(e, params) {
+    //    var row = $(this).closest('tr');
+    //    var columns = row.find('td');
+    //
+    //    // find values for Type and Description
+    //    var vType = row.find('input[name=rowTaskType_type]').val();
+    //    var vDesc = row.find('input[name=rowTaskDesc_desc]').val();
+    //
+    //    var typeRow = $(row.find('input[name=rowTaskType_type]'));
+    //    var typeRowVal = $(typeRow).val();
+    //    var typeRowId = $(typeRow).attr('id').split('_');
+    //
+    //    // only process the row that changed.
+    //    if (params.whichOne[1] === typeRowId[1]) {
+    //        // perform validations.
+    //        if (! taskType.allowOneWord(typeRow)) {
+    //            return false;
+    //        }
+    //
+    //        if (! taskType.isTaskTypeEmpty(typeRow)) {
+    //            return false;
+    //        }
+    //
+    //        if (taskType.isTaskTypeADuplicate(typeRowVal, typeRowId[1])) {
+    //            $(row.find('input[name=rowTaskType_type]')).css('background-color', 'pink');
+    //
+    //            $('#taskTypeHeader').text("Error: Type already exists.");
+    //            $('#taskTypeHeader').css('color', 'brown');
+    //            $('#taskTypeHeader').css('font-weight', 'bold');
+    //            taskType.saveButton.setType(false);
+    //            enabledDisabledSaveButton01();
+    //
+    //            return false;
+    //        } else {
+    //            // set error condition back to a none error color.
+    //            $(typeRow).css('background-color', 'white');
+    //            document.getElementById("taskTypeHeader").style.color=$(typeRow).css("color");
+    //            $('#taskTypeHeader').text("Task Type Maintenance");
+    //        }
+    //
+    //        // place in correct format.
+    //        vType = taskType.placeInCorrectFormat(vType);
+    //        vDesc = taskType.placeInCorrectFormat(vDesc);
+    //
+    //        // update client with new format.
+    //        row.find('input[name=rowTaskType_type]').val(vType);
+    //        row.find('input[name=rowTaskDesc_desc]').val(vDesc);
+    //
+    //        // bundle data for server send.
+    //        var rowTaskType_id = columns.find('input[name=rowTaskType_id]').val();
+    //        var data = {
+    //            id: rowTaskType_id,
+    //            type: vType,
+    //            desc: vDesc,
+    //            client_id: appGlobal.clientId
+    //        };
+    //        data = JSON.stringify(data);
+    //        data = {data: data};
+    //
+    //        // send request to server
+    //        taskType.ajaxGetReq(data, rowTaskType_id);
+    //
+    //        // set save button to true.
+    //        taskType.saveButton.setType(false);
+    //        taskType.saveButton.setDescription(false);
+    //        enabledDisabledSaveButton01();
+    //    }
+    //});
 };
 
-taskType.ajaxPostReq = function(data, id) {
+taskType.editGridItems = function(params) {
+    var row = $(params.outerObj).closest('tr');
+    var columns = row.find('td');
+
+    // find values for Type and Description
+    var vType = row.find('input[name=rowTaskType_type]').val();
+    var vDesc = row.find('input[name=rowTaskDesc_desc]').val();
+
+    var typeRow = $(row.find('input[name=rowTaskType_type]'));
+    var typeRowVal = $(typeRow).val();
+    var typeRowId = $(typeRow).attr('id').split('_');
+
+    // only process the row that changed.
+    if (params.whichOne[1] === typeRowId[1]) {
+        // perform validations.
+        if (! taskType.allowOneWord(typeRow)) {
+            return false;
+        }
+
+        if (! taskType.isTaskTypeEmpty(typeRow)) {
+            return false;
+        }
+
+        if (taskType.isTaskTypeADuplicate(typeRowVal, typeRowId[1])) {
+            $(row.find('input[name=rowTaskType_type]')).css('background-color', 'pink');
+
+            $('#taskTypeHeader').text("Error: Type already exists.");
+            $('#taskTypeHeader').css('color', 'brown');
+            $('#taskTypeHeader').css('font-weight', 'bold');
+            taskType.saveButton.setType(false);
+            enabledDisabledSaveButton01();
+
+            return false;
+        } else {
+            // set error condition back to a none error color.
+            $(typeRow).css('background-color', 'white');
+            document.getElementById("taskTypeHeader").style.color=$(typeRow).css("color");
+            $('#taskTypeHeader').text("Task Type Maintenance");
+        }
+
+        // place in correct format.
+        vType = taskType.placeInCorrectFormat(vType);
+        vDesc = taskType.placeInCorrectFormat(vDesc);
+
+        // update client with new format.
+        row.find('input[name=rowTaskType_type]').val(vType);
+        row.find('input[name=rowTaskDesc_desc]').val(vDesc);
+
+        // bundle data for server send.
+        var rowTaskType_id = columns.find('input[name=rowTaskType_id]').val();
+        var data = {
+            id: rowTaskType_id,
+            type: vType,
+            desc: vDesc,
+            client_id: appGlobal.clientId
+        };
+        data = JSON.stringify(data);
+        data = {data: data};
+
+        // send request to server
+        taskType.ajaxGetReq(data, rowTaskType_id);
+
+        // set save button to true.
+        taskType.saveButton.setType(false);
+        taskType.saveButton.setDescription(false);
+        enabledDisabledSaveButton01();
+    }
+};
+
+taskType.ajaxGetReq = function(data, id) {
     $.ajax({
         type: "GET",
-        url: "http://timetrax.dev/taskType/" + id + "/update/",
+        url:  appGlobal.taskTypeURI + id + appGlobal.update,
         contentType: "application/json; charset=utf8",
         data: data,
-        dataType: "json",
-        success: function(response) {
-            alert(response);
-        }
+        dataType: "json"
     });
 };
 

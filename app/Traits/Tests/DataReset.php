@@ -66,4 +66,28 @@ trait DataReset
         return $this;
 
     }
+
+    function setTtvTypeClearTextTrue($className)
+    {
+        $newTestClass = new $className();
+
+        $newTestClass->visit("set_ttvTypeClearText_true");
+
+        $newTestClass->tearDown();
+
+        return $this;
+
+    }
+
+    function setTtvTypeClearTextFalse($className)
+    {
+        $newTestClass = new $className();
+
+        $newTestClass->visit("set_ttvTypeClearText_false");
+
+        $newTestClass->tearDown();
+
+        return $this;
+
+    }
 }

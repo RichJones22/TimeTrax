@@ -90,6 +90,9 @@ class testTaskView extends Selenium
 
     /** @test */
     function test_grid_updates() {
+
+        $this->setTtvTypeClearTextTrue($this->getClassName($this));
+
         $this->visit('/taskType/1')
             ->click('#rowTaskTypeId_0')
             ->type("",'#rowTaskTypeId_0')
@@ -107,7 +110,15 @@ class testTaskView extends Selenium
             ->type("Lunch",'#rowTaskTypeId_0')
             ->click('#rowTaskTypeDesc_0')
             ->click('#taskTypeRefreshPage')->wait($this->delayMe)
-            ->see('Lunch');
+            ->see('Lunch')
+            ->click('#rowTaskTypeDesc_0')
+            ->type(" stuff...",'#rowTaskTypeDesc_0')
+            ->click('#rowTaskTypeDesc_1')
+            ->click('#taskTypeRefreshPage')->wait($this->delayMe)
+            ->see(' stuff...')
+        ;
+
+        $this->setTtvTypeClearTextFalse($this->getClassName($this));
 
     }
 

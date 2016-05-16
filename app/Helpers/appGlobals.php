@@ -51,6 +51,8 @@ class appGlobals
     static protected $timeCardURI="timeCard/";
     static protected $workURI="work/";
     static protected $taskTypeUpdateURI="taskType/update/";
+    static protected $taskTypeURI="taskType/";
+    static protected $update="/update/";
 
     static protected $infoMessageType = 'info_message';
     static protected $messageText = [
@@ -220,12 +222,11 @@ class appGlobals
         return $data->client_id;
     }
 
-    static public function populateJsGlobalSpace($request) {
+    static public function populateJsGlobalSpace() {
         // jeffery way's package for moving php variables to the .js space.
         // see https://github.com/laracasts/PHP-Vars-To-Js-Transformer.
         // also see javascript.php in the config dir for view and .js namespace used.
         \JavaScript::put([
-            'timeCardURI'       => $request->root() . "/" . appGlobals::getTimeCardURI(),
             'workURI'           => appGlobals::getWorkURI()
         ]);
 
@@ -246,8 +247,37 @@ class appGlobals
         // see https://github.com/laracasts/PHP-Vars-To-Js-Transformer.
         // also see javascript.php in the config dir for view and .js namespace used.
         \JavaScript::put([
-            'taskTypeUpdateURI' => appGlobals::getTaskTypeUpdateURI()
+            'taskTypeUpdateURI' => appGlobals::getTaskTypeUpdateURI(),
+            'update' => self::$update,
+            'taskTypeURI' => url("/") . "/" . self::$taskTypeURI
         ]);
+    }
+
+    static public function populateJsGlobalTtvTypeClearTextTrue() {
+
+        $result = Schema::hasTable('testing_selenium_variables');
+
+        if ($result) {
+            $result = \DB::table('testing_selenium_variables')->select('ttvTypeClearText')->where('id', 1)->first();
+
+            if ($result) {
+
+                // if the test failed, we would have a testing_selenium_variables record; ttvTypeClearText needs to = 1.
+                if ($result->ttvTypeClearText === 1) {
+                    // jeffery way's package for moving php variables to the .js space.
+                    // see https://github.com/laracasts/PHP-Vars-To-Js-Transformer.
+                    // also see javascript.php in the config dir for view and .js namespace used.
+                    \JavaScript::put([
+                        'ttvTypeClearText' => true,
+                    ]);
+
+                    return true;
+                }
+            }
+        }
+
+        return false;
+
     }
 
     static public function getIsoBeginningDowDate($timeCardHoursWorkedId) {

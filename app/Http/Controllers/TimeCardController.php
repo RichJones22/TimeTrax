@@ -45,7 +45,7 @@ class TimeCardController extends Controller
      * @param  $request
      * @return \Illuminate\Http\Response
      */
-    public function show($dateSelected=null, Request $request)
+    public function show($dateSelected=null)
     {
         // get beginning and ending week dates.
         list($bwDate, $ewDate, $iso_beginning_dow_date) = $this->getBeginningAndEndingWeekDates($dateSelected);
@@ -57,7 +57,7 @@ class TimeCardController extends Controller
         $timeCardRange = $this->buildViewVariables($timeCardRows, $hoursWorkedDow, $hoursWorkedIdDow, $bwDate, $ewDate);
 
         // set values use by appGlobal class.
-        $this->setValueUseByAppGlobal($request, $timeCardRows);
+        $this->setValueUseByAppGlobal($timeCardRows);
 
         // pass the data to the view.
         return view('pages.userTimeCardView')
@@ -421,12 +421,12 @@ class TimeCardController extends Controller
      * @param Request $request
      * @param $timeCardRows
      */
-    private function setValueUseByAppGlobal(Request $request, $timeCardRows)
+    private function setValueUseByAppGlobal($timeCardRows)
     {
         // jeffery way's package for moving php variables to the .js space.
         // see https://github.com/laracasts/PHP-Vars-To-Js-Transformer.
         // also see javascript.php in the config dir for view and .js namespace used.
-        appGlobals::populateJsGlobalSpace($request);
+        appGlobals::populateJsGlobalSpace();
 
         // used for routing.
         $this->setRefreshButtonToCorrectTimeCardWorkedId($timeCardRows);

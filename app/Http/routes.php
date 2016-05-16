@@ -564,6 +564,20 @@ Route::get('create_data', function() {
 
 });
 
+Route::get('set_ttvTypeClearText_true', function() {
+
+    DB::table('testing_selenium_variables')->truncate();
+
+    $seleniumVars = new TestingSeleniumVariables();
+    $seleniumVars->ttvTypeClearText = true;
+    $seleniumVars->save();
+
+});
+
+Route::get('set_ttvTypeClearText_false', function() {
+    DB::table('testing_selenium_variables')->truncate();
+});
+
 Route::get('set_rdbms_true', function() {
 
     DB::table('testing_selenium_variables')->truncate();
@@ -571,7 +585,6 @@ Route::get('set_rdbms_true', function() {
     $seleniumVars = new TestingSeleniumVariables();
     $seleniumVars->testingRDBMS = true;
     $seleniumVars->save();
-
 
 });
 
@@ -584,13 +597,6 @@ Route::get('delete_task_data', function() {
 
     echo "task data deleted!";
 });
-
-//Route::get('delete_taskType_data', function() {
-//    DB::table('task')->delete();
-//    DB::table('task_type')->delete();
-//
-//    echo "task data deleted!";
-//});
 
 Route::get('add_task_data_firstPass', function() {
     $startTime = '07:00:00';
