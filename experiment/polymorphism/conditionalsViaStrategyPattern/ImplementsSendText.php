@@ -9,9 +9,9 @@
 namespace experiment\polymorphism\conditionalsViaStrategyPattern;
 
 
-class decoupleSendText extends SendText implements SendInterface
+class ImplementsSendText extends SendText implements SendInterface
 {
-    // allows decoupling of the SendText class
+    // decoupling of the SendHtml class; allows for implemented by another interface.
     // 1. no implementations for this class; that is done in the extended class.
     // 2. must have extends and implements in the class definition.
 }

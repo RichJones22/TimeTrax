@@ -11,10 +11,12 @@ namespace experiment\polymorphism\conditionalsViaStrategyPattern;
 
 class SendFactory
 {
+    const DS = "\\";
+    
     private $builtClass;
 
     public function __construct($type) {
-        $className = "experiment\\polymorphism\\conditionalsViaStrategyPattern\\" . "decouple" . "Send" . ucfirst($type);
+        $className = __NAMESPACE__ . self::DS . "Implements" . "Send" . ucfirst($type);
 
         if (! class_exists($className)) {
             throw new \RuntimeException('Incorrect email Send type');
