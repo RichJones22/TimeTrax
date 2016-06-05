@@ -12,9 +12,11 @@ class WidgetMap extends Migration
      */
     public function up()
     {
+        
+        
         Schema::create('widget_map', function(Blueprint $table){
             $table->increments('id');
-            $table->integer('widget_class_name')->unique();
+            $table->integer('widget_name')->unique();
             $table->string('widget_type', 20)->default('map');
             $table->boolean('active')->default(true);
             $table->timestamps();

@@ -15,7 +15,7 @@ class WidgetDashboard extends Migration
         Schema::create('widget_dashboard', function(Blueprint $table){
             $table->increments('id');
             $table->integer('user_id')->unique();
-            $table->integer('widget_id')->unsigned();
+            $table->integer('widget_seq');
             $table->timestamps();
         });
     }

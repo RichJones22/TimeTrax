@@ -14,13 +14,11 @@ class WidgetRibbonTile extends Migration
     {
         Schema::create('widget_ribbon_tile', function(Blueprint $table){
             $table->increments('id');
-            $table->integer('widget_ribbon_id')->unsigned();
-            $table->integer('widget_tile_id')->unsigned();
-            $table->string('widget_type', 20)->defautl('ribbon_tile');
-            $table->string('widget_class_name', 100);
+            $table->string('widget_name', 100);
+            $table->string('widget_type', 20)->default('ribbonTile');
             $table->boolean('active')->default(true);
             $table->timestamps();
-            $table->unique(['widget_ribbon_id', 'widget_tile_id']);
+//            $table->unique(['widget_ribbon_id', 'widget_tile_id']);
         });
 
         /**

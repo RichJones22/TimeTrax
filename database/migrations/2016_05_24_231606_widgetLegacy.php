@@ -14,7 +14,7 @@ class WidgetLegacy extends Migration
     {
         Schema::create('widget_legacy', function(Blueprint $table){
             $table->increments('id');
-            $table->integer('widget_class_name')->unique();
+            $table->integer('widget_name')->unique();
             $table->string('widget_type', 20)->default('legacy');
             $table->boolean('active')->default(true);
             $table->timestamps();
