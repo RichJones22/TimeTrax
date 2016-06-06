@@ -16,6 +16,9 @@ class WidgetDashboard extends Migration
             $table->increments('id');
             $table->integer('user_id')->unique();
             $table->integer('widget_seq');
+            $table->integer('widget_name')->unique();
+            $table->string('widget_type', 20)->default('legacy');
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }
