@@ -227,6 +227,7 @@ class appGlobals
         // see https://github.com/laracasts/PHP-Vars-To-Js-Transformer.
         // also see javascript.php in the config dir for view and .js namespace used.
         \JavaScript::put([
+            'timeCardURI'       => url("/") . "/" . appGlobals::getTimeCardURI(),
             'workURI'           => appGlobals::getWorkURI()
         ]);
 
