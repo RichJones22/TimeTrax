@@ -33,24 +33,38 @@ use \App\Http\Controllers\TaskTypeController;
 
 
 /***********************************************************************************************************************
+ * filters
+ **********************************************************************************************************************/
+//Route::filter('cache.before', 'Acme\Filters\CacheFilters@fetch');
+//Route::filter('cache.after', 'Acme\Filters\CacheFilters@put');
+
+/***********************************************************************************************************************
  * home, or root, or splash page route
  **********************************************************************************************************************/
 Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('phpinfo', function () {
+    phpinfo();
+});
+
+
 /***********************************************************************************************************************
  * task routes
  **********************************************************************************************************************/
 
-// route to task view; show a specific task.
-Route::get('task/{task}'        , ['as' => 'task.show', 'uses' => 'TaskController@show']);
+Route::group(['prefix' => 'task'], function () {
+    // route to task view; show a specific task.
+    Route::get('{task}'        , ['as' => 'task.show',    'uses' => 'TaskController@show']);
+//    ->before('cache.before')->after('cache.after');
 
-// insert a task
-Route::post('task/create/'      , ['as' => 'task.create', 'uses' => 'TaskController@create']);
+    // insert a task
+    Route::post('create/'      , ['as' => 'task.create',  'uses' => 'TaskController@create']);
 
-// delete a task
-Route::post('task/{task}'       , ['as' => 'task.destroy', 'uses' => 'TaskController@destroy']);
+    // delete a task
+    Route::post('{task}'       , ['as' => 'task.destroy', 'uses' => 'TaskController@destroy']);
+});
 
 // ajax call to list all tasks.
 Route::get('get_all_tasks', function() {

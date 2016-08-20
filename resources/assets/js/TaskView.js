@@ -90,11 +90,13 @@ function isValidHourMinute(ttime) {
     var myDateTime = "1960-10-03 " + ttime;
     var formats = ["YYYY-MM-DD LT","YYYY-MM-DD h:mm:ss A","YYYY-MM-DD HH:mm:ss","YYYY-MM-DD HH:mm"];
 
-    if (moment(myDateTime, formats, true).isValid()) {
-        return true;
-    }
+    // if (moment(myDateTime, formats, true).isValid()) {
+    //     return true;
+    // }
+    //
+    // return false;
 
-    return false;
+    return moment(myDateTime, formats, true).isValid();
 
 }
 
