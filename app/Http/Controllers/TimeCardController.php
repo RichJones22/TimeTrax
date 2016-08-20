@@ -211,7 +211,7 @@ class TimeCardController extends Controller
             $ewDate->addDays(6);
         }
 
-        return array($bwDate, $ewDate, $iso_beginning_dow_date);
+        return [$bwDate, $ewDate, $iso_beginning_dow_date];
     }
 
 
@@ -232,7 +232,7 @@ class TimeCardController extends Controller
         array_shift($hoursWorkedDow);
         array_shift($hoursWorkedIdDow);
 
-        return array($hoursWorkedDow, $hoursWorkedIdDow);
+        return [$hoursWorkedDow, $hoursWorkedIdDow];
     }
 
     /**
@@ -296,7 +296,7 @@ class TimeCardController extends Controller
         // eager load related data.
         $this->egerloadRelations($timeCardRows);
 
-        return array($timeCardRows, $hoursWorkedDow, $hoursWorkedIdDow);
+        return [$timeCardRows, $hoursWorkedDow, $hoursWorkedIdDow];
     }
 
 
