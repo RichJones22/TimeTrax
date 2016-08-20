@@ -11,7 +11,6 @@ use Laracasts\Integrated\Services\Laravel\Application as Laravel;
 
 use \App\Traits\Tests\DataReset;
 
-
 class testTimeCardView extends Selenium
 {
     use Laravel, DataReset;
@@ -22,7 +21,8 @@ class testTimeCardView extends Selenium
      * these tests are run as a unit, so we begin by resetting the data.
      * @test
      */
-    function test_reset_data() {
+    function test_reset_data()
+    {
 
         $this->deleteData($this->getClassName($this));
         $this->createData($this->getClassName($this));
@@ -31,7 +31,8 @@ class testTimeCardView extends Selenium
     }
 
    /** @test */
-    function test_visits_timeCard_cant_add_sun_hours() {
+    function test_visits_timeCard_cant_add_sun_hours()
+    {
         $this->visit("/timeCard/2015-11-12")->see("( 2015-11-08 - 2015-11-14 )")
             ->type('8', '#dow_00')
             ->click('#saveButtonTimeCard')
@@ -39,7 +40,8 @@ class testTimeCardView extends Selenium
     }
 
     /** @test */
-    function test_visits_timeCard_add_sun_hours() {
+    function test_visits_timeCard_add_sun_hours()
+    {
         $this->visit("/timeCard/2015-11-12")->see("( 2015-11-08 - 2015-11-14 )")
             ->type('8', '#dow_00')
             ->tick('#dow_01')->wait($this->delayMe)
@@ -49,14 +51,16 @@ class testTimeCardView extends Selenium
     }
 
     /** @test */
-    function test_visits_timeCard_delete_sun_hours() {
+    function test_visits_timeCard_delete_sun_hours()
+    {
         $this->visit("/timeCard/2015-11-12")->see("( 2015-11-08 - 2015-11-14 )")
             ->click('#deleteButton3')
             ->notSee('deleteButton3');
     }
 
     /** @test */
-    function test_visits_timeCard_hours_for_day_exist() {
+    function test_visits_timeCard_hours_for_day_exist()
+    {
         $this->visit("/timeCard/2015-11-12")->wait($this->delayMe)
             ->select('#workType', 2)
             ->type('8', '#dow_04')
@@ -66,14 +70,16 @@ class testTimeCardView extends Selenium
     }
 
     /** @test */
-    function test_visits_delete_data_for_timeCard_toggle_type_between_two_days() {
+    function test_visits_delete_data_for_timeCard_toggle_type_between_two_days()
+    {
         $this->visit("/timeCard/2015-11-12")->see("( 2015-11-08 - 2015-11-14 )")
             ->click('#deleteButton2')
             ->notSee('deleteButton2');
     }
 
     /** @test */
-    function test_visits_add_data_for_timeCard_toggle_type_between_two_days() {
+    function test_visits_add_data_for_timeCard_toggle_type_between_two_days()
+    {
         $this->visit("/timeCard/2015-11-12")->see("( 2015-11-08 - 2015-11-14 )")
             ->type('8', '#dow_04')
             ->tick('#dow_05')->wait($this->delayMe)
@@ -83,7 +89,8 @@ class testTimeCardView extends Selenium
     }
 
     /** @test */
-    function test_visits_timeCard_toggle_type_between_two_days() {
+    function test_visits_timeCard_toggle_type_between_two_days()
+    {
         $this->visit("/timeCard/2015-11-12")->wait($this->delayMe)
             ->select('#workType', 2)
             ->type('8', '#dow_04')
@@ -96,5 +103,4 @@ class testTimeCardView extends Selenium
             ->click('#saveButtonTimeCard')->wait($this->delayMe)
             ->see('pink');
     }
-
 }

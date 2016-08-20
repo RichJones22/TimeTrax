@@ -5,7 +5,6 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use \App\Helpers\appGlobals;
 
-
 class Project extends Model
 {
     /**
@@ -26,7 +25,8 @@ class Project extends Model
      * @param [in] $text
      * @return a record.
      */
-    static public function checkIfExists($text) {
+    public static function checkIfExists($text)
+    {
         $project = Project::where('name', '=', $text)->first();
 
         if (!is_null($project)) {
@@ -35,7 +35,4 @@ class Project extends Model
 
         return $project;
     }
-
-
-
 }

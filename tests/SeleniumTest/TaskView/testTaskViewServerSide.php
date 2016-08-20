@@ -11,7 +11,6 @@ use Laracasts\Integrated\Services\Laravel\Application as Laravel;
 
 use \App\Traits\Tests\DataReset;
 
-
 class testTaskView extends Selenium
 {
     use Laravel, DataReset;
@@ -28,7 +27,6 @@ class testTaskView extends Selenium
         $newTestClass->tearDown();
 
         return $this;
-
     }
 
     public function waitClosure()
@@ -50,7 +48,7 @@ class testTaskView extends Selenium
             ->type('13:00', '#startt-search')
             ->type('14:00', '#endt')
             ->select('#taskType', 1)
-            ->type('rich was here','#notes')
+            ->type('rich was here', '#notes')
             ->click('#saveButton')->wait(2000)
             ->see('One of your entered time values overlaps with existing data.  Your data has been refreshed.');
     }
@@ -63,7 +61,7 @@ class testTaskView extends Selenium
             ->type('11:30', '#startt-search')
             ->type('14:00', '#endt')
             ->select('#taskType', 1)
-            ->type('rich was here','#notes')
+            ->type('rich was here', '#notes')
             ->click('#saveButton')->wait(2000)
             ->see('One of your entered time values overlaps with existing data.  Your data has been refreshed.');
     }
@@ -76,7 +74,7 @@ class testTaskView extends Selenium
             ->type('16:00', '#startt-search')
             ->type('18:00', '#endt')
             ->select('#taskType', 1)
-            ->type('rich was here','#notes')
+            ->type('rich was here', '#notes')
             ->click('#saveButton')->wait(2000)
             ->see('One of your entered time values overlaps with existing data.  Your data has been refreshed.');
     }
@@ -90,9 +88,8 @@ class testTaskView extends Selenium
             ->type('16:00', '#startt-search')
             ->type('18:00', '#endt')
             ->select('#taskType', 1)
-            ->type('rich was here','#notes')
+            ->type('rich was here', '#notes')
             ->click('#saveButton')->wait(15000)
             ->see('Nov 12, 2015');
     }
-
 }

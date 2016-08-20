@@ -19,7 +19,8 @@ class TaskType extends Model
         'type',
         'description'];
 
-    static public function checkIfExists($data) {
+    public static function checkIfExists($data)
+    {
         $taskType = TaskType::where('type', '=', $data)->first();
 
         if (!is_null($taskType)) {
@@ -33,7 +34,8 @@ class TaskType extends Model
      * Eager load Task model.
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function task() {
+    public function task()
+    {
         return $this->hasMany('\App\Task');
     }
 
@@ -42,7 +44,8 @@ class TaskType extends Model
      * @param $taskType
      * @return bool
      */
-    public function checkTaskTypeDeleteAudits($taskType) {
+    public function checkTaskTypeDeleteAudits($taskType)
+    {
 
         if (($result =  $this->checkIfTypeConstraintExists($taskType)) > 0) {
             return $result;
@@ -56,7 +59,8 @@ class TaskType extends Model
      * @param $taskType
      * @return bool
      */
-    public function checkTaskTypeCreateAudits($taskType) {
+    public function checkTaskTypeCreateAudits($taskType)
+    {
 
         if (($result =  $this->checkIfTypeExists($taskType)) > 0) {
             return $result;
@@ -69,7 +73,8 @@ class TaskType extends Model
         return false;
     }
 
-    public function checkIfTypeExists($taskType) {
+    public function checkIfTypeExists($taskType)
+    {
 
         $val = TaskType::where('type', '=', $taskType->type)
             ->where('client_id', '=', $taskType->client_id)
@@ -82,7 +87,8 @@ class TaskType extends Model
         return 0;
     }
 
-    public function checkIfTypeContainsMultipleWords($taskType) {
+    public function checkIfTypeContainsMultipleWords($taskType)
+    {
 
         $val[] = explode(" ", trim($taskType->type));
 
@@ -93,7 +99,8 @@ class TaskType extends Model
         return 0;
     }
 
-    public function checkIfTypeConstraintExists($taskType) {
+    public function checkIfTypeConstraintExists($taskType)
+    {
 
         $val = Task::where('task_type_id', '=', $taskType->id)
             ->first();
@@ -105,7 +112,8 @@ class TaskType extends Model
         return 0;
     }
 
-    public function updateRec($att) {
+    public function updateRec($att)
+    {
 
         $arrUpdate = [];
 

@@ -4,7 +4,6 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-
 class ExampleTest extends TestCase
 {
     /**
@@ -22,5 +21,4 @@ class ExampleTest extends TestCase
 //    {
 //        $this->get('/task/show/1')->see('Type')->see('Start')->see('Time');
 //    }
-
 }

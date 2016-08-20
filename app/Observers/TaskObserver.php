@@ -9,9 +9,11 @@
 namespace app\Observers;
 
 use \App\Helpers\appGlobals;
+
 class TaskObserver
 {
-    public function creating($task) {
+    public function creating($task)
+    {
 
         // check if getTestRDBMS is set for testing the Database triggers.
         if (appGlobals::getTestRDBMS()) {
@@ -25,7 +27,8 @@ class TaskObserver
         }
     }
 
-    public function created($task) {
-        appGlobals::createdMessage(appGlobals::getTaskTableName(), $task->start_time , $task->id);
+    public function created($task)
+    {
+        appGlobals::createdMessage(appGlobals::getTaskTableName(), $task->start_time, $task->id);
     }
 }

@@ -7,6 +7,7 @@
  */
 
 namespace app\Helpers;
+
 use \Illuminate\Database\QueryException;
 
 use \App\Client;
@@ -67,7 +68,8 @@ class appGlobals
     // - set to true for the RDBMS test files.
     static protected $testRDBMS = false;
 
-    public function __construct() {
+    public function __construct()
+    {
         self::$clientTableName = with(new Client)->getTable();
         self::$projectTableName = with(new Project)->getTable();
         self::$workTypeTableName = with(new WorkType)->getTable();
@@ -80,55 +82,68 @@ class appGlobals
         self::$testingSeleniumVariablesTableName = with(new TestingSeleniumVariables)->getTable();
     }
 
-    static public function getClientTableName() {
+    public static function getClientTableName()
+    {
         return self::$clientTableName;
     }
 
-    static public function getProjectTableName() {
+    public static function getProjectTableName()
+    {
         return self::$projectTableName;
     }
 
-    static public function getWorkTypeTableName() {
+    public static function getWorkTypeTableName()
+    {
         return self::$workTypeTableName;
     }
 
-    static public function getTimeCardFormatTableName() {
+    public static function getTimeCardFormatTableName()
+    {
         return self::$timeCardFormatTableName;
     }
 
-    static public function getWorkTableName() {
+    public static function getWorkTableName()
+    {
         return self::$workTableName;
     }
 
-    static public function getTimeCardTableName() {
+    public static function getTimeCardTableName()
+    {
         return self::$timeCardTableName;
     }
 
-    static public function getTimeCardHoursWorkedTableName() {
+    public static function getTimeCardHoursWorkedTableName()
+    {
         return self::$timeCardHoursWorkedTableName;
     }
 
-    static public function getTaskTypeTableName() {
+    public static function getTaskTypeTableName()
+    {
         return self::$timeTaskTypeTableName;
     }
 
-    static public function getTaskTableName() {
+    public static function getTaskTableName()
+    {
         return self::$timeTaskTableName;
     }
 
-    static public function getTestingSeleniumVariablesTableName() {
+    public static function getTestingSeleniumVariablesTableName()
+    {
         return self::$testingSeleniumVariablesTableName;
     }
 
-    static public function existsMessage($table, $text, $key) {
+    public static function existsMessage($table, $text, $key)
+    {
         echo $table . ": " . "'" . $text . "'" . " with key of " . $key . ' exists.<br>';
     }
 
-    static public function createdMessage($table, $text, $key) {
+    public static function createdMessage($table, $text, $key)
+    {
         echo $table . ": " . "'" . $text . "'" . " with key of " . $key . ' created.<br>';
     }
 
-    static public function reportError(QueryException $e, $file, $line) {
+    public static function reportError(QueryException $e, $file, $line)
+    {
         echo "error code ". $e->getCode() . " found at line: " . $line . "<br>";
         echo "in file: " . $file . "<br>";
         echo "with message: ". "<br>";
@@ -136,11 +151,13 @@ class appGlobals
         //var_dump($e);
     }
 
-    static public function getInfoMessageType() {
+    public static function getInfoMessageType()
+    {
         return self::$infoMessageType;
     }
 
-    static public function getInfoMessageText($messageNum) {
+    public static function getInfoMessageText($messageNum)
+    {
         if (array_key_exists($messageNum, self::$messageText)) {
             return self::$messageText[$messageNum];
         } else {
@@ -148,11 +165,13 @@ class appGlobals
         }
     }
 
-    static public function setTestRDBMS($value) {
+    public static function setTestRDBMS($value)
+    {
         self::$testRDBMS = $value;
     }
 
-    static public function getTestRDBMS() {
+    public static function getTestRDBMS()
+    {
 
         $result = Schema::hasTable('testing_selenium_variables');
 
@@ -167,25 +186,30 @@ class appGlobals
         return false;
     }
 
-    static public function getDomain() {
+    public static function getDomain()
+    {
         return self::$domain;
     }
 
-    static public function getTimeCardURI() {
+    public static function getTimeCardURI()
+    {
         return self::$timeCardURI;
     }
 
-    static public function getWorkURI() {
+    public static function getWorkURI()
+    {
         return self::$workURI;
     }
 
-    static public function getTaskTypeUpdateURI() {
+    public static function getTaskTypeUpdateURI()
+    {
         return self::$taskTypeUpdateURI;
     }
 
-    static public function getBeginningOfCurrentWeek($dateRange) {
-        if (substr($dateRange,0,1) == '(') {
-            $dateSelected = substr($dateRange,2,10);
+    public static function getBeginningOfCurrentWeek($dateRange)
+    {
+        if (substr($dateRange, 0, 1) == '(') {
+            $dateSelected = substr($dateRange, 2, 10);
             $dateSelected = new Carbon($dateSelected, 'America/Chicago');
             $dateRange = $dateSelected->AddDays(1); // one extra day to accommodate for iso standard of a Monday start to the week
                                                     // this will push it into the next week.
@@ -194,9 +218,10 @@ class appGlobals
         return $dateRange;
     }
 
-    static public function getBeginningOfNextWeek($dateRange) {
-        if (substr($dateRange,0,1) == '(') {
-            $dateSelected = substr($dateRange,2,10);
+    public static function getBeginningOfNextWeek($dateRange)
+    {
+        if (substr($dateRange, 0, 1) == '(') {
+            $dateSelected = substr($dateRange, 2, 10);
             $dateSelected = new Carbon($dateSelected, 'America/Chicago');
             $dateRange = $dateSelected->AddDays(8); // extra days to accommodate for iso standard of a Monday start to the week
                                                     // this will push it into the next week.
@@ -205,9 +230,10 @@ class appGlobals
         return $dateRange;
     }
 
-    static public function getBeginningOfPreviousWeek($dateRange) {
-        if (substr($dateRange,0,1) == '(') {
-            $dateSelected = substr($dateRange,2,10);
+    public static function getBeginningOfPreviousWeek($dateRange)
+    {
+        if (substr($dateRange, 0, 1) == '(') {
+            $dateSelected = substr($dateRange, 2, 10);
             $dateSelected = new Carbon($dateSelected, 'America/Chicago');
             $dateRange = $dateSelected->SubDays(6); // less day to accommodate for iso standard of a Monday start to the week
                                                     // this will push it into the next week.
@@ -216,13 +242,15 @@ class appGlobals
         return $dateRange;
     }
 
-    static public function getClientIdOfProjectRecordingTimeFor() {
+    public static function getClientIdOfProjectRecordingTimeFor()
+    {
         $data = \DB::table('project')->where('flag_recording_time_for', 1)->first();
 
         return $data->client_id;
     }
 
-    static public function populateJsGlobalSpace() {
+    public static function populateJsGlobalSpace()
+    {
         // jeffery way's package for moving php variables to the .js space.
         // see https://github.com/laracasts/PHP-Vars-To-Js-Transformer.
         // also see javascript.php in the config dir for view and .js namespace used.
@@ -234,7 +262,8 @@ class appGlobals
         self::populateJsGlobalClient();
     }
 
-    static public function populateJsGlobalClient() {
+    public static function populateJsGlobalClient()
+    {
         // jeffery way's package for moving php variables to the .js space.
         // see https://github.com/laracasts/PHP-Vars-To-Js-Transformer.
         // also see javascript.php in the config dir for view and .js namespace used.
@@ -243,7 +272,8 @@ class appGlobals
         ]);
     }
 
-    static public function populateJsGlobalTaskTypeUpdateURI() {
+    public static function populateJsGlobalTaskTypeUpdateURI()
+    {
         // jeffery way's package for moving php variables to the .js space.
         // see https://github.com/laracasts/PHP-Vars-To-Js-Transformer.
         // also see javascript.php in the config dir for view and .js namespace used.
@@ -254,7 +284,8 @@ class appGlobals
         ]);
     }
 
-    static public function populateJsGlobalTtvTypeClearTextTrue() {
+    public static function populateJsGlobalTtvTypeClearTextTrue()
+    {
 
         $result = Schema::hasTable('testing_selenium_variables');
 
@@ -262,7 +293,6 @@ class appGlobals
             $result = \DB::table('testing_selenium_variables')->select('ttvTypeClearText')->where('id', 1)->first();
 
             if ($result) {
-
                 // if the test failed, we would have a testing_selenium_variables record; ttvTypeClearText needs to = 1.
                 if ($result->ttvTypeClearText === 1) {
                     // jeffery way's package for moving php variables to the .js space.
@@ -278,10 +308,10 @@ class appGlobals
         }
 
         return false;
-
     }
 
-    static public function getIsoBeginningDowDate($timeCardHoursWorkedId) {
+    public static function getIsoBeginningDowDate($timeCardHoursWorkedId)
+    {
         $data = \DB::table('time_card_hours_worked')
             ->join('time_card', 'time_card_hours_worked.time_card_id', '=', 'time_card.id')
             ->where('time_card_hours_worked.id', $timeCardHoursWorkedId)
@@ -294,7 +324,7 @@ class appGlobals
     /**
      * @param $timeCardHoursWorkedId
      */
-    static public function setSessionVariableAppGlobalTimeCardTableName($timeCardHoursWorkedId)
+    public static function setSessionVariableAppGlobalTimeCardTableName($timeCardHoursWorkedId)
     {
         if (is_null($timeCardHoursWorkedId)) {
             \Session::forget(appGlobals::getTimeCardTableName());
@@ -302,7 +332,6 @@ class appGlobals
             \Session::set(appGlobals::getTimeCardTableName(), $timeCardHoursWorkedId);
         }
     }
-
 }
 
 global $appGlobals;

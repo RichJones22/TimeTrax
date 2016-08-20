@@ -12,7 +12,8 @@ use \App\Helpers\appGlobals;
 
 class TaskTypeObserver
 {
-    public function deleting($taskType) {
+    public function deleting($taskType)
+    {
 
         // check if getTestRDBMS is set for testing the Database triggers.
         if (appGlobals::getTestRDBMS()) {
@@ -30,7 +31,8 @@ class TaskTypeObserver
         return true;
     }
 
-    public function creating($taskType) {
+    public function creating($taskType)
+    {
 
         // check if getTestRDBMS is set for testing the Database triggers.
         if (appGlobals::getTestRDBMS()) {
@@ -48,11 +50,13 @@ class TaskTypeObserver
         return true;
     }
 
-    public function created($taskType) {
-        appGlobals::createdMessage(appGlobals::getTaskTypeTableName(), $taskType->type , $taskType->id);
+    public function created($taskType)
+    {
+        appGlobals::createdMessage(appGlobals::getTaskTypeTableName(), $taskType->type, $taskType->id);
     }
 
-    public function updating($taskType) {
+    public function updating($taskType)
+    {
 
         // check to see if the task_type.type exists.
         $result = $taskType->checkIfTypeExists($taskType);

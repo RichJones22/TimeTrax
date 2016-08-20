@@ -25,7 +25,8 @@ class TimeCardHoursWorked extends Model
      * @param [in/out] $inTimeCard
      * @return mixed
      */
-    static public function checkIfExists($timeCardHoursWorked) {
+    public static function checkIfExists($timeCardHoursWorked)
+    {
 
         $timeCardHoursWorked = TimeCardHoursWorked::where('time_card_id', '=', $timeCardHoursWorked->time_card_id)->first();
 
@@ -40,7 +41,8 @@ class TimeCardHoursWorked extends Model
      * @param [in/out] $inTimeCard
      * @return mixed
      */
-    static public function checkIfDateWorkedDowExists($timeCardHoursWorked) {
+    public static function checkIfDateWorkedDowExists($timeCardHoursWorked)
+    {
 
         $timeCardHoursWorked = TimeCardHoursWorked::where('date_worked', $timeCardHoursWorked->date_worked)
             ->where('dow', $timeCardHoursWorked->dow)
@@ -53,14 +55,16 @@ class TimeCardHoursWorked extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function task() {
+    public function task()
+    {
         return $this->hasMany('\App\Task');
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function timeCard() {
+    public function timeCard()
+    {
         return $this->belongsTo('\App\TimeCard');
     }
 
@@ -70,7 +74,7 @@ class TimeCardHoursWorked extends Model
      * @param $ewDate
      * @return array
      */
-    static public function deriveTimeCardHoursWorkedFromBeginningAndEndingWeekDates($timeCardRows, $iso_beginning_dow_date)
+    public static function deriveTimeCardHoursWorkedFromBeginningAndEndingWeekDates($timeCardRows, $iso_beginning_dow_date)
     {
         $hoursWorkedPerWorkId = [];
 

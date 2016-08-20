@@ -9,9 +9,11 @@
 namespace app\Observers;
 
 use \App\Helpers\appGlobals;
+
 class TimeCardFormatObserver
 {
-    public function created($timeCardFormat) {
+    public function created($timeCardFormat)
+    {
         appGlobals::createdMessage(appGlobals::getTimeCardFormatTableName(), $timeCardFormat->description, $timeCardFormat->id);
     }
 }

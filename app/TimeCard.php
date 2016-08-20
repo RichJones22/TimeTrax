@@ -29,7 +29,8 @@ class TimeCard extends Model
      * establish relations.
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function work() {
+    public function work()
+    {
         return $this->belongsTo('\App\Work');
     }
 
@@ -37,7 +38,8 @@ class TimeCard extends Model
     * establish relations.
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function timeCardFormat() {
+    public function timeCardFormat()
+    {
         return $this->belongsTo('\App\TimeCardFormat');
     }
 
@@ -45,7 +47,8 @@ class TimeCard extends Model
      * establish relations.
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function timeCardHoursWorked() {
+    public function timeCardHoursWorked()
+    {
         return $this->hasMany('\App\TimeCardHoursWorked');
     }
 
@@ -55,7 +58,8 @@ class TimeCard extends Model
      *                                   $inTimeCard
      * @return mixed
      */
-    static public function checkIfExists(&$inTimeCard) {
+    public static function checkIfExists(&$inTimeCard)
+    {
 
         $timeCard = TimeCard::where('work_id', $inTimeCard->work_id)
             ->where('time_card_format_id', '=', $inTimeCard->time_card_format_id)
@@ -74,7 +78,8 @@ class TimeCard extends Model
      * @param TimeCard $timeCard
      * @return bool
      */
-    static public function doesTimeCardExist(TimeCard &$inTimeCard) {
+    public static function doesTimeCardExist(TimeCard &$inTimeCard)
+    {
 
         $timeCard = TimeCard::where('iso_beginning_dow_date', '=', $inTimeCard->iso_beginning_dow_date)
             ->where('work_id', '=', $inTimeCard->work_id)
@@ -92,7 +97,7 @@ class TimeCard extends Model
     public function rowExists()
     {
         $this->row = TimeCard::where('work_id', '=', $this->work_id)
-            ->where('iso_beginning_dow_date',   '=', $this->iso_beginning_dow_date)
+            ->where('iso_beginning_dow_date', '=', $this->iso_beginning_dow_date)
             ->first();
 
         return $this->row ? true : false;
@@ -103,11 +108,11 @@ class TimeCard extends Model
      * @param $ewDate
      * @return mixed
      */
-    static public function getTimeCardRows($iso_beginning_dow_date)
+    public static function getTimeCardRows($iso_beginning_dow_date)
     {
         $timeCardRows = TimeCard::where('iso_beginning_dow_date', '=', $iso_beginning_dow_date)
-            ->join('work', 'work.id' ,'=', 'time_card.work_id')
-            ->join('work_type', 'work_type.id' ,'=', 'work.work_type_id')
+            ->join('work', 'work.id', '=', 'time_card.work_id')
+            ->join('work_type', 'work_type.id', '=', 'work.work_type_id')
             ->select('time_card.id', 'time_card.iso_beginning_dow_date', 'time_card.work_id', 'time_card.time_card_format_id')
             ->orderBy('work_type.type')
             ->get();
@@ -120,20 +125,14 @@ class TimeCard extends Model
      * @param $hoursWorkedPerWorkId
      * @return mixed
      */
-    static public function getHoursWorkedForTimeCard($iso_beginning_dow_date, $timeCardRow, $hoursWorkedPerWorkId)
+    public static function getHoursWorkedForTimeCard($iso_beginning_dow_date, $timeCardRow, $hoursWorkedPerWorkId)
     {
         $hoursWorkedPerWorkId[$timeCardRow->id] = TimeCard::where('iso_beginning_dow_date', '=', $iso_beginning_dow_date)
             ->join('time_card_hours_worked', 'time_card_hours_worked.time_card_id', '=', 'time_card.id')
             ->where('time_card_hours_worked.hours_worked', ">", 0)
             ->where('time_card_hours_worked.time_card_id', '=', $timeCardRow->id)
-            ->select('time_card.work_id'
-                , 'time_card_hours_worked.dow'
-                , 'time_card_hours_worked.hours_worked'
-                , 'time_card_hours_worked.id'
-                , 'time_card_hours_worked.date_worked')
+            ->select('time_card.work_id', 'time_card_hours_worked.dow', 'time_card_hours_worked.hours_worked', 'time_card_hours_worked.id', 'time_card_hours_worked.date_worked')
             ->get();
         return $hoursWorkedPerWorkId;
     }
-
-
 }

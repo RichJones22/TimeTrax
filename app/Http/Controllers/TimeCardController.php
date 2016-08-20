@@ -45,7 +45,7 @@ class TimeCardController extends Controller
      * @param  $request
      * @return \Illuminate\Http\Response
      */
-    public function show($dateSelected=null)
+    public function show($dateSelected = null)
     {
         // get beginning and ending week dates.
         list($bwDate, $ewDate, $iso_beginning_dow_date) = $this->getBeginningAndEndingWeekDates($dateSelected);
@@ -73,7 +73,7 @@ class TimeCardController extends Controller
      */
     public function destroy($id)
     {
-        DB::transaction(function() use ($id) {
+        DB::transaction(function () use ($id) {
 
             // remove all task rows
             DB::table('task')->join('time_card_hours_worked', 'task.time_card_hours_worked_id', '=', 'time_card_hours_worked.id')
@@ -98,7 +98,8 @@ class TimeCardController extends Controller
      * @param $i
      * @return static
      */
-    private function getDateWorked($date, $i) {
+    private function getDateWorked($date, $i)
+    {
         $i--;
         $newDate = new Carbon($date, 'America/Chicago');
 
@@ -109,7 +110,8 @@ class TimeCardController extends Controller
      * @param $date
      * @return string
      */
-    private function getDOW($date) {
+    private function getDOW($date)
+    {
 
         $date = new Carbon($date, 'America/Chicago');
 
@@ -140,12 +142,13 @@ class TimeCardController extends Controller
      * @param $workTypeId
      * @return mixed
      */
-    private function getClientId($workTypeId) {
+    private function getClientId($workTypeId)
+    {
         $data = DB::table('work_type')->where('work_type.id', $workTypeId)
             ->select('client_id')
             ->first();
 
-        foreach($data as $k => $v) {
+        foreach ($data as $k => $v) {
             return $v;
         }
     }
@@ -154,13 +157,14 @@ class TimeCardController extends Controller
      * @param $clientId
      * @return mixed
      */
-    private function getTimeCardFormatId($clientId) {
+    private function getTimeCardFormatId($clientId)
+    {
 
         $data = DB::table('time_card_format')->where('client_id', $clientId)
             ->select('time_card_format.id')
             ->first();
 
-        foreach($data as $k => $v) {
+        foreach ($data as $k => $v) {
             return $v;
         }
     }
@@ -169,13 +173,14 @@ class TimeCardController extends Controller
      * @param $workTypeId
      * @return mixed
      */
-    private function getWorkIdViaWorkTypeId($workTypeId) {
+    private function getWorkIdViaWorkTypeId($workTypeId)
+    {
 
         $data = DB::table('work')->where('work_type_id', $workTypeId)
             ->select('work.id')
             ->first();
 
-        foreach($data as $k => $v) {
+        foreach ($data as $k => $v) {
             return $v;
         }
     }
@@ -353,7 +358,6 @@ class TimeCardController extends Controller
         $timeCardHoursWorked->hours_worked = $timeCardRequestAttributes['dow_0' . $i];
 
         $timeCardHoursWorked->save();
-
     }
 
     /**
@@ -369,7 +373,7 @@ class TimeCardController extends Controller
         } else {
             try {
                 $this->createTimeCardDataTransaction($timeCardRange, $timeCardRequestAttributes);
-            } catch(\Exception $e) {
+            } catch (\Exception $e) {
                 $this->timeOverlapError(appGlobals::INFO_TIME_VALUE_OVERLAP);
             }
         }

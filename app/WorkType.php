@@ -25,7 +25,8 @@ class WorkType extends Model
      * @param [in] $text
      * @return record.
      */
-    static public function checkIfExists($text) {
+    public static function checkIfExists($text)
+    {
         $workType = WorkType::where('type', '=', $text)->first();
 
         if (!is_null($workType)) {
@@ -35,7 +36,8 @@ class WorkType extends Model
         return $workType;
     }
 
-    public function work() {
+    public function work()
+    {
         return $this->hasMany('\App\Work');
     }
 }

@@ -1,5 +1,6 @@
 <?php
 namespace App\Observers;
+
 /**
  * Created by PhpStorm.
  * User: richjones
@@ -15,8 +16,8 @@ class ClientObserver
      * post successful call to the save() method
      * @param $project
      */
-    public function created($client) {
-        appGlobals::createdMessage(appGlobals::getClientTableName(), $client->name , $client->id);
+    public function created($client)
+    {
+        appGlobals::createdMessage(appGlobals::getClientTableName(), $client->name, $client->id);
     }
-
 }
