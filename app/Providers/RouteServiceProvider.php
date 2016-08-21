@@ -37,7 +37,13 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map(Router $router)
     {
-        $this->mapWebRoutes($router);
+//        $this->mapWebRoutes($router);
+
+        // TODO: still having problems using the mapWebRoutes post 5.2 conversion
+        // TODO: - tests are failing when I use the mapWebRoutes method below.
+        $router->group(['namespace' => $this->namespace], function ($router) {
+            require app_path('Http/routes.php');
+        });
 
         //
     }
@@ -53,6 +59,8 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapWebRoutes(Router $router)
     {
         $router->group([
+            // TODO: Issue#01 5.2 conversion shows middleware of web, but class or array does not exist?  Do I need to create this middleware?
+            // TODO: I need to populate the $middlewareGroups variable in
             'namespace' => $this->namespace, 'middleware' => 'web',
         ], function ($router) {
             require app_path('Http/routes.php');

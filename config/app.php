@@ -150,7 +150,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         'Laracasts\Utilities\JavaScript\JavaScriptServiceProvider',
         Collective\Html\HtmlServiceProvider::class,
-        Barryvdh\Debugbar\ServiceProvider::class,
+        // TODO: removed; seem to be causing problems with 5.2 upgrade...
+//        Barryvdh\Debugbar\ServiceProvider::class,
 
     ],
 

@@ -1,6 +1,6 @@
 <?php
 
-use \App\Helpers\appGlobals;
+use App\Helpers\appGlobals;
 use \Illuminate\Database\QueryException;
 
 use \App\Client;
@@ -110,27 +110,32 @@ Route::post('taskType/destroy/{taskType}', ['as' => 'taskType.destroy',   'uses'
  * timeCard routes
  **********************************************************************************************************************/
 
+Route::group(['prefix' => appGlobals::getTimeCardURI()], function () {
 // route to timeCard type view.
-Route::get(appGlobals::getTimeCardURI() . '{dateSelected?}', ['as' => 'timeCard.show', 'uses' => 'TimeCardController@show']);
+    Route::get('{dateSelected?}', ['as' => 'timeCard.show', 'uses' => 'TimeCardController@show']);
 
 // insert a TimeCard record.
-Route::post(appGlobals::getTimeCardURI() . 'create/{id}', ['as' => 'timeCard.create', 'uses' => 'TimeCardController@create']);
+    Route::post('create/{id}', ['as' => 'timeCard.create', 'uses' => 'TimeCardController@create']);
 
 // delete a TimeCard record.
-Route::post(appGlobals::getTimeCardURI() . 'destroy/{id}', ['as' => 'timeCard.destroy', 'uses' => 'TimeCardController@destroy']);
+    Route::post('destroy/{id}', ['as' => 'timeCard.destroy', 'uses' => 'TimeCardController@destroy']);
 
 // ajax call list Work Type's
-Route::get(appGlobals::getTimeCardURI() . appGlobals::getWorkURI() . '{clientId}', function ($client_id) {
+    Route::get(appGlobals::getWorkURI() . '{client_id}', function ($clientID) {
+//Route::get('timeCard_list_all', function () {
 
-    $data = \DB::table('project')->where('project.client_id', $client_id)
-        ->join('work', 'project.id', '=', 'work.project_id')
-        ->join('work_type', 'work.work_type_id', '=', 'work_type.id')
-        ->select('work_type.id', 'work_type.type', 'work.work_type_description')
-        ->orderby('work.work_type_id')
-        ->get();
+        $data = \DB::table('project')->where('project.client_id', $clientID)
+            ->join('work', 'project.id', '=', 'work.project_id')
+            ->join('work_type', 'work.work_type_id', '=', 'work_type.id')
+            ->select('work_type.id', 'work_type.type', 'work.work_type_description')
+            ->orderby('work.work_type_id')
+            ->get();
 
-    return $data;
+        return $data;
+    });
 });
+
+
 
 
 // route 'zzbob' is used to display all REST APIs for reference.  uncomment it and view all routes via the

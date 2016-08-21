@@ -6,7 +6,7 @@
  * Time: 4:41 PM
  */
 
-namespace app\Helpers;
+namespace App\Helpers;
 
 use \Illuminate\Database\QueryException;
 
@@ -334,5 +334,21 @@ class appGlobals
     }
 }
 
-global $appGlobals;
-$appGlobals = new appGlobals();
+// add to IOC container.
+//app()->bind('appGlobals', function(){
+//    return new appGlobals();
+//});
+
+
+//global $appGlobals;
+//$appGlobals = new appGlobals();
+//
+
+
+app()->singleton('appGlobals', function () {
+    return new appGlobals();
+});
+
+$appGlobals = app()->make('appGlobals');;
+
+
