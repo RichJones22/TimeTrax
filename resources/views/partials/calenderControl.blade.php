@@ -1,9 +1,5 @@
-<?php
-    use \App\Helpers\appGlobals;
-?>
-
 <span style="display: inline-block;">
-    {!! Form::open(array('route' => array('timeCard.show', appGlobals::getBeginningOfPreviousWeek($timeCardRange)))) !!}
+    {!! Form::open(array('route' => array('timeCard.show', appGlobals()->getBeginningOfPreviousWeek($timeCardRange)))) !!}
         <input type="hidden" name="_method" value="GET">
         <button type ="submit" style="background: darkgray">
             <span class="glyphicon glyphicon-triangle-left"></span>
@@ -11,7 +7,7 @@
     {!! Form::close() !!}
 </span>
 <span style="display: inline-block;">
-    {!! Form::open(array('route' => array('timeCard.show', appGlobals::getBeginningOfCurrentWeek($timeCardRange))
+    {!! Form::open(array('route' => array('timeCard.show', appGlobals()->getBeginningOfCurrentWeek($timeCardRange))
                                                          ,'id'    => 'formNext')) !!}
         <input type="hidden" name="_method" value="GET">
         <input id="specificDay" type="hidden" name="specificDay" value="">
@@ -19,7 +15,7 @@
     {!! Form::close() !!}
 </span>
 <span style="display: inline-block;">
-    {!! Form::open(array('route' => array('timeCard.show', appGlobals::getBeginningOfNextWeek($timeCardRange)))) !!}
+    {!! Form::open(array('route' => array('timeCard.show', appGlobals()->getBeginningOfNextWeek($timeCardRange)))) !!}
         <input type="hidden" name="_method" value="GET">
         <button type ="submit" style="background: darkgray">
             <span class="glyphicon glyphicon-triangle-right"></span>

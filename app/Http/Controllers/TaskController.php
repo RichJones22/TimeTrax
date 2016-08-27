@@ -84,7 +84,7 @@ class TaskController extends Controller
 
         // derive total hours worked.
         $totalHoursWorked=0;
-        foreach($tasks as $task) {
+        foreach ($tasks as $task) {
             $totalHoursWorked += $task->hours_worked;
         }
 
@@ -115,6 +115,4 @@ class TaskController extends Controller
 
         return redirect()->back();
     }
-
-
 }

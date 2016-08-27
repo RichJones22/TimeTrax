@@ -5,7 +5,6 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use \App\Helpers\appGlobals;
 
-
 class Task extends Model
 {
     /**
@@ -25,11 +24,13 @@ class Task extends Model
         'notes'];
 
 
-    static private function getStartTime($startTime) {
+    private static function getStartTime($startTime)
+    {
         return Task::where('start_time', '=', $startTime)->first();
     }
 
-    static public function checkIfExists($startTime) {
+    public static function checkIfExists($startTime)
+    {
         $task = self::getStartTime($startTime);
 
         if (!is_null($task)) {
@@ -48,7 +49,8 @@ class Task extends Model
      * @param $endTime
      * @return bool
      */
-    public function checkIfTimeOverLaps($timeCardId, $startTime, $endTime) {
+    public function checkIfTimeOverLaps($timeCardId, $startTime, $endTime)
+    {
 
         if ($this->checkIfStartTimeExists($timeCardId, $startTime) ||
             $this->checkIfStartTimeOverLaps($timeCardId, $startTime) ||
@@ -59,7 +61,8 @@ class Task extends Model
         return false;
     }
 
-    public function checkIfStartTimeExists($timeCardId, $startTime) {
+    public function checkIfStartTimeExists($timeCardId, $startTime)
+    {
 
         $val = Task::where('start_time', '=', $startTime)
             ->where('time_card_hours_worked_id', '=', $timeCardId)
@@ -72,7 +75,8 @@ class Task extends Model
         return true;
     }
 
-    public function checkIfStartTimeOverLaps($timeCardId, $startTime) {
+    public function checkIfStartTimeOverLaps($timeCardId, $startTime)
+    {
 
         $val = Task::where('time_card_hours_worked_id', '=', $timeCardId)
             ->where('start_time', '<=', $startTime)
@@ -86,7 +90,8 @@ class Task extends Model
         return true;
     }
 
-    public function checkIfEndTimeOverLaps($timeCardId, $endTime) {
+    public function checkIfEndTimeOverLaps($timeCardId, $endTime)
+    {
 
         $val = Task::where('time_card_hours_worked_id', '=', $timeCardId)
             ->where('start_time', '<', $endTime)
@@ -104,7 +109,8 @@ class Task extends Model
      * Eager load the TimeCard model.
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function timeCardHoursWorked() {
+    public function timeCardHoursWorked()
+    {
         return $this->belongsTo('\App\TimeCardHoursWorked');
     }
 
@@ -112,7 +118,8 @@ class Task extends Model
      * Eager load the TaskType model.
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function taskType() {
+    public function taskType()
+    {
         return $this->belongsTo('\App\TaskType');
     }
 }

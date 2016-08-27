@@ -13,7 +13,8 @@ use App\TimeCard;
 
 class TimeCardObserver
 {
-    public function created($timeCard) {
+    public function created($timeCard)
+    {
         appGlobals::createdMessage(appGlobals::getTimeCardTableName(), $timeCard->iso_beginning_dow_date, $timeCard->id);
     }
 }

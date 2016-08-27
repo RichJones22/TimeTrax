@@ -6,8 +6,7 @@
  * Time: 7:19 PM
  */
 
-namespace app\Traits\Tests;
-
+namespace App\Traits\Tests;
 
 trait DataReset
 {
@@ -40,7 +39,6 @@ trait DataReset
         $newTestClass->tearDown();
 
         return $this;
-
     }
 
     function setRDBMSTrue($className)
@@ -52,7 +50,6 @@ trait DataReset
         $newTestClass->tearDown();
 
         return $this;
-
     }
 
     function setRDBMSFalse($className)
@@ -64,7 +61,6 @@ trait DataReset
         $newTestClass->tearDown();
 
         return $this;
-
     }
 
     function setTtvTypeClearTextTrue($className)
@@ -76,7 +72,6 @@ trait DataReset
         $newTestClass->tearDown();
 
         return $this;
-
     }
 
     function setTtvTypeClearTextFalse($className)
@@ -88,6 +83,5 @@ trait DataReset
         $newTestClass->tearDown();
 
         return $this;
-
     }
 }

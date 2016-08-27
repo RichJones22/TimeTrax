@@ -1,24 +1,28 @@
 {
     "name": "laravel/laravel",
     "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "keywords": [
+        "framework",
+        "laravel"
+    ],
     "license": "MIT",
     "type": "project",
     "require": {
         "php": ">=5.5.9",
-        "laravel/framework": "5.1.*",
+        "laravel/framework": "5.2.*",
         "Laracasts/Integrated": "^0.15.6",
         "illuminate/html": "^5.0",
         "laracasts/utilities": "~2.0",
-        "laravelcollective/html": "5.1.*",
-        "barryvdh/laravel-debugbar": "^2.2"
+        "laravelcollective/html": "5.2.*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
         "phpunit/phpunit": "~4.0",
         "phpspec/phpspec": "~2.1",
-        "laracasts/integrated": "^0.15.6"
+        "laracasts/integrated": "^0.15.6",
+        "symfony/dom-crawler": "~2.5",
+        "symfony/css-selector": "~2.5"
     },
     "autoload": {
         "classmap": [
@@ -28,7 +32,9 @@
             "App\\": "app/",
             "Acme\\": "app/Acme"
         },
-        "files":["app/Helpers/helper.php"]
+        "files": [
+            "app/Helpers/helper.php"
+        ]
     },
     "autoload-dev": {
         "classmap": [
@@ -37,13 +43,11 @@
     },
     "scripts": {
         "post-install-cmd": [
-            "php artisan clear-compiled",
+            "Illuminate\\Foundation\\ComposerScripts::postInstall",
             "php artisan optimize"
         ],
-        "pre-update-cmd": [
-            "php artisan clear-compiled"
-        ],
         "post-update-cmd": [
+            "Illuminate\\Foundation\\ComposerScripts::postUpdate",
             "php artisan optimize"
         ],
         "post-root-package-install": [

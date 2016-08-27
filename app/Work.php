@@ -17,7 +17,8 @@ class Work extends Model
      */
     protected $fillable = ['work_type_description'];
 
-    static public function checkIfExists($text) {
+    public static function checkIfExists($text)
+    {
         $work = Work::where('work_type_description', '=', $text)->first();
 
         if (!is_null($work)) {
@@ -27,11 +28,13 @@ class Work extends Model
         return $work;
     }
 
-    public function workType() {
+    public function workType()
+    {
         return $this->belongsTo('\App\WorkType');
     }
 
-    public function timeCard() {
+    public function timeCard()
+    {
         return $this->hasMany('\App\TimeCard');
     }
 }

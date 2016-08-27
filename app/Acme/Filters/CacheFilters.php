@@ -21,15 +21,18 @@ class CacheFilters
     {
         $key = self::makeCacheKey($request->url());
 
-        if (Cache::has($key)) return Cache::get($key);
+        if (Cache::has($key)) {
+            return Cache::get($key);
+        }
     }
 
     public function put(Route $route, Request $request, Response $response)
     {
         $key = $this->makeCacheKey($request->url());
 
-        if (! Cache::has($key)) Cache::put($key, $response->getContent(), 10);
-
+        if (! Cache::has($key)) {
+            Cache::put($key, $response->getContent(), 10);
+        }
     }
 
     private function makeCacheKey($url)

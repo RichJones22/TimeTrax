@@ -6,23 +6,21 @@
  * Time: 7:05 AM
  */
 
-namespace app\Observers;
-
-use \App\Helpers\appGlobals;
+namespace App\Observers;
 
 class TaskTypeObserver
 {
-    public function deleting($taskType) {
-
+    public function deleting($taskType)
+    {
         // check if getTestRDBMS is set for testing the Database triggers.
-        if (appGlobals::getTestRDBMS()) {
+        if (appGlobals()->getTestRDBMS()) {
             return true;
         }
 
         $result = $taskType->checkTaskTypeDeleteAudits($taskType);
         if ($result > 0) {
-            session()->forget(appGlobals::getInfoMessageType());
-            session()->flash(appGlobals::getInfoMessageType(), sprintf(appGlobals::getInfoMessageText($result), $taskType->type));
+            session()->forget(appGlobals()->getInfoMessageType());
+            session()->flash(appGlobals()->getInfoMessageType(), sprintf(appGlobals()->getInfoMessageText($result), $taskType->type));
 
             return false;
         }
@@ -30,17 +28,21 @@ class TaskTypeObserver
         return true;
     }
 
-    public function creating($taskType) {
-
+    public function creating($taskType)
+    {
         // check if getTestRDBMS is set for testing the Database triggers.
-        if (appGlobals::getTestRDBMS()) {
+        if (appGlobals()->getTestRDBMS()) {
+            // this log statement is needed to make testCreatingDataThatAlreadyExists() pass in
+            // TaskTypeView/testTaskTypeRDBMS.php; this is a mystery as to why...
+            MyLog()->info("I was creating", ['taskType' => $taskType]);
+
             return true;
         }
 
         $result = $taskType->checkTaskTypeCreateAudits($taskType);
         if ($result > 0) {
-            session()->forget(appGlobals::getInfoMessageType());
-            session()->flash(appGlobals::getInfoMessageType(), appGlobals::getInfoMessageText($result));
+            session()->forget(appGlobals()->getInfoMessageType());
+            session()->flash(appGlobals()->getInfoMessageType(), appGlobals()->getInfoMessageText($result));
 
             return false;
         }
@@ -48,17 +50,18 @@ class TaskTypeObserver
         return true;
     }
 
-    public function created($taskType) {
-        appGlobals::createdMessage(appGlobals::getTaskTypeTableName(), $taskType->type , $taskType->id);
+    public function created($taskType)
+    {
+        appGlobals()->createdMessage(appGlobals()->getTaskTypeTableName(), $taskType->type, $taskType->id);
     }
 
-    public function updating($taskType) {
-
+    public function updating($taskType)
+    {
         // check to see if the task_type.type exists.
         $result = $taskType->checkIfTypeExists($taskType);
         if ($result > 0) {
-            session()->forget(appGlobals::getInfoMessageType());
-            session()->flash(appGlobals::getInfoMessageType(), appGlobals::getInfoMessageText($result));
+            session()->forget(appGlobals()->getInfoMessageType());
+            session()->flash(appGlobals()->getInfoMessageType(), appGlobals()->getInfoMessageText($result));
 
             return false;
         }

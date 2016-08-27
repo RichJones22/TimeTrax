@@ -1,9 +1,12 @@
 /vendor
 /node_modules
 Homestead.yaml
+/public/storage
 Homestead.json
 .env
 .env.example
 .idea/
 .DS_Store
 selenium-server-standalone-*.jar
+/storage
+/test/logs/

@@ -11,8 +11,6 @@ use Laracasts\Integrated\Services\Laravel\Application as Laravel;
 
 use \App\Traits\Tests\DataReset;
 
-
-
 /**
  * Note:  For this test to work the 'static protected $testRDBMS' needs to be set to true
  *
@@ -28,7 +26,8 @@ class testTimeCardView extends Selenium
      * these tests are run as a unit, so we begin by resetting the data.
      * @test
      */
-    function test_reset_data() {
+    function test_reset_data()
+    {
 
         $this->deleteData($this->getClassName($this));
         $this->createData($this->getClassName($this));
@@ -64,8 +63,5 @@ class testTimeCardView extends Selenium
             ->see("2300");
 
         $this->setRDBMSFalse($this->getClassName($this));
-
-
     }
-
 }

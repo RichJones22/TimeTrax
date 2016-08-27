@@ -11,7 +11,6 @@ use Laracasts\Integrated\Services\Laravel\Application as Laravel;
 
 use \App\Traits\Tests\DataReset;
 
-
 class testTaskView extends Selenium
 {
     use Laravel, DataReset;
@@ -22,7 +21,8 @@ class testTaskView extends Selenium
      * these tests are run as a unit, so we begin by resetting the data.
      * @test
      */
-    function test_reset_data() {
+    function test_reset_data()
+    {
 
         $this->deleteData($this->getClassName($this));
         $this->createData($this->getClassName($this));
@@ -46,11 +46,9 @@ class testTaskView extends Selenium
         $this->visit('/taskType/1')->wait($this->delayMe)
             ->createTaskTypeData()
             ->type('Lunch', '#taskType')
-            ->type('Lunch break','#description')
+            ->type('Lunch break', '#description')
             ->tick('#taskType')
             ->click('saveButtonTaskType')->wait(15000)
             ->see('Task Type Maintenance');
     }
-
-
 }

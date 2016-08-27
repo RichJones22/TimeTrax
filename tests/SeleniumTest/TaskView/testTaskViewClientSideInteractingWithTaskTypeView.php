@@ -19,7 +19,8 @@ class testTaskViewInteractions extends Selenium
      * these tests are run as a unit, so we begin by resetting the data.
      * @test
      */
-    function test_reset_data() {
+    function test_reset_data()
+    {
 
         $this->deleteData($this->getClassName($this));
         $this->createData($this->getClassName($this));
@@ -28,7 +29,8 @@ class testTaskViewInteractions extends Selenium
     }
 
     /** @test */
-    function test_visits_root() {
+    function test_visits_root()
+    {
         $this->visit('/');
     }
 
@@ -37,19 +39,22 @@ class testTaskViewInteractions extends Selenium
      */
 
    /** @test */
-    function test_visits_task_view() {
+    function test_visits_task_view()
+    {
         $this->visit('/task/1')->see("Nov 12, 2015");
     }
 
     /** @test */
-    function test_route_taskType_view() {
+    function test_route_taskType_view()
+    {
         $this->visit('/task/1')
             ->click('#routeToTaskTypeView')
             ->see('Task Type Maintenance');
     }
 
     /** @test */
-    function test_route_taskType_view_refresh_the_page_route_to_task_view() {
+    function test_route_taskType_view_refresh_the_page_route_to_task_view()
+    {
         $this->visit('/task/1')
             ->click('#routeToTaskTypeView')
             ->see('Task Type Maintenance')
@@ -59,12 +64,13 @@ class testTaskViewInteractions extends Selenium
     }
 
     /** @test */
-    function test_route_taskType_view_add_and_delete_a_record_route_back_to_task_view() {
+    function test_route_taskType_view_add_and_delete_a_record_route_back_to_task_view()
+    {
         $this->visit('/task/1')
             ->click('#routeToTaskTypeView')
             ->see('Task Type Maintenance')
             ->type('Lunch', '#taskType')
-            ->type('Lunch break','description')
+            ->type('Lunch break', 'description')
             ->tick('#taskType')
             ->click('saveButtonTaskType')
             ->see('Lunch')
@@ -72,7 +78,6 @@ class testTaskViewInteractions extends Selenium
             ->notSee('Lunch')
             ->click('#routeToTaskView')
             ->see('Nov 12, 2015');
-
     }
 
     /**
@@ -80,25 +85,28 @@ class testTaskViewInteractions extends Selenium
      */
 
     /** @test */
-    function test_call_taskType_view() {
+    function test_call_taskType_view()
+    {
         $this->visit('/taskType/1')
             ->see('Task Type Maintenance');
     }
 
     /** @test */
-    function test_call_taskType_view_notSee_route_to_task_view() {
+    function test_call_taskType_view_notSee_route_to_task_view()
+    {
         $this->visit('/taskType/1')
             ->see('Task Type Maintenance')
             ->notSee('routeToTaskView');
     }
 
     /** @test */
-    function test_call_taskType_view_notSee_route_to_task_view_add_delete_refresh() {
+    function test_call_taskType_view_notSee_route_to_task_view_add_delete_refresh()
+    {
         $this->visit('/taskType/1')
             ->see('Task Type Maintenance')
             ->notSee('routeToTaskView')
             ->type('Lunch', '#taskType')
-            ->type('Lunch break','description')
+            ->type('Lunch break', 'description')
             ->tick('#taskType')
             ->click('saveButtonTaskType')
             ->see('Lunch')
@@ -113,15 +121,17 @@ class testTaskViewInteractions extends Selenium
      */
 
     /** @test */
-    function test_dropDown_check_first_element_code() {
+    function test_dropDown_check_first_element_code()
+    {
         $this->visit('/task/1')
             ->see("Nov 12, 2015")->wait(1000)
             ->select('#taskType', 1)
-            ->type('rich was here','#notes')
+            ->type('rich was here', '#notes')
             ->see('Code');
     }
 
-    function test_create_type_code_of_lunch() {
+    function test_create_type_code_of_lunch()
+    {
 
         // awkward part of the test.  You need to see the ch
         $currentTaskTypeId = 4;
@@ -133,7 +143,7 @@ class testTaskViewInteractions extends Selenium
             ->click('#routeToTaskTypeView')
             ->see('Task Type Maintenance')
             ->type('Lunch', '#taskType')
-            ->type('Lunch break','description')
+            ->type('Lunch break', 'description')
             ->tick('#taskType')
             ->click('saveButtonTaskType')
             ->click('#routeToTaskView')
@@ -148,7 +158,8 @@ class testTaskViewInteractions extends Selenium
             ->notSee('Lunch');
     }
 
-    function deleteLunchFromOtherTypeTypeView() {
+    function deleteLunchFromOtherTypeTypeView()
+    {
 
         $deleteLunch = new testTaskViewInteractions;
 
@@ -160,5 +171,4 @@ class testTaskViewInteractions extends Selenium
 
         return $this;
     }
-
 }

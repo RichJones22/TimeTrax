@@ -9,9 +9,11 @@
 namespace app\Observers;
 
 use \App\Helpers\appGlobals;
+
 class WorkObserver
 {
-    public function created($work) {
+    public function created($work)
+    {
         appGlobals::createdMessage(appGlobals::getWorkTableName(), $work->work_type_description, $work->id);
     }
 }

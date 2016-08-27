@@ -11,7 +11,6 @@ use Laracasts\Integrated\Services\Laravel\Application as Laravel;
 
 use \App\Traits\Tests\DataReset;
 
-
 class testTaskView extends Selenium
 {
     use Laravel, DataReset;
@@ -22,7 +21,8 @@ class testTaskView extends Selenium
      * these tests are run as a unit, so we begin by resetting the data.
      * @test
      */
-    function test_reset_data() {
+    function test_reset_data()
+    {
 
         $this->deleteData($this->getClassName($this));
         $this->createData($this->getClassName($this));
@@ -31,17 +31,20 @@ class testTaskView extends Selenium
     }
 
     /** @test */
-    function test_visits_root() {
+    function test_visits_root()
+    {
         $this->visit('/');
     }
 
    /** @test */
-    function test_visits_task_view() {
+    function test_visits_task_view()
+    {
         $this->visit('/task/1')->see("Hours Worked");
     }
 
     /** @test */
-    function test_checks_for_invalid_start_time() {
+    function test_checks_for_invalid_start_time()
+    {
         $this->visit('/task/1')
             ->type('11:99', '#startt-search')
             ->click('#taskType')
@@ -49,7 +52,8 @@ class testTaskView extends Selenium
     }
 
     /** @test */
-    function test_checks_for_invalid_end_time() {
+    function test_checks_for_invalid_end_time()
+    {
         $this->visit('/task/1')
             ->type('11:99', '#endt-search')
             ->click('#taskType')
@@ -57,7 +61,8 @@ class testTaskView extends Selenium
     }
 
     /** @test */
-    function test_checks_empty_start_and_end_times() {
+    function test_checks_empty_start_and_end_times()
+    {
         $this->visit('/task/1')
             ->type('', '#startt-search')
             ->type('', '#endt-search')
@@ -66,7 +71,8 @@ class testTaskView extends Selenium
     }
 
     /** @test */
-    function test_saveButton_is_disabled_when_start_end_times_are_empty() {
+    function test_saveButton_is_disabled_when_start_end_times_are_empty()
+    {
         $this->visit('/task/1')
             ->type('', '#startt-search')
             ->type('', '#endt-search')->wait($this->delayMe)
@@ -77,15 +83,17 @@ class testTaskView extends Selenium
     }
 
     /** @test */
-    function test_checks_for_valid_start_time() {
-       $this->visit('/task/1')
+    function test_checks_for_valid_start_time()
+    {
+        $this->visit('/task/1')
            ->type('18:00', '#startt-search')
            ->click('#taskType')
            ->notSee('pink');
     }
 
     /** @test */
-    function test_checks_for_valid_end_time() {
+    function test_checks_for_valid_end_time()
+    {
         $this->visit('/task/1')
             ->type('18:00', '#endt-search')
             ->click('#taskType')
@@ -93,7 +101,8 @@ class testTaskView extends Selenium
     }
 
     /** @test */
-    function test_checks_for_start_time_overlap() {
+    function test_checks_for_start_time_overlap()
+    {
         $this->visit('/task/1')
             ->type('07:00', '#startt-search')
             ->click('#taskType')
@@ -101,7 +110,8 @@ class testTaskView extends Selenium
     }
 
     /** @test */
-    function test_checks_for_end_time_overlap() {
+    function test_checks_for_end_time_overlap()
+    {
         $this->visit('/task/1')
             ->type('11:00', '#endt-search')
             ->click('#taskType')
@@ -109,7 +119,8 @@ class testTaskView extends Selenium
     }
 
     /** @test */
-    function test_start_time_is_after_end_time() {
+    function test_start_time_is_after_end_time()
+    {
         $this->visit('/task/1')
             ->type('20:00', '#startt-search')
             ->type('19:00', '#endt-search')
@@ -118,7 +129,8 @@ class testTaskView extends Selenium
     }
 
     /** @test */
-    function test_checks_for_start_and_end_time_overlap() {
+    function test_checks_for_start_and_end_time_overlap()
+    {
         $this->visit('/task/1')
             ->type('07:00', '#startt-search')
             ->type('11:00', '#endt-search')
@@ -127,7 +139,8 @@ class testTaskView extends Selenium
     }
 
     /** @test */
-    function test_start_time_can_be_the_same_as_existing_end_time() {
+    function test_start_time_can_be_the_same_as_existing_end_time()
+    {
         $this->visit('/task/1')
             ->type('11:30', '#startt-search')
             ->click('#taskType')
@@ -135,7 +148,8 @@ class testTaskView extends Selenium
     }
 
     /** @test */
-    function test_start_time_can_fill_an_exiting_time_slot() {
+    function test_start_time_can_fill_an_exiting_time_slot()
+    {
         $this->visit('/task/1')
             ->type('11:30', '#startt-search')
             ->type('12:00', '#endt-search')
@@ -144,7 +158,8 @@ class testTaskView extends Selenium
     }
 
     /** @test */
-    function test_start_time_overlaps_existing_time_slot() {
+    function test_start_time_overlaps_existing_time_slot()
+    {
         $this->visit('/task/1')
             ->type('11:29', '#startt-search')
             ->type('12:00', '#endt-search')
@@ -153,7 +168,8 @@ class testTaskView extends Selenium
     }
 
     /** @test */
-    function test_end_time_overlaps_existing_time_slot() {
+    function test_end_time_overlaps_existing_time_slot()
+    {
         $this->visit('/task/1')
             ->type('11:30', '#startt-search')
             ->type('12:01', '#endt-search')
@@ -162,7 +178,8 @@ class testTaskView extends Selenium
     }
 
     /** @test */
-    function test_both_times_overlaps_existing_time_slot() {
+    function test_both_times_overlaps_existing_time_slot()
+    {
         $this->visit('/task/1')
             ->type('11:29', '#startt-search')
             ->type('12:01', '#endt-search')
@@ -171,7 +188,8 @@ class testTaskView extends Selenium
     }
 
     /** @test */
-    function test_write_record() {
+    function test_write_record()
+    {
         $this->visit('/task/1')
             ->type('11:30', '#startt-search')
             ->type('12:00', '#endt-search')->wait($this->delayMe)
@@ -179,5 +197,4 @@ class testTaskView extends Selenium
             ->click('#saveButton')
             ->see("Test");
     }
-
 }

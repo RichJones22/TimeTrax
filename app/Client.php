@@ -25,7 +25,8 @@ class Client extends Model
      * @param [in] $text
      * @return a record.
      */
-    static public function checkIfExists($text) {
+    public static function checkIfExists($text)
+    {
         $client = Client::where('name', '=', $text)->first();
 
         if (!is_null($client)) {
@@ -34,8 +35,4 @@ class Client extends Model
 
         return $client;
     }
-
-
-
-
 }

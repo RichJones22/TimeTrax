@@ -1,6 +1,5 @@
 <?php
 
-use \App\Helpers\appGlobals;
 use \Illuminate\Database\QueryException;
 
 use \App\Client;
@@ -56,29 +55,28 @@ Route::get('phpinfo', function () {
 
 Route::group(['prefix' => 'task'], function () {
     // route to task view; show a specific task.
-    Route::get('{task}'        , ['as' => 'task.show',    'uses' => 'TaskController@show']);
+    Route::get('{task}', ['as' => 'task.show',    'uses' => 'TaskController@show']);
 //    ->before('cache.before')->after('cache.after');
 
     // insert a task
-    Route::post('create/'      , ['as' => 'task.create',  'uses' => 'TaskController@create']);
+    Route::post('create/', ['as' => 'task.create',  'uses' => 'TaskController@create']);
 
     // delete a task
-    Route::post('{task}'       , ['as' => 'task.destroy', 'uses' => 'TaskController@destroy']);
+    Route::post('{task}', ['as' => 'task.destroy', 'uses' => 'TaskController@destroy']);
 });
 
 // ajax call to list all tasks.
-Route::get('get_all_tasks', function() {
+Route::get('get_all_tasks', function () {
 
     $data = [];
 
     $tasks = TaskType::all();
 
-    foreach($tasks as $task) {
+    foreach ($tasks as $task) {
         $data[] = ['id' => $task->id, 'type' => $task->type];
     }
 
     return $data;
-
 });
 
 
@@ -89,49 +87,54 @@ Route::get('get_all_tasks', function() {
 //Route::post('taskType/create/'                , ['as' => 'taskType.create',    'uses' => 'TaskTypeController@create']);
 
 // route taskType.show denotes that we hit the endpoint directly, i.e.: www.timetrax.com/taskType/1
-Route::get('taskType/{taskType}'              , ['as' => 'taskType.show',      'uses' => 'TaskTypeController@show']);
+Route::get('taskType/{taskType}', ['as' => 'taskType.show',      'uses' => 'TaskTypeController@show']);
 
 // route taskType.task.show denotes that we entered via the task view, clicking a glyphicon...
-Route::get('taskType/{taskType}/task/{task}'  , ['as' => 'taskType.task.show', 'uses' => 'TaskTypeController@show']);
+Route::get('taskType/{taskType}/task/{task}', ['as' => 'taskType.task.show', 'uses' => 'TaskTypeController@show']);
 
 // form request to insert a task type.
 // This is the only way that I found to get this to work?
-Route::post('taskType/create/', function(){
+Route::post('taskType/create/', function () {
     (new TaskTypeController())->create($_POST);
     return redirect()->back();
 })->name('taskType.create');
 
 // ajax request to update a task type.
-Route::get('taskType/{id}/update/'            , ['as' => 'taskType.update',    'uses' => 'TaskTypeController@update']);
+Route::get('taskType/{id}/update/', ['as' => 'taskType.update',    'uses' => 'TaskTypeController@update']);
 
 // delete a task type.
-Route::post('taskType/destroy/{taskType}'     , ['as' => 'taskType.destroy',   'uses' => 'TaskTypeController@destroy']);
+Route::post('taskType/destroy/{taskType}', ['as' => 'taskType.destroy',   'uses' => 'TaskTypeController@destroy']);
 
 /***********************************************************************************************************************
  * timeCard routes
  **********************************************************************************************************************/
 
+Route::group(['prefix' => appGlobals::getTimeCardURI()], function () {
 // route to timeCard type view.
-Route::get(appGlobals::getTimeCardURI() . '{dateSelected?}', ['as' => 'timeCard.show', 'uses' => 'TimeCardController@show']);
+    Route::get('{dateSelected?}', ['as' => 'timeCard.show', 'uses' => 'TimeCardController@show']);
 
 // insert a TimeCard record.
-Route::post(appGlobals::getTimeCardURI() . 'create/{id}'   , ['as' => 'timeCard.create', 'uses' => 'TimeCardController@create']);
+    Route::post('create/{id}', ['as' => 'timeCard.create', 'uses' => 'TimeCardController@create']);
 
 // delete a TimeCard record.
-Route::post(appGlobals::getTimeCardURI() . 'destroy/{id}'  , ['as' => 'timeCard.destroy', 'uses' => 'TimeCardController@destroy']);
+    Route::post('destroy/{id}', ['as' => 'timeCard.destroy', 'uses' => 'TimeCardController@destroy']);
 
 // ajax call list Work Type's
-Route::get(appGlobals::getTimeCardURI() . appGlobals::getWorkURI() . '{clientId}', function($client_id) {
+    Route::get(appGlobals::getWorkURI() . '{client_id}', function ($clientID) {
+//Route::get('timeCard_list_all', function () {
 
-    $data = \DB::table('project')->where('project.client_id', $client_id)
-        ->join('work', 'project.id', '=', 'work.project_id')
-        ->join('work_type', 'work.work_type_id', '=', 'work_type.id')
-        ->select('work_type.id', 'work_type.type', 'work.work_type_description')
-        ->orderby('work.work_type_id')
-        ->get();
+        $data = \DB::table('project')->where('project.client_id', $clientID)
+            ->join('work', 'project.id', '=', 'work.project_id')
+            ->join('work_type', 'work.work_type_id', '=', 'work_type.id')
+            ->select('work_type.id', 'work_type.type', 'work.work_type_description')
+            ->orderby('work.work_type_id')
+            ->get();
 
-    return $data;
+        return $data;
+    });
 });
+
+
 
 
 // route 'zzbob' is used to display all REST APIs for reference.  uncomment it and view all routes via the
@@ -142,24 +145,22 @@ Route::get(appGlobals::getTimeCardURI() . appGlobals::getWorkURI() . '{clientId}
  * below routes are for development purposes.
  *******************************************************************************************************************/
 
-Route::get('delete_data', function() {
+Route::get('delete_data', function () {
 
     \Artisan::call('migrate:refresh');
 
     return;
-
 });
 
 /**
  * creating records
  */
-Route::get('create_data', function() {
+Route::get('create_data', function () {
 
     /*******************************************************************************************************************
     * client insert(s)
     *******************************************************************************************************************/
     if (is_null($client = Client::checkIfExists('Kendra Scott'))) {
-
         $client = new Client;
 
         $client->name = 'Kendra Scott';
@@ -171,7 +172,6 @@ Route::get('create_data', function() {
      * project insert(s)
      ******************************************************************************************************************/
     if (is_null($project = Project::checkIfExists('Magento Development'))) {
-
         // get $client->id
         $client = Client::where('name', '=', 'Kendra Scott')->first();
 
@@ -192,7 +192,6 @@ Route::get('create_data', function() {
      ******************************************************************************************************************/
     $type = 'Atlassian Ticket';
     if (is_null($project = WorkType::checkIfExists($type))) {
-
         // get $client->id
         $client = Client::where('name', '=', 'Kendra Scott')->first();
 
@@ -206,7 +205,6 @@ Route::get('create_data', function() {
 
     $type = 'Defect';
     if (is_null($project = WorkType::checkIfExists($type))) {
-
         // get $client->id
         $client = Client::where('name', '=', 'Kendra Scott')->first();
 
@@ -220,7 +218,6 @@ Route::get('create_data', function() {
 
     $type = 'Feature';
     if (is_null($project = WorkType::checkIfExists($type))) {
-
         // get $client->id
         $client = Client::where('name', '=', 'Kendra Scott')->first();
 
@@ -237,7 +234,6 @@ Route::get('create_data', function() {
      ******************************************************************************************************************/
     $description = 'Day of week starts on SAT and ends on SUN';
     if (is_null($timeCardFormat = TimeCardFormat::checkIfExists($description))) {
-
         // get $client->id
         $client = Client::where('name', '=', 'Kendra Scott')->first();
 
@@ -262,7 +258,6 @@ Route::get('create_data', function() {
      ******************************************************************************************************************/
     $description = 'The catalog view is performing too slowly.';
     if (is_null($work = Work::checkIfExists($description))) {
-
         // get $project->id
         $project = Project::where('name', '=', 'Magento Development')->first();
 
@@ -281,7 +276,6 @@ Route::get('create_data', function() {
 
     $description = 'The Task table needs three additional columns.';
     if (is_null($work = Work::checkIfExists($description))) {
-
         // get $project->id
         $project = Project::where('name', '=', 'Magento Development')->first();
 
@@ -300,7 +294,6 @@ Route::get('create_data', function() {
 
     $description = 'A new landing page is required to support Fall 2016 GNO.';
     if (is_null($work = Work::checkIfExists($description))) {
-
         // get $project->id
         $project = Project::where('name', '=', 'Magento Development')->first();
 
@@ -331,7 +324,6 @@ Route::get('create_data', function() {
     $timeCard->time_card_format_id = $timeCardFormat->id;
 
     if (is_null(TimeCard::checkIfExists($timeCard))) {
-
         $timeCard->iso_beginning_dow_date = '2015-11-09';
 
         $timeCard->save();
@@ -348,7 +340,6 @@ Route::get('create_data', function() {
     $timeCard->time_card_format_id = $timeCardFormat->id;
 
     if (is_null(TimeCard::checkIfExists($timeCard))) {
-
         $timeCard->iso_beginning_dow_date = '2015-11-09';
 
         $timeCard->save();
@@ -365,7 +356,6 @@ Route::get('create_data', function() {
     $timeCard->time_card_format_id = $timeCardFormat->id;
 
     if (is_null(TimeCard::checkIfExists($timeCard))) {
-
         $timeCard->iso_beginning_dow_date = '2015-11-16';
 
         $timeCard->save();
@@ -462,7 +452,6 @@ Route::get('create_data', function() {
     $type = 'Code';
     $description = 'Type for coding tasks';
     if (is_null($taskType = TaskType::checkIfExists($type))) {
-
         // get $client->id
         $client = Client::where('name', '=', 'Kendra Scott')->first();
 
@@ -478,7 +467,6 @@ Route::get('create_data', function() {
     $type = 'Test';
     $description = 'Type for testing tasks';
     if (is_null($taskType = TaskType::checkIfExists($type))) {
-
         // get $client->id
         $client = Client::where('name', '=', 'Kendra Scott')->first();
 
@@ -494,7 +482,6 @@ Route::get('create_data', function() {
     $type = 'Deployment';
     $description = 'Type for deployment tasks';
     if (is_null($taskType = TaskType::checkIfExists($type))) {
-
         // get $client->id
         $client = Client::where('name', '=', 'Kendra Scott')->first();
 
@@ -510,7 +497,6 @@ Route::get('create_data', function() {
     $type = 'Analysis';
     $description = 'Type for Analyzing tasks';
     if (is_null($taskType = TaskType::checkIfExists($type))) {
-
         // get $client->id
         $client = Client::where('name', '=', 'Kendra Scott')->first();
 
@@ -531,7 +517,6 @@ Route::get('create_data', function() {
     $hoursWorked = 3.5;
     $notes = "worked defect number 127068";
     if (is_null($task = Task::checkIfExists($startTime))) {
-
         // get $taskType->id
         $taskType = TaskType::where('type', '=', 'Code')->first();
 
@@ -556,7 +541,6 @@ Route::get('create_data', function() {
     $hoursWorked = 5.00;
     $notes = "worked defect number 127068";
     if (is_null($task = Task::checkIfExists($startTime))) {
-
         // get $taskType->id
         $taskType = TaskType::where('type', '=', 'Code')->first();
 
@@ -575,50 +559,46 @@ Route::get('create_data', function() {
 
         $task->save();
     }
-
 });
 
-Route::get('set_ttvTypeClearText_true', function() {
+Route::get('set_ttvTypeClearText_true', function () {
 
     DB::table('testing_selenium_variables')->truncate();
 
     $seleniumVars = new TestingSeleniumVariables();
     $seleniumVars->ttvTypeClearText = true;
     $seleniumVars->save();
-
 });
 
-Route::get('set_ttvTypeClearText_false', function() {
+Route::get('set_ttvTypeClearText_false', function () {
     DB::table('testing_selenium_variables')->truncate();
 });
 
-Route::get('set_rdbms_true', function() {
+Route::get('set_rdbms_true', function () {
 
     DB::table('testing_selenium_variables')->truncate();
 
     $seleniumVars = new TestingSeleniumVariables();
     $seleniumVars->testingRDBMS = true;
     $seleniumVars->save();
-
 });
 
-Route::get('set_rdbms_false', function() {
+Route::get('set_rdbms_false', function () {
     DB::table('testing_selenium_variables')->truncate();
 });
 
-Route::get('delete_task_data', function() {
+Route::get('delete_task_data', function () {
     DB::table('task')->truncate();
 
     echo "task data deleted!";
 });
 
-Route::get('add_task_data_firstPass', function() {
+Route::get('add_task_data_firstPass', function () {
     $startTime = '07:00:00';
     $endTime = '11:30:00';
     $hoursWorked = 3.5;
     $notes = "worked defect number 127068";
     if (is_null($task = Task::checkIfExists($startTime))) {
-
         // get $taskType->id
         $taskType = TaskType::where('type', '=', 'Code')->first();
 
@@ -643,7 +623,6 @@ Route::get('add_task_data_firstPass', function() {
     $hoursWorked = 5.00;
     $notes = "worked defect number 127068";
     if (is_null($task = Task::checkIfExists($startTime))) {
-
         // get $taskType->id
         $taskType = TaskType::where('type', '=', 'Code')->first();
 
@@ -664,11 +643,10 @@ Route::get('add_task_data_firstPass', function() {
     }
 });
 
-Route::get('add_taskType_data', function() {
+Route::get('add_taskType_data', function () {
     $type = 'Lunch';
     $description = 'Lunch break';
     if (is_null($taskType = TaskType::checkIfExists($type))) {
-
         // get $client->id
         $client = Client::where('name', '=', 'Kendra Scott')->first();
 
@@ -683,7 +661,7 @@ Route::get('add_taskType_data', function() {
 });
 
 
-Route::get('add_timeCard_data', function() {
+Route::get('add_timeCard_data', function () {
 
     $date = '2015-11-09';
 
@@ -715,7 +693,7 @@ Route::get('add_timeCard_data', function() {
 /**
  * prototyping...
  */
-Route::get('play', function() {
+Route::get('play', function () {
 
     $myArray['SUN'] = 0.0;
     $myArray['MON'] = 0.0;
@@ -732,17 +710,15 @@ Route::get('play', function() {
         $pos = $timeCardFormat->{"dow_0" . $j};
         echo "For $pos the hours worked are: " . $myArray[$pos]  . "<br>";
     }
-
 });
 
-Route::get('task_fail', function() {
+Route::get('task_fail', function () {
 
     $startTime = '17:00:00';
     $endTime = '12:00:00';
     $hoursWorked = 5.00;
     $notes = "error testing";
     if (is_null($task = Task::checkIfExists($startTime))) {
-
         // get $taskType->id
         $taskType = TaskType::where('type', '=', 'Code')->first();
 
@@ -769,7 +745,7 @@ Route::get('task_fail', function() {
     }
 });
 
-Route::get('get_all_clients', function() {
+Route::get('get_all_clients', function () {
 
     $sessionData = Session::get('clients');
 
@@ -778,7 +754,7 @@ Route::get('get_all_clients', function() {
 
         $clients = Client::all();
 
-        foreach($clients as $client) {
+        foreach ($clients as $client) {
             $data[] = ['id' => $client->id, 'text' => $client->name];
         }
 
@@ -788,14 +764,9 @@ Route::get('get_all_clients', function() {
     }
 
     return $sessionData;
-
 });
 
-Route::get('unset_all_clients', function() {
+Route::get('unset_all_clients', function () {
 
     Session::forget('clients');
-
 });
-
-
-

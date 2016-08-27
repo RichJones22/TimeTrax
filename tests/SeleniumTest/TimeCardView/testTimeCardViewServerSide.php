@@ -11,7 +11,6 @@ use Laracasts\Integrated\Services\Laravel\Application as Laravel;
 
 use \App\Traits\Tests\DataReset;
 
-
 class testTimeCardView extends Selenium
 {
     use Laravel, DataReset;
@@ -22,7 +21,8 @@ class testTimeCardView extends Selenium
      * these tests are run as a unit, so we begin by resetting the data.
      * @test
      */
-    function test_reset_data() {
+    function test_reset_data()
+    {
 
         $this->deleteData($this->getClassName($this));
         $this->createData($this->getClassName($this));
@@ -52,5 +52,4 @@ class testTimeCardView extends Selenium
             ->see("One of your entered time values overlaps with existing data.  Your data has been refreshed.")
             ->see("( 2015-11-08 - 2015-11-14 )");
     }
-
 }

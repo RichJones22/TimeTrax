@@ -9,8 +9,7 @@
 use Laracasts\Integrated\Extensions\Selenium;
 use Laracasts\Integrated\Services\Laravel\Application as Laravel;
 
-use \App\Traits\Tests\DataReset;
-
+use App\Traits\Tests\DataReset;
 
 class testTaskView extends Selenium
 {
@@ -22,7 +21,8 @@ class testTaskView extends Selenium
      * these tests are run as a unit, so we begin by resetting the data.
      * @test
      */
-    function test_reset_data() {
+    function test_reset_data()
+    {
 
         $this->deleteData($this->getClassName($this));
         $this->createData($this->getClassName($this));
@@ -30,8 +30,14 @@ class testTaskView extends Selenium
         return $this;
     }
 
-    /** @test */
-    function test_checks_for_unsuccessful_delete() {
+    /**
+     * @test
+     *
+     * checks if Tasks are using a 'Code' task type; you can't delete these if they are being used.
+     *
+     */
+    function test_checks_for_unsuccessful_delete()
+    {
 
         $this->setRDBMSTrue($this->getClassName($this));
 
@@ -40,7 +46,6 @@ class testTaskView extends Selenium
             ->see("Integrity constraint violation: 1451");
 
         $this->setRDBMSFalse($this->getClassName($this));
-
     }
 
     function createTaskTypeData()
@@ -54,20 +59,18 @@ class testTaskView extends Selenium
         return $this;
     }
 
+    /** @test */
     function testCreatingDataThatAlreadyExists()
     {
         $this->setRDBMSTrue($this->getClassName($this));
 
         $this->visit('/taskType/1')->createTaskTypeData()
             ->type('Lunch', '#taskType')
-            ->type('Lunch break','#description')
+            ->type('Lunch break', '#description')
             ->tick('#taskType')
-            ->click('saveButtonTaskType')->wait(5000)
+            ->click('saveButtonTaskType')
             ->see('Integrity constraint violation: 1062');
 
         $this->setRDBMSFalse($this->getClassName($this));
-
     }
-
-
 }

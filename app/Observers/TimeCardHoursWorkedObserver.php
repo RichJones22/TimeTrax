@@ -9,9 +9,11 @@
 namespace app\Observers;
 
 use \App\Helpers\appGlobals;
+
 class TimeCardHoursWorkedObserver
 {
-    public function created($timeCardHoursWorked) {
-        appGlobals::createdMessage(appGlobals::getTimeCardHoursWorkedTableName(), $timeCardHoursWorked->date_worked , $timeCardHoursWorked->id);
+    public function created($timeCardHoursWorked)
+    {
+        appGlobals::createdMessage(appGlobals::getTimeCardHoursWorkedTableName(), $timeCardHoursWorked->date_worked, $timeCardHoursWorked->id);
     }
 }

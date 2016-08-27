@@ -25,7 +25,8 @@ class TimeCardFormat extends Model
     'dow_06',
     'dow_07'];
 
-    static public function checkIfExists($text) {
+    public static function checkIfExists($text)
+    {
         $timeCardFormat = TimeCardFormat::where('description', '=', $text)->first();
 
         if (!is_null($timeCardFormat)) {
@@ -35,7 +36,8 @@ class TimeCardFormat extends Model
         return $timeCardFormat;
     }
 
-    public function timeCard() {
+    public function timeCard()
+    {
         return $this->hasOne('\App\TimeCard');
     }
 }
