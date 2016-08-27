@@ -343,12 +343,12 @@ class appGlobals
 //global $appGlobals;
 //$appGlobals = new appGlobals();
 //
-
-
-app()->singleton('appGlobals', function () {
-    return new appGlobals();
-});
-
-$appGlobals = app()->make('appGlobals');;
+//
+//
+//app()->singleton('appGlobals', function () {
+//    return new appGlobals();
+//});
+//
+//$appGlobals = app()->make('appGlobals');;
 
 

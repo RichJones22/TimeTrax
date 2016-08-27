@@ -9,7 +9,7 @@
 use Laracasts\Integrated\Extensions\Selenium;
 use Laracasts\Integrated\Services\Laravel\Application as Laravel;
 
-use \App\Traits\Tests\DataReset;
+use App\Traits\Tests\DataReset;
 
 class testTaskView extends Selenium
 {
@@ -30,7 +30,12 @@ class testTaskView extends Selenium
         return $this;
     }
 
-    /** @test */
+    /**
+     * @test
+     *
+     * checks if Tasks are using a 'Code' task type; you can't delete these if they are being used.
+     *
+     */
     function test_checks_for_unsuccessful_delete()
     {
 
@@ -54,6 +59,7 @@ class testTaskView extends Selenium
         return $this;
     }
 
+    /** @test */
     function testCreatingDataThatAlreadyExists()
     {
         $this->setRDBMSTrue($this->getClassName($this));
@@ -62,7 +68,7 @@ class testTaskView extends Selenium
             ->type('Lunch', '#taskType')
             ->type('Lunch break', '#description')
             ->tick('#taskType')
-            ->click('saveButtonTaskType')->wait(5000)
+            ->click('saveButtonTaskType')
             ->see('Integrity constraint violation: 1062');
 
         $this->setRDBMSFalse($this->getClassName($this));

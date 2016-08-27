@@ -1,6 +1,5 @@
 <?php
 
-use App\Helpers\appGlobals;
 use \Illuminate\Database\QueryException;
 
 use \App\Client;

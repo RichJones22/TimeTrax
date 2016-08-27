@@ -100,7 +100,7 @@ return [
 
     'log' => 'daily',
 
-        'log_level' => env('APP_LOG_LEVEL', 'debug'),
+    'log_level' => env('APP_LOG_LEVEL', 'info'),
 
     /*
     |--------------------------------------------------------------------------
@@ -150,6 +150,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         'Laracasts\Utilities\JavaScript\JavaScriptServiceProvider',
         Collective\Html\HtmlServiceProvider::class,
+        App\Providers\AppGlobalsServiceProvider::class,
         // TODO: removed; seem to be causing problems with 5.2 upgrade...
 //        Barryvdh\Debugbar\ServiceProvider::class,
 
@@ -201,7 +202,7 @@ return [
         'View'      => Illuminate\Support\Facades\View::class,
         'Form'      => Illuminate\Html\FormFacade::class,
         'Html'      => Collective\Html\HtmlFacade::class,
-        'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'appGlobals' => App\Facades\AppGlobalsFacade::class,
 
     ],
 

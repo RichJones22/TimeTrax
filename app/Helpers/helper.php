@@ -40,3 +40,25 @@ function workTypeTableName()
 {
     return with(new WorkType)->getTable();
 }
+
+/**
+ * wrapper for Facade AppGlobals, as the Facade is not recognized in the Observers.
+ */
+if (! function_exists('appGlobals')) {
+    function appGlobals($key = null)
+    {
+        if (is_null($key)) {
+            return app('appglobals');
+        }
+    }
+}
+
+/**
+ * wrapper for Facade Log, as the Facade is not recognized in the Observers.
+ */
+if (! function_exists('MyLog')) {
+    function MyLog()
+    {
+        return app('log');
+    }
+}

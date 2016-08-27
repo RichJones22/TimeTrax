@@ -3,7 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use \App\Helpers\appGlobals;
 
 class TaskType extends Model
 {
@@ -24,7 +23,7 @@ class TaskType extends Model
         $taskType = TaskType::where('type', '=', $data)->first();
 
         if (!is_null($taskType)) {
-            appGlobals::existsMessage(appGlobals::getTaskTypeTableName(), $taskType->type, $taskType->id);
+            appGlobals()->existsMessage(appGlobals()->getTaskTypeTableName(), $taskType->type, $taskType->id);
         }
 
         return $taskType;
@@ -81,7 +80,7 @@ class TaskType extends Model
             ->first();
 
         if (!is_null($val)) {
-            return appGlobals::TBL_TASK_TYPE_TYPE_ALREADY_EXISTS;
+            return appGlobals()::TBL_TASK_TYPE_TYPE_ALREADY_EXISTS;
         }
 
         return 0;
@@ -93,7 +92,7 @@ class TaskType extends Model
         $val[] = explode(" ", trim($taskType->type));
 
         if (count($val) > 1) {
-            return (int)appGlobals::TBL_TASK_TYPE_TYPE_RESTRICTED_TO_ONE_WORD;
+            return (int)appGlobals()::TBL_TASK_TYPE_TYPE_RESTRICTED_TO_ONE_WORD;
         }
 
         return 0;
@@ -106,7 +105,7 @@ class TaskType extends Model
             ->first();
 
         if (!is_null($val)) {
-            return appGlobals::TBL_TASK_TYPE_CONSTRAINT_VIOLATION;
+            return appGlobals()::TBL_TASK_TYPE_CONSTRAINT_VIOLATION;
         }
 
         return 0;

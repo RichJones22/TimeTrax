@@ -6,7 +6,7 @@
  * Time: 7:19 PM
  */
 
-namespace app\Traits\Tests;
+namespace App\Traits\Tests;
 
 trait DataReset
 {
