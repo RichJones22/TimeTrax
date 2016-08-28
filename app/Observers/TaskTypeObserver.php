@@ -1,16 +1,18 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: richjones
+ * User: Rich Jones
  * Date: 11/14/15
  * Time: 7:05 AM
  */
 
 namespace App\Observers;
 
+use App\TaskType;
+
 class TaskTypeObserver
 {
-    public function deleting($taskType)
+    public function deleting(TaskType $taskType)
     {
         // check if getTestRDBMS is set for testing the Database triggers.
         if (appGlobals()->getTestRDBMS()) {
@@ -20,7 +22,8 @@ class TaskTypeObserver
         $result = $taskType->checkTaskTypeDeleteAudits($taskType);
         if ($result > 0) {
             session()->forget(appGlobals()->getInfoMessageType());
-            session()->flash(appGlobals()->getInfoMessageType(), sprintf(appGlobals()->getInfoMessageText($result), $taskType->type));
+            session()->flash(appGlobals()
+                ->getInfoMessageType(), sprintf(appGlobals()->getInfoMessageText($result), $taskType->getType()));
 
             return false;
         }
@@ -28,7 +31,7 @@ class TaskTypeObserver
         return true;
     }
 
-    public function creating($taskType)
+    public function creating(TaskType  $taskType)
     {
         // check if getTestRDBMS is set for testing the Database triggers.
         if (appGlobals()->getTestRDBMS()) {
@@ -50,12 +53,12 @@ class TaskTypeObserver
         return true;
     }
 
-    public function created($taskType)
+    public function created(TaskType $taskType)
     {
-        appGlobals()->createdMessage(appGlobals()->getTaskTypeTableName(), $taskType->type, $taskType->id);
+        appGlobals()->createdMessage(appGlobals()->getTaskTypeTableName(), $taskType->getType(), $taskType->getId());
     }
 
-    public function updating($taskType)
+    public function updating(TaskType $taskType)
     {
         // check to see if the task_type.type exists.
         $result = $taskType->checkIfTypeExists($taskType);

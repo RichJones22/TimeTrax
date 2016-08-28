@@ -19,3 +19,13 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'remember_token' => str_random(10),
     ];
 });
+
+$factory->define(App\TaskType::class, function ($type) {
+    return [
+        'type' => $type,
+        'description' => 'Was here',
+        'created_at'  => \Carbon\Carbon::now(),
+        'updated_at'  => \Carbon\Carbon::now(),
+        'client_id'   => 1
+    ];
+});

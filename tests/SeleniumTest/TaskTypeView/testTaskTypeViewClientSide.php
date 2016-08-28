@@ -115,16 +115,9 @@ class testTaskView extends Selenium
             ->type("this is it", '#rowTaskTypeId_0')
             ->click('#rowTaskTypeDesc_0')->wait($this->delayMe)
             ->see('Error: Type restricted to one word.')
-            ->click('#rowTaskTypeId_0')
-            ->type("Lunch", '#rowTaskTypeId_0')
+            ->click('#taskTypeRefreshPage')
             ->click('#rowTaskTypeDesc_0')
-            ->click('#taskTypeRefreshPage')->wait($this->delayMe)
-            ->see('Lunch')
-            ->click('#rowTaskTypeDesc_0')
-            ->type(" stuff...", '#rowTaskTypeDesc_0')
-            ->click('#rowTaskTypeDesc_1')
-            ->click('#taskTypeRefreshPage')->wait($this->delayMe)
-            ->see(' stuff...')
+            ->click('#rowTaskTypeDesc_1')->wait($this->delayMe)
         ;
 
         $this->setTtvTypeClearTextFalse($this->getClassName($this));

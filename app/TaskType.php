@@ -1,26 +1,106 @@
 <?php
 
-namespace App;
+namespace app;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class TaskType.
+ */
 class TaskType extends Model
 {
     /**
-     *  table used by this model
+     *  table used by this model.
      */
     protected $table = 'task_type';
 
     /**
-     * fillable fields
+     * fillable fields.
      */
     protected $fillable = [
         'type',
-        'description'];
+        'description',
+    ];
 
-    public static function checkIfExists($data)
+    /**
+     * @param $id
+     *
+     * @return $this
+     */
+    public function setId($id)
     {
-        $taskType = TaskType::where('type', '=', $data)->first();
+        $this->attributes['id'] = $id;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->attributes['id'];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getType()
+    {
+        return $this->attributes['type'];
+    }
+
+    /**
+     * @param $type
+     *
+     * @return $this
+     */
+    public function setType($type)
+    {
+        $this->attributes['type'] = $type;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDescription()
+    {
+        return $this->attributes['description'];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getClientId()
+    {
+        return $this->attributes['client_id'];
+    }
+
+    /**
+     * @param $description
+     *
+     * @return $this
+     */
+    public function setDescription($description)
+    {
+        $this->attributes['description'] = $description;
+
+        return $this;
+    }
+
+    /**
+     * check if type exists.
+     *
+     * @param $type
+     *
+     * @return mixed
+     */
+    public static function checkIfExists($type)
+    {
+        /* @noinspection PhpUndefinedMethodInspection */
+        $taskType = self::where('type', '=', $type)->first();
 
         if (!is_null($taskType)) {
             appGlobals()->existsMessage(appGlobals()->getTaskTypeTableName(), $taskType->type, $taskType->id);
@@ -31,6 +111,7 @@ class TaskType extends Model
 
     /**
      * Eager load Task model.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function task()
@@ -40,13 +121,14 @@ class TaskType extends Model
 
     /**
      * Delete edit and audit routine(s).
+     *
      * @param $taskType
+     *
      * @return bool
      */
     public function checkTaskTypeDeleteAudits($taskType)
     {
-
-        if (($result =  $this->checkIfTypeConstraintExists($taskType)) > 0) {
+        if (($result = $this->checkIfTypeConstraintExists($taskType)) > 0) {
             return $result;
         }
 
@@ -55,27 +137,34 @@ class TaskType extends Model
 
     /**
      * Create edit and audit routine(s).
+     *
      * @param $taskType
+     *
      * @return bool
      */
     public function checkTaskTypeCreateAudits($taskType)
     {
-
-        if (($result =  $this->checkIfTypeExists($taskType)) > 0) {
+        if (($result = $this->checkIfTypeExists($taskType)) > 0) {
             return $result;
         }
 
-        if (($result =  $this->checkIfTypeContainsMultipleWords($taskType)) > 0) {
+        if (($result = $this->checkIfTypeContainsMultipleWords($taskType)) > 0) {
             return $result;
         }
 
         return false;
     }
 
+    /**
+     * @param $taskType
+     *
+     * @return int|mixed
+     */
     public function checkIfTypeExists($taskType)
     {
 
-        $val = TaskType::where('type', '=', $taskType->type)
+        /* @noinspection PhpUndefinedMethodInspection */
+        $val = self::where('type', '=', $taskType->type)
             ->where('client_id', '=', $taskType->client_id)
             ->first();
 
@@ -86,21 +175,31 @@ class TaskType extends Model
         return 0;
     }
 
+    /**
+     * @param $taskType
+     *
+     * @return int
+     */
     public function checkIfTypeContainsMultipleWords($taskType)
     {
-
-        $val[] = explode(" ", trim($taskType->type));
+        $val = explode(' ', trim($taskType->type));
 
         if (count($val) > 1) {
-            return (int)appGlobals()::TBL_TASK_TYPE_TYPE_RESTRICTED_TO_ONE_WORD;
+            return (int) appGlobals()::TBL_TASK_TYPE_TYPE_RESTRICTED_TO_ONE_WORD;
         }
 
         return 0;
     }
 
+    /**
+     * @param $taskType
+     *
+     * @return int|mixed
+     */
     public function checkIfTypeConstraintExists($taskType)
     {
 
+        /* @noinspection PhpUndefinedMethodInspection */
         $val = Task::where('task_type_id', '=', $taskType->id)
             ->first();
 
@@ -111,8 +210,12 @@ class TaskType extends Model
         return 0;
     }
 
+    /**
+     * @param $att
+     */
     public function updateRec($att)
     {
+        $changed = false;
 
         $arrUpdate = [];
 
@@ -120,19 +223,26 @@ class TaskType extends Model
 
         // if taskType exists, create an update array of those fields that changed; then update the record.
         if ($taskType) {
-            if ($taskType->type !== $att->type) {
+            if (TaskType::getType() !== $att->type) {
                 $arrUpdate['type'] = $att->type;
+                $changed = true;
             }
-            if ($taskType->description !== $att->desc) {
+            if (TaskType::getDescription() !== $att->desc) {
                 $arrUpdate['description'] = $att->desc;
+                $changed = true;
             }
-            if ($taskType->client_id !== $att->client_id) {
-                $arrUpdate['client_id'] = $att->client_id;
-            }
+            // currently only one client; update this when there are two clients.
+//            if (self::getClientId() !== $att->client_id) {
+//                $arrUpdate['client_id'] = $att->client_id;
+//                $changed = true;
+//            }
 
-            \DB::table('task_type')
-                ->where('id', $att->id)
-                ->update($arrUpdate);
+            if ($changed) {
+                /* @noinspection PhpUndefinedClassInspection */
+                \DB::table('task_type')
+                    ->where('id', $att->id)
+                    ->update($arrUpdate);
+            }
         }
     }
 }

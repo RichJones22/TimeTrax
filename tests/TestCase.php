@@ -1,6 +1,5 @@
 <?php
 
-use Laracasts\Integrated\Extensions\Laravel;
 
 class TestCase extends Illuminate\Foundation\Testing\TestCase
 {
