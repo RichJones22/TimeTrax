@@ -219,15 +219,16 @@ class TaskType extends Model
 
         $arrUpdate = [];
 
-        $taskType = TaskType::where('id', '=', $att->id)->first();
+        /* @noinspection PhpUndefinedMethodInspection */
+        $taskType = self::where('id', '=', $att->id)->first();
 
         // if taskType exists, create an update array of those fields that changed; then update the record.
         if ($taskType) {
-            if (TaskType::getType() !== $att->type) {
+            if (self::getType() !== $att->type) {
                 $arrUpdate['type'] = $att->type;
                 $changed = true;
             }
-            if (TaskType::getDescription() !== $att->desc) {
+            if (self::getDescription() !== $att->desc) {
                 $arrUpdate['description'] = $att->desc;
                 $changed = true;
             }
