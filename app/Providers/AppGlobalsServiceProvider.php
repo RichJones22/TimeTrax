@@ -1,35 +1,28 @@
 <?php
 
-namespace App\Providers;
+namespace app\Providers;
 
 use Illuminate\Support\ServiceProvider;
-
 use App;
-use \App\Helpers\appGlobals;
+use App\Helpers\appGlobals;
 
 class AppGlobalsServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
-     *
-     * @return void
      */
     public function boot()
     {
-        //
     }
 
     /**
      * Register the application services.
-     *
-     * @return void
      */
     public function register()
     {
-        App::bind('appglobals', function()
-        {
-//            return new DemoClass;
-            return new appGlobals;
+        /* @noinspection PhpUndefinedClassInspection */
+        App::singleton('appglobals', function () {
+            return new appGlobals();
         });
     }
 }

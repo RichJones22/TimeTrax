@@ -9,4 +9,4 @@ Homestead.json
 .DS_Store
 selenium-server-standalone-*.jar
 /storage
-/test/logs/
+/tests/logs/
