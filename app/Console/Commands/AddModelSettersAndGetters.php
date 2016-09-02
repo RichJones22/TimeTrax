@@ -59,7 +59,20 @@ class AddModelSettersAndGetters extends Command
         }
 
         // set fileContents and modelClassName vars
+//        $this->fileContents = file_get_contents($this->modelClassFileName);
+//        $this->fileContents = file($this->modelClassFileName);
+
         $this->fileContents = file_get_contents($this->modelClassFileName);
+        $tokens = token_get_all($this->fileContents);
+
+        var_dump($tokens);
+
+//        $lines = $this->fileContents;
+//        foreach ($lines as $line) {
+//            if (strpos($line, 'name'))
+//        }
+
+//        var_dump($this->fileContents);
 
 
         // verify fillable variable exists in model
@@ -75,21 +88,36 @@ class AddModelSettersAndGetters extends Command
     public function verifyFillableVariableExists()
     {
 
-        $myclass = "<?php class MyClass extends \\$this->modelClassName {}\n";
+//        $myclass = "<?php class MyClass extends \\$this->modelClassName {}\n";
 
-        $myfile = "tmpFile";
+//        $myfile = app_path() . "/Console/Commands" . "/tmpFile";
+//        $myfile = __NAMESPACE__ . "\\tmpFile";
 //        dd($myfile);
 
 //        if (!class_exists($myfile)) {
 //            return false;
 //        }
 
+        $myfile = __NAMESPACE__ . "\\MyClass";
+        if (!class_exists($myfile)) {
+            return false;
+        }
+
         $inst = new $myfile;
 
+        $myArray = $inst->getFillableArr();
 
-        $handle = file_put_contents($myfile, $myclass);
+        foreach($myArray as $key => $value) {
+            echo "for key $key the value is $value\n";
+        }
 
-        class_exists($myfile) ? true : false;
+
+
+
+
+//        $handle = file_put_contents($myfile, $myclass);
+
+//        class_exists($myfile) ? true : false;
 
 
 
