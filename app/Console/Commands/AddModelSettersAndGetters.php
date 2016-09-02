@@ -59,11 +59,73 @@ class AddModelSettersAndGetters extends Command
         }
 
         // set fileContents and modelClassName vars
-//        $this->fileContents = file_get_contents($this->modelClassFileName);
-//        $this->fileContents = file($this->modelClassFileName);
+        $this->fileContents = file_get_contents($this->modelClassFileName);
+        $this->fileContents = file($this->modelClassFileName);
+        $count = count($this->fileContents);
+
+        for ($i=0; $i<$count; $i++) {
+            if (strpos($this->fileContents[$i], 'checkIfExists')) {
+                $startPos = $i;
+                $found = true;
+                $leftParen = 0;
+                $rightParen = 0;
+                for ($j=$i; $j<$count && $found; $j++) {
+                    if (strpos($this->fileContents[$j], '{')) {
+                        $leftParen++;
+                    }
+
+                    if (strpos($this->fileContents[$j], '}')) {
+                        $rightParen++;
+                    }
+
+                    if ($leftParen == $rightParen && $leftParen) {
+                        $endPos = $j;
+                        $found = true;
+                    }
+                }
+
+                if ($found) {
+                    echo "startPos: $startPos and endPos: $endPos\n";
+
+                    $help = ($this->fileContents);
+
+                    array_splice($help, $startPos, $endPos-$startPos);
+//                    for($k=$startPos;$k<$endPos;$k++) {
+//                        echo $this->fileContents[$k];
+//                    }
+                }
+            }
+        }
+
+        var_dump($help);
+        die();
+
+//        foreach($this->fileContents as $line) {
+//            if (strpos($line , 'checkIfExists')) {
+//                echo "name found";
+//            }
+//        }
+
+        die();
+
+//        var_dump($this->fileContents);
+//        die();
 
         $this->fileContents = file_get_contents($this->modelClassFileName);
         $tokens = token_get_all($this->fileContents);
+
+        var_dump($tokens);
+        die();
+
+        $count = count($tokens);
+        for ($i = 1; $i < $count; $i++) {
+            if ($tokens[$i - 1][0] == T_STRING) {
+                if ($tokens[$i - 1][1] == 'getClientTableName') {
+                    $tokens[$i - 1][1] = "bob";
+                    return true;
+                }
+            }
+        }
 
         var_dump($tokens);
 
@@ -98,14 +160,16 @@ class AddModelSettersAndGetters extends Command
 //            return false;
 //        }
 
-        $myfile = __NAMESPACE__ . "\\MyClass";
+//        $myfile = __NAMESPACE__ . "\\MyClass";
+        $myfile = "\\App\\Client";
         if (!class_exists($myfile)) {
             return false;
         }
 
         $inst = new $myfile;
 
-        $myArray = $inst->getFillableArr();
+//        $myArray = $inst->getFillableArr();
+        $myArray = $inst->getFillable();
 
         foreach($myArray as $key => $value) {
             echo "for key $key the value is $value\n";
