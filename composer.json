@@ -39,7 +39,10 @@
     "autoload-dev": {
         "classmap": [
             "tests/TestCase.php"
-        ]
+        ],
+        "psr-4": {
+            "shell\\": "shell"
+        }
     },
     "scripts": {
         "post-install-cmd": [
