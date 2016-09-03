@@ -30,7 +30,6 @@ use \App\Http\Controllers\TaskTypeController;
  * helpers
  **********************************************************************************************************************/
 
-
 /***********************************************************************************************************************
  * filters
  **********************************************************************************************************************/
@@ -84,7 +83,7 @@ Route::get('get_all_tasks', function () {
 * taskType routes
  **********************************************************************************************************************/
 
-//Route::post('taskType/create/'                , ['as' => 'taskType.create',    'uses' => 'TaskTypeController@create']);
+//Route::post('taskType/create/', ['as' => 'taskType.create', 'uses' => 'TaskTypeController@create']);
 
 // route taskType.show denotes that we hit the endpoint directly, i.e.: www.timetrax.com/taskType/1
 Route::get('taskType/{taskType}', ['as' => 'taskType.show',      'uses' => 'TaskTypeController@show']);
@@ -346,7 +345,8 @@ Route::get('create_data', function () {
     }
 
     // get $work->id
-    $work = Work::where('work_type_description', '=', 'A new landing page is required to support Fall 2016 GNO.')->first();
+    $work = Work::where('work_type_description', '=', 'A new landing page is required to support Fall 2016 GNO.')
+        ->first();
 
     // get $timeCardFormat->id
     $timeCardFormat = TimeCardFormat::where('description', '=', 'Day of week starts on SAT and ends on SUN')->first();
