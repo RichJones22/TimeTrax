@@ -2,31 +2,30 @@
 
 namespace App;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use \App\Helpers\appGlobals;
-use DB;
+use App\Helpers\appGlobals;
 
 class TimeCard extends Model
 {
     /**
-     *  table used by this model
+     *  table used by this model.
      */
     protected $table = 'time_card';
 
-    public $row=null;
+    public $row = null;
 
     /**
-     * fillable fields
+     * fillable fields.
      */
     protected $fillable = [
+        'iso_beginning_dow_date',
         'work_id',
         'time_card_format_id',
-        'iso_beginning_dow_date'
     ];
 
     /**
      * establish relations.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function work()
@@ -35,7 +34,8 @@ class TimeCard extends Model
     }
 
     /**
-    * establish relations.
+     * establish relations.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function timeCardFormat()
@@ -45,6 +45,7 @@ class TimeCard extends Model
 
     /**
      * establish relations.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function timeCardHoursWorked()
@@ -53,15 +54,15 @@ class TimeCard extends Model
     }
 
     /**
+     * If time card found set $inTimeCard to found time card.  If not found don't $inTimeCard.
      *
-     * @param $inTimeCard by reference.  If time card found set $inTimeCard to found time card.  If not found don't
-     *                                   $inTimeCard
+     * @param $inTimeCard
+     *
      * @return mixed
      */
     public static function checkIfExists(&$inTimeCard)
     {
-
-        $timeCard = TimeCard::where('work_id', $inTimeCard->work_id)
+        $timeCard = self::where('work_id', $inTimeCard->work_id)
             ->where('time_card_format_id', '=', $inTimeCard->time_card_format_id)
             ->first();
 
@@ -75,47 +76,53 @@ class TimeCard extends Model
     }
 
     /**
-     * @param TimeCard $timeCard
+     * @param TimeCard $inTimeCard
+     *
      * @return bool
+     *
+     * @internal param TimeCard $timeCard
      */
     public static function doesTimeCardExist(TimeCard &$inTimeCard)
     {
-
-        $timeCard = TimeCard::where('iso_beginning_dow_date', '=', $inTimeCard->iso_beginning_dow_date)
-            ->where('work_id', '=', $inTimeCard->work_id)
+        $timeCard = self::where('iso_beginning_dow_date', '=', $inTimeCard->getIsoBeginningDowDate())
+            ->where('work_id', '=', $inTimeCard->getWorkId())
             ->first();
 
         if (is_null($timeCard)) {
             return false;
         } else {
             $inTimeCard = $timeCard;
+
             return true;
         }
     }
 
-
     public function rowExists()
     {
-        $this->row = TimeCard::where('work_id', '=', $this->work_id)
-            ->where('iso_beginning_dow_date', '=', $this->iso_beginning_dow_date)
+        $this->row = self::where('work_id', '=', $this->getWorkId())
+            ->where('iso_beginning_dow_date', '=', $this->getIsoBeginningDowDate())
             ->first();
 
         return $this->row ? true : false;
     }
 
     /**
-     * @param $bwDate
-     * @param $ewDate
+     * @param $iso_beginning_dow_date
+     *
      * @return mixed
+     *
+     * @internal param $bwDate
+     * @internal param $ewDate
      */
     public static function getTimeCardRows($iso_beginning_dow_date)
     {
-        $timeCardRows = TimeCard::where('iso_beginning_dow_date', '=', $iso_beginning_dow_date)
+        $timeCardRows = self::where('iso_beginning_dow_date', '=', $iso_beginning_dow_date)
             ->join('work', 'work.id', '=', 'time_card.work_id')
             ->join('work_type', 'work_type.id', '=', 'work.work_type_id')
             ->select('time_card.id', 'time_card.iso_beginning_dow_date', 'time_card.work_id', 'time_card.time_card_format_id')
             ->orderBy('work_type.type')
             ->get();
+
         return $timeCardRows;
     }
 
@@ -123,16 +130,66 @@ class TimeCard extends Model
      * @param $iso_beginning_dow_date
      * @param $timeCardRow
      * @param $hoursWorkedPerWorkId
+     *
      * @return mixed
      */
     public static function getHoursWorkedForTimeCard($iso_beginning_dow_date, $timeCardRow, $hoursWorkedPerWorkId)
     {
-        $hoursWorkedPerWorkId[$timeCardRow->id] = TimeCard::where('iso_beginning_dow_date', '=', $iso_beginning_dow_date)
+        $hoursWorkedPerWorkId[$timeCardRow->id] = self::where('iso_beginning_dow_date', '=', $iso_beginning_dow_date)
             ->join('time_card_hours_worked', 'time_card_hours_worked.time_card_id', '=', 'time_card.id')
-            ->where('time_card_hours_worked.hours_worked', ">", 0)
+            ->where('time_card_hours_worked.hours_worked', '>', 0)
             ->where('time_card_hours_worked.time_card_id', '=', $timeCardRow->id)
             ->select('time_card.work_id', 'time_card_hours_worked.dow', 'time_card_hours_worked.hours_worked', 'time_card_hours_worked.id', 'time_card_hours_worked.date_worked')
             ->get();
+
         return $hoursWorkedPerWorkId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsoBeginningDowDate()
+    {
+        return $this->attributes['iso_beginning_dow_date'];
+    }
+
+    /**
+     * @param $setIsoBeginningDowDate
+     */
+    public function setIsoBeginningDowDate($setIsoBeginningDowDate)
+    {
+        $this->attributes['iso_beginning_dow_date'] = $setIsoBeginningDowDate;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getWorkId()
+    {
+        return $this->attributes['work_id'];
+    }
+
+    /**
+     * @param $setWorkId
+     */
+    public function setWorkId($setWorkId)
+    {
+        $this->attributes['work_id'] = $setWorkId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTimeCardFormatId()
+    {
+        return $this->attributes['time_card_format_id'];
+    }
+
+    /**
+     * @param $setTimeCardFormatId
+     */
+    public function setTimeCardFormatId($setTimeCardFormatId)
+    {
+        $this->attributes['time_card_format_id'] = $setTimeCardFormatId;
     }
 }
