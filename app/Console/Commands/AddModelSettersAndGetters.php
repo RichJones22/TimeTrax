@@ -1,28 +1,47 @@
 <?php
 
-namespace App\Console\Commands;
+/** @noinspection PhpMethodOrClassCallIsNotCaseSensitiveInspection */
+namespace app\Console\Commands;
 
 use Illuminate\Console\Command;
 
+/**
+ * Class AddModelSettersAndGetters.
+ */
 class AddModelSettersAndGetters extends Command
 {
-
+    /**
+     * @var
+     */
     protected $paramName;
+    /**
+     * @var
+     */
     protected $modelClassName;
+    /**
+     * @var
+     */
     protected $modelClassFileName;
 
+    /**
+     * @var
+     */
     protected $fileContents;
+    /**
+     * @var
+     */
     protected $arrVars;
 
-    CONST MODEL_NS = "\\App\\";
-    CONST DS = "/";
+    const MODEL_NS = '\\App\\';
+
+    const DS = '/';
 
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'add:settersGetters 
+    protected $signature = 'model:addSettersGetters 
                                {model : model to add setters and getter to}';
 
     /**
@@ -34,8 +53,6 @@ class AddModelSettersAndGetters extends Command
 
     /**
      * Create a new command instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -49,7 +66,7 @@ class AddModelSettersAndGetters extends Command
      */
     public function handle()
     {
-        if (! $this->init()) {
+        if (!$this->init()) {
             return false;
         }
 
@@ -58,11 +75,17 @@ class AddModelSettersAndGetters extends Command
         return $this;
     }
 
+    /**
+     * @return bool
+     */
     protected function init()
     {
         return $this->setModelClassNameAndClassFileName();
     }
 
+    /**
+     * @return $this
+     */
     protected function processModel()
     {
         $filleables = $this->getFillables();
@@ -84,25 +107,26 @@ class AddModelSettersAndGetters extends Command
     }
 
     /**
-     * Give a 'model' param, determine that both the file and class exists
+     * Give a 'model' param, determine that both the file and class exists.
      *
      * @return bool
      */
     protected function setModelClassNameAndClassFileName()
     {
-//        $this->paramName = $this->argument('model');
-        $this->paramName = "ClientTest";
+        $this->getParameter();
 
-        $this->modelClassName = self::MODEL_NS . "$this->paramName";
-        $this->modelClassFileName = app_path() . self::DS . $this->paramName . ".php";
+        $this->modelClassName = self::MODEL_NS."$this->paramName";
+        $this->modelClassFileName = app_path().self::DS.$this->paramName.'.php';
 
-        if (! file_exists($this->modelClassFileName)) {
+        if (!file_exists($this->modelClassFileName)) {
             echo "file $this->modelClassFileName not found\n";
+
             return false;
         }
 
-        if (! class_exists($this->modelClassName)) {
+        if (!class_exists($this->modelClassName)) {
             echo "class $this->modelClassName not found\n";
+
             return false;
         }
 
@@ -110,7 +134,7 @@ class AddModelSettersAndGetters extends Command
     }
 
     /**
-     * derive array list of fillables from modelClassName
+     * derive array list of fillables from modelClassName.
      *
      * @return mixed
      */
@@ -118,19 +142,26 @@ class AddModelSettersAndGetters extends Command
     {
         $MyClass = new $this->modelClassName();
 
+        /* @noinspection PhpUndefinedMethodInspection */
         return $MyClass->getFillable();
     }
 
+    /**
+     * @param $val
+     *
+     * @return string
+     */
     protected function snakeToCamel($val)
     {
         $val = str_replace(' ', '', ucwords(str_replace('_', ' ', $val)));
         $val = strtolower(substr($val, 0, 1)).substr($val, 1);
+
         return ucfirst($val);
     }
 
-
     /**
      * @param $filleable
+     *
      * @return array
      */
     protected function deriveGetter($filleable)
@@ -140,37 +171,50 @@ class AddModelSettersAndGetters extends Command
         $funcName = $this->getGetterFunctionName($filleable);
 
         array_push($arr, "\n");
+        array_push($arr, "    /**\n");
+        array_push($arr, "    * @return mixed\n");
+        array_push($arr, "    */\n");
         array_push($arr, "    public function $funcName()\n");
         array_push($arr, "    {\n");
-        array_push($arr, '        return $this->attributes[' . "'" . $filleable . "'" . "];\n");
+        array_push($arr, '        return $this->attributes['."'".$filleable."'"."];\n");
         array_push($arr, "    }\n");
         array_push($arr, "\n");
 
         return $arr;
     }
 
+    /**
+     * @param $filleable
+     *
+     * @return array
+     */
     protected function deriveSetter($filleable)
     {
         $arr = [];
 
-        $funcName = "set" . $this->snakeToCamel($filleable);
+        $funcName = 'set'.$this->snakeToCamel($filleable);
 
-        $param = "$".$funcName;
+        $param = '$'.$funcName;
 
+        array_push($arr, "    /**\n");
+        array_push($arr, "    * @param $$funcName\n");
+        array_push($arr, "    */\n");
         array_push($arr, "    public function $funcName($param)\n");
         array_push($arr, "    {\n");
-        array_push($arr, '        $this->attributes[' . "'" . $filleable . "'" . "] = $param;\n");
+        array_push($arr, '        $this->attributes['."'".$filleable."'"."] = $param;\n");
         array_push($arr, "    }\n");
-        array_push($arr, "");
+        array_push($arr, '');
 
         return $arr;
     }
 
-
     /**
      * @param $getterFuncName
-     * @param $arrGetter
+     * @param $getterOrSetter
+     *
      * @return $this
+     *
+     * @internal param $arrGetter
      */
     protected function findPlaceMethod($getterFuncName, $getterOrSetter)
     {
@@ -178,50 +222,18 @@ class AddModelSettersAndGetters extends Command
         $count = count($this->fileContents);
 
         $tmpContents = null;
-        $foundAny = false;
+        $setterGetterFound = false;
 
-        for ($i = 0; $i < $count; $i++) {
+        for ($i = 0; $i < $count; ++$i) {
             if (strpos($this->fileContents[$i], $getterFuncName)) {
-
-                $startPos = $i;
-                $endPos = 0;
-                $found = false;
-                $leftParen = 0;
-                $rightParen = 0;
-
-                for ($j = $i; $j < $count && !$found; $j++) {
-                    if (strpos($this->fileContents[$j], '{')) {
-                        $leftParen++;
-                    }
-
-                    if (strpos($this->fileContents[$j], '}')) {
-                        $rightParen++;
-                    }
-
-                    if ($leftParen == $rightParen && $leftParen) {
-                        $endPos = $j;
-                        $found = true;
-                    }
-                }
-
-                if ($found) {
-                    $tmpContents = $this->fileContents;
-                    $top = array_slice($tmpContents, 0, $startPos);
-                    $bottom = array_slice($tmpContents, $endPos+1);
-                    $tmpContents = array_merge($top, $getterOrSetter);
-                    $tmpContents = array_merge($tmpContents, $bottom);
-                    $this->fileContents = $tmpContents;
-                    $foundAny = true;
-                }
+                $setterGetterFound = true;
             }
         }
 
-        if ($foundAny) {
-            file_put_contents($this->modelClassFileName, $this->fileContents);
-        } else {
+        if (!$setterGetterFound) {
             $tmpContents = $this->fileContents;
 
-            // greb one less than the bottom.
+            // grab one less than the bottom.
             $top = array_slice($tmpContents, 0, -1);
             $tmpContents = array_merge($top, $getterOrSetter);
             $tmpContents = array_merge($tmpContents, ["}\n"]);
@@ -229,25 +241,43 @@ class AddModelSettersAndGetters extends Command
             $this->fileContents = $tmpContents;
         }
 
-
         return $this;
     }
 
     /**
      * @param $filleable
+     *
      * @return string
      */
     protected function getGetterFunctionName($filleable):string
     {
-        $funcName = "get" . $this->snakeToCamel($filleable);
+        $funcName = 'get'.$this->snakeToCamel($filleable);
+
         return $funcName;
     }
 
+    /**
+     * @param $filleable
+     *
+     * @return string
+     */
     protected function getSetterFunctionName($filleable):string
     {
-        $funcName = "set" . $this->snakeToCamel($filleable);
+        $funcName = 'set'.$this->snakeToCamel($filleable);
+
         return $funcName;
     }
 
-
+    /**
+     * the getParameter() method allows for XDebug testing.
+     *
+     * test with XDebug by creating a route.
+     * then, comment out the ->argument('model') line.
+     * and uncomment the other line containing your test model
+     */
+    protected function getParameter()
+    {
+        $this->paramName = $this->argument('model');
+//        $this->paramName = "ClientTest";
+    }
 }
