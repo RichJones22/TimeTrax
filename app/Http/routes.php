@@ -15,8 +15,6 @@ use \App\TestingSeleniumVariables;
 
 use \App\Http\Controllers\TaskTypeController;
 
-use \App\Console\Commands\AddModelSettersAndGetters;
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
