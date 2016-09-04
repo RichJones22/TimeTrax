@@ -23,7 +23,7 @@ class TimeCardHoursWorked extends Model
         'time_card_id', ];
 
     /**
-     * @param [in/out] $inTimeCard
+     * @param $timeCardHoursWorked
      *
      * @return mixed
      */
@@ -39,7 +39,7 @@ class TimeCardHoursWorked extends Model
     }
 
     /**
-     * @param [in/out] $inTimeCard
+     * @param $timeCardHoursWorked
      *
      * @return mixed
      */
@@ -74,9 +74,6 @@ class TimeCardHoursWorked extends Model
      * @param $iso_beginning_dow_date
      *
      * @return array
-     *
-     * @internal param $bwDate
-     * @internal param $ewDate
      */
     public static function deriveTimeCardHoursWorkedFromBeginningAndEndingWeekDates($timeCardRows, $iso_beginning_dow_date)
     {

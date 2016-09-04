@@ -20,9 +20,6 @@ class TimeCardController extends Controller
      * param $request
      * param $timeCardRange
      *
-     * @param prepareTimeCardRequest $request
-     * @param $timeCardRange
-     *
      * @return \Illuminate\Http\Response
      */
     public function create(prepareTimeCardRequest $request, $timeCardRange)
@@ -201,11 +198,7 @@ class TimeCardController extends Controller
      */
     protected function getBeginningAndEndingWeekDates($dateSelected)
     {
-        if (is_null($dateSelected)) {
-            $dateSelected = Carbon::now('America/Chicago');
-        } else {
-            $dateSelected = new Carbon($dateSelected, 'America/Chicago');
-        }
+        $dateSelected = $this->deriveDateSelected($dateSelected);
         $bwDate = new Carbon($dateSelected);
 
         if ($bwDate->dayOfWeek == 0) {
@@ -449,5 +442,25 @@ class TimeCardController extends Controller
 
         // used for routing.
         $this->setRefreshButtonToCorrectTimeCardWorkedId($timeCardRows);
+    }
+
+    /**
+     * @param $dateSelected
+     * @return Carbon
+     */
+    protected function deriveDateSelected($dateSelected):Carbon
+    {
+        if (is_null($dateSelected)) {
+            $dateSelected = Carbon::now('America/Chicago');
+            return $dateSelected;
+        } else {
+            try {
+                $dateSelected = new Carbon($dateSelected, 'America/Chicago');
+                return $dateSelected;
+            } catch (\Exception $e) {
+                abort(404, 'Invalid date selected in URL');
+            }
+            return $dateSelected;
+        }
     }
 }

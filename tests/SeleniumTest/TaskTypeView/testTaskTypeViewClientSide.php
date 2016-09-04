@@ -36,6 +36,12 @@ class testTaskView extends Selenium
         $this->visit('/');
     }
 
+    /** @test */
+    function it_checks_page_not_found()
+    {
+        $this->visit("/taskType/99/task/1")->see("Your Task Type ID does not exist.");
+    }
+
    /** @test */
     function test_visits_taskType_view()
     {

@@ -30,6 +30,18 @@ class testTimeCardView extends Selenium
         return $this;
     }
 
+    /** @test */
+    function it_checks_page_not_found()
+    {
+        $this->visit("/bob")->see("Page not found...");
+    }
+
+    /** @test */
+    function it_checks_invalid_date_for_timeCard()
+    {
+        $this->visit("/timeCard/2015-11-99")->see("Invalid date selected in URL");
+    }
+
    /** @test */
     function test_visits_timeCard_cant_add_sun_hours()
     {

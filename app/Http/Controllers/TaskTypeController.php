@@ -2,16 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Task;
-use Illuminate\Http\Request;
-
-use \App\Http\Requests\PrepareTaskTypeRequest;
-use \App\TaskType;
-use \App\Helpers\appGlobals;
+use App\TaskType;
+use App\Helpers\appGlobals;
 
 /**
- * Class TaskTypeController
- * @package App\Http\Controllers
+ * Class TaskTypeController.
  */
 class TaskTypeController extends Controller
 {
@@ -22,9 +17,9 @@ class TaskTypeController extends Controller
     {
         $newTaskType = new TaskType();
 
-        $newTaskType->type = $ttvAttributes['type'];
-        $newTaskType->description = $ttvAttributes['description'];
-        $newTaskType->client_id = $ttvAttributes['client_id'];
+        $newTaskType->setType($ttvAttributes['type']);
+        $newTaskType->setDescription($ttvAttributes['description']);
+        $newTaskType->setClientId($ttvAttributes['client_id']);
 
         $newTaskType->save();
     }
@@ -32,6 +27,7 @@ class TaskTypeController extends Controller
     /**
      * @param $clientId
      * @param null $timeCardId
+     *
      * @return mixed
      */
     public function show($clientId, $timeCardId = null)
@@ -40,7 +36,13 @@ class TaskTypeController extends Controller
         $this->setGlobals($timeCardId);
 
         // get all task for a specific time_card.date.
+        /* @noinspection PhpUndefinedMethodInspection */
         $taskTypes = TaskType::where('client_id', $clientId)->get();
+
+        // check if $timeCardHoursWorkedId exists, if not return 404 message.
+        if (count($taskTypes) == 0) {
+            abort(404, 'Your Task Type ID does not exist.');
+        }
 
         // pass the data to the view.
         return view('pages.userTaskTypeView')
@@ -49,7 +51,7 @@ class TaskTypeController extends Controller
     }
 
     /**
-     * ajax called method
+     * ajax called method.
      */
     public function update()
     {
@@ -60,6 +62,7 @@ class TaskTypeController extends Controller
 
     /**
      * @param $id
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
@@ -85,9 +88,9 @@ class TaskTypeController extends Controller
 
         // correctly sets the back button if the $timeCardId has been passed, the back button is set, else not.
         if (is_null($timeCardId)) {
-            \Session::forget(appGlobals::getTaskTableName());
+            session()->forget(appGlobals::getTaskTableName());
         } else {
-            \Session::set(appGlobals::getTaskTableName(), $timeCardId);
+            session()->set(appGlobals::getTaskTableName(), $timeCardId);
         }
     }
 }
