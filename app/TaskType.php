@@ -1,6 +1,6 @@
 <?php
 
-namespace app;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,75 +20,8 @@ class TaskType extends Model
     protected $fillable = [
         'type',
         'description',
+        'client_id',
     ];
-
-    /**
-     * @param $id
-     *
-     * @return $this
-     */
-    public function setId($id)
-    {
-        $this->attributes['id'] = $id;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getId()
-    {
-        return $this->attributes['id'];
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getType()
-    {
-        return $this->attributes['type'];
-    }
-
-    /**
-     * @param $type
-     *
-     * @return $this
-     */
-    public function setType($type)
-    {
-        $this->attributes['type'] = $type;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDescription()
-    {
-        return $this->attributes['description'];
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getClientId()
-    {
-        return $this->attributes['client_id'];
-    }
-
-    /**
-     * @param $description
-     *
-     * @return $this
-     */
-    public function setDescription($description)
-    {
-        $this->attributes['description'] = $description;
-
-        return $this;
-    }
 
     /**
      * check if type exists.
@@ -245,5 +178,61 @@ class TaskType extends Model
                     ->update($arrUpdate);
             }
         }
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->attributes['id'];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getType()
+    {
+        return $this->attributes['type'];
+    }
+
+    /**
+     * @param $setType
+     */
+    public function setType($setType)
+    {
+        $this->attributes['type'] = $setType;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDescription()
+    {
+        return $this->attributes['description'];
+    }
+
+    /**
+     * @param $setDescription
+     */
+    public function setDescription($setDescription)
+    {
+        $this->attributes['description'] = $setDescription;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getClientId()
+    {
+        return $this->attributes['client_id'];
+    }
+
+    /**
+     * @param $setClientId
+     */
+    public function setClientId($setClientId)
+    {
+        $this->attributes['client_id'] = $setClientId;
     }
 }

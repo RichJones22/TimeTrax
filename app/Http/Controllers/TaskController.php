@@ -3,28 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\TimeCardHoursWorked;
-use Illuminate\Http\Request;
-
-use \App\Http\Requests\PrepareTaskRequest;
-use \App\Task;
-
-use \App\Helpers\appGlobals;
+use App\Http\Requests\PrepareTaskRequest;
+use App\Task;
+use App\Helpers\appGlobals;
 
 class TaskController extends Controller
 {
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
     /**
      * Show the form for creating a new resource.
+     *
+     * @param PrepareTaskRequest $request
      *
      * @return \Illuminate\Http\Response
      */
@@ -41,13 +29,13 @@ class TaskController extends Controller
 
         $task = new Task();
 
-        $task->start_time = $taskRequestAttributes['startt'];
-        $task->end_time = $taskRequestAttributes['endt'];
-        $task->hours_worked = $taskRequestAttributes['hoursWorked'];
-        $task->notes = $taskRequestAttributes['notes'];
+        $task->setStartTime($taskRequestAttributes['startt']);
+        $task->setEndTime($taskRequestAttributes['endt']);
+        $task->setHoursWorked($taskRequestAttributes['hoursWorked']);
+        $task->setNotes($taskRequestAttributes['notes']);
 
-        $task->task_type_id = $taskRequestAttributes['taskType'];
-        $task->time_card_hours_worked_id = $taskRequestAttributes['time_card_hours_worked_id'];
+        $task->setTaskTypeId($taskRequestAttributes['taskType']);
+        $task->setTimeCardHoursWorkedId($taskRequestAttributes['time_card_hours_worked_id']);
 
         $task->save();
 
@@ -55,21 +43,11 @@ class TaskController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $timeCardHoursWorkedId
+     *
+     * @return \Illuminate\Http\Response|\Illuminate\View\View
      */
     public function show($timeCardHoursWorkedId)
     {
@@ -80,19 +58,27 @@ class TaskController extends Controller
         appGlobals::setSessionVariableAppGlobalTimeCardTableName($timeCardHoursWorkedId);
 
         // get all task for a specific time_card.date.
+        /* @noinspection PhpUndefinedMethodInspection */
         $tasks = Task::where('time_card_hours_worked_id', '=', $timeCardHoursWorkedId)->get()->sortBy('start_time');
 
         // derive total hours worked.
-        $totalHoursWorked=0;
+        $totalHoursWorked = 0;
         foreach ($tasks as $task) {
             $totalHoursWorked += $task->hours_worked;
         }
 
         // eager load task_type for each task.
+        /* @noinspection PhpUndefinedMethodInspection */
         $tasks->load('taskType');
 
         // get time_card data.
+        /* @noinspection PhpUndefinedMethodInspection */
         $timeCard = TimeCardHoursWorked::where('id', '=', $timeCardHoursWorkedId)->get();
+
+        // check if $timeCardHoursWorkedId exists, if not return 404 message.
+        if (count($timeCard) == 0) {
+            abort(404, 'Your Task ID does not exist.');
+        }
 
         // pass the data to the view.
         return view('pages.userTaskView')
@@ -105,12 +91,12 @@ class TaskController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-
         Task::destroy($id);
 
         return redirect()->back();

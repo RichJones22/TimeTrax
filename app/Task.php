@@ -122,4 +122,91 @@ class Task extends Model
     {
         return $this->belongsTo('\App\TaskType');
     }
+
+    /**
+    * @return mixed
+    */
+    public function getTimeCardHoursWorkedId()
+    {
+        return $this->attributes['time_card_hours_worked_id'];
+    }
+
+    /**
+    * @param $setTimeCardHoursWorkedId
+    */
+    public function setTimeCardHoursWorkedId($setTimeCardHoursWorkedId)
+    {
+        $this->attributes['time_card_hours_worked_id'] = $setTimeCardHoursWorkedId;
+    }
+
+    /**
+    * @return mixed
+    */
+    public function getTaskTypeId()
+    {
+        return $this->attributes['task_type_id'];
+    }
+
+    /**
+    * @param $setTaskTypeId
+    */
+    public function setTaskTypeId($setTaskTypeId)
+    {
+        $this->attributes['task_type_id'] = $setTaskTypeId;
+    }
+    /**
+    * @param $setStartTime
+    */
+    public function setStartTime($setStartTime)
+    {
+        $this->attributes['start_time'] = $setStartTime;
+    }
+
+    /**
+    * @return mixed
+    */
+    public function getEndTime()
+    {
+        return $this->attributes['end_time'];
+    }
+
+    /**
+    * @param $setEndTime
+    */
+    public function setEndTime($setEndTime)
+    {
+        $this->attributes['end_time'] = $setEndTime;
+    }
+
+    /**
+    * @return mixed
+    */
+    public function getHoursWorked()
+    {
+        return $this->attributes['hours_worked'];
+    }
+
+    /**
+    * @param $setHoursWorked
+    */
+    public function setHoursWorked($setHoursWorked)
+    {
+        $this->attributes['hours_worked'] = $setHoursWorked;
+    }
+
+    /**
+    * @return mixed
+    */
+    public function getNotes()
+    {
+        return $this->attributes['notes'];
+    }
+
+    /**
+    * @param $setNotes
+    */
+    public function setNotes($setNotes)
+    {
+        $this->attributes['notes'] = $setNotes;
+    }
 }
