@@ -30,7 +30,7 @@ class TimeCard extends Model
      */
     public function work()
     {
-        return $this->belongsTo('\App\Work');
+        return $this->belongsTo(Work::class);
     }
 
     /**
@@ -40,7 +40,7 @@ class TimeCard extends Model
      */
     public function timeCardFormat()
     {
-        return $this->belongsTo('\App\TimeCardFormat');
+        return $this->belongsTo(TimeCardFormat::class);
     }
 
     /**
@@ -50,7 +50,7 @@ class TimeCard extends Model
      */
     public function timeCardHoursWorked()
     {
-        return $this->hasMany('\App\TimeCardHoursWorked');
+        return $this->hasMany(TimeCardHoursWorked::class);
     }
 
     /**

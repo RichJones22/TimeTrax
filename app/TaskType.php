@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class TaskType.
@@ -18,6 +19,7 @@ class TaskType extends Model
      * fillable fields.
      */
     protected $fillable = [
+        'id',
         'type',
         'description',
         'client_id',
@@ -95,7 +97,6 @@ class TaskType extends Model
      */
     public function checkIfTypeExists($taskType)
     {
-
         /* @noinspection PhpUndefinedMethodInspection */
         $val = self::where('type', '=', $taskType->type)
             ->where('client_id', '=', $taskType->client_id)
@@ -144,40 +145,34 @@ class TaskType extends Model
     }
 
     /**
+     * - get TaskType by id
+     * - if either Type or Description have changed, update the record.
+     *
      * @param $att
      */
     public function updateRec($att)
     {
-        $changed = false;
+        if ($taskType = $this->getTaskTypeById($att)) {
+            if ($taskType->getType() !== $att->type) {
+                $taskType->setType($att->type);
 
-        $arrUpdate = [];
+                $this->updateTaskTypeById($taskType);
+            } elseif ($taskType->getDescription() !== $att->desc) {
+                $taskType->setDescription($att->desc);
 
-        /* @noinspection PhpUndefinedMethodInspection */
-        $taskType = self::where('id', '=', $att->id)->first();
-
-        // if taskType exists, create an update array of those fields that changed; then update the record.
-        if ($taskType) {
-            if (self::getType() !== $att->type) {
-                $arrUpdate['type'] = $att->type;
-                $changed = true;
-            }
-            if (self::getDescription() !== $att->desc) {
-                $arrUpdate['description'] = $att->desc;
-                $changed = true;
-            }
-            // currently only one client; update this when there are two clients.
-//            if (self::getClientId() !== $att->client_id) {
-//                $arrUpdate['client_id'] = $att->client_id;
-//                $changed = true;
-//            }
-
-            if ($changed) {
-                /* @noinspection PhpUndefinedClassInspection */
-                \DB::table('task_type')
-                    ->where('id', $att->id)
-                    ->update($arrUpdate);
+                $this->updateTaskTypeById($taskType);
             }
         }
+    }
+
+    /**
+     * @param $id
+     *
+     * @return mixed
+     */
+    public function setId($id)
+    {
+        return $this->attributes['id'] = $id;
     }
 
     /**
@@ -234,5 +229,37 @@ class TaskType extends Model
     public function setClientId($setClientId)
     {
         $this->attributes['client_id'] = $setClientId;
+    }
+
+    /**
+     * The method returns a filled TaskType class.
+     * This technique allows for the setters and getters to be recognized by the IDE.
+     *
+     * The only magic method is the self::where, which is a laravel thing...
+     *
+     * @param $att
+     *
+     * @return $this
+     */
+    protected function getTaskTypeById($att)
+    {
+        try {
+            /* @noinspection PhpUndefinedMethodInspection */
+            return (new self())->fill((self::where('id', $att->id)->first())->attributes);
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+
+    /**
+     * - find TaskType record by id
+     * - if found, update the row with taskType->attributes.
+     *
+     * @param $taskType
+     */
+    protected function updateTaskTypeById($taskType)
+    {
+        /* @noinspection PhpUndefinedMethodInspection */
+        DB::table('task_type')->where('id', $taskType->id)->update($taskType->attributes);
     }
 }

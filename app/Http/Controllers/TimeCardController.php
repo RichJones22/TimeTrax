@@ -224,8 +224,14 @@ class TimeCardController extends Controller
      *
      * @return array
      */
-    protected function deriveHoursWorkDowAndHoursWorkedIdDow($hoursWorkedPerWorkId, $hoursWorkedDow, $hoursWorkedIdDow)
+    protected function deriveHoursWorkDowAndHoursWorkedIdDow($hoursWorkedPerWorkId)
     {
+        // create arrays for:
+        // - hours worked for dow
+        // - hours worked id for dow
+        $hoursWorkedDow[] = [];
+        $hoursWorkedIdDow[] = [];
+
         foreach ($hoursWorkedPerWorkId as $hoursWorked) {
             foreach ($hoursWorked as $hoursWork) {
                 $hoursWorkedDow[$hoursWork->work_id][$hoursWork->dow] = $hoursWork->hours_worked;
@@ -290,12 +296,8 @@ class TimeCardController extends Controller
         // derive time_card_hours data via bwDate and ewDate
         $hoursWorkedPerWorkId = TimeCardHoursWorked::deriveTimeCardHoursWorkedFromBeginningAndEndingWeekDates($timeCardRows, $iso_beginning_dow_date);
 
-        // create arrays for:
-        // - hours worked for dow
-        // - hours worked id for dow
-        $hoursWorkedDow[] = [];
-        $hoursWorkedIdDow[] = [];
-        list($hoursWorkedDow, $hoursWorkedIdDow) = $this->deriveHoursWorkDowAndHoursWorkedIdDow($hoursWorkedPerWorkId, $hoursWorkedDow, $hoursWorkedIdDow);
+        // derive $hoursWorkedDow, $hoursWorkedIdDow
+        list($hoursWorkedDow, $hoursWorkedIdDow) = $this->deriveHoursWorkDowAndHoursWorkedIdDow($hoursWorkedPerWorkId);
 
         // eager load related data.
         $this->egerloadRelations($timeCardRows);
