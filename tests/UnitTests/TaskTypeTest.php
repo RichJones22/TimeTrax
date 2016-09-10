@@ -56,7 +56,6 @@ class TaskTypeTest extends TestCase
         $taskType = new TaskType();
         $taskType->id = $task->task_type_id;
 
-        // negative test for TaskType->checkTaskTypeDeleteAudits() entry point
         $result = $taskType->checkTaskTypeDeleteAudits($taskType);
 
         // expected result
@@ -74,7 +73,6 @@ class TaskTypeTest extends TestCase
         $taskType = new TaskType();
         $taskType->setId(-1);
 
-        // negative test for TaskType->checkTaskTypeDeleteAudits() entry point
         $result = $taskType->checkTaskTypeDeleteAudits($taskType);
 
         // expected result

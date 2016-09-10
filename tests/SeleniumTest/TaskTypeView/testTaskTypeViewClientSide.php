@@ -124,6 +124,17 @@ class testTaskView extends Selenium
             ->click('#taskTypeRefreshPage')
             ->click('#rowTaskTypeDesc_0')
             ->click('#rowTaskTypeDesc_1')->wait($this->delayMe)
+            ->click('#taskTypeRefreshPage')
+            ->click('#rowTaskTypeDesc_0')
+            ->type(" stuff...",'#rowTaskTypeDesc_0')
+            ->click('#rowTaskTypeDesc_1')
+            ->click('#taskTypeRefreshPage')->wait($this->delayMe)
+            ->see(' stuff...')
+            ->click('#rowTaskTypeId_0')
+            ->type("testing1",'#rowTaskTypeId_0')
+            ->click('#rowTaskTypeId_1')
+            ->click('#taskTypeRefreshPage')->wait($this->delayMe)
+            ->see('testing1')
         ;
 
         $this->setTtvTypeClearTextFalse($this->getClassName($this));
