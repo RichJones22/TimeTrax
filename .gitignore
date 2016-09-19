@@ -10,3 +10,4 @@ Homestead.json
 selenium-server-standalone-*.jar
 /storage
 /tests/logs/
+_ide_helper.php
