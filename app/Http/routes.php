@@ -15,6 +15,10 @@ use \App\TestingSeleniumVariables;
 
 use \App\Http\Controllers\TaskTypeController;
 
+//use Illuminate\Support\Facades\Redis;
+
+use Illuminate\Support\Facades\Cache;
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -45,6 +49,12 @@ Route::get('/', function () {
 
 Route::get('phpinfo', function () {
     phpinfo();
+});
+
+Route::get('redisTest', function() {
+    Cache::put('name', 'Rich', 10);
+
+    return Cache::get('name');
 });
 
 
