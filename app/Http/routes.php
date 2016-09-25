@@ -51,11 +51,15 @@ Route::get('phpinfo', function () {
     phpinfo();
 });
 
-Route::get('redisTest', function() {
-    Cache::put('name', 'Rich', 10);
-
-    return Cache::get('name');
-});
+//Route::get('redisTest', function($value = 'Rich') {
+//
+//    if ($name = Cache::get('name')) {
+//        return $name;
+//    } else {
+//        Cache::put('name', $value, 1);
+//        return $value;
+//    }
+//});
 
 
 /***********************************************************************************************************************
