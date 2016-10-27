@@ -7,7 +7,8 @@ use App\TimeCard;
 use App\TimeCardHoursWorked;
 use Carbon\Carbon;
 use App\Helpers\appGlobals;
-use Illuminate\Support\Facades\DB;
+
+use DB;
 
 /**
  * Class TimeCardController.
@@ -20,6 +21,8 @@ class TimeCardController extends Controller
      * param $request
      * param $timeCardRange
      *
+     * @param prepareTimeCardRequest $request
+     * @param $timeCardRange
      * @return \Illuminate\Http\Response
      */
     public function create(prepareTimeCardRequest $request, $timeCardRange)
@@ -219,9 +222,6 @@ class TimeCardController extends Controller
 
     /**
      * @param $hoursWorkedPerWorkId
-     * @param $hoursWorkedDow
-     * @param $hoursWorkedIdDow
-     *
      * @return array
      */
     protected function deriveHoursWorkDowAndHoursWorkedIdDow($hoursWorkedPerWorkId)
@@ -250,9 +250,10 @@ class TimeCardController extends Controller
     protected function egerloadRelations($timeCardRows)
     {
         foreach ($timeCardRows as $timeCardRow) {
+            /** @var TimeCard $timeCardRow */
             $timeCardRow->load('work');
             $timeCardRow->load('timeCardFormat');
-            $timeCardRow->work->load('workType');
+            $timeCardRow['work']->load('workType');
         }
     }
 
