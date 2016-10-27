@@ -24,6 +24,9 @@ use \App\Observers\TimeCardHoursWorkedObserver;
 use \App\Observers\TaskTypeObserver;
 use \App\Observers\TaskObserver;
 
+use \App\Events\WorkFlowApplicationReceivedEvent;
+use \App\Listeners\WorkFlowApplicationReceivedListener;
+
 class EventServiceProvider extends ServiceProvider
 {
     /**
@@ -32,8 +35,8 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'App\Events\SomeEvent' => [
-            'App\Listeners\EventListener',
+        WorkFlowApplicationReceivedEvent::class => [
+            WorkFlowApplicationReceivedListener::class,
         ],
     ];
 

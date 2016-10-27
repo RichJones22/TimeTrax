@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\WorkFlowApplicationReceivedEvent;
 use \Illuminate\Database\QueryException;
 
 use \App\Client;
@@ -29,6 +30,13 @@ use Illuminate\Support\Facades\Cache;
 | and give it the controller to call when that URI is requested.
 |
 */
+
+Route::get('wf_event', function() {
+    $client = Client::where('id', 1)->first();
+    event(new WorkFlowApplicationReceivedEvent($client));
+});
+
+
 
 /***********************************************************************************************************************
  * helpers

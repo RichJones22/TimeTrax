@@ -35,4 +35,20 @@ class Client extends Model
 
         return $client;
     }
+
+    /**
+    * @return mixed
+    */
+    public function getName()
+    {
+        return $this->attributes['name'];
+    }
+
+    /**
+    * @param $setName
+    */
+    public function setName($setName)
+    {
+        $this->attributes['name'] = $setName;
+    }
 }
