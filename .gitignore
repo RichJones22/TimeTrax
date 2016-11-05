@@ -11,3 +11,4 @@ selenium-server-standalone-*.jar
 /storage
 /tests/logs/
 _ide_helper.php
+.phpstorm.meta.php
