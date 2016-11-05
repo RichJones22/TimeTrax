@@ -2,10 +2,9 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Helpers\appGlobals;
 
-class TimeCardHoursWorked extends Model
+class TimeCardHoursWorked extends AppBaseModel
 {
     /**
      *  table used by this model.
@@ -29,7 +28,9 @@ class TimeCardHoursWorked extends Model
      */
     public static function checkIfExists($timeCardHoursWorked)
     {
-        $timeCardHoursWorked = self::where('time_card_id', '=', $timeCardHoursWorked->time_card_id)->first();
+        $timeCardHoursWorked = TimeCardHoursWorked::queryExec()
+            ->where('time_card_id', '=', $timeCardHoursWorked->time_card_id)
+            ->first();
 
         if (!is_null($timeCardHoursWorked)) {
             appGlobals::existsMessage(appGlobals::getTimeCardHoursWorkedTableName(), $timeCardHoursWorked->time_card_id, $timeCardHoursWorked->date_worked);
@@ -45,7 +46,8 @@ class TimeCardHoursWorked extends Model
      */
     public static function checkIfDateWorkedDowExists($timeCardHoursWorked)
     {
-        $timeCardHoursWorked = self::where('date_worked', $timeCardHoursWorked->date_worked)
+        $timeCardHoursWorked = TimeCardHoursWorked::queryExec()
+            ->where('date_worked', $timeCardHoursWorked->date_worked)
             ->where('dow', $timeCardHoursWorked->dow)
             ->where('work_id', $timeCardHoursWorked->work_id)
             ->first();

@@ -11,8 +11,8 @@ namespace tests\UnitTests;
 use TestCase;
 use App\Task;
 use App\TaskType;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 use \Carbon\Carbon;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 
 class TaskTypeTest extends TestCase
@@ -235,7 +235,10 @@ class TaskTypeTest extends TestCase
         $stdClass->client_id = $taskType->client_id;
 
         $taskType->updateRec($stdClass);
-        $result = $taskType::where('id', $taskType->getId())->first();
+
+        $result = TaskType::queryExec()
+            ->where('id', $taskType->getId())
+            ->first();
 
         $this->assertEquals($result->getType(), $changeType);
     }
@@ -267,7 +270,10 @@ class TaskTypeTest extends TestCase
         $stdClass->client_id = $taskType->client_id;
 
         $taskType->updateRec($stdClass);
-        $result = $taskType::where('id', $taskType->getId())->first();
+
+        $result = TaskType::queryExec()
+            ->where('id', $taskType->getId())
+            ->first();
 
         $this->assertEquals($result->getType(), $changeType);
     }
@@ -299,7 +305,9 @@ class TaskTypeTest extends TestCase
         $stdClass->client_id = $taskType->client_id;
 
         $taskType->updateRec($stdClass);
-        $result = $taskType::where('id', $taskType->getId())->first();
+        $result = TaskType::queryExec()
+            ->where('id', $taskType->getId())
+            ->first();
 
         $this->assertEquals($result->getDescription(), $changeDescription);
     }

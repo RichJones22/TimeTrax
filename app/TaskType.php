@@ -2,13 +2,10 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
-
 /**
  * Class TaskType.
  */
-class TaskType extends Model
+class TaskType extends AppBaseModel
 {
     /**
      *  table used by this model.
@@ -25,7 +22,7 @@ class TaskType extends Model
         'client_id',
     ];
 
-    /**
+   /**
      * check if type exists.
      *
      * @param $type
@@ -34,8 +31,9 @@ class TaskType extends Model
      */
     public static function checkIfExists($type)
     {
-        /* @noinspection PhpUndefinedMethodInspection */
-        $taskType = self::where('type', '=', $type)->first();
+        $taskType = TaskType::queryExec()
+            ->where('type', '=', $type)
+            ->first();
 
         if (!is_null($taskType)) {
             appGlobals()->existsMessage(appGlobals()->getTaskTypeTableName(), $taskType->type, $taskType->id);
@@ -97,8 +95,8 @@ class TaskType extends Model
      */
     public function checkIfTypeExists($taskType)
     {
-        /* @noinspection PhpUndefinedMethodInspection */
-        $val = self::where('type', '=', $taskType->type)
+        $val = TaskType::queryExec()
+            ->where('type', '=', $taskType->type)
             ->where('client_id', '=', $taskType->client_id)
             ->first();
 
@@ -119,7 +117,7 @@ class TaskType extends Model
         $val = explode(' ', trim($taskType->type));
 
         if (count($val) > 1) {
-            return (int) appGlobals()::TBL_TASK_TYPE_TYPE_RESTRICTED_TO_ONE_WORD;
+            return (int)appGlobals()::TBL_TASK_TYPE_TYPE_RESTRICTED_TO_ONE_WORD;
         }
 
         return 0;
@@ -133,8 +131,8 @@ class TaskType extends Model
     public function checkIfTypeConstraintExists($taskType)
     {
 
-        /* @noinspection PhpUndefinedMethodInspection */
-        $val = Task::where('task_type_id', '=', $taskType->id)
+        $val = Task::queryExec()
+            ->where('task_type_id', '=', $taskType->id)
             ->first();
 
         if (!is_null($val)) {
@@ -163,6 +161,37 @@ class TaskType extends Model
                 $this->updateTaskTypeById($taskType);
             }
         }
+    }
+
+    /**
+     * @param $att
+     * @return $this|null
+     */
+    protected function getTaskTypeById($att)
+    {
+        try {
+            $attributes = TaskType::queryExec()
+                ->where('id', $att->id)
+                ->first()
+                ->attributes;
+
+            return $this->getModel()->fill($attributes);
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+
+    /**
+     * - find TaskType record by id
+     * - if found, update the row with taskType->attributes.
+     *
+     * @param $taskType
+     */
+    protected function updateTaskTypeById($taskType)
+    {
+        TaskType::queryExec()
+            ->where('id', $taskType->id)
+            ->update($taskType->attributes);
     }
 
     /**
@@ -229,37 +258,5 @@ class TaskType extends Model
     public function setClientId($setClientId)
     {
         $this->attributes['client_id'] = $setClientId;
-    }
-
-    /**
-     * The method returns a filled TaskType class.
-     * This technique allows for the setters and getters to be recognized by the IDE.
-     *
-     * The only magic method is the self::where, which is a laravel thing...
-     *
-     * @param $att
-     *
-     * @return $this
-     */
-    protected function getTaskTypeById($att)
-    {
-        try {
-            /* @noinspection PhpUndefinedMethodInspection */
-            return (new self())->fill((self::where('id', $att->id)->first())->attributes);
-        } catch (\Exception $e) {
-            return null;
-        }
-    }
-
-    /**
-     * - find TaskType record by id
-     * - if found, update the row with taskType->attributes.
-     *
-     * @param $taskType
-     */
-    protected function updateTaskTypeById($taskType)
-    {
-        /* @noinspection PhpUndefinedMethodInspection */
-        DB::table('task_type')->where('id', $taskType->id)->update($taskType->attributes);
     }
 }

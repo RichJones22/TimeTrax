@@ -2,10 +2,13 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-use \App\Helpers\appGlobals;
+use App\Helpers\appGlobals;
 
-class Task extends Model
+/**
+ * Class Task
+ * @package App
+ */
+class Task extends AppBaseModel
 {
     /**
      *  table used by this model
@@ -24,11 +27,21 @@ class Task extends Model
         'notes'];
 
 
+    /**
+     * @param $startTime
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
     private static function getStartTime($startTime)
     {
-        return Task::where('start_time', '=', $startTime)->first();
+        return Task::queryExec()
+            ->where('start_time', '=', $startTime)
+            ->first();
     }
 
+    /**
+     * @param $startTime
+     * @return Task|\Illuminate\Database\Eloquent\Model|null
+     */
     public static function checkIfExists($startTime)
     {
         $task = self::getStartTime($startTime);
@@ -40,7 +53,6 @@ class Task extends Model
         return $task;
     }
 
-
     /**
      *  check for time overlaps
      *
@@ -51,7 +63,6 @@ class Task extends Model
      */
     public function checkIfTimeOverLaps($timeCardId, $startTime, $endTime)
     {
-
         if ($this->checkIfStartTimeExists($timeCardId, $startTime) ||
             $this->checkIfStartTimeOverLaps($timeCardId, $startTime) ||
             $this->checkIfEndTimeOverLaps($timeCardId, $endTime)) {
@@ -61,10 +72,15 @@ class Task extends Model
         return false;
     }
 
+    /**
+     * @param $timeCardId
+     * @param $startTime
+     * @return bool
+     */
     public function checkIfStartTimeExists($timeCardId, $startTime)
     {
-
-        $val = Task::where('start_time', '=', $startTime)
+        $val = Task::queryExec()
+            ->where('start_time', '=', $startTime)
             ->where('time_card_hours_worked_id', '=', $timeCardId)
             ->first();
 
@@ -75,10 +91,15 @@ class Task extends Model
         return true;
     }
 
+    /**
+     * @param $timeCardId
+     * @param $startTime
+     * @return bool
+     */
     public function checkIfStartTimeOverLaps($timeCardId, $startTime)
     {
-
-        $val = Task::where('time_card_hours_worked_id', '=', $timeCardId)
+        $val = Task::queryExec()
+            ->where('time_card_hours_worked_id', '=', $timeCardId)
             ->where('start_time', '<=', $startTime)
             ->where('end_time', '>', $startTime)
             ->first();
@@ -90,10 +111,14 @@ class Task extends Model
         return true;
     }
 
+    /**
+     * @param $timeCardId
+     * @param $endTime
+     * @return bool
+     */
     public function checkIfEndTimeOverLaps($timeCardId, $endTime)
     {
-
-        $val = Task::where('time_card_hours_worked_id', '=', $timeCardId)
+        $val = Task::queryExec()->where('time_card_hours_worked_id', '=', $timeCardId)
             ->where('start_time', '<', $endTime)
             ->where('end_time', '>=', $endTime)
             ->first();
