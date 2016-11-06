@@ -1,11 +1,8 @@
-<?php
+<?php namespace App;
 
-namespace App;
+use App\Helpers\appGlobals;
 
-use Illuminate\Database\Eloquent\Model;
-use \App\Helpers\appGlobals;
-
-class Client extends Model
+class Client extends AppBaseModel
 {
     /**
      *  table used by this model
@@ -23,11 +20,13 @@ class Client extends Model
      *  - if found return the $project record to the caller.
      *
      * @param [in] $text
-     * @return a record.
+     * @return  \Illuminate\Database\Eloquent\Builder
      */
     public static function checkIfExists($text)
     {
-        $client = Client::where('name', '=', $text)->first();
+        $client = Client::queryExec()
+            ->where('name', '=', $text)
+            ->first();
 
         if (!is_null($client)) {
             appGlobals::existsMessage(appGlobals::getClientTableName(), $client->name, $client->id);

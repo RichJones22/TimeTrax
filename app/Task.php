@@ -1,6 +1,4 @@
-<?php
-
-namespace App;
+<?php namespace App;
 
 use App\Helpers\appGlobals;
 
@@ -118,7 +116,8 @@ class Task extends AppBaseModel
      */
     public function checkIfEndTimeOverLaps($timeCardId, $endTime)
     {
-        $val = Task::queryExec()->where('time_card_hours_worked_id', '=', $timeCardId)
+        $val = Task::queryExec()
+            ->where('time_card_hours_worked_id', '=', $timeCardId)
             ->where('start_time', '<', $endTime)
             ->where('end_time', '>=', $endTime)
             ->first();

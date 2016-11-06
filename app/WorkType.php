@@ -1,11 +1,9 @@
-<?php
+<?php namespace App;
 
-namespace App;
-
-use Illuminate\Database\Eloquent\Model;
 use \App\Helpers\appGlobals;
+use Illuminate\Database\Eloquent\Builder;
 
-class WorkType extends Model
+class WorkType extends AppBaseModel
 {
     /**
      *  table used by this model
@@ -23,11 +21,13 @@ class WorkType extends Model
      *  - if found return the $project record to the caller.
      *
      * @param [in] $text
-     * @return record.
+     * @return Builder.
      */
     public static function checkIfExists($text)
     {
-        $workType = WorkType::where('type', '=', $text)->first();
+        $workType = WorkType::queryExec()
+            ->where('type', '=', $text)
+            ->first();
 
         if (!is_null($workType)) {
             appGlobals::existsMessage(appGlobals::getWorkTypeTableName(), $workType->type, $workType->id);
@@ -38,6 +38,6 @@ class WorkType extends Model
 
     public function work()
     {
-        return $this->hasMany('\App\Work');
+        return $this->hasMany(Work::class);
     }
 }

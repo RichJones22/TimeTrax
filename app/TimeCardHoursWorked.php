@@ -1,6 +1,4 @@
-<?php
-
-namespace App;
+<?php namespace App;
 
 use App\Helpers\appGlobals;
 
@@ -60,7 +58,7 @@ class TimeCardHoursWorked extends AppBaseModel
      */
     public function task()
     {
-        return $this->hasMany('\App\Task');
+        return $this->hasMany(Task::class);
     }
 
     /**
@@ -68,7 +66,7 @@ class TimeCardHoursWorked extends AppBaseModel
      */
     public function timeCard()
     {
-        return $this->belongsTo('\App\TimeCard');
+        return $this->belongsTo(TimeCard::class);
     }
 
     /**

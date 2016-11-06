@@ -162,7 +162,7 @@ Route::get('delete_data', function () {
 
     \Artisan::call('migrate:refresh');
 
-    return;
+    return "data deleted!";
 });
 
 /**

@@ -1,11 +1,8 @@
-<?php
+<?php namespace App;
 
-namespace App;
-
-use Illuminate\Database\Eloquent\Model;
 use \App\Helpers\appGlobals;
 
-class TimeCardFormat extends Model
+class TimeCardFormat extends AppBaseModel
 {
     /**
      *  table used by this model
@@ -27,7 +24,7 @@ class TimeCardFormat extends Model
 
     public static function checkIfExists($text)
     {
-        $timeCardFormat = TimeCardFormat::where('description', '=', $text)->first();
+        $timeCardFormat = TimeCardFormat::queryExec()->where('description', '=', $text)->first();
 
         if (!is_null($timeCardFormat)) {
             appGlobals::existsMessage(appGlobals::getTimeCardFormatTableName(), $timeCardFormat->description, $timeCardFormat->id);
@@ -38,6 +35,6 @@ class TimeCardFormat extends Model
 
     public function timeCard()
     {
-        return $this->hasOne('\App\TimeCard');
+        return $this->hasOne(TimeCard::class);
     }
 }

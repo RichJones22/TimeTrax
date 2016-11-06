@@ -1,11 +1,8 @@
-<?php
+<?php namespace App;
 
-namespace App;
-
-use Illuminate\Database\Eloquent\Model;
 use App\Helpers\appGlobals;
 
-class TimeCard extends Model
+class TimeCard extends AppBaseModel
 {
     /**
      *  table used by this model.
@@ -62,7 +59,8 @@ class TimeCard extends Model
      */
     public static function checkIfExists(&$inTimeCard)
     {
-        $timeCard = self::where('work_id', $inTimeCard->work_id)
+        $timeCard = TimeCard::queryExec()
+            ->where('work_id', $inTimeCard->work_id)
             ->where('time_card_format_id', '=', $inTimeCard->time_card_format_id)
             ->first();
 
@@ -84,7 +82,8 @@ class TimeCard extends Model
      */
     public static function doesTimeCardExist(TimeCard &$inTimeCard)
     {
-        $timeCard = self::where('iso_beginning_dow_date', '=', $inTimeCard->getIsoBeginningDowDate())
+        $timeCard = TimeCard::queryExec()
+            ->where('iso_beginning_dow_date', '=', $inTimeCard->getIsoBeginningDowDate())
             ->where('work_id', '=', $inTimeCard->getWorkId())
             ->first();
 
@@ -99,7 +98,8 @@ class TimeCard extends Model
 
     public function rowExists()
     {
-        $this->row = self::where('work_id', '=', $this->getWorkId())
+        $this->row = TimeCard::queryExec()
+            ->where('work_id', '=', $this->getWorkId())
             ->where('iso_beginning_dow_date', '=', $this->getIsoBeginningDowDate())
             ->first();
 
@@ -116,7 +116,9 @@ class TimeCard extends Model
      */
     public static function getTimeCardRows($iso_beginning_dow_date)
     {
-        $timeCardRows = self::where('iso_beginning_dow_date', '=', $iso_beginning_dow_date)
+        $timeCardRows = TimeCard::getModel()
+            ->newQuery()
+            ->where('iso_beginning_dow_date', '=', $iso_beginning_dow_date)
             ->join('work', 'work.id', '=', 'time_card.work_id')
             ->join('work_type', 'work_type.id', '=', 'work.work_type_id')
             ->select('time_card.id', 'time_card.iso_beginning_dow_date', 'time_card.work_id', 'time_card.time_card_format_id')
@@ -135,7 +137,9 @@ class TimeCard extends Model
      */
     public static function getHoursWorkedForTimeCard($iso_beginning_dow_date, $timeCardRow, $hoursWorkedPerWorkId)
     {
-        $hoursWorkedPerWorkId[$timeCardRow->id] = self::where('iso_beginning_dow_date', '=', $iso_beginning_dow_date)
+        $hoursWorkedPerWorkId[$timeCardRow->id] = TimeCard::getModel()
+            ->newQuery()
+            ->where('iso_beginning_dow_date', '=', $iso_beginning_dow_date)
             ->join('time_card_hours_worked', 'time_card_hours_worked.time_card_id', '=', 'time_card.id')
             ->where('time_card_hours_worked.hours_worked', '>', 0)
             ->where('time_card_hours_worked.time_card_id', '=', $timeCardRow->id)

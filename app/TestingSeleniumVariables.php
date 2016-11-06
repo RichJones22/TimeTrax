@@ -1,10 +1,7 @@
-<?php
+<?php namespace App;
 
-namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
-class TestingSeleniumVariables extends Model
+class TestingSeleniumVariables extends AppBaseModel
 {
     /**
      *  table used by this model

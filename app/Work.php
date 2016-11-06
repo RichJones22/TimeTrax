@@ -1,11 +1,8 @@
-<?php
+<?php namespace App;
 
-namespace App;
-
-use Illuminate\Database\Eloquent\Model;
 use \App\Helpers\appGlobals;
 
-class Work extends Model
+class Work extends AppBaseModel
 {
     /**
      *  table used by this model
@@ -19,7 +16,9 @@ class Work extends Model
 
     public static function checkIfExists($text)
     {
-        $work = Work::where('work_type_description', '=', $text)->first();
+        $work = Work::queryExec()
+            ->where('work_type_description', '=', $text)
+            ->first();
 
         if (!is_null($work)) {
             appGlobals::existsMessage(appGlobals::getWorkTableName(), $work->work_type_description, $work->id);
@@ -30,11 +29,11 @@ class Work extends Model
 
     public function workType()
     {
-        return $this->belongsTo('\App\WorkType');
+        return $this->belongsTo(WorkType::class);
     }
 
     public function timeCard()
     {
-        return $this->hasMany('\App\TimeCard');
+        return $this->hasMany(TimeCard::class);
     }
 }
