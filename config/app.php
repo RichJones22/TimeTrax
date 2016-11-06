@@ -152,7 +152,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         App\Providers\AppGlobalsServiceProvider::class,
         // TODO: removed; seem to be causing problems with 5.2 upgrade...
-//        Barryvdh\Debugbar\ServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 
     ],
@@ -204,6 +204,7 @@ return [
         'Form'      => Illuminate\Html\FormFacade::class,
         'Html'      => Collective\Html\HtmlFacade::class,
         'appGlobals' => App\Facades\AppGlobalsFacade::class,
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
 
     ],
 
