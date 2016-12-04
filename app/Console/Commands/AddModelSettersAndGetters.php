@@ -33,9 +33,7 @@ class AddModelSettersAndGetters extends Command
     protected $description = 'Adds setters and getters to a model';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
+     * AddModelSettersAndGetters constructor.
      */
     public function __construct()
     {
