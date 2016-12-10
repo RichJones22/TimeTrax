@@ -41,6 +41,23 @@ $app->singleton(
     App\Exceptions\Handler::class
 );
 
+
+
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+use App\Helpers\CheckForLocalLogging;
+
+
+// if not logging to local environment use APP_LOCAL_LOG
+if( ! (new CheckForLocalLogging())->isLogLocalSet())
+{
+    $app->configureMonologUsing(function(Logger $monoLog) {
+        $monoLog->pushHandler(new StreamHandler(
+            env('APP_LOG_PATH','/var/log/laravel/se-api.log')
+        ));
+    });
+}
+
 /*
 |--------------------------------------------------------------------------
 | Return The Application
@@ -51,5 +68,7 @@ $app->singleton(
 | from the actual running of the application and sending responses.
 |
 */
+
+
 
 return $app;

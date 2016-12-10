@@ -13,3 +13,4 @@ selenium-server-standalone-*.jar
 .phpstorm.meta.php
 _ide_helper.php
 _ide_helper_models.php
+.php_cs.php
