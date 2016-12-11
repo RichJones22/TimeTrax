@@ -154,7 +154,7 @@ return [
         App\Providers\AppGlobalsServiceProvider::class,
         // TODO: removed; seem to be causing problems with 5.2 upgrade...
 //        Barryvdh\Debugbar\ServiceProvider::class,
-        Premise\Utilities\PremiseUtilitiesProvider::class
+//        Premise\Utilities\PremiseUtilitiesProvider::class
 
     ],
 
