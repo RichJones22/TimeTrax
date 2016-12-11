@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Console\Commands;
+declare(strict_types=1);
 
+namespace App\Console\Commands;
 
 use App\Utilities\FileAndDirectoryUtilities;
 use ReflectionClass;
@@ -42,7 +43,7 @@ class BuildEnumTypeClass extends BaseFileDirCommand
         $path = $this->argument('entity-path');
 
         // Validate the path
-        if (!$this->validatePath($path)) {
+        if ( ! $this->validatePath($path)) {
             return $this;
         }
 
@@ -51,22 +52,18 @@ class BuildEnumTypeClass extends BaseFileDirCommand
 
         // echo the output.
         foreach ($NameSpaces as $NameSpace) {
-
             $NameSpace = $this->formatNameSpace($NameSpace);
 
-            if (class_exists($NameSpace, true) === true)
-            {
+            if (class_exists($NameSpace, true) === true) {
                 $Class = new ReflectionClass($NameSpace);
                 $Methods = $Class->getMethods();
-                foreach($Methods as $method)
-                {
-//                    var_dump($method->getName());
+                foreach ($Methods as $method) {
+                    //                    var_dump($method->getName());
                     $reflection = new ReflectionMethod($method->class, $method->getName());
                     $doc = $reflection->getDocComment();
                     preg_match('/@param\s+([^\s]+)/', $doc, $type);
 
-                    if (isset($type[1]))
-                    {
+                    if (isset($type[1])) {
                         $type = $type[1];
 //                        if ($result === 'string' ||
 //                            $result === 'int'    ||
@@ -75,16 +72,13 @@ class BuildEnumTypeClass extends BaseFileDirCommand
 //                            $result === 'float') {
 //                            continue;
 //                        }
-                        if ($type === 'int')
-                        {
+                        if ($type === 'int') {
                             var_dump($method->class, $method->getName(), $type);
                         }
                     }
                 }
 //                dd();
             }
-
-
         }
 
         return $this;
@@ -97,6 +91,7 @@ class BuildEnumTypeClass extends BaseFileDirCommand
 
     /**
      * @param $NameSpace
+     *
      * @return mixed
      */
     protected function formatNameSpace($NameSpace)
@@ -105,6 +100,7 @@ class BuildEnumTypeClass extends BaseFileDirCommand
         $result = ucwords($NameSpace);
         $NameSpace = str_replace(' ', '\\', $result);
         $NameSpace = preg_replace('/\\.[^.\\s]{3,4}$/', '', $NameSpace);
+
         return $NameSpace;
     }
 }

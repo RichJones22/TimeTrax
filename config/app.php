@@ -142,6 +142,7 @@ return [
         Illuminate\Html\HtmlServiceProvider::class,
 
         /*
+         *
          * Application Service Providers...
          */
         App\Providers\AppServiceProvider::class,
@@ -153,6 +154,7 @@ return [
         App\Providers\AppGlobalsServiceProvider::class,
         // TODO: removed; seem to be causing problems with 5.2 upgrade...
 //        Barryvdh\Debugbar\ServiceProvider::class,
+        Premise\Utilities\PremiseUtilitiesProvider::class
 
     ],
 
