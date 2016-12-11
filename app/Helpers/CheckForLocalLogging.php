@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace app\Helpers;
 
 use Exception;
@@ -7,7 +9,7 @@ use Exception;
 /**
  * Utility class for determining if APP_LOCAL_LOG is set in the .env file.
  *
- * if APP_LOCAL_LOG=true, indicates that we are to log to the Laravel default location; typically, /storage/logs/*.
+ * if APP_LOCAL_LOG=true; we are logging to the Laravel default location; typically, /storage/logs/*.
  *
  * Class CheckForLocalLogging.
  */
@@ -18,7 +20,6 @@ class CheckForLocalLogging
      */
     const APP_ENV_NOT_FOUND = 'APP_ENV not found in .env file...';
     const ENV_FILE_NOT_FOUND = '.env file not found...';
-
     /**
      * expected to be in the .env file.
      */
@@ -28,7 +29,9 @@ class CheckForLocalLogging
      * storage/logs/laravel-*.
      */
     const APP_LOCAL_LOG = 'APP_LOCAL_LOG';
-
+    /**
+     * Allowed value for APP_ENV variable in the .env file.
+     */
     const LOCAL = 'LOCAL';
     /**
      * @var string
@@ -128,6 +131,7 @@ class CheckForLocalLogging
      * if above are true then log to laravel's default logging location, using the isLogLocalSet() method.
      *
      * @return CheckForLocalLogging
+     *
      * @throws Exception
      */
     public function setEnvironment(): CheckForLocalLogging
@@ -136,15 +140,15 @@ class CheckForLocalLogging
         $this->logLocal = false;
 
         // validate that APP_ENV exists.
-        if (key_exists(self::APP_ENV, $this->getEnvArray())) {
+        if (array_key_exists(self::APP_ENV, $this->getEnvArray())) {
             $this->environment = $this->getEnvArray()[self::APP_ENV];
             $this->isEnvironmentFileValid = true;
 
             // check if we are logging to laravel storage dir.
             // - APP_LOCAL exists and is set to local
             // = APP_LOCAL_LOG exists and is set to true.
-            if (key_exists(self::APP_LOCAL_LOG, $this->getEnvArray())) {
-                if ($this->getEnvArray()[self::APP_LOCAL_LOG] == true &&
+            if (array_key_exists(self::APP_LOCAL_LOG, $this->getEnvArray())) {
+                if ($this->getEnvArray()[self::APP_LOCAL_LOG] === true &&
                     strtoupper($this->environment) === self::LOCAL) {
                     $this->logLocal = true;
                 }
@@ -175,12 +179,12 @@ class CheckForLocalLogging
     protected function validateEnvironmentFile(string $environmentFile = null): string
     {
         // if $environmentFile is null, set assumed
-        if ($environmentFile == null) {
+        if ($environmentFile === null) {
             $environmentFile = base_path().'/.env';
         }
 
         // validate that .env file exists.
-        if (!file_exists($environmentFile)) {
+        if ( ! file_exists($environmentFile)) {
             throw new Exception($this::ENV_FILE_NOT_FOUND);
         }
 
