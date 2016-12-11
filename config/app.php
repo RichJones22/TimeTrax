@@ -149,7 +149,8 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        'Laracasts\Utilities\JavaScript\JavaScriptServiceProvider',
+//        'Laracasts\Utilities\JavaScript\JavaScriptServiceProvider',
+        \Laracasts\Utilities\JavaScript\JavaScriptServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         App\Providers\AppGlobalsServiceProvider::class,
         // TODO: removed; seem to be causing problems with 5.2 upgrade...
