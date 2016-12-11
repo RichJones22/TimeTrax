@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Console\Commands;
 
 use App\Utilities\FileAndDirectoryUtilities;
+use Premise\Utilities\PremiseUtilities;
 use ReflectionClass;
 use ReflectionMethod;
 
@@ -50,6 +51,8 @@ class BuildEnumTypeClass extends BaseFileDirCommand
         // Get all files from path.
         $NameSpaces = $this->getFilesInDirectoryRecursiveByFileExt($path, 'PHP');
 
+        dd($NameSpaces);
+
         // echo the output.
         foreach ($NameSpaces as $NameSpace) {
             $NameSpace = $this->formatNameSpace($NameSpace);
@@ -86,7 +89,7 @@ class BuildEnumTypeClass extends BaseFileDirCommand
 
     protected function getFilesInDirectoryRecursiveByFileExt($path, $ext)
     {
-        return FileAndDirectoryUtilities::getFilesInDirectoryRecursiveByFileExt($path, $ext);
+        return PremiseUtilities::getFilesInDirectoryRecursiveByFileExt($path, $ext);
     }
 
     /**
