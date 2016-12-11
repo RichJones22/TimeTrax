@@ -1,0 +1,14 @@
+{
+    "name": "premise/utilities",
+    "description": "File and directory utilities",
+    "type": "composer-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Rich Jones",
+            "email": "jones_rich@yahoo.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}

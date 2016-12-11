@@ -14,3 +14,4 @@ selenium-server-standalone-*.jar
 _ide_helper.php
 _ide_helper_models.php
 .php_cs.php
+.php_cs.cache
