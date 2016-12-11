@@ -6,6 +6,7 @@ use App\Helpers\appGlobals;
 use App\Http\Requests\PrepareTaskRequest;
 use App\Task;
 use App\TimeCardHoursWorked;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -75,6 +76,7 @@ class TaskController extends Controller
         appGlobals::setSessionVariableAppGlobalTimeCardTableName($timeCardHoursWorkedId);
 
         // get all task for a specific time_card.date.
+        /** @var Collection $tasks */
         $tasks = Task::where('time_card_hours_worked_id', '=', $timeCardHoursWorkedId)->get()->sortBy('start_time');
 
         // derive total hours worked.
