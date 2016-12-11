@@ -1,18 +1,16 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Helpers\appGlobals;
+use App\Http\Requests\PrepareTaskRequest;
+use App\Task;
 use App\TimeCardHoursWorked;
 use Illuminate\Http\Request;
-
-use \App\Http\Requests\PrepareTaskRequest;
-use \App\Task;
-
-use \App\Helpers\appGlobals;
+use Illuminate\View\View;
 
 class TaskController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +18,6 @@ class TaskController extends Controller
      */
     public function index()
     {
-        //
     }
 
     /**
@@ -35,7 +32,7 @@ class TaskController extends Controller
         // if the hoursWorked has not been set, then just return to the client.  hoursWorked is calculated via .js
         // and does not seem to be populated before being sent to the server in some cases.  this has to do with
         // the return key being pressed prior to leaving the End Time field.
-        if (!isset($taskRequestAttributes['hoursWorked'])) {
+        if ( ! isset($taskRequestAttributes['hoursWorked'])) {
             return redirect()->back();
         }
 
@@ -57,19 +54,17 @@ class TaskController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $timeCardHoursWorkedId
+     * @return View
      */
     public function show($timeCardHoursWorkedId)
     {
@@ -83,7 +78,7 @@ class TaskController extends Controller
         $tasks = Task::where('time_card_hours_worked_id', '=', $timeCardHoursWorkedId)->get()->sortBy('start_time');
 
         // derive total hours worked.
-        $totalHoursWorked=0;
+        $totalHoursWorked = 0;
         foreach ($tasks as $task) {
             $totalHoursWorked += $task->hours_worked;
         }
@@ -105,12 +100,12 @@ class TaskController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-
         Task::destroy($id);
 
         return redirect()->back();
