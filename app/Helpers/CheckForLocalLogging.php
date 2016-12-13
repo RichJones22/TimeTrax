@@ -125,7 +125,7 @@ class CheckForLocalLogging
     }
 
     /**
-     * - verify that self::APP_ENV exists and list set to 'local'
+     * - verify that self::APP_ENV exists and is set to 'local'
      * - verify that self::APP_LOCAL_LOG exists and is set to 'true'.
      *
      * if above are true then log to laravel's default logging location, using the isLogLocalSet() method.
