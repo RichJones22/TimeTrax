@@ -145,7 +145,7 @@ class CheckForLocalLogging
             $this->environment = $this->getEnvArray()[self::APP_ENV];
 
             // if not the 'local' environment leave...
-            if (strtoupper($this->environment) !==self::LOCAL)
+            if (strtoupper($this->environment) !== self::LOCAL)
             {
                 return $this;
             }
