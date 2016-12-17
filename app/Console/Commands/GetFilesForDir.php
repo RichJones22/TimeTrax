@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Utilities\FileAndDirectoryUtilities;
+use Premise\Utilities\PremiseUtilities;
 
 class GetFilesForDir extends BaseFileDirCommand
 {
@@ -51,14 +51,6 @@ class GetFilesForDir extends BaseFileDirCommand
             $this->line($file);
         }
 
-        // 3. for each file:
-        // 4. find non scalar types
-        // 5. for each non scalar type
-        // 6. determine if non scalar type extends the Enum type
-        // 7. build EnumParameterType class
-
-//        $this->info($path . PHP_EOL);
-
         return $this;
     }
 
@@ -69,6 +61,6 @@ class GetFilesForDir extends BaseFileDirCommand
      */
     protected function getFilesForPath($path)
     {
-        return FileAndDirectoryUtilities::getFileForDirectory($path);
+        return PremiseUtilities::getFilesInDirectoryRecursiveByFileExt($path);
     }
 }

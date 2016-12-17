@@ -145,13 +145,12 @@ class CheckForLocalLogging
             $this->environment = $this->getEnvArray()[self::APP_ENV];
 
             // if not the 'local' environment leave...
-            if (strtoupper($this->environment) !== self::LOCAL)
-            {
+            if (strtoupper($this->environment) !== self::LOCAL) {
                 return $this;
             }
 
             // check if we are logging to laravel storage dir.
-            // = APP_LOCAL_LOG exists and is set to true.
+            // - APP_LOCAL_LOG exists and is set to true.
             if (array_key_exists(self::APP_LOCAL_LOG, $this->getEnvArray())) {
                 if ($this->getEnvArray()[self::APP_LOCAL_LOG] === true) {
                     $this->logLocal = true;

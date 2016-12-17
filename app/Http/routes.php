@@ -36,6 +36,13 @@ Route::get('/setters', function () {
     $mySetters = new AddModelSettersAndGetters();
     $mySetters->handle();
 
+});
+
+Route::get('/getFilesForDir', function () {
+
+    $path = app()->basePath() . '/app/Console';
+
+    return Artisan::call('timetrax:get-files-for-directory', ['path' => $path]);
 
 });
 

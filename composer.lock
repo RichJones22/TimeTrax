@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "856fe0ce275832a3647d9ff924808656",
-    "content-hash": "8ccadc4f3ab858942a4dd67954315e4a",
+    "hash": "bf59b158c27d893bea25f434e21db83d",
+    "content-hash": "80d2b173fe4084d1e8b1b58a0136e960",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -212,16 +212,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "dev-master",
+            "version": "v2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/PHP-CS-Fixer.git",
-                "reference": "c0332c0e7be23232e67bb52ec9b9e7c4a500453b"
+                "reference": "f3baf72eb2f58bf275b372540f5b47d25aed910f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/c0332c0e7be23232e67bb52ec9b9e7c4a500453b",
-                "reference": "c0332c0e7be23232e67bb52ec9b9e7c4a500453b",
+                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/f3baf72eb2f58bf275b372540f5b47d25aed910f",
+                "reference": "f3baf72eb2f58bf275b372540f5b47d25aed910f",
                 "shasum": ""
             },
             "require": {
@@ -273,7 +273,7 @@
                 }
             ],
             "description": "A tool to automatically fix PHP code style",
-            "time": "2016-12-11 10:48:09"
+            "time": "2016-12-01 06:18:06"
         },
         {
             "name": "fzaninotto/faker",
@@ -1405,29 +1405,6 @@
             "time": "2016-03-18 20:34:03"
         },
         {
-            "name": "premise/utilities",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/RichJones22/utilities.git",
-                "reference": "42f309f2a6a6ce78429f667c663afe56774c10f4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/RichJones22/utilities/zipball/42f309f2a6a6ce78429f667c663afe56774c10f4",
-                "reference": "42f309f2a6a6ce78429f667c663afe56774c10f4",
-                "shasum": ""
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Premise\\Utilities\\": "./src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "time": "2016-12-12 01:17:04"
-        },
-        {
             "name": "psr/log",
             "version": "1.0.2",
             "source": {
@@ -1697,7 +1674,7 @@
         },
         {
             "name": "symfony/browser-kit",
-            "version": "v2.8.14",
+            "version": "v2.8.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/browser-kit.git",
@@ -1814,7 +1791,7 @@
         },
         {
             "name": "symfony/css-selector",
-            "version": "v2.8.14",
+            "version": "v2.8.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/css-selector.git",
@@ -1924,16 +1901,16 @@
         },
         {
             "name": "symfony/dom-crawler",
-            "version": "v2.8.14",
+            "version": "v2.8.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dom-crawler.git",
-                "reference": "7f565fe00e580c1edf732234a6d26e9b796bd105"
+                "reference": "adb9f190b13884d6a70ec094a487363675575c1a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/7f565fe00e580c1edf732234a6d26e9b796bd105",
-                "reference": "7f565fe00e580c1edf732234a6d26e9b796bd105",
+                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/adb9f190b13884d6a70ec094a487363675575c1a",
+                "reference": "adb9f190b13884d6a70ec094a487363675575c1a",
                 "shasum": ""
             },
             "require": {
@@ -1976,11 +1953,11 @@
             ],
             "description": "Symfony DomCrawler Component",
             "homepage": "https://symfony.com",
-            "time": "2016-11-14 16:15:57"
+            "time": "2016-12-10 14:24:35"
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v3.2.0",
+            "version": "v3.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
@@ -2040,7 +2017,7 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v3.2.0",
+            "version": "v3.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
@@ -2622,7 +2599,7 @@
         },
         {
             "name": "symfony/stopwatch",
-            "version": "v3.2.0",
+            "version": "v3.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/stopwatch.git",
@@ -3705,47 +3682,6 @@
             "time": "2015-10-02 06:51:40"
         },
         {
-            "name": "refinery29/php-cs-fixer-config",
-            "version": "0.6.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/refinery29/php-cs-fixer-config.git",
-                "reference": "a28dd37d95732a6d8ddc04bff9f3f8b72b60db48"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/refinery29/php-cs-fixer-config/zipball/a28dd37d95732a6d8ddc04bff9f3f8b72b60db48",
-                "reference": "a28dd37d95732a6d8ddc04bff9f3f8b72b60db48",
-                "shasum": ""
-            },
-            "require": {
-                "friendsofphp/php-cs-fixer": "^2.0.0",
-                "php": "^5.5 || ^7.0"
-            },
-            "require-dev": {
-                "codeclimate/php-test-reporter": "0.3.2",
-                "phpunit/phpunit": "^4.8.28"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Refinery29\\CS\\Config\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Andreas Möller",
-                    "email": "andreas.moller@refinery29.com"
-                }
-            ],
-            "description": "Provides a configuration for friendsofphp/php-cs-fixer, used within Refinery29.",
-            "time": "2016-12-09 16:59:07"
-        },
-        {
             "name": "sebastian/comparator",
             "version": "1.2.2",
             "source": {
@@ -4067,16 +4003,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.2.0",
+            "version": "v3.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "f2300ba8fbb002c028710b92e1906e7457410693"
+                "reference": "a7095af4b97a0955f85c8989106c249fa649011f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/f2300ba8fbb002c028710b92e1906e7457410693",
-                "reference": "f2300ba8fbb002c028710b92e1906e7457410693",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/a7095af4b97a0955f85c8989106c249fa649011f",
+                "reference": "a7095af4b97a0955f85c8989106c249fa649011f",
                 "shasum": ""
             },
             "require": {
@@ -4118,7 +4054,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2016-11-18 21:17:59"
+            "time": "2016-12-10 10:07:06"
         },
         {
             "name": "webmozart/assert",
@@ -4173,10 +4109,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "friendsofphp/php-cs-fixer": 20,
-        "premise/utilities": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
