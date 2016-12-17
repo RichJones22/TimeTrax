@@ -2,7 +2,7 @@
 
 namespace app\Console\Commands;
 
-use App\Utilities\FileAndDirectoryUtilities;
+use Premise\Utilities\PremiseUtilities;
 
 /**
  * Class GetSubDirsForDir.
@@ -64,6 +64,6 @@ class GetSubDirsForDir extends BaseFileDirCommand
      */
     protected function getDirectoriesForDirectory($path)
     {
-        return FileAndDirectoryUtilities::getDirectoriesForDirectory($path);
+        return PremiseUtilities::getDirectoriesForDirectory($path);
     }
 }

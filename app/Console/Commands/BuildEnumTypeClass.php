@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
-use App\Utilities\FileAndDirectoryUtilities;
 use Premise\Utilities\PremiseUtilities;
 use ReflectionClass;
 use ReflectionMethod;
