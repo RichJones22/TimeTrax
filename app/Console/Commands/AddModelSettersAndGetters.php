@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Database\Eloquent\Model;
 
 class AddModelSettersAndGetters extends Command
 {
@@ -114,6 +115,7 @@ class AddModelSettersAndGetters extends Command
      */
     protected function getFillables()
     {
+        /** @var Model $MyClass */
         $MyClass = new $this->modelClassName();
 
         return $MyClass->getFillable();

@@ -14,7 +14,9 @@
         "illuminate/html": "^5.0",
         "laracasts/utilities": "~2.0",
         "laravelcollective/html": "5.2.*",
-        "friendsofphp/php-cs-fixer": "2.0"
+        "friendsofphp/php-cs-fixer": "2.0",
+        "barryvdh/laravel-ide-helper": "^2.3",
+        "predis/predis": "^1.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -35,7 +37,8 @@
             "Premise\\Utilities\\": "packages/premise/utilities/src/"
         },
         "files": [
-            "app/Helpers/helper.php"
+            "app/Helpers/helper.php",
+            "app/Helpers/appGlobals.php"
         ]
     },
     "autoload-dev": {
@@ -47,13 +50,22 @@
         }
     },
     "scripts": {
+        "app_setup": [
+            "php artisan clear-compiled",
+            "php artisan ide-helper:generate",
+            "php artisan ide-helper:meta",
+            "php artisan cache:clear",
+            "php artisan view:clear",
+            "php artisan optimize",
+            "composer dumpautoload"
+        ],
         "post-install-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postInstall",
-            "php artisan optimize"
+            "@app_setup"
         ],
         "post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
-            "php artisan optimize"
+            "@app_setup"
         ],
         "post-root-package-install": [
             "php -r \"copy('.env.example', '.env');\""

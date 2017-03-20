@@ -154,7 +154,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         App\Providers\AppGlobalsServiceProvider::class,
         // TODO: removed; seem to be causing problems with 5.2 upgrade...
-//        Barryvdh\Debugbar\ServiceProvider::class,
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 //        \Premise\Utilities\PremiseUtilitiesServiceProvider::class
 
     ],

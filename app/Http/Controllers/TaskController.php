@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\appGlobals;
-use App\Http\Requests\PrepareTaskRequest;
 use App\Task;
+use App\Http\Requests\PrepareTaskRequest;
 use App\TimeCardHoursWorked;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
@@ -13,18 +12,8 @@ use Illuminate\View\View;
 class TaskController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param PrepareTaskRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function create(PrepareTaskRequest $request)
     {
@@ -70,10 +59,10 @@ class TaskController extends Controller
     public function show($timeCardHoursWorkedId)
     {
         // set appGlobal.clientId to current view, otherwise 'if (appGlobal.clientId)' in TimeCard.js causes a js load failure.
-        appGlobals::populateJsGlobalClient();
+        \appGlobals::populateJsGlobalClient();
 
         // used for routing.
-        appGlobals::setSessionVariableAppGlobalTimeCardTableName($timeCardHoursWorkedId);
+        appGlobals()::setSessionVariableAppGlobalTimeCardTableName($timeCardHoursWorkedId);
 
         // get all task for a specific time_card.date.
         /** @var Collection $tasks */
