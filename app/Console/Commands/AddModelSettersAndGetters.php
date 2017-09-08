@@ -1,6 +1,7 @@
 <?php
 
-/** @noinspection PhpMethodOrClassCallIsNotCaseSensitiveInspection */
+declare(strict_types=1);
+
 namespace app\Console\Commands;
 
 use Illuminate\Console\Command;
@@ -10,6 +11,9 @@ use Illuminate\Console\Command;
  */
 class AddModelSettersAndGetters extends Command
 {
+    const MODEL_NS = '\\App\\';
+
+    const DS = '/';
     /**
      * @var
      */
@@ -31,10 +35,6 @@ class AddModelSettersAndGetters extends Command
      * @var
      */
     protected $arrVars;
-
-    const MODEL_NS = '\\App\\';
-
-    const DS = '/';
 
     /**
      * The name and signature of the console command.
@@ -66,7 +66,7 @@ class AddModelSettersAndGetters extends Command
      */
     public function handle()
     {
-        if (!$this->init()) {
+        if ( ! $this->init()) {
             return false;
         }
 
@@ -91,7 +91,6 @@ class AddModelSettersAndGetters extends Command
         $filleables = $this->getFillables();
 
         foreach ($filleables as $filleable) {
-
             // process getter
             $arrGetter = $this->deriveGetter($filleable);
             $getterFuncName = $this->getGetterFunctionName($filleable);
@@ -118,13 +117,13 @@ class AddModelSettersAndGetters extends Command
         $this->modelClassName = self::MODEL_NS."$this->paramName";
         $this->modelClassFileName = app_path().self::DS.$this->paramName.'.php';
 
-        if (!file_exists($this->modelClassFileName)) {
+        if ( ! file_exists($this->modelClassFileName)) {
             echo "file $this->modelClassFileName not found\n";
 
             return false;
         }
 
-        if (!class_exists($this->modelClassName)) {
+        if ( ! class_exists($this->modelClassName)) {
             echo "class $this->modelClassName not found\n";
 
             return false;
@@ -230,7 +229,7 @@ class AddModelSettersAndGetters extends Command
             }
         }
 
-        if (!$setterGetterFound) {
+        if ( ! $setterGetterFound) {
             $tmpContents = $this->fileContents;
 
             // grab one less than the bottom.
@@ -249,7 +248,7 @@ class AddModelSettersAndGetters extends Command
      *
      * @return string
      */
-    protected function getGetterFunctionName($filleable):string
+    protected function getGetterFunctionName($filleable): string
     {
         $funcName = 'get'.$this->snakeToCamel($filleable);
 
@@ -261,7 +260,7 @@ class AddModelSettersAndGetters extends Command
      *
      * @return string
      */
-    protected function getSetterFunctionName($filleable):string
+    protected function getSetterFunctionName($filleable): string
     {
         $funcName = 'set'.$this->snakeToCamel($filleable);
 
